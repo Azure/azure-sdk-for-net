@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
-            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
         }
@@ -34,10 +34,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> clientId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -47,13 +52,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientId"u8))
-                {
-                    clientId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new MachineLearningWorkspaceConnectionManagedIdentity(resourceId.Value, clientId.Value);
+            return new MachineLearningWorkspaceConnectionManagedIdentity(clientId.Value, resourceId.Value);
         }
     }
 }

@@ -795,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ReadEventsFromPartitionAsyncThrowsIfCancelledBeforeRead()
+        public void ReadEventsFromPartitionAsyncThrowsIfCanceledBeforeRead()
         {
             var events = new List<EventData>
             {
@@ -837,7 +837,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ReadEventsFromPartitionAsyncThrowsIfCancelledDuringRead()
+        public void ReadEventsFromPartitionAsyncThrowsIfCanceledDuringRead()
         {
             var events = new List<EventData>
             {
@@ -878,7 +878,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ReadEventsFromPartitionAsyncDoesNotThrowIfNotCancelled()
+        public void ReadEventsFromPartitionAsyncDoesNotThrowIfNotCanceled()
         {
             var events = new List<EventData>
             {
@@ -919,7 +919,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReadEventsFromPartitionAsyncStopsReceivingWhenCancelled()
+        public async Task ReadEventsFromPartitionAsyncStopsReceivingWhenCanceled()
         {
             var events = Enumerable
                 .Range(0, 1500)
@@ -1350,7 +1350,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(typeof(TaskCanceledException))]
         [TestCase(typeof(OperationCanceledException))]
-        public void ReadEventsFromPartitionAsyncSurfacesCancelation(Type exceptionType)
+        public void ReadEventsFromPartitionAsyncSurfacesCancellation(Type exceptionType)
         {
             var transportConsumer = new ReceiveCallbackTransportConsumerMock((_max, _time) => throw (Exception)Activator.CreateInstance(exceptionType));
             var mockConnection = new MockConnection(() => transportConsumer);
@@ -1589,7 +1589,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ReadEventsAsyncThrowsIfCancelledBeforeRead()
+        public void ReadEventsAsyncThrowsIfCanceledBeforeRead()
         {
             var events = new List<EventData>
             {
@@ -1631,7 +1631,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ReadEventsAsyncThrowsIfCancelledDuringRead()
+        public void ReadEventsAsyncThrowsIfCanceledDuringRead()
         {
             var events = new List<EventData>
             {
@@ -1672,7 +1672,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ReadEventsAsyncDoesNotThrowIfNotCancelled()
+        public void ReadEventsAsyncDoesNotThrowIfNotCanceled()
         {
             var events = new List<EventData>
             {
@@ -2123,7 +2123,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReadEventsAsynSetsThePartitionContext()
+        public async Task ReadEventsAsyncSetsThePartitionContext()
         {
             var events = Enumerable
                 .Range(0, 500)
@@ -2197,7 +2197,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(typeof(TaskCanceledException))]
         [TestCase(typeof(OperationCanceledException))]
-        public void ReadEventsAsyncSurfacesCancelation(Type exceptionType)
+        public void ReadEventsAsyncSurfacesCancellation(Type exceptionType)
         {
             var transportConsumer = new ReceiveCallbackTransportConsumerMock((_max, _time) => throw (Exception)Activator.CreateInstance(exceptionType));
             var mockConnection = new MockConnection(() => transportConsumer);
@@ -2761,7 +2761,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan timeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true)
             {
                 var client = new Mock<TransportClient>();
 

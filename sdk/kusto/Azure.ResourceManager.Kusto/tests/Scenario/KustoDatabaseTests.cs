@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [SetUp]
         protected async Task SetUp()
         {
-            await BaseSetUp(cluster: true);
+            await BaseSetUp();
 
             KeyVaultUri = TE.KeyVaultUri;
             KeyName = TE.KeyName;

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
     /// A Class representing a StorageMover along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageMoverResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageMoverResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStorageMover method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageMoverResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageMoverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageMover method.
     /// </summary>
     public partial class StorageMoverResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageMoverResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageMoverName"> The storageMoverName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.StorageMover
         private readonly StorageMoversRestOperations _storageMoverRestClient;
         private readonly StorageMoverData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers";
+
         /// <summary> Initializes a new instance of the <see cref="StorageMoverResource"/> class for mocking. </summary>
         protected StorageMoverResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageMoverResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageMoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageMoverResource(ArmClient client, StorageMoverData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverAgentResources and their operations over a StorageMoverAgentResource. </returns>
         public virtual StorageMoverAgentCollection GetStorageMoverAgents()
         {
-            return GetCachedClient(Client => new StorageMoverAgentCollection(Client, Id));
+            return GetCachedClient(client => new StorageMoverAgentCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +110,20 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>Agents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the Agent resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverAgentResource>> GetStorageMoverAgentAsync(string agentName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +141,20 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>Agents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the Agent resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageMoverAgentResource> GetStorageMoverAgent(string agentName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverEndpointResources and their operations over a StorageMoverEndpointResource. </returns>
         public virtual StorageMoverEndpointCollection GetStorageMoverEndpoints()
         {
-            return GetCachedClient(Client => new StorageMoverEndpointCollection(Client, Id));
+            return GetCachedClient(client => new StorageMoverEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +179,20 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointName"> The name of the Endpoint resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverEndpointResource>> GetStorageMoverEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +210,20 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointName"> The name of the Endpoint resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageMoverEndpointResource> GetStorageMoverEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +234,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverProjectResources and their operations over a StorageMoverProjectResource. </returns>
         public virtual StorageMoverProjectCollection GetStorageMoverProjects()
         {
-            return GetCachedClient(Client => new StorageMoverProjectCollection(Client, Id));
+            return GetCachedClient(client => new StorageMoverProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -213,12 +248,20 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverProjectResource>> GetStorageMoverProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -236,12 +279,20 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageMoverProjectResource> GetStorageMoverProject(string projectName, CancellationToken cancellationToken = default)
         {
@@ -258,6 +309,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +350,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -322,6 +389,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +432,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -391,9 +474,17 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverResource>> UpdateAsync(StorageMoverPatch patch, CancellationToken cancellationToken = default)
@@ -425,9 +516,17 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverResource> Update(StorageMoverPatch patch, CancellationToken cancellationToken = default)
@@ -458,6 +557,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,6 +620,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -567,6 +682,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -616,6 +739,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -664,6 +795,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -716,6 +855,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

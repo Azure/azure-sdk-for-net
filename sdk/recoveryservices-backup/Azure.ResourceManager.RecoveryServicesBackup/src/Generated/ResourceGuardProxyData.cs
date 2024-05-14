@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// <summary> A class representing the ResourceGuardProxy data model. </summary>
     public partial class ResourceGuardProxyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ResourceGuardProxyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

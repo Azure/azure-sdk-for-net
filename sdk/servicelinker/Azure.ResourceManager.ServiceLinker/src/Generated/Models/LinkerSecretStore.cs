@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> An option to store secret value in secure place. </summary>
     internal partial class LinkerSecretStore
     {
-        /// <summary> Initializes a new instance of LinkerSecretStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerSecretStore"/>. </summary>
         public LinkerSecretStore()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkerSecretStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerSecretStore"/>. </summary>
         /// <param name="keyVaultId"> The key vault id to store secret. </param>
         internal LinkerSecretStore(ResourceIdentifier keyVaultId)
         {

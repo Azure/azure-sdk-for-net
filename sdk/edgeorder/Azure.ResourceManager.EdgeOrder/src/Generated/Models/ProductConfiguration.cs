@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Configuration object. </summary>
     public partial class ProductConfiguration
     {
-        /// <summary> Initializes a new instance of ProductConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
         internal ProductConfiguration()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Specifications = new ChangeTrackingList<ProductSpecification>();
         }
 
-        /// <summary> Initializes a new instance of ProductConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>

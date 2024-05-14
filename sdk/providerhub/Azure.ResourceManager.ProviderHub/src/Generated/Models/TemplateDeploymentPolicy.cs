@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TemplateDeploymentPolicy. </summary>
     public partial class TemplateDeploymentPolicy
     {
-        /// <summary> Initializes a new instance of TemplateDeploymentPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
         /// <param name="capabilities"></param>
         /// <param name="preflightOptions"></param>
         internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)

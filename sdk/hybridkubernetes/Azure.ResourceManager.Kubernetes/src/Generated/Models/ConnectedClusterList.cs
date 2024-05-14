@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> The paginated list of connected Clusters. </summary>
     internal partial class ConnectedClusterList
     {
-        /// <summary> Initializes a new instance of ConnectedClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterList"/>. </summary>
         internal ConnectedClusterList()
         {
             Value = new ChangeTrackingList<ConnectedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectedClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterList"/>. </summary>
         /// <param name="value"> The list of connected clusters. </param>
         /// <param name="nextLink"> The link to fetch the next page of connected cluster. </param>
         internal ConnectedClusterList(IReadOnlyList<ConnectedClusterData> value, string nextLink)

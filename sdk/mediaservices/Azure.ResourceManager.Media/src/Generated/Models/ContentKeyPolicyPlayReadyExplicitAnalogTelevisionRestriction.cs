@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Configures the Explicit Analog Television Output Restriction control bits. For further details see the PlayReady Compliance Rules. </summary>
     public partial class ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction"/>. </summary>
         /// <param name="isBestEffort"> Indicates whether this restriction is enforced on a Best Effort basis. </param>
         /// <param name="configurationData"> Configures the restriction control bits. Must be between 0 and 3 inclusive. </param>
         public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool isBestEffort, int configurationData)

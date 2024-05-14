@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsAuthorizationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsAuthorizationRuleData"/>. </summary>
         public EventHubsAuthorizationRuleData()
         {
             Rights = new ChangeTrackingList<EventHubsAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

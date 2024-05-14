@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GlobalParameterListResponse>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryGlobalParameterListResult>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        GlobalParameterListResponse value = default;
+                        DataFactoryGlobalParameterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GlobalParameterListResponse.DeserializeGlobalParameterListResponse(document.RootElement);
+                        value = DataFactoryGlobalParameterListResult.DeserializeDataFactoryGlobalParameterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GlobalParameterListResponse> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryGlobalParameterListResult> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        GlobalParameterListResponse value = default;
+                        DataFactoryGlobalParameterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GlobalParameterListResponse.DeserializeGlobalParameterListResponse(document.RootElement);
+                        value = DataFactoryGlobalParameterListResult.DeserializeDataFactoryGlobalParameterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GlobalParameterListResponse>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryGlobalParameterListResult>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        GlobalParameterListResponse value = default;
+                        DataFactoryGlobalParameterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GlobalParameterListResponse.DeserializeGlobalParameterListResponse(document.RootElement);
+                        value = DataFactoryGlobalParameterListResult.DeserializeDataFactoryGlobalParameterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GlobalParameterListResponse> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryGlobalParameterListResult> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -438,9 +438,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        GlobalParameterListResponse value = default;
+                        DataFactoryGlobalParameterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GlobalParameterListResponse.DeserializeGlobalParameterListResponse(document.RootElement);
+                        value = DataFactoryGlobalParameterListResult.DeserializeDataFactoryGlobalParameterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

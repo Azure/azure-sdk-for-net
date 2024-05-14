@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The network endpoint. </summary>
     public partial class IntegrationServiceEnvironmentNetworkEndpoint
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkEndpoint"/>. </summary>
         internal IntegrationServiceEnvironmentNetworkEndpoint()
         {
             Ports = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkEndpoint"/>. </summary>
         /// <param name="accessibility"> The accessibility state. </param>
         /// <param name="domainName"> The domain name. </param>
         /// <param name="ports"> The ports. </param>

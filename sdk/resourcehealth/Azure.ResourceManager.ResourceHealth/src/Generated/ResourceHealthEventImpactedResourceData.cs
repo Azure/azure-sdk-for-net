@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthEventImpactedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         internal ResourceHealthEventImpactedResourceData()
         {
             Info = new ChangeTrackingList<ResourceHealthKeyValueItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +32,22 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
         /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
         /// <param name="targetRegion"> Impacted resource region name. </param>
+        /// <param name="resourceName"> Resource name of the impacted resource. </param>
+        /// <param name="resourceGroup"> Resource group name of the impacted resource. </param>
+        /// <param name="status"> Status of the impacted resource. </param>
+        /// <param name="maintenanceStartTime"> Start time of maintenance for the impacted resource. </param>
+        /// <param name="maintenanceEndTime"> End time of maintenance for the impacted resource. </param>
         /// <param name="info"> Additional information. </param>
-        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, IReadOnlyList<ResourceHealthKeyValueItem> info) : base(id, name, resourceType, systemData)
+        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, string resourceName, string resourceGroup, string status, string maintenanceStartTime, string maintenanceEndTime, IReadOnlyList<ResourceHealthKeyValueItem> info) : base(id, name, resourceType, systemData)
         {
             TargetResourceType = targetResourceType;
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;
+            ResourceName = resourceName;
+            ResourceGroup = resourceGroup;
+            Status = status;
+            MaintenanceStartTime = maintenanceStartTime;
+            MaintenanceEndTime = maintenanceEndTime;
             Info = info;
         }
 
@@ -47,6 +57,16 @@ namespace Azure.ResourceManager.ResourceHealth
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Impacted resource region name. </summary>
         public string TargetRegion { get; }
+        /// <summary> Resource name of the impacted resource. </summary>
+        public string ResourceName { get; }
+        /// <summary> Resource group name of the impacted resource. </summary>
+        public string ResourceGroup { get; }
+        /// <summary> Status of the impacted resource. </summary>
+        public string Status { get; }
+        /// <summary> Start time of maintenance for the impacted resource. </summary>
+        public string MaintenanceStartTime { get; }
+        /// <summary> End time of maintenance for the impacted resource. </summary>
+        public string MaintenanceEndTime { get; }
         /// <summary> Additional information. </summary>
         public IReadOnlyList<ResourceHealthKeyValueItem> Info { get; }
     }

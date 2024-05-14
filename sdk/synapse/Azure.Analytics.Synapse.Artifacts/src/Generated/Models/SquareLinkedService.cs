@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Square Service linked service. </summary>
     public partial class SquareLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SquareLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
         /// <param name="clientId"> The client ID associated with your Square application. </param>
         /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Square";
         }
 
-        /// <summary> Initializes a new instance of SquareLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,24 +16,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters for VirtualNetworkGatewayPolicyGroup. </summary>
     public partial class VirtualNetworkGatewayPolicyGroup : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         public VirtualNetworkGatewayPolicyGroup()
         {
             PolicyMembers = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>();
             VngClientConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="isDefault"> Shows if this is a Default VirtualNetworkGatewayPolicyGroup or not. </param>
         /// <param name="priority"> Priority for VirtualNetworkGatewayPolicyGroup. </param>
         /// <param name="policyMembers"> Multiple PolicyMembers for VirtualNetworkGatewayPolicyGroup. </param>
         /// <param name="vngClientConnectionConfigurations"> List of references to vngClientConnectionConfigurations. </param>
         /// <param name="provisioningState"> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </param>
-        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? isDefault, int? priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? isDefault, int? priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             IsDefault = isDefault;

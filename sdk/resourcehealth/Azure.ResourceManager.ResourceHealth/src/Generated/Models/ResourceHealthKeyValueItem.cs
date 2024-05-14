@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Key value tuple. </summary>
     public partial class ResourceHealthKeyValueItem
     {
-        /// <summary> Initializes a new instance of ResourceHealthKeyValueItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthKeyValueItem"/>. </summary>
         internal ResourceHealthKeyValueItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthKeyValueItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthKeyValueItem"/>. </summary>
         /// <param name="key"> Key of tuple. </param>
         /// <param name="value"> Value of tuple. </param>
         internal ResourceHealthKeyValueItem(string key, string value)

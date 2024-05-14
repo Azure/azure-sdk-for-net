@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> AML file system HSM settings. </summary>
     public partial class AmlFileSystemHsmSettings
     {
-        /// <summary> Initializes a new instance of AmlFileSystemHsmSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemHsmSettings"/>. </summary>
         /// <param name="container"> Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider must have permission to create SAS tokens on the storage account. </param>
         /// <param name="loggingContainer"> Resource ID of storage container used for logging events and errors.  Must be a separate container in the same storage account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="container"/> or <paramref name="loggingContainer"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             LoggingContainer = loggingContainer;
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemHsmSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemHsmSettings"/>. </summary>
         /// <param name="container"> Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider must have permission to create SAS tokens on the storage account. </param>
         /// <param name="loggingContainer"> Resource ID of storage container used for logging events and errors.  Must be a separate container in the same storage account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the storage account. </param>
         /// <param name="importPrefix"> Only blobs in the non-logging container that start with this path/prefix get hydrated into the cluster namespace. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of EnvironmentVersion entities. </summary>
     internal partial class EnvironmentVersionResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of EnvironmentVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVersionResourceArmPaginatedResult"/>. </summary>
         internal EnvironmentVersionResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningEnvironmentVersionData>();
         }
 
-        /// <summary> Initializes a new instance of EnvironmentVersionResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVersionResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of EnvironmentVersion objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type EnvironmentVersion. </param>
         internal EnvironmentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningEnvironmentVersionData> value)

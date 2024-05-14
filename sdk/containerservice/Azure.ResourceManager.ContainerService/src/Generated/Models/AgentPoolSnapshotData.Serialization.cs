@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class AgentPoolSnapshotData : IUtf8JsonSerializable
+    public partial class AgentPoolSnapshotData : IUtf8JsonSerializable, IJsonModel<AgentPoolSnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolSnapshotData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AgentPoolSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolSnapshotData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,6 +41,26 @@ namespace Azure.ResourceManager.ContainerService
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreationData))
@@ -43,12 +73,71 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("snapshotType"u8);
                 writer.WriteStringValue(SnapshotType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
+            {
+                writer.WritePropertyName("nodeImageVersion"u8);
+                writer.WriteStringValue(NodeImageVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSSku))
+            {
+                writer.WritePropertyName("osSku"u8);
+                writer.WriteStringValue(OSSku.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnableFips))
+            {
+                writer.WritePropertyName("enableFIPS"u8);
+                writer.WriteBooleanValue(EnableFips.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolSnapshotData DeserializeAgentPoolSnapshotData(JsonElement element)
+        AgentPoolSnapshotData IJsonModel<AgentPoolSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolSnapshotData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolSnapshotData(document.RootElement, options);
+        }
+
+        internal static AgentPoolSnapshotData DeserializeAgentPoolSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +156,8 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ContainerServiceOSSku> osSku = default;
             Optional<string> vmSize = default;
             Optional<bool> enableFIPS = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -184,8 +275,44 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentPoolSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentPoolSnapshotData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolSnapshotData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AgentPoolSnapshotData IPersistableModel<AgentPoolSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgentPoolSnapshotData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolSnapshotData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgentPoolSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

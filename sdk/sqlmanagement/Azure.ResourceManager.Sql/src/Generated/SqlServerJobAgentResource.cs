@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,13 +21,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerJobAgent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerJobAgentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerJobAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerJobAgent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerJobAgentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerJobAgentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerJobAgent method.
     /// </summary>
     public partial class SqlServerJobAgentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerJobAgentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="jobAgentName"> The jobAgentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}";
@@ -39,12 +44,15 @@ namespace Azure.ResourceManager.Sql
         private readonly JobExecutionsRestOperations _sqlServerJobExecutionJobExecutionsRestClient;
         private readonly SqlServerJobAgentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobAgentResource"/> class for mocking. </summary>
         protected SqlServerJobAgentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerJobAgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerJobAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerJobAgentResource(ArmClient client, SqlServerJobAgentData data) : this(client, data.Id)
@@ -68,9 +76,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobCredentialResources and their operations over a SqlServerJobCredentialResource. </returns>
         public virtual SqlServerJobCredentialCollection GetSqlServerJobCredentials()
         {
-            return GetCachedClient(Client => new SqlServerJobCredentialCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobCredentialCollection(client, Id));
         }
 
         /// <summary>
@@ -111,12 +116,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobCredentials_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobCredentialResource>> GetSqlServerJobCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
         {
@@ -134,12 +147,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobCredentials_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobCredentialResource> GetSqlServerJobCredential(string credentialName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobResources and their operations over a SqlServerJobResource. </returns>
         public virtual SqlServerJobCollection GetSqlServerJobs()
         {
-            return GetCachedClient(Client => new SqlServerJobCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobCollection(client, Id));
         }
 
         /// <summary>
@@ -164,12 +185,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobResource>> GetSqlServerJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
@@ -187,12 +216,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobResource> GetSqlServerJob(string jobName, CancellationToken cancellationToken = default)
         {
@@ -203,7 +240,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobTargetGroupResources and their operations over a SqlServerJobTargetGroupResource. </returns>
         public virtual SqlServerJobTargetGroupCollection GetSqlServerJobTargetGroups()
         {
-            return GetCachedClient(Client => new SqlServerJobTargetGroupCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobTargetGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -217,12 +254,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobTargetGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobTargetGroupResource>> GetSqlServerJobTargetGroupAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
@@ -240,12 +285,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobTargetGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobTargetGroupResource> GetSqlServerJobTargetGroup(string targetGroupName, CancellationToken cancellationToken = default)
         {
@@ -262,6 +315,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +356,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -326,6 +395,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobAgents_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,6 +438,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobAgents_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -394,6 +479,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobAgents_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +526,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobAgents_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -471,18 +572,26 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobExecutions_ListByAgent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionJobExecutionsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionJobExecutionsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, "SqlServerJobAgentResource.GetJobExecutionsByAgent", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, "SqlServerJobAgentResource.GetJobExecutionsByAgent", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -496,18 +605,26 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobExecutions_ListByAgent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobExecutionResource> GetJobExecutionsByAgent(SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobExecutionJobExecutionsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobExecutionJobExecutionsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, options.Skip, options.Top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, "SqlServerJobAgentResource.GetJobExecutionsByAgent", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobExecutionResource(Client, SqlServerJobExecutionData.DeserializeSqlServerJobExecutionData(e)), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, "SqlServerJobAgentResource.GetJobExecutionsByAgent", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -520,6 +637,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -575,6 +700,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -629,6 +762,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -678,6 +819,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -726,6 +875,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -778,6 +935,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobAgents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobAgentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

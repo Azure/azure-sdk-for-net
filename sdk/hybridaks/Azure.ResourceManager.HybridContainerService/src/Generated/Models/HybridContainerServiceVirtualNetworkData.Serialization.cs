@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<VirtualNetworksProperties> properties = default;
-            Optional<VirtualNetworksExtendedLocation> extendedLocation = default;
+            Optional<HybridContainerServiceVirtualNetworkProperties> properties = default;
+            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    properties = VirtualNetworksProperties.DeserializeVirtualNetworksProperties(property.Value);
+                    properties = HybridContainerServiceVirtualNetworkProperties.DeserializeHybridContainerServiceVirtualNetworkProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = VirtualNetworksExtendedLocation.DeserializeVirtualNetworksExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

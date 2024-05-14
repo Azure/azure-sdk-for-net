@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The HDInsight cluster application GET response. </summary>
     public partial class HDInsightApplicationProperties
     {
-        /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationProperties"/>. </summary>
         public HDInsightApplicationProperties()
         {
             InstallScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationProperties"/>. </summary>
         /// <param name="computeProfile"> The list of roles in the cluster. </param>
         /// <param name="installScriptActions"> The list of install script actions. </param>
         /// <param name="uninstallScriptActions"> The list of uninstall script actions. </param>

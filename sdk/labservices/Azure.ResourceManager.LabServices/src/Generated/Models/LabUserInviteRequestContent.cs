@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Body for a user invite request. </summary>
     public partial class LabUserInviteRequestContent
     {
-        /// <summary> Initializes a new instance of LabUserInviteRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserInviteRequestContent"/>. </summary>
         public LabUserInviteRequestContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabUserInviteRequestContent"/>. </summary>
+        /// <param name="text"> Custom text for the invite email. </param>
+        internal LabUserInviteRequestContent(BinaryData text)
+        {
+            Text = text;
         }
 
         /// <summary>
@@ -23,7 +30,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

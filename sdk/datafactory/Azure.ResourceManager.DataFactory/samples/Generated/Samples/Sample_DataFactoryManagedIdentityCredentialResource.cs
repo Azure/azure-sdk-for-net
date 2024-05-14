@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryManagedIdentityCredentialResource dataFactoryManagedIdentityCredential = client.GetDataFactoryManagedIdentityCredentialResource(dataFactoryManagedIdentityCredentialResourceId);
 
             // invoke the operation
-            DataFactoryManagedIdentityCredentialData data = new DataFactoryManagedIdentityCredentialData(new DataFactoryManagedIdentityCredentialDefinition()
+            DataFactoryManagedIdentityCredentialData data = new DataFactoryManagedIdentityCredentialData(new DataFactoryManagedIdentityCredentialProperties()
             {
-                ResourceId = "/subscriptions/12345678-1234-1234-1234-12345678abc/resourcegroups/exampleResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleUami",
+                ResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-12345678abc/resourcegroups/exampleResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleUami"),
             });
             ArmOperation<DataFactoryManagedIdentityCredentialResource> lro = await dataFactoryManagedIdentityCredential.UpdateAsync(WaitUntil.Completed, data);
             DataFactoryManagedIdentityCredentialResource result = lro.Value;

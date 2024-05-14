@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetAppAccounts_AccountsList()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/Accounts_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Accounts_List.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AccountsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_AccountsDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/Accounts_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Accounts_Delete.json
             // this example is just showing the usage of "Accounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AccountsUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/Accounts_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Accounts_Update.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RenewCredentials_AccountsRenewCredentials()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/Accounts_RenewCredentials.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/Accounts_RenewCredentials.json
             // this example is just showing the usage of "Accounts_RenewCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,12 +175,42 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // VolumeGroups_List
+        // VolumeGroups_List_Oracle
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVolumeGroups_VolumeGroupsList()
+        public async Task GetVolumeGroups_VolumeGroupsListOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/VolumeGroups_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/VolumeGroups_List_Oracle.json
+            // this example is just showing the usage of "VolumeGroups_ListByNetAppAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (NetAppVolumeGroupResult item in netAppAccount.GetVolumeGroupsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // VolumeGroups_List_SapHana
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetVolumeGroups_VolumeGroupsListSapHana()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-05-01/examples/VolumeGroups_List_SapHana.json
             // this example is just showing the usage of "VolumeGroups_ListByNetAppAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

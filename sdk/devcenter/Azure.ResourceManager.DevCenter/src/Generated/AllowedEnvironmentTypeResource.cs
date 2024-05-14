@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing an AllowedEnvironmentType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AllowedEnvironmentTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAllowedEnvironmentTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetAllowedEnvironmentType method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AllowedEnvironmentTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAllowedEnvironmentTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetAllowedEnvironmentType method.
     /// </summary>
     public partial class AllowedEnvironmentTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AllowedEnvironmentTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="environmentTypeName"> The environmentTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly ProjectAllowedEnvironmentTypesRestOperations _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient;
         private readonly AllowedEnvironmentTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/allowedEnvironmentTypes";
+
         /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class for mocking. </summary>
         protected AllowedEnvironmentTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AllowedEnvironmentTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AllowedEnvironmentTypeResource(ArmClient client, AllowedEnvironmentTypeData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/allowedEnvironmentTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridDomainData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventGridDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventGridDomainData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid
             InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
-        /// <summary> Initializes a new instance of EventGridDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

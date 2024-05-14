@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The response to a list recoverable sql pools request. </summary>
     internal partial class SynapseRecoverableSqlPoolListResult
     {
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRecoverableSqlPoolListResult"/>. </summary>
         internal SynapseRecoverableSqlPoolListResult()
         {
             Value = new ChangeTrackingList<SynapseRecoverableSqlPoolData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRecoverableSqlPoolListResult"/>. </summary>
         /// <param name="value"> A list of recoverable sql pool. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseRecoverableSqlPoolListResult(IReadOnlyList<SynapseRecoverableSqlPoolData> value, string nextLink)

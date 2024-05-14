@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Backup engine type when Azure Backup Server is used to manage the backups. </summary>
     public partial class BackupServerEngine : BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of BackupServerEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupServerEngine"/>. </summary>
         public BackupServerEngine()
         {
             BackupEngineType = BackupEngineType.AzureBackupServerEngine;
         }
 
-        /// <summary> Initializes a new instance of BackupServerEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupServerEngine"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>

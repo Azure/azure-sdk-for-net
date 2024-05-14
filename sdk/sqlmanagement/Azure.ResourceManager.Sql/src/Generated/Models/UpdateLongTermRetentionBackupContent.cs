@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform long term retention backup update operation. </summary>
     public partial class UpdateLongTermRetentionBackupContent
     {
-        /// <summary> Initializes a new instance of UpdateLongTermRetentionBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateLongTermRetentionBackupContent"/>. </summary>
         public UpdateLongTermRetentionBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateLongTermRetentionBackupContent"/>. </summary>
+        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
+        internal UpdateLongTermRetentionBackupContent(SqlBackupStorageRedundancy? requestedBackupStorageRedundancy)
+        {
+            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
         }
 
         /// <summary> The storage redundancy type of the copied backup. </summary>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRSharedPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceData"/>. </summary>
         public SignalRSharedPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

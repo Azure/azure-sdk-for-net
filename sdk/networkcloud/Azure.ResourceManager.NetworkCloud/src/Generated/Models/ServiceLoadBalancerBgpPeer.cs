@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ServiceLoadBalancerBgpPeer represents the configuration of the BGP service load balancer for the Kubernetes cluster. </summary>
     public partial class ServiceLoadBalancerBgpPeer
     {
-        /// <summary> Initializes a new instance of ServiceLoadBalancerBgpPeer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLoadBalancerBgpPeer"/>. </summary>
         /// <param name="name"> The name used to identify this BGP peer for association with a BGP advertisement. </param>
         /// <param name="peerAddress"> The IPv4 or IPv6 address used to connect this BGP session. </param>
         /// <param name="peerAsn"> The autonomous system number expected from the remote end of the BGP session. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             PeerAsn = peerAsn;
         }
 
-        /// <summary> Initializes a new instance of ServiceLoadBalancerBgpPeer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLoadBalancerBgpPeer"/>. </summary>
         /// <param name="bfdEnabled"> The indicator of BFD enablement for this BgpPeer. </param>
         /// <param name="bgpMultiHop"> The indicator to enable multi-hop peering support. </param>
         /// <param name="holdTime"> The requested BGP hold time value. This field uses ISO 8601 duration format, for example P1H. </param>

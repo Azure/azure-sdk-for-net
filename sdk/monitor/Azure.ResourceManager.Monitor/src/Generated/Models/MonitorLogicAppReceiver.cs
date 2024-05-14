@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A logic app receiver. </summary>
     public partial class MonitorLogicAppReceiver
     {
-        /// <summary> Initializes a new instance of MonitorLogicAppReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLogicAppReceiver"/>. </summary>
         /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             CallbackUri = callbackUri;
         }
 
-        /// <summary> Initializes a new instance of MonitorLogicAppReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorLogicAppReceiver"/>. </summary>
         /// <param name="name"> The name of the logic app receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="resourceId"> The azure resource id of the logic app receiver. </param>
         /// <param name="callbackUri"> The callback url where http request sent to. </param>

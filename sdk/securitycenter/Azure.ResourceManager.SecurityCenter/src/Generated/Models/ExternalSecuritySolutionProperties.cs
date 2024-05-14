@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The solution properties (correspond to the solution kind). </summary>
     public partial class ExternalSecuritySolutionProperties
     {
-        /// <summary> Initializes a new instance of ExternalSecuritySolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionProperties"/>. </summary>
         public ExternalSecuritySolutionProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ExternalSecuritySolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionProperties"/>. </summary>
         /// <param name="deviceVendor"></param>
         /// <param name="deviceType"></param>
         /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

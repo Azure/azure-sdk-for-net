@@ -9,14 +9,21 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>> GetAsync(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> GetIfExists(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>> GetIfExistsAsync(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomanageBestPracticeData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomanageBestPracticeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>
     {
         internal AutomanageBestPracticeData() { }
         public System.BinaryData Configuration { get { throw null; } }
+        Azure.ResourceManager.Automanage.AutomanageBestPracticeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.AutomanageBestPracticeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageBestPracticeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomanageBestPracticeResource : Azure.ResourceManager.ArmResource
     {
@@ -28,13 +35,18 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AutomanageConfigurationProfileAssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomanageConfigurationProfileAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>
     {
         public AutomanageConfigurationProfileAssignmentData() { }
         public string ManagedBy { get { throw null; } }
         public Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomanageConfigurationProfileAssignmentReportData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomanageConfigurationProfileAssignmentReportData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>
     {
         public AutomanageConfigurationProfileAssignmentReportData() { }
         public string ConfigurationProfile { get { throw null; } }
@@ -47,6 +59,11 @@ namespace Azure.ResourceManager.Automanage
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentReportData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomanageConfigurationProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>, System.Collections.IEnumerable
     {
@@ -59,14 +76,21 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>> GetAsync(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetIfExists(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>> GetIfExistsAsync(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomanageConfigurationProfileData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class AutomanageConfigurationProfileData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>
     {
-        public AutomanageConfigurationProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomanageConfigurationProfileData(Azure.Core.AzureLocation location) { }
         public System.BinaryData Configuration { get { throw null; } set { } }
+        Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomanageConfigurationProfileResource : Azure.ResourceManager.ArmResource
     {
@@ -102,6 +126,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource>> GetAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource> GetIfExists(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource>> GetIfExistsAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -170,6 +196,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>> GetAsync(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource> GetIfExists(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>> GetIfExistsAsync(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -183,6 +211,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource>> GetAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetIfExists(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource>> GetIfExistsAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -225,6 +255,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource>> GetAsync(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> GetIfExists(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource>> GetIfExistsAsync(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -238,6 +270,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource>> GetAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource> GetIfExists(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource>> GetIfExistsAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -280,6 +314,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>> GetAsync(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> GetIfExists(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>> GetIfExistsAsync(string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -293,6 +329,8 @@ namespace Azure.ResourceManager.Automanage
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource>> GetAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource> GetIfExists(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource>> GetIfExistsAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -325,6 +363,55 @@ namespace Azure.ResourceManager.Automanage
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automanage.AutomanageConfigurationProfileAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Automanage.Mocking
+{
+    public partial class MockableAutomanageArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomanageArmClient() { }
+        public virtual Azure.ResourceManager.Automanage.AutomanageBestPracticeResource GetAutomanageBestPracticeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource> GetAutomanageHciClusterConfigurationProfileAssignment(Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource>> GetAutomanageHciClusterConfigurationProfileAssignmentAsync(Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentReportResource GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentResource GetAutomanageHciClusterConfigurationProfileAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHciClusterConfigurationProfileAssignmentCollection GetAutomanageHciClusterConfigurationProfileAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource> GetAutomanageHcrpConfigurationProfileAssignment(Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource>> GetAutomanageHcrpConfigurationProfileAssignmentAsync(Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource> GetAutomanageVmConfigurationProfileAssignment(Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource>> GetAutomanageVmConfigurationProfileAssignmentAsync(Azure.Core.ResourceIdentifier scope, string configurationProfileAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+    public partial class MockableAutomanageResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomanageResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles() { throw null; }
+    }
+    public partial class MockableAutomanageSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomanageSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipal(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>> GetServicePrincipalAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipals(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipalsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableAutomanageTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomanageTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> GetAutomanageBestPractice(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automanage.AutomanageBestPracticeCollection GetAutomanageBestPractices() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Automanage.Models
 {
     public static partial class ArmAutomanageModelFactory
@@ -337,33 +424,58 @@ namespace Azure.ResourceManager.Automanage.Models
         public static Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData AutomanageServicePrincipalData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string servicePrincipalId = null, bool? isAuthorizationSet = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails ConfigurationProfileAssignmentReportResourceDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string status = null, Azure.ResponseError error = null) { throw null; }
     }
-    public partial class AutomanageConfigurationProfileAssignmentProperties
+    public partial class AutomanageConfigurationProfileAssignmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>
     {
         public AutomanageConfigurationProfileAssignmentProperties() { }
         public Azure.Core.ResourceIdentifier ConfigurationProfile { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
+        Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfileAssignmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomanageConfigurationProfilePatch : Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails
+    public partial class AutomanageConfigurationProfilePatch : Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>
     {
         public AutomanageConfigurationProfilePatch() { }
         public System.BinaryData Configuration { get { throw null; } set { } }
+        Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageConfigurationProfilePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomanageResourceUpdateDetails
+    public partial class AutomanageResourceUpdateDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>
     {
         public AutomanageResourceUpdateDetails() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomanageServicePrincipalData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomanageServicePrincipalData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>
     {
         public AutomanageServicePrincipalData() { }
         public bool? IsAuthorizationSet { get { throw null; } }
         public string ServicePrincipalId { get { throw null; } }
+        Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfigurationProfileAssignmentReportResourceDetails : Azure.ResourceManager.Models.ResourceData
+    public partial class ConfigurationProfileAssignmentReportResourceDetails : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>
     {
         internal ConfigurationProfileAssignmentReportResourceDetails() { }
         public Azure.ResponseError Error { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -4,7 +4,7 @@
       This Client library enables working with the Microsoft Azure Communication Rooms Service.
     </Description>
     <AssemblyTitle>Azure Communication Rooms Service</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.1.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Rooms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Rooms Service;Rooms;Communication;$(PackageCommonTags)</PackageTags>

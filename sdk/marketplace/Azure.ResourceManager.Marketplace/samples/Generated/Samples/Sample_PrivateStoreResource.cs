@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPrivateStore()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/GetPrivateStore.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetPrivateStore.json
             // this example is just showing the usage of "PrivateStore_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PrivateStoresUpdate()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/PrivateStores_update.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/PrivateStores_update.json
             // this example is just showing the usage of "PrivateStore_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeletePrivateStores()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/DeletePrivateStore.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/DeletePrivateStore.json
             // this example is just showing the usage of "PrivateStore_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AnyExistingOffersInTheCollections_AnyExistingOffersInTheCollections()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/AnyExistingOffersInTheCollections.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/AnyExistingOffersInTheCollections.json
             // this example is just showing the usage of "PrivateStore_AnyExistingOffersInTheCollections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task QueryOffers_QueryOffers()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/QueryOffers.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/QueryOffers.json
             // this example is just showing the usage of "PrivateStore_QueryOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task QueryUserOffers_QueryUserOffers()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/QueryUserOffers.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/QueryUserOffers.json
             // this example is just showing the usage of "PrivateStore_QueryUserOffers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task FetchBillingAccounts_BillingAccounts()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/BillingAccounts.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/BillingAccounts.json
             // this example is just showing the usage of "PrivateStore_BillingAccounts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task FetchCollectionsToSubscriptionsMapping_CollectionsToSubscriptionsMapping()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/CollectionsToSubscriptionsMapping.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/CollectionsToSubscriptionsMapping.json
             // this example is just showing the usage of "PrivateStore_CollectionsToSubscriptionsMapping" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task QueryApprovedPlans_QueryApprovedPlans()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/QueryApprovedPlans.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/QueryApprovedPlans.json
             // this example is just showing the usage of "PrivateStore_QueryApprovedPlans" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PerformActionOnBulkCollections_BulkCollectionsAction()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/BulkCollectionsAction.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/BulkCollectionsAction.json
             // this example is just showing the usage of "PrivateStore_BulkCollectionsAction" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -326,7 +326,7 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task QueryNotificationsState_NotificationsState()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/NotificationsState.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/NotificationsState.json
             // this example is just showing the usage of "PrivateStore_QueryNotificationsState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -351,7 +351,7 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AcknowledgeOfferNotification_AcknowledgeNotification()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/AcknowledgeNotification.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/AcknowledgeNotification.json
             // this example is just showing the usage of "PrivateStore_AcknowledgeOfferNotification" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -390,7 +390,7 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task FetchAllMarketplaceSubscriptions_FetchAllSubscriptionsInTenant()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/FetchAllSubscriptionsInTenant.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/FetchAllSubscriptionsInTenant.json
             // this example is just showing the usage of "PrivateStore_FetchAllSubscriptionsInTenant" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -418,7 +418,7 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNewPlansNotifications_ListNewPlansNotifications()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/ListNewPlansNotifications.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/ListNewPlansNotifications.json
             // this example is just showing the usage of "PrivateStore_ListNewPlansNotifications" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -443,7 +443,7 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetStopSellOffersPlansNotifications_ListStopSellOffersPlansNotifications()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/ListStopSellOffersPlansNotifications.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/ListStopSellOffersPlansNotifications.json
             // this example is just showing the usage of "PrivateStore_ListStopSellOffersPlansNotifications" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -468,7 +468,7 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSubscriptionsContext_ListSubscriptionsContext()
         {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2022-03-01/examples/ListSubscriptionsContext.json
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/ListSubscriptionsContext.json
             // this example is just showing the usage of "PrivateStore_ListSubscriptionsContext" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -486,6 +486,41 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
             SubscriptionsContextList result = await privateStore.GetSubscriptionsContextAsync();
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // QueryUserRules
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task QueryUserRules_QueryUserRules()
+        {
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/QueryUserRules.json
+            // this example is just showing the usage of "QueryUserRules" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateStoreResource created on azure
+            // for more information of creating PrivateStoreResource, please refer to the document of PrivateStoreResource
+            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
+            ResourceIdentifier privateStoreResourceId = PrivateStoreResource.CreateResourceIdentifier(privateStoreId);
+            PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
+
+            // invoke the operation and iterate over the result
+            QueryUserRulesContent content = new QueryUserRulesContent()
+            {
+                SubscriptionIds =
+{
+"b340914e-353d-453a-85fb-8f9b65b51f91"
+},
+            };
+            await foreach (MarketplaceRule item in privateStore.QueryUserRulesAsync(content: content))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }

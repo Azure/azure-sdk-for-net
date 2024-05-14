@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
-    <Version>1.3.0-beta.3</Version>
+    <Version>1.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Application Configuration;Data;AppConfig;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);3021;AZC0007;</NoWarn>
+    <NoWarn>$(NoWarn);3021;</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
@@ -22,10 +22,9 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ConditionalRequestOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
-
 </Project>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for MySQL data source. </summary>
     public partial class MySqlLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of MySqlLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public MySqlLinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "MySql";
         }
 
-        /// <summary> Initializes a new instance of MySqlLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the Facebook provider. </summary>
     public partial class AppServiceFacebookProvider
     {
-        /// <summary> Initializes a new instance of AppServiceFacebookProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceFacebookProvider"/>. </summary>
         public AppServiceFacebookProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceFacebookProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceFacebookProvider"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
         /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>

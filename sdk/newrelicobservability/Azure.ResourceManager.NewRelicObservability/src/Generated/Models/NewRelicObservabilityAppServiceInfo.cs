@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
     public partial class NewRelicObservabilityAppServiceInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAppServiceInfo"/>. </summary>
         internal NewRelicObservabilityAppServiceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAppServiceInfo"/>. </summary>
         /// <param name="azureResourceId"> Azure App service resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>

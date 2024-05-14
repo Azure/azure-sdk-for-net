@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of sensitivity label update operations. </summary>
     public partial class SynapseSensitivityLabelUpdateListResult
     {
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdateListResult"/>. </summary>
         public SynapseSensitivityLabelUpdateListResult()
         {
             Operations = new ChangeTrackingList<SynapseSensitivityLabelUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdateListResult"/>. </summary>
+        /// <param name="operations"></param>
+        internal SynapseSensitivityLabelUpdateListResult(IList<SynapseSensitivityLabelUpdate> operations)
+        {
+            Operations = operations;
         }
 
         /// <summary> Gets the operations. </summary>

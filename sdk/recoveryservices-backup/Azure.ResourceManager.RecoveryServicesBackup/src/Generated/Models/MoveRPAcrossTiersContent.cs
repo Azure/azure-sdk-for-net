@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The MoveRPAcrossTiersContent. </summary>
     public partial class MoveRPAcrossTiersContent
     {
-        /// <summary> Initializes a new instance of MoveRPAcrossTiersContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveRPAcrossTiersContent"/>. </summary>
         public MoveRPAcrossTiersContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoveRPAcrossTiersContent"/>. </summary>
+        /// <param name="objectType"> Gets the class type. </param>
+        /// <param name="sourceTierType"> Source tier from where RP needs to be moved. </param>
+        /// <param name="targetTierType"> Target tier where RP needs to be moved. </param>
+        internal MoveRPAcrossTiersContent(string objectType, RecoveryPointTierType? sourceTierType, RecoveryPointTierType? targetTierType)
+        {
+            ObjectType = objectType;
+            SourceTierType = sourceTierType;
+            TargetTierType = targetTierType;
         }
 
         /// <summary> Gets the class type. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Delegated subnet usage data. </summary>
     public partial class MySqlFlexibleServerDelegatedSubnetUsage
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDelegatedSubnetUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
         internal MySqlFlexibleServerDelegatedSubnetUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDelegatedSubnetUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
         /// <param name="subnetName"> name of the subnet. </param>
         /// <param name="usage"> Number of used delegated subnets. </param>
         internal MySqlFlexibleServerDelegatedSubnetUsage(string subnetName, long? usage)

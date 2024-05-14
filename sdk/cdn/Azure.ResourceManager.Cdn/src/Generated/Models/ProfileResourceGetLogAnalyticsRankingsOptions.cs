@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
     public partial class ProfileResourceGetLogAnalyticsRankingsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
-        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
-        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/>. </summary>
+        /// <param name="rankings"> The rankings. </param>
+        /// <param name="metrics"> The metrics. </param>
+        /// <param name="maxRanking"> The maxRanking. </param>
+        /// <param name="dateTimeBegin"> The dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> The dateTimeEnd. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public ProfileResourceGetLogAnalyticsRankingsOptions(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd)
         {
@@ -35,17 +35,22 @@ namespace Azure.ResourceManager.Cdn.Models
             CustomDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The ArrayOfLogRanking to use. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsRankingsOptions()
+        {
+        }
+
+        /// <summary> The rankings. </summary>
         public IList<LogRanking> Rankings { get; }
-        /// <summary> The ArrayOfLogRankingMetric to use. </summary>
+        /// <summary> The metrics. </summary>
         public IList<LogRankingMetric> Metrics { get; }
-        /// <summary> The Integer to use. </summary>
+        /// <summary> The maxRanking. </summary>
         public int MaxRanking { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The dateTimeBegin. </summary>
         public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The dateTimeEnd. </summary>
         public DateTimeOffset DateTimeEnd { get; }
-        /// <summary> The ArrayOfString to use. </summary>
+        /// <summary> The customDomains. </summary>
         public IList<string> CustomDomains { get; }
     }
 }

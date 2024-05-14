@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Result of the request to list data exports. </summary>
     internal partial class DataExportListResult
     {
-        /// <summary> Initializes a new instance of DataExportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportListResult"/>. </summary>
         internal DataExportListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsDataExportData>();
         }
 
-        /// <summary> Initializes a new instance of DataExportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportListResult"/>. </summary>
         /// <param name="value"> List of data export instances within a workspace.. </param>
         internal DataExportListResult(IReadOnlyList<OperationalInsightsDataExportData> value)
         {

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an Azure SQL database output data source. </summary>
     public partial class SqlDatabaseOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of SqlDatabaseOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseOutputDataSource"/>. </summary>
         public SqlDatabaseOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>

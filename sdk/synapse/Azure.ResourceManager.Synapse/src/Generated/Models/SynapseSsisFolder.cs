@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis folder. </summary>
     public partial class SynapseSsisFolder : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisFolder"/>. </summary>
         internal SynapseSsisFolder()
         {
             MetadataType = SynapseSsisObjectMetadataType.Folder;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisFolder"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

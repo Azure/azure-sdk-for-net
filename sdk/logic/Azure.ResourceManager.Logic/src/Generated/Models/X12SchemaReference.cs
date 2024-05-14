@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 schema reference. </summary>
     public partial class X12SchemaReference
     {
-        /// <summary> Initializes a new instance of X12SchemaReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12SchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="schemaVersion"> The schema version. </param>
         /// <param name="schemaName"> The schema name. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaName = schemaName;
         }
 
-        /// <summary> Initializes a new instance of X12SchemaReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12SchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="senderApplicationId"> The sender application id. </param>
         /// <param name="schemaVersion"> The schema version. </param>

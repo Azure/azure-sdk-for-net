@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateEndpointConnectionData"/>. </summary>
         public MonitorPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -11,26 +11,26 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of IpPrefixes. </summary>
+    /// <summary> List of IP Prefixes. </summary>
     internal partial class IPPrefixesListResult
     {
-        /// <summary> Initializes a new instance of IPPrefixesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPrefixesListResult"/>. </summary>
         internal IPPrefixesListResult()
         {
-            Value = new ChangeTrackingList<IPPrefixData>();
+            Value = new ChangeTrackingList<NetworkFabricIPPrefixData>();
         }
 
-        /// <summary> Initializes a new instance of IPPrefixesListResult. </summary>
-        /// <param name="value"> List of IPPrefix resources. </param>
+        /// <summary> Initializes a new instance of <see cref="IPPrefixesListResult"/>. </summary>
+        /// <param name="value"> List of IP Prefix resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal IPPrefixesListResult(IReadOnlyList<IPPrefixData> value, string nextLink)
+        internal IPPrefixesListResult(IReadOnlyList<NetworkFabricIPPrefixData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of IPPrefix resources. </summary>
-        public IReadOnlyList<IPPrefixData> Value { get; }
+        /// <summary> List of IP Prefix resources. </summary>
+        public IReadOnlyList<NetworkFabricIPPrefixData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

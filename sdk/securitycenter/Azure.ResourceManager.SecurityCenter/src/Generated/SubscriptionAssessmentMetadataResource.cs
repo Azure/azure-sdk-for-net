@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SubscriptionAssessmentMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionAssessmentMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionAssessmentMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionAssessmentMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionAssessmentMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionAssessmentMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionAssessmentMetadata method.
     /// </summary>
     public partial class SubscriptionAssessmentMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionAssessmentMetadataResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="assessmentMetadataName"> The assessmentMetadataName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string assessmentMetadataName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AssessmentsMetadataRestOperations _subscriptionAssessmentMetadataAssessmentsMetadataRestClient;
         private readonly SecurityAssessmentMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class for mocking. </summary>
         protected SubscriptionAssessmentMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionAssessmentMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_GetInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_GetInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_DeleteInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +222,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_DeleteInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +263,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_CreateInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +309,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssessmentsMetadata_CreateInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAssessmentMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

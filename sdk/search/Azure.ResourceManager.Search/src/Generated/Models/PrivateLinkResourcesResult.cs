@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of supported Private Link Resources. </summary>
     internal partial class PrivateLinkResourcesResult
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesResult"/>. </summary>
         internal PrivateLinkResourcesResult()
         {
             Value = new ChangeTrackingList<SearchPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesResult"/>. </summary>
         /// <param name="value"> The list of supported Private Link Resources. </param>
         internal PrivateLinkResourcesResult(IReadOnlyList<SearchPrivateLinkResource> value)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> confidence reason item. </summary>
     public partial class SecurityInsightsAlertConfidenceReason
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertConfidenceReason. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceReason"/>. </summary>
         internal SecurityInsightsAlertConfidenceReason()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertConfidenceReason. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceReason"/>. </summary>
         /// <param name="reason"> The reason's description. </param>
         /// <param name="reasonType"> The type (category) of the reason. </param>
         internal SecurityInsightsAlertConfidenceReason(string reason, string reasonType)

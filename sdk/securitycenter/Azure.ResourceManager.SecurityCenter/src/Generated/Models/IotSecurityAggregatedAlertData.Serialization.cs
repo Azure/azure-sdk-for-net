@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecurityAggregatedAlertData : IUtf8JsonSerializable
+    public partial class IotSecurityAggregatedAlertData : IUtf8JsonSerializable, IJsonModel<IotSecurityAggregatedAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityAggregatedAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IotSecurityAggregatedAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedAlertData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotSecurityAggregatedAlertData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -30,14 +39,133 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AlertType))
+            {
+                writer.WritePropertyName("alertType"u8);
+                writer.WriteStringValue(AlertType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
+            {
+                writer.WritePropertyName("alertDisplayName"u8);
+                writer.WriteStringValue(AlertDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AggregatedOn))
+            {
+                writer.WritePropertyName("aggregatedDateUtc"u8);
+                writer.WriteStringValue(AggregatedOn.Value, "D");
+            }
+            if (options.Format != "W" && Optional.IsDefined(VendorName))
+            {
+                writer.WritePropertyName("vendorName"u8);
+                writer.WriteStringValue(VendorName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
+            {
+                writer.WritePropertyName("reportedSeverity"u8);
+                writer.WriteStringValue(ReportedSeverity.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RemediationSteps))
+            {
+                writer.WritePropertyName("remediationSteps"u8);
+                writer.WriteStringValue(RemediationSteps);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EffectedResourceType))
+            {
+                writer.WritePropertyName("effectedResourceType"u8);
+                writer.WriteStringValue(EffectedResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemSource))
+            {
+                writer.WritePropertyName("systemSource"u8);
+                writer.WriteStringValue(SystemSource);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActionTaken))
+            {
+                writer.WritePropertyName("actionTaken"u8);
+                writer.WriteStringValue(ActionTaken);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LogAnalyticsQuery))
+            {
+                writer.WritePropertyName("logAnalyticsQuery"u8);
+                writer.WriteStringValue(LogAnalyticsQuery);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(TopDevicesList))
+            {
+                writer.WritePropertyName("topDevicesList"u8);
+                writer.WriteStartArray();
+                foreach (var item in TopDevicesList)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotSecurityAggregatedAlertData DeserializeIotSecurityAggregatedAlertData(JsonElement element)
+        IotSecurityAggregatedAlertData IJsonModel<IotSecurityAggregatedAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedAlertData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotSecurityAggregatedAlertData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecurityAggregatedAlertData(document.RootElement, options);
+        }
+
+        internal static IotSecurityAggregatedAlertData DeserializeIotSecurityAggregatedAlertData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +188,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> actionTaken = default;
             Optional<string> logAnalyticsQuery = default;
             Optional<IReadOnlyList<IotSecurityAggregatedAlertTopDevice>> topDevicesList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -198,8 +328,44 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, Optional.ToList(topDevicesList), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, Optional.ToList(topDevicesList), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedAlertData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotSecurityAggregatedAlertData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IotSecurityAggregatedAlertData IPersistableModel<IotSecurityAggregatedAlertData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotSecurityAggregatedAlertData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotSecurityAggregatedAlertData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotSecurityAggregatedAlertData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotSecurityAggregatedAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

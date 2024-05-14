@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaTransformData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaTransformData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformData"/>. </summary>
         public MediaTransformData()
         {
             Outputs = new ChangeTrackingList<MediaTransformOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaTransformData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

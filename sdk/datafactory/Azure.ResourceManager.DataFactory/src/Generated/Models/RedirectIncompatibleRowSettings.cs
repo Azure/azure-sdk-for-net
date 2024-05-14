@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Redirect incompatible row settings. </summary>
     public partial class RedirectIncompatibleRowSettings
     {
-        /// <summary> Initializes a new instance of RedirectIncompatibleRowSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectIncompatibleRowSettings"/>. </summary>
         /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public RedirectIncompatibleRowSettings(DataFactoryElement<string> linkedServiceName)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RedirectIncompatibleRowSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectIncompatibleRowSettings"/>. </summary>
         /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
         /// <param name="path"> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

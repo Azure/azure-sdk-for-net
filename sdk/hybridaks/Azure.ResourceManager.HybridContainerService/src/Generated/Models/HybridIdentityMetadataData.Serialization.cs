@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
@@ -28,11 +29,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -49,8 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<SystemData> systemData = default;
             Optional<string> resourceUid = default;
             Optional<string> publicKey = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> provisioningState = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -96,25 +91,20 @@ namespace Azure.ResourceManager.HybridContainerService
                             publicKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("identity"u8))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
+                            provisioningState = new HybridContainerServiceResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new HybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, identity, provisioningState.Value);
+            return new HybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

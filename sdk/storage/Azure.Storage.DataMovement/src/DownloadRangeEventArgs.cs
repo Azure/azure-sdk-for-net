@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadRangeEventArgs : StorageTransferEventArgs
+    internal class DownloadRangeEventArgs : DataTransferEventArgs
     {
         public bool Success { get; }
 

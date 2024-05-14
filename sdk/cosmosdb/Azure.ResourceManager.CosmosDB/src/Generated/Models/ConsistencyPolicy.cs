@@ -5,27 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The consistency policy for the Cosmos DB database account. </summary>
     public partial class ConsistencyPolicy
     {
-        /// <summary> Initializes a new instance of ConsistencyPolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsistencyPolicy"/>. </summary>
         /// <param name="defaultConsistencyLevel"> The default consistency level and configuration settings of the Cosmos DB account. </param>
         public ConsistencyPolicy(DefaultConsistencyLevel defaultConsistencyLevel)
         {
             DefaultConsistencyLevel = defaultConsistencyLevel;
         }
 
-        /// <summary> Initializes a new instance of ConsistencyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsistencyPolicy"/>. </summary>
         /// <param name="defaultConsistencyLevel"> The default consistency level and configuration settings of the Cosmos DB account. </param>
         /// <param name="maxStalenessPrefix"> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </param>
         /// <param name="maxIntervalInSeconds"> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </param>
-        internal ConsistencyPolicy(DefaultConsistencyLevel defaultConsistencyLevel, long? maxStalenessPrefix, int? maxIntervalInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsistencyPolicy(DefaultConsistencyLevel defaultConsistencyLevel, long? maxStalenessPrefix, int? maxIntervalInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultConsistencyLevel = defaultConsistencyLevel;
             MaxStalenessPrefix = maxStalenessPrefix;
             MaxIntervalInSeconds = maxIntervalInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConsistencyPolicy"/> for deserialization. </summary>
+        internal ConsistencyPolicy()
+        {
         }
 
         /// <summary> The default consistency level and configuration settings of the Cosmos DB account. </summary>

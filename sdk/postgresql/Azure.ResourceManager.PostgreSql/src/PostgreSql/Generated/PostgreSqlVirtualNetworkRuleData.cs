@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlVirtualNetworkRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlVirtualNetworkRuleData"/>. </summary>
         public PostgreSqlVirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

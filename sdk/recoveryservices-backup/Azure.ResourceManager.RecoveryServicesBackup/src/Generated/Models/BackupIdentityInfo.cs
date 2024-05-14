@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Encapsulates Managed Identity related information. </summary>
     public partial class BackupIdentityInfo
     {
-        /// <summary> Initializes a new instance of BackupIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupIdentityInfo"/>. </summary>
         public BackupIdentityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupIdentityInfo"/>. </summary>
         /// <param name="isSystemAssignedIdentity"> To differentiate if the managed identity is system assigned or user assigned. </param>
         /// <param name="managedIdentityResourceId">
         /// Managed Identity Resource Id

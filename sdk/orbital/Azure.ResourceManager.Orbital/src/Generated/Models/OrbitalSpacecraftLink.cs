@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> List of authorized spacecraft links per ground station and the expiration date of the authorization. </summary>
     public partial class OrbitalSpacecraftLink
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Orbital.Models
             Authorizations = new ChangeTrackingList<AuthorizedGroundStation>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>

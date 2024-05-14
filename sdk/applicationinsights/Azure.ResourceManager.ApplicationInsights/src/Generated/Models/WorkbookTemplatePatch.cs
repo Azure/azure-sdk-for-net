@@ -14,12 +14,63 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The parameters that can be provided when updating workbook template. </summary>
     public partial class WorkbookTemplatePatch
     {
-        /// <summary> Initializes a new instance of WorkbookTemplatePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatePatch"/>. </summary>
         public WorkbookTemplatePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Galleries = new ChangeTrackingList<WorkbookTemplateGallery>();
             Localized = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="priority"> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </param>
+        /// <param name="author"> Information about the author of the workbook template. </param>
+        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
+        /// <param name="galleries"> Workbook galleries supported by the template. </param>
+        /// <param name="localized"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkbookTemplatePatch(IDictionary<string, string> tags, int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Priority = priority;
+            Author = author;
+            TemplateData = templateData;
+            Galleries = galleries;
+            Localized = localized;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
@@ -34,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

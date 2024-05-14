@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Pool change request. </summary>
     public partial class NetAppVolumePoolChangeContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumePoolChangeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
         /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
         public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)

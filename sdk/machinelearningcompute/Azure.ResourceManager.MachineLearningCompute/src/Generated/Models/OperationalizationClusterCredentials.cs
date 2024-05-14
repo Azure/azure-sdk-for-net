@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Credentials to resources in the cluster. </summary>
     public partial class OperationalizationClusterCredentials
     {
-        /// <summary> Initializes a new instance of OperationalizationClusterCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterCredentials"/>. </summary>
         internal OperationalizationClusterCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalizationClusterCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalizationClusterCredentials"/>. </summary>
         /// <param name="storageAccount"> Credentials for the Storage Account. </param>
         /// <param name="containerRegistry"> Credentials for Azure Container Registry. </param>
         /// <param name="containerService"> Credentials for Azure Container Service. </param>

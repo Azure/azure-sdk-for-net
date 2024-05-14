@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Grouping configuration property bag. </summary>
     public partial class SecurityInsightsGroupingConfiguration
     {
-        /// <summary> Initializes a new instance of SecurityInsightsGroupingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/>. </summary>
         /// <param name="isEnabled"> Grouping enabled. </param>
         /// <param name="isClosedIncidentReopened"> Re-open closed matching incidents. </param>
         /// <param name="lookbackDuration"> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             GroupByCustomDetails = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsGroupingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/>. </summary>
         /// <param name="isEnabled"> Grouping enabled. </param>
         /// <param name="isClosedIncidentReopened"> Re-open closed matching incidents. </param>
         /// <param name="lookbackDuration"> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </param>

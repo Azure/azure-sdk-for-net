@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of incident alerts. </summary>
     internal partial class IncidentAlertList
     {
-        /// <summary> Initializes a new instance of IncidentAlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/>. </summary>
         /// <param name="value"> Array of incident alerts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentAlertList(IEnumerable<SecurityInsightsAlert> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncidentAlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentAlertList"/>. </summary>
         /// <param name="value"> Array of incident alerts. </param>
         internal IncidentAlertList(IReadOnlyList<SecurityInsightsAlert> value)
         {

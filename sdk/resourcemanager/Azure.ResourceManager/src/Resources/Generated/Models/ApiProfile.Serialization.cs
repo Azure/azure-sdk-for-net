@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApiProfile
+    public partial class ApiProfile : IUtf8JsonSerializable, IJsonModel<ApiProfile>
     {
-        internal static ApiProfile DeserializeApiProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiProfile)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProfileVersion))
+            {
+                writer.WritePropertyName("profileVersion"u8);
+                writer.WriteStringValue(ProfileVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApiProfile IJsonModel<ApiProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiProfile(document.RootElement, options);
+        }
+
+        internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> profileVersion = default;
             Optional<string> apiVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileVersion"u8))
@@ -32,8 +90,44 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiProfile(profileVersion.Value, apiVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiProfile(profileVersion.Value, apiVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiProfile IPersistableModel<ApiProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

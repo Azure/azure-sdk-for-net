@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The UnknownAuthInfoBase. </summary>
     internal partial class UnknownAuthInfoBase : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of UnknownAuthInfoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthInfoBase"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         internal UnknownAuthInfoBase(LinkerAuthType authType) : base(authType)
         {

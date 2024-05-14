@@ -8,12 +8,16 @@ azure-arm: true
 csharp: true
 library-name: Redis
 namespace: Azure.ResourceManager.Redis
-require: https://github.com/Azure/azure-rest-api-specs/blob/ae9d07fdb281804d4af18b48d4b895e09a0ca35c/specification/redis/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/dac9f85a47b0e4e759593f3a19968a732b911b47/specification/redis/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 
 rename-mapping:
   CheckNameAvailabilityParameters: RedisNameAvailabilityContent
@@ -39,6 +43,8 @@ rename-mapping:
   RedisCommonPropertiesRedisConfiguration.aof-backup-enabled: IsAofBackupEnabled|boolean
   RedisCommonPropertiesRedisConfiguration.rdb-backup-max-snapshot-count: -|integer
   RedisForceRebootResponse: RedisForceRebootResult
+  RedisCacheAccessPolicyAssignment.properties.objectId: -|uuid
+  RedisCommonPropertiesRedisConfiguration.aad-enabled: IsAadEnabled
 
 prepend-rp-prefix:
   - OperationStatus
@@ -61,7 +67,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

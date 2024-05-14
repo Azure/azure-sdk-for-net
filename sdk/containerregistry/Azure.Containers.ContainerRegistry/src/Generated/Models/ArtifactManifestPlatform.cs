@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The artifact's platform, consisting of operating system and architecture. </summary>
     public partial class ArtifactManifestPlatform
     {
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ArtifactManifestPlatform(string digest)
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry
             Digest = digest;
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>

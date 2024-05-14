@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment script execution logs. </summary>
     internal partial class ScriptLogsList
     {
-        /// <summary> Initializes a new instance of ScriptLogsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptLogsList"/>. </summary>
         internal ScriptLogsList()
         {
             Value = new ChangeTrackingList<ScriptLogData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptLogsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptLogsList"/>. </summary>
         /// <param name="value"> Deployment scripts logs. </param>
         internal ScriptLogsList(IReadOnlyList<ScriptLogData> value)
         {

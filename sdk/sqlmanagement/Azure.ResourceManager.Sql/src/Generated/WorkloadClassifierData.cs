@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class WorkloadClassifierData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadClassifierData"/>. </summary>
         public WorkloadClassifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadClassifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

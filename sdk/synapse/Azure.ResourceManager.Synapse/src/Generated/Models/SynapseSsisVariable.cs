@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis variable. </summary>
     public partial class SynapseSsisVariable
     {
-        /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisVariable"/>. </summary>
         internal SynapseSsisVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisVariable"/>. </summary>
         /// <param name="id"> Variable id. </param>
         /// <param name="name"> Variable name. </param>
         /// <param name="description"> Variable description. </param>

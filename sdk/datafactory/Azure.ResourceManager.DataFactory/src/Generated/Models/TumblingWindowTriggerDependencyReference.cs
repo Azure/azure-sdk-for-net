@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Referenced tumbling window trigger dependency. </summary>
     public partial class TumblingWindowTriggerDependencyReference : TriggerDependencyReference
     {
-        /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TumblingWindowTriggerDependencyReference(DataFactoryTriggerReference referenceTrigger) : base(referenceTrigger)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependencyReferenceType = "TumblingWindowTriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>

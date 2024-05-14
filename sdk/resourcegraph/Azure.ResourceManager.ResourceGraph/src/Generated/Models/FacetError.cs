@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> A facet whose execution resulted in an error. </summary>
     public partial class FacetError : Facet
     {
-        /// <summary> Initializes a new instance of FacetError. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetError"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> or <paramref name="errors"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             ResultType = "FacetError";
         }
 
-        /// <summary> Initializes a new instance of FacetError. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetError"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> AutoScale configuration properties. </summary>
     public partial class AutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of AutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleConfiguration"/>. </summary>
         public AutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleConfiguration"/>. </summary>
         /// <param name="status"> If auto-scale is enabled for all services. Each service can turn it off individually. </param>
         /// <param name="minReplicas"> The minimum number of replicas for each service. </param>
         /// <param name="maxReplicas"> The maximum number of replicas for each service. </param>

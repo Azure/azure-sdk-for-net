@@ -1,9 +1,6 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Newtonsoft.Json.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.using System;
+
 using System;
 using System.IO;
 using System.Linq;
@@ -12,6 +9,12 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -205,7 +208,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
         public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
         {
-
             return new AuthenticationEventsTriggerAttribute()
             {
                 TenantId = tenantId,
@@ -267,7 +269,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
         public static TokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
         {
-
             JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "CloudEventActionableTemplate.json")));
             (jBody["data"]["@odata.type"] as JValue).Value = "microsoft.graph.onTokenIssuanceStartResponseData";
 
@@ -320,6 +321,71 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             input = input.Trim();
             return (input.StartsWith("{", StringComparison.OrdinalIgnoreCase) && input.EndsWith("}", StringComparison.OrdinalIgnoreCase))
                 || (input.StartsWith("[", StringComparison.OrdinalIgnoreCase) && input.EndsWith("]", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public enum ActionTestTypes
+        {
+            NullClaims,
+            EmptyClaims,
+            NullClaimId,
+            EmptyClaimsId,
+            EmptyValueString,
+            NullValue,
+            EmptyValueArray,
+            EmptyValueStringArray,
+            EmptyMixedArray,
+            NullActionItems
+        }
+
+        public static (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) GetActionTestExepected(ActionTestTypes actionTestTypes)
+        {
+            switch (actionTestTypes)
+            {
+                case ActionTestTypes.NullClaims:
+                    return (new ProvideClaimsForToken(null),
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: The Claims field is required.\"]}");
+                case ActionTestTypes.EmptyClaims:
+                    return (new ProvideClaimsForToken(),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{}}]}}");
+                case ActionTestTypes.NullClaimId:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(null, string.Empty) }),
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyClaimsId:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(String.Empty, string.Empty) }),
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyValueString:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", string.Empty) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":\"\"}}]}}");
+                case ActionTestTypes.NullValue:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", null) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":null}}]}}");
+                case ActionTestTypes.EmptyValueArray:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { }) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[]}}]}}");
+                case ActionTestTypes.EmptyValueStringArray:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, String.Empty }) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",\"\"]}}]}}");
+                case ActionTestTypes.EmptyMixedArray:
+                    return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { String.Empty, null, " " }) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
+                case ActionTestTypes.NullActionItems:
+                    return (null,
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"TokenIssuanceStartResponse: Actions can not contain null items.\"]}");
+                default:
+                    return (null,
+                    HttpStatusCode.InternalServerError,
+                    null);
+            }
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub MpnsCredential. </summary>
     public partial class NotificationHubMpnsCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubMpnsCredential"/>. </summary>
         public NotificationHubMpnsCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubMpnsCredential"/>. </summary>
         /// <param name="mpnsCertificate"> The MPNS certificate. </param>
         /// <param name="certificateKey"> The certificate key for this credential. </param>
         /// <param name="thumbprintString"> The MPNS certificate Thumbprint. </param>

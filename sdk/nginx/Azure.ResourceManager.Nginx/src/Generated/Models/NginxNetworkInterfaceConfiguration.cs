@@ -5,24 +5,26 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxNetworkInterfaceConfiguration. </summary>
     internal partial class NginxNetworkInterfaceConfiguration
     {
-        /// <summary> Initializes a new instance of NginxNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkInterfaceConfiguration"/>. </summary>
         public NginxNetworkInterfaceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="subnetId"></param>
-        internal NginxNetworkInterfaceConfiguration(string subnetId)
+        internal NginxNetworkInterfaceConfiguration(ResourceIdentifier subnetId)
         {
             SubnetId = subnetId;
         }
 
         /// <summary> Gets or sets the subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

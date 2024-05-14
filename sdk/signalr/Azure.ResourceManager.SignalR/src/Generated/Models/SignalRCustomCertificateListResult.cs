@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Custom certificates list. </summary>
     internal partial class SignalRCustomCertificateListResult
     {
-        /// <summary> Initializes a new instance of SignalRCustomCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateListResult"/>. </summary>
         internal SignalRCustomCertificateListResult()
         {
             Value = new ChangeTrackingList<SignalRCustomCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateListResult"/>. </summary>
         /// <param name="value"> List of custom certificates of this resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

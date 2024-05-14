@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> An InputDefinition that looks across all of the files provided to select tracks specified by the IncludedTracks property. Generally used with the AudioTrackByAttribute and VideoTrackByAttribute to allow selection of a single track across a set of input files. </summary>
     public partial class FromAllInputFile : MediaJobInputDefinition
     {
-        /// <summary> Initializes a new instance of FromAllInputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FromAllInputFile"/>. </summary>
         public FromAllInputFile()
         {
             OdataType = "#Microsoft.Media.FromAllInputFile";
         }
 
-        /// <summary> Initializes a new instance of FromAllInputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FromAllInputFile"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="includedTracks">
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.

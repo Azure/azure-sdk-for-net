@@ -13,6 +13,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VolumeGroupsListByElasticSanMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_ListByElasticSan_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_ListByElasticSan_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_ListByElasticSan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VolumeGroupsListByElasticSanMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_ListByElasticSan_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_ListByElasticSan_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_ListByElasticSan" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VolumeGroupsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,8 +121,25 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             string volumeGroupName = "volumegroupname";
             ElasticSanVolumeGroupData data = new ElasticSanVolumeGroupData()
             {
-                ProtocolType = StorageTargetType.Iscsi,
-                Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey,
+                Identity = new ManagedServiceIdentity("None")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("key7482")] = new UserAssignedIdentity(),
+},
+                },
+                ProtocolType = ElasticSanStorageTargetType.Iscsi,
+                Encryption = ElasticSanEncryptionType.EncryptionAtRestWithCustomerManagedKey,
+                EncryptionProperties = new ElasticSanEncryptionProperties()
+                {
+                    KeyVaultProperties = new ElasticSanKeyVaultProperties()
+                    {
+                        KeyName = "sftaiernmrzypnrkpakrrawxcbsqzc",
+                        KeyVersion = "c",
+                        KeyVaultUri = new Uri("https://microsoft.com/axmblwp"),
+                    },
+                    EncryptionUserAssignedIdentity = new ResourceIdentifier("im"),
+                },
                 VirtualNetworkRules =
 {
 new ElasticSanVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}"))
@@ -145,7 +163,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VolumeGroupsCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_Create_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Create_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +200,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +235,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -243,12 +261,55 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // VolumeGroups_Get_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_VolumeGroupsGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticSanResource created on azure
+            // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
+            string elasticSanName = "elasticsanname";
+            ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
+            ElasticSanResource elasticSan = client.GetElasticSanResource(elasticSanResourceId);
+
+            // get the collection of this ElasticSanVolumeGroupResource
+            ElasticSanVolumeGroupCollection collection = elasticSan.GetElasticSanVolumeGroups();
+
+            // invoke the operation
+            string volumeGroupName = "volumegroupname";
+            NullableResponse<ElasticSanVolumeGroupResource> response = await collection.GetIfExistsAsync(volumeGroupName);
+            ElasticSanVolumeGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ElasticSanVolumeGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // VolumeGroups_Get_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -283,7 +344,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2022-12-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -307,6 +368,49 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             bool result = await collection.ExistsAsync(volumeGroupName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // VolumeGroups_Get_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_VolumeGroupsGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticSanResource created on azure
+            // for more information of creating ElasticSanResource, please refer to the document of ElasticSanResource
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
+            string elasticSanName = "elasticsanname";
+            ResourceIdentifier elasticSanResourceId = ElasticSanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName);
+            ElasticSanResource elasticSan = client.GetElasticSanResource(elasticSanResourceId);
+
+            // get the collection of this ElasticSanVolumeGroupResource
+            ElasticSanVolumeGroupCollection collection = elasticSan.GetElasticSanVolumeGroups();
+
+            // invoke the operation
+            string volumeGroupName = "volumegroupname";
+            NullableResponse<ElasticSanVolumeGroupResource> response = await collection.GetIfExistsAsync(volumeGroupName);
+            ElasticSanVolumeGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ElasticSanVolumeGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

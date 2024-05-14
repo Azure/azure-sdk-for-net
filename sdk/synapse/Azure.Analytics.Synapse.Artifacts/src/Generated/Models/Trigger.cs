@@ -15,16 +15,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
-    public partial class Trigger
+    public abstract partial class Trigger
     {
-        /// <summary> Initializes a new instance of Trigger. </summary>
-        public Trigger()
+        /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
+        protected Trigger()
         {
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Trigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

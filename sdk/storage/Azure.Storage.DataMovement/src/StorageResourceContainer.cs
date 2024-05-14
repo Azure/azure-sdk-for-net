@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement
 {
@@ -26,7 +27,22 @@ namespace Azure.Storage.DataMovement
         /// Returns storage resources from the parent resource container
         /// </summary>
         /// <param name="path"></param>
-        protected internal abstract StorageResourceSingle GetChildStorageResource(string path);
+        protected internal abstract StorageResourceItem GetStorageResourceReference(string path);
+
+        /// <summary>
+        /// Creates storage resource container if it does not already exists.
+        /// </summary>
+        /// <returns></returns>
+        protected internal abstract Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the child StorageResourceContainer of the respective container.
+        /// </summary>
+        /// <param name="path">
+        /// The path of the child container.
+        /// </param>
+        /// <returns></returns>
+        protected internal abstract StorageResourceContainer GetChildStorageResourceContainer(string path);
 
         /// <summary>
         /// Storage Resource is a container.

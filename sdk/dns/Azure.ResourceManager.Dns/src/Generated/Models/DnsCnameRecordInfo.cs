@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> A CNAME record. </summary>
     internal partial class DnsCnameRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsCnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsCnameRecordInfo"/>. </summary>
         public DnsCnameRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsCnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsCnameRecordInfo"/>. </summary>
         /// <param name="cname"> The canonical name for this CNAME record. </param>
         internal DnsCnameRecordInfo(string cname)
         {

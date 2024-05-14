@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A rule governing the accessibility of a vault from a specific virtual network. </summary>
     public partial class KeyVaultVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public KeyVaultVirtualNetworkRule(string id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </param>
         internal KeyVaultVirtualNetworkRule(string id, bool? ignoreMissingVnetServiceEndpoint)

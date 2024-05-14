@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Response to the action call for count devices in a catalog.
-    /// Serialized Name: CountDeviceResponse
-    /// </summary>
+    /// <summary> Response to the action call for count devices in a catalog. </summary>
     public partial class CountDeviceResult : CountElementsResult
     {
-        /// <summary> Initializes a new instance of CountDeviceResult. </summary>
-        /// <param name="value">
-        /// Number of children resources in parent resource.
-        /// Serialized Name: CountElementsResponse.value
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/>. </summary>
+        /// <param name="value"> Number of children resources in parent resource. </param>
         internal CountDeviceResult(int value) : base(value)
         {
         }

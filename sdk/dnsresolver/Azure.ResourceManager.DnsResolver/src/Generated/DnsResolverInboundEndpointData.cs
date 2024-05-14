@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsResolverInboundEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsResolverInboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
             IPConfigurations = ipConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DnsResolverInboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

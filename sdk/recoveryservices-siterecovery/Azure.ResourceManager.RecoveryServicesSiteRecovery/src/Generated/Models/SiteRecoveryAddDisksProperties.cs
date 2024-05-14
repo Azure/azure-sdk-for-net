@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Add Disks input properties. </summary>
     internal partial class SiteRecoveryAddDisksProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAddDisksProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddDisksProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// The ReplicationProviderInput. For HyperVReplicaAzure provider, it will be AzureEnableProtectionInput object. For San provider, it will be SanEnableProtectionInput object. For HyperVReplicaAzure provider, it can be null.
         /// Please note <see cref="SiteRecoveryAddDisksProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

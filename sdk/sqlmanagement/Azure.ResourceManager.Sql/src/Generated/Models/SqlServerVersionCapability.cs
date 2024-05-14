@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The server capability. </summary>
     public partial class SqlServerVersionCapability
     {
-        /// <summary> Initializes a new instance of SqlServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerVersionCapability"/>. </summary>
         internal SqlServerVersionCapability()
         {
             SupportedEditions = new ChangeTrackingList<EditionCapability>();
             SupportedElasticPoolEditions = new ChangeTrackingList<ElasticPoolEditionCapability>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerVersionCapability"/>. </summary>
         /// <param name="name"> The server version name. </param>
         /// <param name="supportedEditions"> The list of supported database editions. </param>
         /// <param name="supportedElasticPoolEditions"> The list of supported elastic pool editions. </param>

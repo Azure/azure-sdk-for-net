@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Recognized field value. </summary>
     internal partial class FieldValue_internal
     {
-        /// <summary> Initializes a new instance of FieldValue_internal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldValue_internal"/>. </summary>
         /// <param name="type"> Type of field value. </param>
         internal FieldValue_internal(FieldValueType type)
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FieldValue_internal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldValue_internal"/>. </summary>
         /// <param name="type"> Type of field value. </param>
         /// <param name="valueString"> String value. </param>
         /// <param name="valueDate"> Date value. </param>

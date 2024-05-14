@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Request from client to check resource name availability. </summary>
     public partial class MySqlFlexibleServerNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MySqlFlexibleServerNameAvailabilityContent(string name)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        internal MySqlFlexibleServerNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Resource name to verify. </summary>

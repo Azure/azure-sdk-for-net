@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class RecoveryServiceVaultProtectionIntent : BackupGenericProtectionIntent
     {
-        /// <summary> Initializes a new instance of RecoveryServiceVaultProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServiceVaultProtectionIntent"/>. </summary>
         public RecoveryServiceVaultProtectionIntent()
         {
             ProtectionIntentItemType = ProtectionIntentItemType.RecoveryServiceVaultItem;
         }
 
-        /// <summary> Initializes a new instance of RecoveryServiceVaultProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServiceVaultProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>

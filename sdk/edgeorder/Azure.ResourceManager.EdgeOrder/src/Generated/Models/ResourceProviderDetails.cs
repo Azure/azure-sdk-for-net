@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Management RP details. </summary>
     public partial class ResourceProviderDetails
     {
-        /// <summary> Initializes a new instance of ResourceProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderDetails"/>. </summary>
         internal ResourceProviderDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderDetails"/>. </summary>
         /// <param name="resourceProviderNamespace"> Resource provider namespace. </param>
         internal ResourceProviderDetails(string resourceProviderNamespace)
         {

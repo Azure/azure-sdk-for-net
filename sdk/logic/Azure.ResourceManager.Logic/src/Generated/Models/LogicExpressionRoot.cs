@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The expression root. </summary>
     public partial class LogicExpressionRoot : LogicExpression
     {
-        /// <summary> Initializes a new instance of LogicExpressionRoot. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionRoot"/>. </summary>
         internal LogicExpressionRoot()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicExpressionRoot. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionRoot"/>. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>

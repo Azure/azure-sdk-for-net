@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage specific error information. </summary>
     public partial class WorkloadErrorInfo
     {
-        /// <summary> Initializes a new instance of WorkloadErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadErrorInfo"/>. </summary>
         public WorkloadErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="errorTitle"> Title: Typically, the entity that the error pertains to. </param>

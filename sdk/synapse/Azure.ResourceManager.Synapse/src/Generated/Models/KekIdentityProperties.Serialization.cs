@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseSystemAssignedIdentity);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemAssignedIdentity.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(UseSystemAssignedIdentity))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

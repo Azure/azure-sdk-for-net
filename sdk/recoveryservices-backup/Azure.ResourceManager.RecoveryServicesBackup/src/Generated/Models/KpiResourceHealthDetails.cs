@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> KPI Resource Health Details. </summary>
     public partial class KpiResourceHealthDetails
     {
-        /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiResourceHealthDetails"/>. </summary>
         public KpiResourceHealthDetails()
         {
             ResourceHealthDetails = new ChangeTrackingList<ResourceHealthDetails>();
         }
 
-        /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiResourceHealthDetails"/>. </summary>
         /// <param name="resourceHealthStatus"> Resource Health Status. </param>
         /// <param name="resourceHealthDetails"> Resource Health Status. </param>
         internal KpiResourceHealthDetails(ResourceHealthStatus? resourceHealthStatus, IList<ResourceHealthDetails> resourceHealthDetails)

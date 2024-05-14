@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a HybridConnectionLimit along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridConnectionLimitResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridConnectionLimitResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource" /> using the GetHybridConnectionLimit method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridConnectionLimitResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridConnectionLimitResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource"/> using the GetHybridConnectionLimit method.
     /// </summary>
     public partial class HybridConnectionLimitResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridConnectionLimitResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.AppService
         private readonly AppServicePlansRestOperations _hybridConnectionLimitAppServicePlansRestClient;
         private readonly HybridConnectionLimitData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/hybridConnectionPlanLimits";
+
         /// <summary> Initializes a new instance of the <see cref="HybridConnectionLimitResource"/> class for mocking. </summary>
         protected HybridConnectionLimitResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridConnectionLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridConnectionLimitResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridConnectionLimitResource(ArmClient client, HybridConnectionLimitData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/hybridConnectionPlanLimits";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnectionPlanLimit</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridConnectionLimitResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +139,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnectionPlanLimit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridConnectionLimitResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

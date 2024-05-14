@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A Class representing a StorageSyncPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetStorageSyncPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageSyncPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource"/> using the GetStorageSyncPrivateEndpointConnection method.
     /// </summary>
     public partial class StorageSyncPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSyncPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.StorageSync
         private readonly PrivateEndpointConnectionsRestOperations _storageSyncPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly StorageSyncPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected StorageSyncPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageSyncPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSyncPrivateEndpointConnectionResource(ArmClient client, StorageSyncPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
-    /// A class representing a collection of <see cref="QuotaRequestDetailResource" /> and their operations.
-    /// Each <see cref="QuotaRequestDetailResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="QuotaRequestDetailCollection" /> instance call the GetQuotaRequestDetails method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="QuotaRequestDetailResource"/> and their operations.
+    /// Each <see cref="QuotaRequestDetailResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="QuotaRequestDetailCollection"/> instance call the GetQuotaRequestDetails method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class QuotaRequestDetailCollection : ArmCollection, IEnumerable<QuotaRequestDetailResource>, IAsyncEnumerable<QuotaRequestDetailResource>
     {
@@ -72,6 +73,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +155,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -148,12 +173,12 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element includes a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaRequestDetailResource> GetAllAsync(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,6 +192,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -177,12 +210,12 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element includes a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuotaRequestDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QuotaRequestDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaRequestDetailResource> GetAll(string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quotaRequestDetailQuotaRequestStatusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location), filter, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuotaRequestDetailResource(Client, QuotaRequestDetailData.DeserializeQuotaRequestDetailData(e)), _quotaRequestDetailQuotaRequestStatusClientDiagnostics, Pipeline, "QuotaRequestDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -195,6 +228,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,6 +268,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
@@ -239,6 +288,88 @@ namespace Azure.ResourceManager.Reservations
             {
                 var response = _quotaRequestDetailQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Quota Request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<QuotaRequestDetailResource>> GetIfExistsAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _quotaRequestDetailQuotaRequestStatusRestClient.GetAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Quota Request ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<QuotaRequestDetailResource> GetIfExists(Guid id, CancellationToken cancellationToken = default)
+        {
+            using var scope = _quotaRequestDetailQuotaRequestStatusClientDiagnostics.CreateScope("QuotaRequestDetailCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _quotaRequestDetailQuotaRequestStatusRestClient.Get(Id.SubscriptionId, _providerId, new AzureLocation(_location), id, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<QuotaRequestDetailResource>(response.GetRawResponse());
+                return Response.FromValue(new QuotaRequestDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

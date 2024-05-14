@@ -88,6 +88,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue(Authentication);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -115,6 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
             Optional<object> encryptedCredential = default;
+            Optional<object> authentication = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -237,13 +243,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value);
+            return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value, authentication.Value);
         }
 
         internal partial class AzureMLLinkedServiceConverter : JsonConverter<AzureMLLinkedService>

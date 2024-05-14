@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(CommonName))
@@ -38,7 +41,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(IssuerThumbprint);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(IssuerThumbprint.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(IssuerThumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

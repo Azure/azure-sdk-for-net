@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Agent resource. </summary>
     public partial class StorageMoverAgentPatch
     {
-        /// <summary> Initializes a new instance of StorageMoverAgentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
         public StorageMoverAgentPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
+        /// <param name="description"> A description for the Agent. </param>
+        internal StorageMoverAgentPatch(string description)
+        {
+            Description = description;
         }
 
         /// <summary> A description for the Agent. </summary>

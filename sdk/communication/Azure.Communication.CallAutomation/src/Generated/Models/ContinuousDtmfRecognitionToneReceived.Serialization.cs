@@ -18,21 +18,45 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<ToneInfo> toneInfo = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<int> sequenceId = default;
+            Optional<DtmfTone> tone = default;
+            Optional<string> operationContext = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("toneInfo"u8))
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    toneInfo = ToneInfo.DeserializeToneInfo(property.Value);
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sequenceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sequenceId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("tone"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tone = new DtmfTone(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"u8))
@@ -50,22 +74,8 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value);
+            return new ContinuousDtmfRecognitionToneReceived(resultInformation.Value, Optional.ToNullable(sequenceId), Optional.ToNullable(tone), operationContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

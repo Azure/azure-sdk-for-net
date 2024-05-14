@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of long term retention backups. </summary>
     internal partial class SynapseRestorePointListResult
     {
-        /// <summary> Initializes a new instance of SynapseRestorePointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorePointListResult"/>. </summary>
         internal SynapseRestorePointListResult()
         {
             Value = new ChangeTrackingList<SynapseRestorePointData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorePointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorePointListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseRestorePointListResult(IReadOnlyList<SynapseRestorePointData> value, string nextLink)

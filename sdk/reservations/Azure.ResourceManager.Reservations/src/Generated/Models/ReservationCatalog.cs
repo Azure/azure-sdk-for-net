@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Product details of a type of resource. </summary>
     public partial class ReservationCatalog
     {
-        /// <summary> Initializes a new instance of ReservationCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationCatalog"/>. </summary>
         internal ReservationCatalog()
         {
             BillingPlans = new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Capabilities = new ChangeTrackingList<SkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of ReservationCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationCatalog"/>. </summary>
         /// <param name="appliedResourceType"> The type of resource the sku applies to. </param>
         /// <param name="skuName"> The name of sku. </param>
         /// <param name="billingPlans"> The billing plan options available for this sku. </param>

@@ -17,8 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pfx"u8);
-            JsonSerializer.Serialize(writer, Pfx); writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); writer.WritePropertyName("url"u8);
+            JsonSerializer.Serialize(writer, Pfx);
+            writer.WritePropertyName("password"u8);
+            JsonSerializer.Serialize(writer, Password);
+            writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an OutboundRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OutboundRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOutboundRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource" /> using the GetOutboundRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OutboundRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOutboundRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource"/> using the GetOutboundRule method.
     /// </summary>
     public partial class OutboundRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OutboundRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
+        /// <param name="outboundRuleName"> The outboundRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string outboundRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly LoadBalancerOutboundRulesRestOperations _outboundRuleLoadBalancerOutboundRulesRestClient;
         private readonly OutboundRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/outboundRules";
+
         /// <summary> Initializes a new instance of the <see cref="OutboundRuleResource"/> class for mocking. </summary>
         protected OutboundRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OutboundRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OutboundRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OutboundRuleResource(ArmClient client, OutboundRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/outboundRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerOutboundRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OutboundRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancerOutboundRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OutboundRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

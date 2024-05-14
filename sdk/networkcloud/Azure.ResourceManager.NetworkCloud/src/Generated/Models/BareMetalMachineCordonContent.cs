@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineCordonParameters represents the body of the request to evacuate workloads from node on a bare metal machine. </summary>
     public partial class BareMetalMachineCordonContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineCordonContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineCordonContent"/>. </summary>
         public BareMetalMachineCordonContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineCordonContent"/>. </summary>
+        /// <param name="evacuate"> The indicator of whether to evacuate the node workload when the bare metal machine is cordoned. </param>
+        internal BareMetalMachineCordonContent(BareMetalMachineEvacuate? evacuate)
+        {
+            Evacuate = evacuate;
         }
 
         /// <summary> The indicator of whether to evacuate the node workload when the bare metal machine is cordoned. </summary>

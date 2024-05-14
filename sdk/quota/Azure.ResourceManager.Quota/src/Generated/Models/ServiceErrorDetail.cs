@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Error details. </summary>
     public partial class ServiceErrorDetail
     {
-        /// <summary> Initializes a new instance of ServiceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceErrorDetail"/>. </summary>
         internal ServiceErrorDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         internal ServiceErrorDetail(string code, string message)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Enable migration input. </summary>
     public partial class SiteRecoveryMigrationItemCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Enable migration input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryMigrationItemCreateOrUpdateContent(EnableMigrationProperties properties)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines load balancer backend address pool properties. </summary>
     public partial class LoadBalancerBackendAddressPoolResourceSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolResourceSettings"/>. </summary>
         public LoadBalancerBackendAddressPoolResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the backend address pool name. </param>
         internal LoadBalancerBackendAddressPoolResourceSettings(string name)
         {

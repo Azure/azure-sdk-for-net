@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServiceScalingTrigger
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
         protected ManagedServiceScalingTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
         /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
         internal ManagedServiceScalingTrigger(ServiceScalingTriggerKind kind)
         {

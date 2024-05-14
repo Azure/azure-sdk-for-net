@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> The SqlTempDBSettings. </summary>
     public partial class SqlTempDBSettings
     {
-        /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlTempDBSettings"/>. </summary>
         public SqlTempDBSettings()
         {
             LogicalUnitNumbers = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlTempDBSettings"/>. </summary>
         /// <param name="dataFileSize"> SQL Server tempdb data file size. </param>
         /// <param name="dataGrowth"> SQL Server tempdb data file autoGrowth size. </param>
         /// <param name="logFileSize"> SQL Server tempdb log file size. </param>

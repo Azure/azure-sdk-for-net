@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the StorageQueue data model. </summary>
     public partial class StorageQueueData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageQueueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueData"/>. </summary>
         public StorageQueueData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StorageQueueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

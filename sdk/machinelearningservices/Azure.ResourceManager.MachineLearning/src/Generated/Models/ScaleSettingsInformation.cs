@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Desired scale settings for the amlCompute. </summary>
     internal partial class ScaleSettingsInformation
     {
-        /// <summary> Initializes a new instance of ScaleSettingsInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleSettingsInformation"/>. </summary>
         public ScaleSettingsInformation()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScaleSettingsInformation"/>. </summary>
+        /// <param name="scaleSettings"> scale settings for AML Compute. </param>
+        internal ScaleSettingsInformation(AmlComputeScaleSettings scaleSettings)
+        {
+            ScaleSettings = scaleSettings;
         }
 
         /// <summary> scale settings for AML Compute. </summary>

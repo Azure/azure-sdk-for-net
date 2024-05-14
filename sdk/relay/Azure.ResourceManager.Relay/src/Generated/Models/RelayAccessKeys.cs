@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Namespace/Relay Connection String. </summary>
     public partial class RelayAccessKeys
     {
-        /// <summary> Initializes a new instance of RelayAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayAccessKeys"/>. </summary>
         internal RelayAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayAccessKeys"/>. </summary>
         /// <param name="primaryConnectionString"> Primary connection string of the created namespace authorization rule. </param>
         /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace authorization rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>

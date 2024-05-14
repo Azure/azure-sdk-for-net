@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP request to get list of supported SKUs. </summary>
     public partial class SapSupportedSkusContent
     {
-        /// <summary> Initializes a new instance of SapSupportedSkusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSkusContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
@@ -25,6 +25,23 @@ namespace Azure.ResourceManager.Workloads.Models
             SapProduct = sapProduct;
             DeploymentType = deploymentType;
             DatabaseType = databaseType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSkusContent"/>. </summary>
+        /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
+        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
+        /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
+        /// <param name="highAvailabilityType"> The high availability type. </param>
+        internal SapSupportedSkusContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, SapDatabaseType databaseType, SapHighAvailabilityType? highAvailabilityType)
+        {
+            AppLocation = appLocation;
+            Environment = environment;
+            SapProduct = sapProduct;
+            DeploymentType = deploymentType;
+            DatabaseType = databaseType;
+            HighAvailabilityType = highAvailabilityType;
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>

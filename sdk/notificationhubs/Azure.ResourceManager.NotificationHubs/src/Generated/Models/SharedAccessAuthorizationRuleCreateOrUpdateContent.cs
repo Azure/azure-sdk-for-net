@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules. </summary>
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Properties of the Namespace AuthorizationRules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SharedAccessAuthorizationRuleCreateOrUpdateContent(SharedAccessAuthorizationRuleProperties properties)

@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("filePath"u8);
             JsonSerializer.Serialize(writer, FilePath);
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, LinkedServiceName);
+            writer.WriteEndObject();
         }
 
         internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)

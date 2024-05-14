@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure ML Execute Pipeline activity. </summary>
     public partial class AzureMLExecutePipelineActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="mlPipelineId"> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mlPipelineId"/> is null. </exception>
@@ -27,10 +27,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureMLExecutePipeline";
         }
 
-        /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -41,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="mlPipelineParameters"> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </param>
         /// <param name="mlParentRunId"> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnStepFailure"> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </param>
-        internal AzureMLExecutePipelineActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object mlPipelineId, object experimentName, object mlPipelineParameters, object mlParentRunId, object continueOnStepFailure) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureMLExecutePipelineActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object mlPipelineId, object experimentName, object mlPipelineParameters, object mlParentRunId, object continueOnStepFailure) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             MlPipelineId = mlPipelineId;
             ExperimentName = experimentName;

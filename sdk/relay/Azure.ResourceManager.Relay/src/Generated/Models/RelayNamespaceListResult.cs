@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> The response from the list namespace operation. </summary>
     internal partial class RelayNamespaceListResult
     {
-        /// <summary> Initializes a new instance of RelayNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespaceListResult"/>. </summary>
         internal RelayNamespaceListResult()
         {
             Value = new ChangeTrackingList<RelayNamespaceData>();
         }
 
-        /// <summary> Initializes a new instance of RelayNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNamespaceListResult"/>. </summary>
         /// <param name="value"> Result of the list namespace operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of namespaces. </param>
         internal RelayNamespaceListResult(IReadOnlyList<RelayNamespaceData> value, string nextLink)

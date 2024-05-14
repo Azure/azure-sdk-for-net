@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Log Destination. </summary>
     public partial class FirewallLogDestination
     {
-        /// <summary> Initializes a new instance of FirewallLogDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallLogDestination"/>. </summary>
         public FirewallLogDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallLogDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallLogDestination"/>. </summary>
         /// <param name="storageConfiguration"> Storage account configurations. </param>
         /// <param name="eventHubConfiguration"> Event Hub configurations. </param>
         /// <param name="monitorConfiguration"> Monitor Log configurations. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Pipeline that needs to be triggered with the given parameters. </summary>
     public partial class TriggerPipelineReference
     {
-        /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerPipelineReference"/>. </summary>
         public TriggerPipelineReference()
         {
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerPipelineReference"/>. </summary>
         /// <param name="pipelineReference"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         internal TriggerPipelineReference(DataFactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

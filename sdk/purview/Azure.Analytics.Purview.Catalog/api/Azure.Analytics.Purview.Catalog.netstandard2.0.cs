@@ -56,22 +56,22 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddClassificationsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response AddLabel(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddLabelAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response AddLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response AddOrUpdateBusinessMetadata(string guid, Azure.Core.RequestContent content, bool? isOverwrite, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAsync(string guid, Azure.Core.RequestContent content, bool? isOverwrite, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response AddLabel(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddLabelAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddOrUpdateBusinessMetadata(string guid, Azure.Core.RequestContent content, bool? isOverwrite = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAsync(string guid, Azure.Core.RequestContent content, bool? isOverwrite = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateEntities(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateEntitiesAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteBusinessMetadata(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBusinessMetadataAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response DeleteBusinessMetadataAttributes(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response DeleteBusinessMetadata(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBusinessMetadataAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteBusinessMetadataAttributes(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteByGuid(string guid, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteByGuidAsync(string guid, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteByGuids(System.Collections.Generic.IEnumerable<string> guids, Azure.RequestContext context) { throw null; }
@@ -82,10 +82,10 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassificationAsync(string guid, string classificationName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteClassificationByUniqueAttribute(string typeName, string classificationName, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteLabels(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLabelsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response DeleteLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response DeleteLabels(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLabelsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetByGuid(string guid, bool? minExtInfo, bool? ignoreRelationships, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetByGuidAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetByGuids(System.Collections.Generic.IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, System.Collections.Generic.IEnumerable<string> excludeRelationshipTypes, Azure.RequestContext context) { throw null; }
@@ -102,18 +102,18 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetSampleBusinessMetadataTemplate(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSampleBusinessMetadataTemplateAsync(Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response PartialUpdateEntityAttributeByGuid(string guid, string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityAttributeByGuidAsync(string guid, string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response PartialUpdateEntityByUniqueAttributes(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateEntityByUniqueAttributesAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response SetClassifications(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetClassificationsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response SetLabels(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetLabelsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response SetLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response SetLabels(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetLabelsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SetLabelsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetLabelsByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateClassifications(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateClassificationsAsync(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateClassificationsByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attrQualifiedName = null, Azure.RequestContext context = null) { throw null; }

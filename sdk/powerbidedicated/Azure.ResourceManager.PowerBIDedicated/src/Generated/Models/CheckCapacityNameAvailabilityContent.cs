@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Details of capacity name request body. </summary>
     public partial class CheckCapacityNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckCapacityNameAvailabilityContent"/>. </summary>
         public CheckCapacityNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckCapacityNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name for checking availability. </param>
+        /// <param name="resourceType"> The resource type of PowerBI dedicated. </param>
+        internal CheckCapacityNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Name for checking availability. </summary>

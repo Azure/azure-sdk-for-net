@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LinkedOperationRule. </summary>
     public partial class LinkedOperationRule
     {
-        /// <summary> Initializes a new instance of LinkedOperationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedOperationRule"/>. </summary>
         /// <param name="linkedOperation"></param>
         /// <param name="linkedAction"></param>
         internal LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)

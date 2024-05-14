@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Application Insights key. </summary>
     public partial class FirewallApplicationInsights
     {
-        /// <summary> Initializes a new instance of FirewallApplicationInsights. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallApplicationInsights"/>. </summary>
         public FirewallApplicationInsights()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallApplicationInsights. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallApplicationInsights"/>. </summary>
         /// <param name="id"> Resource id for Application Insights. </param>
         /// <param name="key"> Application Insights key. </param>
         internal FirewallApplicationInsights(string id, string key)

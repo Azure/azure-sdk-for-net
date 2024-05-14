@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> advanced security object. </summary>
     public partial class AdvancedSecurityObjectListResult
     {
-        /// <summary> Initializes a new instance of AdvancedSecurityObjectListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObjectListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AdvancedSecurityObjectListResult(AdvancedSecurityObject value)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of AdvancedSecurityObjectListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObjectListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
         internal AdvancedSecurityObjectListResult(AdvancedSecurityObject value, string nextLink)

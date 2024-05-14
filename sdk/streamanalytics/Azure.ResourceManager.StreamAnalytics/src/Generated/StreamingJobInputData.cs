@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobInputData : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamingJobInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputData"/>. </summary>
         public StreamingJobInputData()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

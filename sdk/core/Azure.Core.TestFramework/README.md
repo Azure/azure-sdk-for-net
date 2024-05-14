@@ -251,6 +251,8 @@ test-proxy push -a <path-to-assets.json>
 
 On completion of the push, a newly created tag will be stamped into the `assets.json` file. This new tag must be committed and pushed to your package directory along with any other changes.
 
+**NOTE**: Permission is required for updating the assets repository. If you failed when executing `test-proxy push` command, please [join a partner write team](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/785/Externalizing-Recordings-(Asset-Sync)?anchor=permissions-to-%60azure/azure-sdk-assets%60). Please notice that this is "Microsoft Internal", community contributors will need to work with the pull request reviewers to merge the assets.
+
 ### Sanitizing
 
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
@@ -366,6 +368,8 @@ public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceV
 }
 ```
 
+__Note:__ A user can set the environment variable PROXY_DEBUG_MODE to a truthy value prior to invoking, just like if they set `UseLocalDebugProxy` in their code.
+
 In order to debug the test proxy, you will need to clone the [azure-sdk-tools](https://github.com/Azure/azure-sdk-tools) repo. The best practice is to first create a fork of the repo, and then clone your fork locally.
 
 Once you have cloned the repo, open the [Test Proxy solution](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy.sln) in your IDE.
@@ -377,6 +381,11 @@ With your breakpoints set, run the Test Proxy project, and then run your test th
 The key integration points between the Test Framework and the Test Proxy are:
  - InstrumentClientOptions method of `RecordedTestBase` - calling this on your client options will set the [ClientOptions.Transport property](https://learn.microsoft.com/dotnet/api/azure.core.clientoptions.transport?view=azure-dotnet) to be [ProxyTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/ProxyTransport.cs) to your client options when in `Playback` or `Record` mode. The ProxyTransport will send all requests to the Test Proxy.
  - [TestProxy.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestProxy.cs) - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in `Record` or `Playback` mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
+
+#### Including Test Proxy Logs
+
+In order to enable Test Proxy logging, you can either set the `AZURE_ENABLE_TEST_PROXY_LOGGING` 
+environment variable or the `EnableTestProxyLogging` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 ## Unit tests
 

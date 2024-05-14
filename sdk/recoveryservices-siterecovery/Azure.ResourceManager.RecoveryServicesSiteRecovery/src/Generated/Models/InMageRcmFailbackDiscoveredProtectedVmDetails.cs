@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback discovered VM details. </summary>
     public partial class InMageRcmFailbackDiscoveredProtectedVmDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackDiscoveredProtectedVmDetails"/>. </summary>
         internal InMageRcmFailbackDiscoveredProtectedVmDetails()
         {
             Datastores = new ChangeTrackingList<string>();
             IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackDiscoveredProtectedVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackDiscoveredProtectedVmDetails"/>. </summary>
         /// <param name="vCenterId"> The VCenter Id. </param>
         /// <param name="vCenterFqdn"> The VCenter fqdn. </param>
         /// <param name="datastores"> The list of datastores. </param>

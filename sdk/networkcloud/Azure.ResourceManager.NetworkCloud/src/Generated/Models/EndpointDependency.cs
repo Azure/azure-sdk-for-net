@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> EndpointDependency represents the definition of an endpoint, including the domain and details. </summary>
     public partial class EndpointDependency
     {
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public EndpointDependency(string domainName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             DomainName = domainName;
         }
 
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="port"> The port of this endpoint. </param>
         internal EndpointDependency(string domainName, long? port)

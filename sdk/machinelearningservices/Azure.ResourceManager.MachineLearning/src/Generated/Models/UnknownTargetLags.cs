@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownTargetLags. </summary>
     internal partial class UnknownTargetLags : TargetLags
     {
-        /// <summary> Initializes a new instance of UnknownTargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
         internal UnknownTargetLags(TargetLagsMode mode) : base(mode)
         {

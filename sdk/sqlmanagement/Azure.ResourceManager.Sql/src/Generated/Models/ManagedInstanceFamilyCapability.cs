@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed server family capability. </summary>
     public partial class ManagedInstanceFamilyCapability
     {
-        /// <summary> Initializes a new instance of ManagedInstanceFamilyCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceFamilyCapability"/>. </summary>
         internal ManagedInstanceFamilyCapability()
         {
             SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
             SupportedVcoresValues = new ChangeTrackingList<ManagedInstanceVcoresCapability>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceFamilyCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceFamilyCapability"/>. </summary>
         /// <param name="name"> Family name. </param>
         /// <param name="sku"> SKU name. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>

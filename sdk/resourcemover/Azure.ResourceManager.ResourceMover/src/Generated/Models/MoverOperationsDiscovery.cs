@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Operations discovery class. </summary>
     public partial class MoverOperationsDiscovery
     {
-        /// <summary> Initializes a new instance of MoverOperationsDiscovery. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationsDiscovery"/>. </summary>
         internal MoverOperationsDiscovery()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverOperationsDiscovery. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationsDiscovery"/>. </summary>
         /// <param name="name">
         /// Gets or sets Name of the API.
         /// The name of the operation being performed on this particular object. It should
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

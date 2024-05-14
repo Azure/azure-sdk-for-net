@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// </summary>
     public abstract partial class MediaOutput
     {
-        /// <summary> Initializes a new instance of MediaOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
         internal MediaOutput(MediaOutputType kind)
         {

@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> An object describing the detected language. </summary>
     public partial class DetectedLanguage
     {
-        /// <summary> Initializes a new instance of DetectedLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
         /// A float value indicating the confidence in the result.

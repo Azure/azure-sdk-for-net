@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System.Diagnostics.CodeAnalysis;
 
 using Azure.Core;
@@ -21,14 +23,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
         /// </summary>
         /// <remarks>
-        /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
+        /// <see href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string"/>.
         /// </remarks>
-        public string? ConnectionString { get; set; }
+        public string ConnectionString { get; set; }
 
         /// <summary>
         /// Get or sets the value of <see cref="TokenCredential" />.
         /// </summary>
-        public TokenCredential? Credential { get; set; }
+        public TokenCredential Credential { get; set; }
 
         /// <summary>
         /// Gets or sets the ratio of telemetry items to be sampled. The value must be between 0.0F and 1.0F, inclusive.
@@ -65,20 +67,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public enum ServiceVersion
         {
             /// <summary>
-            /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/2020-09-15_Preview/swagger.json).
+            /// <see href="https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json" />.
             /// </summary>
-            V2020_09_15_Preview = 1,
-
-            /// <summary>
-            /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json).
-            /// </summary>
-            v2_1 = 2,
+            v2_1 = 1,
         }
 
         /// <summary>
         /// Override the default directory for offline storage.
         /// </summary>
-        public string? StorageDirectory { get; set; }
+        public string StorageDirectory { get; set; }
 
         /// <summary>
         /// Disable offline storage.

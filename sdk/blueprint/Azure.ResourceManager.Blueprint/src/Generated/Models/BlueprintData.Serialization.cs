@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    public partial class BlueprintData : IUtf8JsonSerializable
+    public partial class BlueprintData : IUtf8JsonSerializable, IJsonModel<BlueprintData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlueprintData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BlueprintData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlueprintData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlueprintData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -30,6 +59,11 @@ namespace Azure.ResourceManager.Blueprint
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
             }
             if (Optional.IsDefined(TargetScope))
             {
@@ -64,15 +98,59 @@ namespace Azure.ResourceManager.Blueprint
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Versions);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Versions.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Versions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && Optional.IsDefined(Layout))
+            {
+                writer.WritePropertyName("layout"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Layout);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Layout))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlueprintData DeserializeBlueprintData(JsonElement element)
+        BlueprintData IJsonModel<BlueprintData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlueprintData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlueprintData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlueprintData(document.RootElement, options);
+        }
+
+        internal static BlueprintData DeserializeBlueprintData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +167,8 @@ namespace Azure.ResourceManager.Blueprint
             Optional<IDictionary<string, ResourceGroupDefinition>> resourceGroups = default;
             Optional<BinaryData> versions = default;
             Optional<BinaryData> layout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -201,8 +281,44 @@ namespace Azure.ResourceManager.Blueprint
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), Optional.ToDictionary(parameters), Optional.ToDictionary(resourceGroups), versions.Value, layout.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), Optional.ToDictionary(parameters), Optional.ToDictionary(resourceGroups), versions.Value, layout.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BlueprintData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlueprintData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BlueprintData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlueprintData IPersistableModel<BlueprintData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlueprintData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlueprintData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlueprintData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlueprintData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

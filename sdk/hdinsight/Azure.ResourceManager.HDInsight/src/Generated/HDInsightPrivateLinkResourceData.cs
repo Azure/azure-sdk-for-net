@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.HDInsight
     /// </summary>
     public partial class HDInsightPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceData"/>. </summary>
         public HDInsightPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

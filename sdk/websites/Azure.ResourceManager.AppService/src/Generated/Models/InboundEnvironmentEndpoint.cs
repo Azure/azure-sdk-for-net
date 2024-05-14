@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
     public partial class InboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpoint"/>. </summary>
         internal InboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<string>();
             Ports = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpoint"/>. </summary>
         /// <param name="description"> Short text describing the purpose of the network traffic. </param>
         /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
         /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>

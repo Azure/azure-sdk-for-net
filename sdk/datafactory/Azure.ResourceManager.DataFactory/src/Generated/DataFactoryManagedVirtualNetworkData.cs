@@ -19,31 +19,31 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryManagedVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/>. </summary>
         /// <param name="properties"> Managed Virtual Network properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryManagedVirtualNetworkData(ManagedVirtualNetwork properties)
+        public DataFactoryManagedVirtualNetworkData(DataFactoryManagedVirtualNetworkProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed Virtual Network properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryManagedVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedVirtualNetwork properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryManagedVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedVirtualNetworkProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary> Managed Virtual Network properties. </summary>
-        public ManagedVirtualNetwork Properties { get; set; }
+        public DataFactoryManagedVirtualNetworkProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }

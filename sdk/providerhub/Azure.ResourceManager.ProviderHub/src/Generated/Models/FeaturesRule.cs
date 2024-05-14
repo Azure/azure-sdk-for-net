@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The FeaturesRule. </summary>
     internal partial class FeaturesRule
     {
-        /// <summary> Initializes a new instance of FeaturesRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesRule"/>. </summary>
         /// <param name="requiredFeaturesPolicy"></param>
         public FeaturesRule(FeaturesPolicy requiredFeaturesPolicy)
         {

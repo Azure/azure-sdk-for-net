@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -180,7 +180,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task UpdateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -248,7 +248,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
         public async Task GetIndex()
         {
             await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
@@ -262,7 +261,6 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
         public async Task GetIndexes()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -454,7 +452,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task AnalyzeTextWithNormalizer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);

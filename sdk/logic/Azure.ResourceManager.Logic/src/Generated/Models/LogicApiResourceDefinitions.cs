@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Api resource definition. </summary>
     public partial class LogicApiResourceDefinitions
     {
-        /// <summary> Initializes a new instance of LogicApiResourceDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceDefinitions"/>. </summary>
         internal LogicApiResourceDefinitions()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceDefinitions"/>. </summary>
         /// <param name="originalSwaggerUri"> The original swagger url. </param>
         /// <param name="modifiedSwaggerUri"> The modified swagger url. </param>
         internal LogicApiResourceDefinitions(Uri originalSwaggerUri, Uri modifiedSwaggerUri)

@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The JobManifest. </summary>
     internal partial class JobManifest
     {
-        /// <summary> Initializes a new instance of JobManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobManifest"/>. </summary>
         /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         public JobManifest(JobManifestTasks tasks)

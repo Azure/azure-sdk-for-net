@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> HardwareValidationStatus represents the latest hardware validation details performed for this bare metal machine. </summary>
     public partial class HardwareValidationStatus
     {
-        /// <summary> Initializes a new instance of HardwareValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareValidationStatus"/>. </summary>
         internal HardwareValidationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareValidationStatus"/>. </summary>
         /// <param name="lastValidationOn"> The timestamp of the hardware validation execution. </param>
         /// <param name="result"> The outcome of the hardware validation. </param>
         internal HardwareValidationStatus(DateTimeOffset? lastValidationOn, BareMetalMachineHardwareValidationResult? result)

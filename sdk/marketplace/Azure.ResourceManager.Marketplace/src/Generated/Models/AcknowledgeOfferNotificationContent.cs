@@ -13,11 +13,26 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Notification update request payload. </summary>
     public partial class AcknowledgeOfferNotificationContent
     {
-        /// <summary> Initializes a new instance of AcknowledgeOfferNotificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeOfferNotificationContent"/>. </summary>
         public AcknowledgeOfferNotificationContent()
         {
             AddPlans = new ChangeTrackingList<string>();
             RemovePlans = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeOfferNotificationContent"/>. </summary>
+        /// <param name="isAcknowledgeActionFlagEnabled"> Gets or sets a value indicating whether acknowledge action flag is enabled. </param>
+        /// <param name="isDismissActionFlagEnabled"> Gets or sets a value indicating whether dismiss action flag is enabled. </param>
+        /// <param name="isRemoveOfferActionFlagEnabled"> Gets or sets a value indicating whether remove offer action flag is enabled. </param>
+        /// <param name="addPlans"> Gets or sets added plans. </param>
+        /// <param name="removePlans"> Gets or sets remove plans. </param>
+        internal AcknowledgeOfferNotificationContent(bool? isAcknowledgeActionFlagEnabled, bool? isDismissActionFlagEnabled, bool? isRemoveOfferActionFlagEnabled, IList<string> addPlans, IList<string> removePlans)
+        {
+            IsAcknowledgeActionFlagEnabled = isAcknowledgeActionFlagEnabled;
+            IsDismissActionFlagEnabled = isDismissActionFlagEnabled;
+            IsRemoveOfferActionFlagEnabled = isRemoveOfferActionFlagEnabled;
+            AddPlans = addPlans;
+            RemovePlans = removePlans;
         }
 
         /// <summary> Gets or sets a value indicating whether acknowledge action flag is enabled. </summary>

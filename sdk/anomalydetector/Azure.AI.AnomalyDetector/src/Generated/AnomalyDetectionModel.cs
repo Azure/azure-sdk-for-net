@@ -12,7 +12,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Response of getting a model. </summary>
     public partial class AnomalyDetectionModel
     {
-        /// <summary> Initializes a new instance of AnomalyDetectionModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -23,7 +23,7 @@ namespace Azure.AI.AnomalyDetector
             LastUpdatedTime = lastUpdatedTime;
         }
 
-        /// <summary> Initializes a new instance of AnomalyDetectionModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>

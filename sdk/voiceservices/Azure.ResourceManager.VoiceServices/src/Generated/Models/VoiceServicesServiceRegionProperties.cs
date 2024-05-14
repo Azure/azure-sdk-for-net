@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The service region configuration needed for Teams Callings. </summary>
     public partial class VoiceServicesServiceRegionProperties
     {
-        /// <summary> Initializes a new instance of VoiceServicesServiceRegionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesServiceRegionProperties"/>. </summary>
         /// <param name="name"> The name of the region in which the resources needed for Teams Calling will be deployed. </param>
         /// <param name="primaryRegionProperties"> The configuration used in this region as primary, and other regions as backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="primaryRegionProperties"/> is null. </exception>

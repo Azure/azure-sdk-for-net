@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The properties of a registration definition. </summary>
     public partial class ManagedServicesRegistrationProperties
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationProperties"/>. </summary>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             ManagedByTenantId = managedByTenantId;
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationProperties"/>. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>

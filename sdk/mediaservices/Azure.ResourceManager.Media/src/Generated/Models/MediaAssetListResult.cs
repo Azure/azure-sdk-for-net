@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of Asset items. </summary>
     internal partial class MediaAssetListResult
     {
-        /// <summary> Initializes a new instance of MediaAssetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetListResult"/>. </summary>
         internal MediaAssetListResult()
         {
             Value = new ChangeTrackingList<MediaAssetData>();
         }
 
-        /// <summary> Initializes a new instance of MediaAssetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetListResult"/>. </summary>
         /// <param name="value"> A collection of Asset items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal MediaAssetListResult(IReadOnlyList<MediaAssetData> value, string odataNextLink)

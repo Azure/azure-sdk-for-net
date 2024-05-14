@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The EditTablesRequest. </summary>
     public partial class EditTablesRequest
     {
-        /// <summary> Initializes a new instance of EditTablesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="EditTablesRequest"/>. </summary>
         public EditTablesRequest()
         {
             LinkTables = new ChangeTrackingList<LinkTableRequest>();
         }
 
-        /// <summary> Initializes a new instance of EditTablesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="EditTablesRequest"/>. </summary>
         /// <param name="linkTables"> Edit link tables request. </param>
         internal EditTablesRequest(IList<LinkTableRequest> linkTables)
         {

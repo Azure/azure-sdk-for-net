@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaAssetFilterData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetFilterData"/>. </summary>
         public MediaAssetFilterData()
         {
             Tracks = new ChangeTrackingList<FilterTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetFilterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

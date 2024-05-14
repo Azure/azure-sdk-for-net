@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DenyAssignmentResource" /> and their operations.
-    /// Each <see cref="DenyAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="DenyAssignmentCollection" /> instance call the GetDenyAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="DenyAssignmentResource"/> and their operations.
+    /// Each <see cref="DenyAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="DenyAssignmentCollection"/> instance call the GetDenyAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class DenyAssignmentCollection : ArmCollection, IEnumerable<DenyAssignmentResource>, IAsyncEnumerable<DenyAssignmentResource>
     {
@@ -54,6 +55,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,6 +100,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,12 +147,28 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_ListForResource</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -146,6 +179,14 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
@@ -153,36 +194,44 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DenyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DenyAssignmentResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == "")
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForScopeRequest(Id, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
@@ -198,12 +247,28 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_ListForResource</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -214,6 +279,14 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
@@ -221,36 +294,44 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DenyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DenyAssignmentResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == "")
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForScopeRequest(Id, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
@@ -264,6 +345,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +389,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -316,6 +413,96 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _denyAssignmentRestClient.Get(Id, denyAssignmentId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        public virtual async Task<NullableResponse<DenyAssignmentResource>> GetIfExistsAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+
+            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _denyAssignmentRestClient.GetAsync(Id, denyAssignmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DenyAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        public virtual NullableResponse<DenyAssignmentResource> GetIfExists(string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+
+            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _denyAssignmentRestClient.Get(Id, denyAssignmentId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DenyAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

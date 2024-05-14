@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a load balancing rule. </summary>
     public partial class ManagedClusterLoadBalancingRule
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancingRule"/>. </summary>
         /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 1 and 65534. </param>
         /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProbeProtocol = probeProtocol;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancingRule"/>. </summary>
         /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 1 and 65534. </param>
         /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>

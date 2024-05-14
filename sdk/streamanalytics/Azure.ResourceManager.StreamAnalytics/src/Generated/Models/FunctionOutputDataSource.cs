@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Defines the metadata of AzureFunctionOutputDataSource. </summary>
     public partial class FunctionOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of FunctionOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionOutputDataSource"/>. </summary>
         public FunctionOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.AzureFunction";
         }
 
-        /// <summary> Initializes a new instance of FunctionOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="functionAppName"> The name of your Azure Functions app. </param>
         /// <param name="functionName"> The name of the function in your Azure Functions app. </param>

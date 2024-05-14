@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Cluster HTTP proxy configuration. </summary>
     public partial class ManagedClusterHttpProxyConfig
     {
-        /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHttpProxyConfig"/>. </summary>
         public ManagedClusterHttpProxyConfig()
         {
             NoProxy = new ChangeTrackingList<string>();
-            EffectiveNoProxy = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHttpProxyConfig"/>. </summary>
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
-        /// <param name="effectiveNoProxy"> A read-only list of all endpoints for which traffic should not be sent to the proxy. This list is a superset of noProxy and values injected by AKS. </param>
         /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
-        internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, IReadOnlyList<string> effectiveNoProxy, string trustedCA)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, string trustedCA, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HttpProxy = httpProxy;
             HttpsProxy = httpsProxy;
             NoProxy = noProxy;
-            EffectiveNoProxy = effectiveNoProxy;
             TrustedCA = trustedCA;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The HTTP proxy server endpoint to use. </summary>
@@ -41,8 +73,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public string HttpsProxy { get; set; }
         /// <summary> The endpoints that should not go through proxy. </summary>
         public IList<string> NoProxy { get; }
-        /// <summary> A read-only list of all endpoints for which traffic should not be sent to the proxy. This list is a superset of noProxy and values injected by AKS. </summary>
-        public IReadOnlyList<string> EffectiveNoProxy { get; }
         /// <summary> Alternative CA cert to use for connecting to proxy servers. </summary>
         public string TrustedCA { get; set; }
     }

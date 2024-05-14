@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 Managed disk details. </summary>
     public partial class InMageAzureV2ManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ManagedDiskDetails"/>. </summary>
         internal InMageAzureV2ManagedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>

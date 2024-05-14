@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The instance pool family capability. </summary>
     public partial class InstancePoolFamilyCapability
     {
-        /// <summary> Initializes a new instance of InstancePoolFamilyCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolFamilyCapability"/>. </summary>
         internal InstancePoolFamilyCapability()
         {
             SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
             SupportedVcoresValues = new ChangeTrackingList<InstancePoolVcoresCapability>();
         }
 
-        /// <summary> Initializes a new instance of InstancePoolFamilyCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolFamilyCapability"/>. </summary>
         /// <param name="name"> Family name. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
         /// <param name="supportedVcoresValues"> List of supported virtual cores values. </param>

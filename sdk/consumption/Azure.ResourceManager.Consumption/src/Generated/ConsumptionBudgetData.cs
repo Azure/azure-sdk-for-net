@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,45 @@ namespace Azure.ResourceManager.Consumption
     /// </summary>
     public partial class ConsumptionBudgetData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetData"/>. </summary>
         public ConsumptionBudgetData()
         {
             Notifications = new ChangeTrackingDictionary<string, BudgetAssociatedNotification>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
         /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionBudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetCategory? category, decimal? amount, BudgetTimeGrainType? timeGrain, BudgetTimePeriod timePeriod, ConsumptionBudgetFilter filter, BudgetCurrentSpend currentSpend, IDictionary<string, BudgetAssociatedNotification> notifications, BudgetForecastSpend forecastSpend, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Category = category;
             Amount = amount;
@@ -50,6 +84,7 @@ namespace Azure.ResourceManager.Consumption
             Notifications = notifications;
             ForecastSpend = forecastSpend;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The category of the budget, whether the budget tracks cost or usage. </summary>

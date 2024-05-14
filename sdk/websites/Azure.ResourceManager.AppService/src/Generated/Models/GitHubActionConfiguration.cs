@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The GitHub action configuration. </summary>
     public partial class GitHubActionConfiguration
     {
-        /// <summary> Initializes a new instance of GitHubActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionConfiguration"/>. </summary>
         public GitHubActionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionConfiguration"/>. </summary>
         /// <param name="codeConfiguration"> GitHub Action code configuration. </param>
         /// <param name="containerConfiguration"> GitHub Action container configuration. </param>
         /// <param name="isLinux"> This will help determine the workflow configuration to select. </param>

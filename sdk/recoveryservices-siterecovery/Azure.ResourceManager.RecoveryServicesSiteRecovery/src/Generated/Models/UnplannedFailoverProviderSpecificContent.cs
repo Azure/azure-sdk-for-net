@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class UnplannedFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of UnplannedFailoverProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverProviderSpecificContent"/>. </summary>
         protected UnplannedFailoverProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal UnplannedFailoverProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

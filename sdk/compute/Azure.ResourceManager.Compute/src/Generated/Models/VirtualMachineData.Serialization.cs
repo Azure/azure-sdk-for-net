@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,15 +16,33 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineData : IUtf8JsonSerializable
+    public partial class VirtualMachineData : IUtf8JsonSerializable, IJsonModel<VirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            {
+                writer.WritePropertyName("resources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Resources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Identity))
             {
@@ -45,6 +64,16 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -58,6 +87,26 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HardwareProfile))
@@ -135,10 +184,25 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("hostGroup"u8);
                 JsonSerializer.Serialize(writer, HostGroup);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            {
+                writer.WritePropertyName("instanceView"u8);
+                writer.WriteObjectValue(InstanceView);
+            }
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmId))
+            {
+                writer.WritePropertyName("vmId"u8);
+                writer.WriteStringValue(VmId);
             }
             if (Optional.IsDefined(ExtensionsTimeBudget))
             {
@@ -170,12 +234,46 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("applicationProfile"u8);
                 writer.WriteObjectValue(ApplicationProfile);
             }
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
+        VirtualMachineData IJsonModel<VirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineData(document.RootElement, options);
+        }
+
+        internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -185,6 +283,8 @@ namespace Azure.ResourceManager.Compute
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<ExtendedLocation> extendedLocation = default;
+            Optional<string> managedBy = default;
+            Optional<string> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -217,6 +317,8 @@ namespace Azure.ResourceManager.Compute
             Optional<CapacityReservationProfile> capacityReservation = default;
             Optional<ApplicationProfile> applicationProfile = default;
             Optional<DateTimeOffset> timeCreated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -272,6 +374,16 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("managedBy"u8))
+                {
+                    managedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -543,8 +655,44 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation, managedBy.Value, etag.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineData IPersistableModel<VirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

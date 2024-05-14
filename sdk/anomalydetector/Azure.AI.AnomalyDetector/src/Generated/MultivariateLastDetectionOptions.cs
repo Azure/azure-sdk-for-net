@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of the last detection. </summary>
     public partial class MultivariateLastDetectionOptions
     {
-        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
@@ -28,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             Variables = variables.ToList();
         }
 
-        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/>. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.

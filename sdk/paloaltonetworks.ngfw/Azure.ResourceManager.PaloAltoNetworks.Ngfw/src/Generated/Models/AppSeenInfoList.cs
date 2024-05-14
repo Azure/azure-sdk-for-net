@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Data Type for App Seen. </summary>
     public partial class AppSeenInfoList
     {
-        /// <summary> Initializes a new instance of AppSeenInfoList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfoList"/>. </summary>
         /// <param name="count"> number of rows. </param>
         /// <param name="appSeenList"> array of appSeen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSeenList"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             AppSeenList = appSeenList.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppSeenInfoList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfoList"/>. </summary>
         /// <param name="count"> number of rows. </param>
         /// <param name="appSeenList"> array of appSeen. </param>
         internal AppSeenInfoList(int count, IReadOnlyList<AppSeenInfo> appSeenList)

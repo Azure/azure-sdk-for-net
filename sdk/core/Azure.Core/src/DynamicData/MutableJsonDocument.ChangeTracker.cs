@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Diagnostics;
+
+#nullable enable
 
 namespace Azure.Core.Json
 {
@@ -11,13 +13,7 @@ namespace Azure.Core.Json
     {
         internal class ChangeTracker
         {
-            public ChangeTracker(JsonSerializerOptions options)
-            {
-                _options = options;
-            }
-
             private List<MutableJsonChange>? _changes;
-            private JsonSerializerOptions _options;
 
             internal const char Delimiter = (char)1;
 
@@ -65,6 +61,11 @@ namespace Azure.Core.Json
 
             internal bool TryGetChange(string path, in int lastAppliedChange, out MutableJsonChange change)
             {
+                return TryGetChange(path.AsSpan(), lastAppliedChange, out change);
+            }
+
+            internal bool TryGetChange(ReadOnlySpan<char> path, in int lastAppliedChange, out MutableJsonChange change)
+            {
                 if (_changes == null)
                 {
                     change = default;
@@ -74,7 +75,7 @@ namespace Azure.Core.Json
                 for (int i = _changes!.Count - 1; i > lastAppliedChange; i--)
                 {
                     MutableJsonChange c = _changes[i];
-                    if (c.Path == path)
+                    if (c.Path.AsSpan().SequenceEqual(path))
                     {
                         change = c;
                         return true;
@@ -85,7 +86,7 @@ namespace Azure.Core.Json
                 return false;
             }
 
-            internal int AddChange(string path, object? value, MutableJsonChangeKind changeKind = MutableJsonChangeKind.PropertyValue, string? addedPropertyName = null)
+            internal int AddChange(string path, object? value, MutableJsonChangeKind changeKind = MutableJsonChangeKind.PropertyUpdate, string? addedPropertyName = null)
             {
                 if (_changes == null)
                 {
@@ -94,7 +95,7 @@ namespace Azure.Core.Json
 
                 int index = _changes.Count;
 
-                _changes.Add(new MutableJsonChange(path, index, value, _options, changeKind, addedPropertyName));
+                _changes.Add(new MutableJsonChange(path, index, value, changeKind, addedPropertyName));
 
                 return index;
             }
@@ -135,6 +136,70 @@ namespace Azure.Core.Json
                 }
             }
 
+            internal MutableJsonChange? GetFirstMergePatchChange(ReadOnlySpan<char> rootPath, out int maxPathLength)
+            {
+                // This method gets the first change from the list in sorted order by path
+                // It also returns the max path length of changes on the list.
+
+                maxPathLength = -1;
+
+                if (_changes == null)
+                {
+                    return null;
+                }
+
+                MutableJsonChange? min = null;
+
+                for (int i = _changes.Count - 1; i >= 0; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+
+                    if (c.Path.AsSpan().StartsWith(rootPath) &&
+                        (min == null || c.IsLessThan(min.Value.Path.AsSpan())))
+                    {
+                        min = c;
+                    }
+
+                    if (c.Path.Length > maxPathLength)
+                    {
+                        maxPathLength = c.Path.Length;
+                    }
+                }
+
+                return min;
+            }
+
+            internal MutableJsonChange? GetNextMergePatchChange(ReadOnlySpan<char> rootPath, ReadOnlySpan<char> lastChangePath)
+            {
+                // This method gets changes from the list in sorted order by path.
+
+                if (_changes == null)
+                {
+                    return null;
+                }
+
+                MutableJsonChange? min = null;
+
+                // This implementation is based on the assumption that iterating through
+                // list elements is fast.
+                // Iterating backwards means we get the latest change for a given path.
+                for (int i = _changes.Count - 1; i >= 0; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+
+                    if (c.Path.AsSpan().StartsWith(rootPath) &&
+                        c.IsGreaterThan(lastChangePath) &&
+                        (min == null || c.IsLessThan(min.Value.Path.AsSpan())) &&
+                        // Ignore descendant if its ancestor changed
+                        !c.IsDescendant(lastChangePath))
+                    {
+                        min = c;
+                    }
+                }
+
+                return min;
+            }
+
             internal bool WasRemoved(string path, int highWaterMark)
             {
                 if (_changes == null)
@@ -153,6 +218,45 @@ namespace Azure.Core.Json
                 }
 
                 return false;
+            }
+
+            internal static SegmentEnumerator Split(ReadOnlySpan<char> path) => new(path);
+
+            internal ref struct SegmentEnumerator
+            {
+                private readonly ReadOnlySpan<char> _path;
+
+                private int _start = 0;
+                private int _segmentLength;
+                private ReadOnlySpan<char> _current;
+
+                public SegmentEnumerator(ReadOnlySpan<char> path)
+                {
+                    _path = path;
+                }
+
+                public readonly SegmentEnumerator GetEnumerator() => this;
+
+                public bool MoveNext()
+                {
+                    if (_start > _path.Length)
+                    {
+                        return false;
+                    }
+
+                    _segmentLength = _path.Slice(_start).IndexOf(Delimiter);
+                    if (_segmentLength == -1)
+                    {
+                        _segmentLength = _path.Length - _start;
+                    }
+
+                    _current = _path.Slice(_start, _segmentLength);
+                    _start += _segmentLength + 1;
+
+                    return true;
+                }
+
+                public readonly ReadOnlySpan<char> Current => _current;
             }
 
             internal static string PushIndex(string path, int index)
@@ -175,16 +279,21 @@ namespace Azure.Core.Json
                 return string.Concat(path, Delimiter, value);
             }
 
-            internal static string PushProperty(string path, ReadOnlySpan<byte> value)
+            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value)
             {
-                string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
+                // Validate that path is large enough to write value into
+                Debug.Assert(path.Length - pathLength >= value.Length);
 
-                if (path.Length == 0)
+                if (pathLength == 0)
                 {
-                    return propertyName;
+                    value.Slice(0, value.Length).CopyTo(path);
+                    pathLength = value.Length;
+                    return;
                 }
 
-                return string.Concat(path, Delimiter, propertyName);
+                path[pathLength] = Delimiter;
+                value.Slice(0, value.Length).CopyTo(path.Slice(pathLength + 1));
+                pathLength += value.Length + 1;
             }
 
             internal static string PopProperty(string path)
@@ -197,6 +306,12 @@ namespace Azure.Core.Json
                 }
 
                 return path.Substring(0, lastDelimiter);
+            }
+
+            internal static void PopProperty(Span<char> path, ref int pathLength)
+            {
+                int lastDelimiter = path.Slice(0, pathLength).LastIndexOf(Delimiter);
+                pathLength = lastDelimiter == -1 ? 0 : lastDelimiter;
             }
         }
     }

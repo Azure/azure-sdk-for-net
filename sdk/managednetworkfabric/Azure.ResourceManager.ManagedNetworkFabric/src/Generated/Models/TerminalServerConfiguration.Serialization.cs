@@ -15,21 +15,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
-            }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
@@ -50,6 +35,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteStringValue(Username);
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
+            if (Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
             writer.WriteEndObject();
         }
 
@@ -59,34 +59,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> networkDeviceId = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            Optional<ResourceIdentifier> networkDeviceId = default;
             Optional<string> primaryIPv4Prefix = default;
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
             Optional<string> secondaryIPv6Prefix = default;
+            Optional<string> username = default;
+            Optional<string> password = default;
+            Optional<string> serialNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkDeviceId"u8))
                 {
-                    networkDeviceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("username"u8))
-                {
-                    username = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"u8))
-                {
-                    password = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serialNumber"u8))
-                {
-                    serialNumber = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkDeviceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -109,8 +98,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("username"u8))
+                {
+                    username = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("password"u8))
+                {
+                    password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
+                {
+                    serialNumber = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TerminalServerConfiguration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, networkDeviceId.Value, username.Value, password.Value, serialNumber.Value);
+            return new TerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, networkDeviceId.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
         }
     }
 }

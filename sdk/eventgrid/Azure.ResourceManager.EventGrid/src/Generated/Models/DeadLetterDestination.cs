@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class DeadLetterDestination
     {
-        /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
         protected DeadLetterDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
         internal DeadLetterDestination(DeadLetterEndPointType endpointType)
         {

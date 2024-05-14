@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The azure monitor status response. </summary>
     public partial class HDInsightAzureMonitorExtensionStatus
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionStatus"/>. </summary>
         internal HDInsightAzureMonitorExtensionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionStatus"/>. </summary>
         /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
         /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
         /// <param name="selectedConfigurations"> The selected configurations. </param>

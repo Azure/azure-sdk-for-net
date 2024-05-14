@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>
     public partial class HealthcareApisResourceTags
     {
-        /// <summary> Initializes a new instance of HealthcareApisResourceTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisResourceTags"/>. </summary>
         public HealthcareApisResourceTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisResourceTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisResourceTags"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         internal HealthcareApisResourceTags(IDictionary<string, string> tags)
         {

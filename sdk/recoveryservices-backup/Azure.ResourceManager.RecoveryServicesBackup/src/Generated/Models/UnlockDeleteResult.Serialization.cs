@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    unlockDeleteExpiryTime = property.Value.GetDateTimeOffset();
+                    unlockDeleteExpiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

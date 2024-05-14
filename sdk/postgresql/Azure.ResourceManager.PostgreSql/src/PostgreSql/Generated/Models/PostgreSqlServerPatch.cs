@@ -14,10 +14,35 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class PostgreSqlServerPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPatch"/>. </summary>
         public PostgreSqlServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPatch"/>. </summary>
+        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="version"> The version of a server. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="replicationRole"> The replication role of the server. </param>
+        internal PostgreSqlServerPatch(ManagedServiceIdentity identity, PostgreSqlSku sku, IDictionary<string, string> tags, PostgreSqlStorageProfile storageProfile, string administratorLoginPassword, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, string replicationRole)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+            StorageProfile = storageProfile;
+            AdministratorLoginPassword = administratorLoginPassword;
+            Version = version;
+            SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
+            PublicNetworkAccess = publicNetworkAccess;
+            ReplicationRole = replicationRole;
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>

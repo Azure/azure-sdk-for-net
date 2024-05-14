@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ThrottlingMetric. </summary>
     public partial class ThrottlingMetric
     {
-        /// <summary> Initializes a new instance of ThrottlingMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/>. </summary>
         /// <param name="metricType"></param>
         /// <param name="limit"></param>
         public ThrottlingMetric(ThrottlingMetricType metricType, long limit)
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Limit = limit;
         }
 
-        /// <summary> Initializes a new instance of ThrottlingMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottlingMetric"/>. </summary>
         /// <param name="metricType"></param>
         /// <param name="limit"></param>
         /// <param name="interval"></param>

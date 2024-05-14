@@ -4,10 +4,19 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/67527326606bd3c71700e2b96ff3c9ce9e655e29/specification/sql/resource-manager/readme.md
+tag: package-composite-v5
+require: https://github.com/Azure/azure-rest-api-specs/blob/fb1e2c65b2dd52ebb18bb835a3d0f0289875858e/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ManagedDatabaseSensitivityLabels_CreateOrUpdate
+  - ManagedDatabaseSensitivityLabels_Delete
+  - SensitivityLabels_CreateOrUpdate
+  - SensitivityLabels_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -52,7 +61,7 @@ keep-plural-enums:
 keep-plural-resource-data:
 - MaintenanceWindows
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -328,6 +337,13 @@ rename-mapping:
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
   MetricDefinition.resourceUri: ResourceUriString
+  FailoverGroup.properties.databases: FailoverDatabases
+  ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
+  ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+  FailoverGroupUpdate.properties.databases: FailoverDatabases
+
+# mgmt-debug: 
+#  show-serialized-names: true
 
 prompted-enum-values:
   - Default

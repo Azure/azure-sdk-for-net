@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the image version list operation. </summary>
     internal partial class ImageVersionListResult
     {
-        /// <summary> Initializes a new instance of ImageVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersionListResult"/>. </summary>
         internal ImageVersionListResult()
         {
             Value = new ChangeTrackingList<ImageVersionData>();
         }
 
-        /// <summary> Initializes a new instance of ImageVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersionListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal ImageVersionListResult(IReadOnlyList<ImageVersionData> value, string nextLink)

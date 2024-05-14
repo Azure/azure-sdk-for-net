@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteConfigConnectionStringResource" /> and their operations.
-    /// Each <see cref="WebSiteConfigConnectionStringResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="WebSiteConfigConnectionStringCollection" /> instance call the GetWebSiteConfigConnectionStrings method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="WebSiteConfigConnectionStringResource"/> and their operations.
+    /// Each <see cref="WebSiteConfigConnectionStringResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="WebSiteConfigConnectionStringCollection"/> instance call the GetWebSiteConfigConnectionStrings method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class WebSiteConfigConnectionStringCollection : ArmCollection, IEnumerable<WebSiteConfigConnectionStringResource>, IAsyncEnumerable<WebSiteConfigConnectionStringResource>
     {
@@ -63,9 +64,17 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReference</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
@@ -100,9 +109,17 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReference</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
@@ -137,15 +154,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReferences</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteConfigConnectionStringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteConfigConnectionStringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,15 +184,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReferences</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteConfigConnectionStringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteConfigConnectionStringResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,9 +214,17 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReference</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
@@ -216,9 +257,17 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReference</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
@@ -232,6 +281,96 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteConnectionStringKeyVaultReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteConfigConnectionStringResource>> GetIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+
+            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteConfigConnectionStringResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetSiteConnectionStringKeyVaultReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigConnectionStringResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        public virtual NullableResponse<WebSiteConfigConnectionStringResource> GetIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
+
+            using var scope = _webSiteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteConfigConnectionStringCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteConfigConnectionStringResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

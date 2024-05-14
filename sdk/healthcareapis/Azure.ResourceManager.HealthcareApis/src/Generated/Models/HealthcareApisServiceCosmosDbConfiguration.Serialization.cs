@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(CrossTenantCmkApplicationId))
+            {
+                writer.WritePropertyName("crossTenantCmkApplicationId"u8);
+                writer.WriteStringValue(CrossTenantCmkApplicationId.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             Optional<int> offerThroughput = default;
             Optional<Uri> keyVaultKeyUri = default;
+            Optional<Guid> crossTenantCmkApplicationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerThroughput"u8))
@@ -57,8 +63,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     keyVaultKeyUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("crossTenantCmkApplicationId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossTenantCmkApplicationId = property.Value.GetGuid();
+                    continue;
+                }
             }
-            return new HealthcareApisServiceCosmosDbConfiguration(Optional.ToNullable(offerThroughput), keyVaultKeyUri.Value);
+            return new HealthcareApisServiceCosmosDbConfiguration(Optional.ToNullable(offerThroughput), keyVaultKeyUri.Value, Optional.ToNullable(crossTenantCmkApplicationId));
         }
     }
 }

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
     /// A Class representing a DeviceUpdateAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceUpdateAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceUpdateAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDeviceUpdateAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceUpdateAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceUpdateAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDeviceUpdateAccount method.
     /// </summary>
     public partial class DeviceUpdateAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceUpdateAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly AccountsRestOperations _deviceUpdateAccountAccountsRestClient;
         private readonly DeviceUpdateAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class for mocking. </summary>
         protected DeviceUpdateAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceUpdateAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceUpdateAccountResource(ArmClient client, DeviceUpdateAccountData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of DeviceUpdateInstanceResources and their operations over a DeviceUpdateInstanceResource. </returns>
         public virtual DeviceUpdateInstanceCollection GetDeviceUpdateInstances()
         {
-            return GetCachedClient(Client => new DeviceUpdateInstanceCollection(Client, Id));
+            return GetCachedClient(client => new DeviceUpdateInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +110,20 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Instances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceUpdateInstanceResource>> GetDeviceUpdateInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +141,20 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Instances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Instance name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeviceUpdateInstanceResource> GetDeviceUpdateInstance(string instanceName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of DeviceUpdatePrivateEndpointConnectionResources and their operations over a DeviceUpdatePrivateEndpointConnectionResource. </returns>
         public virtual DeviceUpdatePrivateEndpointConnectionCollection GetDeviceUpdatePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new DeviceUpdatePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new DeviceUpdatePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +179,20 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceUpdatePrivateEndpointConnectionResource>> GetDeviceUpdatePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -183,23 +210,31 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DeviceUpdatePrivateEndpointConnectionResource> GetDeviceUpdatePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetDeviceUpdatePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the DeviceUpdateAccount. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkCollection GetPrivateLinks()
+        /// <summary> Gets a collection of DeviceUpdatePrivateLinkResources in the DeviceUpdateAccount. </summary>
+        /// <returns> An object representing collection of DeviceUpdatePrivateLinkResources and their operations over a DeviceUpdatePrivateLinkResource. </returns>
+        public virtual DeviceUpdatePrivateLinkCollection GetDeviceUpdatePrivateLinks()
         {
-            return GetCachedClient(Client => new PrivateLinkCollection(Client, Id));
+            return GetCachedClient(client => new DeviceUpdatePrivateLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -213,16 +248,24 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdatePrivateLinkResource>> GetDeviceUpdatePrivateLinkAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateLinks().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceUpdatePrivateLinks().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,46 +279,31 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLink(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdatePrivateLinkResource> GetDeviceUpdatePrivateLink(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetPrivateLinks().Get(groupId, cancellationToken);
+            return GetDeviceUpdatePrivateLinks().Get(groupId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionProxyResources in the DeviceUpdateAccount. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionProxyResources and their operations over a PrivateEndpointConnectionProxyResource. </returns>
-        public virtual PrivateEndpointConnectionProxyCollection GetPrivateEndpointConnectionProxies()
+        /// <summary> Gets a collection of DeviceUpdatePrivateEndpointConnectionProxyResources in the DeviceUpdateAccount. </summary>
+        /// <returns> An object representing collection of DeviceUpdatePrivateEndpointConnectionProxyResources and their operations over a DeviceUpdatePrivateEndpointConnectionProxyResource. </returns>
+        public virtual DeviceUpdatePrivateEndpointConnectionProxyCollection GetDeviceUpdatePrivateEndpointConnectionProxies()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionProxyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// (INTERNAL - DO NOT USE) Get the specified private endpoint connection proxy associated with the device update account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionProxies_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionProxyResource>> GetPrivateEndpointConnectionProxyAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
-        {
-            return await GetPrivateEndpointConnectionProxies().GetAsync(privateEndpointConnectionProxyId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DeviceUpdatePrivateEndpointConnectionProxyCollection(client, Id));
         }
 
         /// <summary>
@@ -289,16 +317,55 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionProxyResource> GetPrivateEndpointConnectionProxy(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdatePrivateEndpointConnectionProxyResource>> GetDeviceUpdatePrivateEndpointConnectionProxyAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnectionProxies().Get(privateEndpointConnectionProxyId, cancellationToken);
+            return await GetDeviceUpdatePrivateEndpointConnectionProxies().GetAsync(privateEndpointConnectionProxyId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// (INTERNAL - DO NOT USE) Get the specified private endpoint connection proxy associated with the device update account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeviceUpdatePrivateEndpointConnectionProxyResource> GetDeviceUpdatePrivateEndpointConnectionProxy(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        {
+            return GetDeviceUpdatePrivateEndpointConnectionProxies().Get(privateEndpointConnectionProxyId, cancellationToken);
         }
 
         /// <summary>
@@ -311,6 +378,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,6 +419,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -375,6 +458,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,6 +501,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -443,6 +542,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,6 +589,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -519,6 +634,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -574,6 +697,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -628,6 +759,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -677,6 +816,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -725,6 +872,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -777,6 +932,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

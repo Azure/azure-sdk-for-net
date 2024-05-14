@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The required set of inputs to validate a VNET. </summary>
     public partial class AppServiceVirtualNetworkValidationContent : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkValidationContent"/>. </summary>
         public AppServiceVirtualNetworkValidationContent()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkValidationContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

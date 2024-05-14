@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.IotCentral
     /// </summary>
     public partial class IotCentralPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateEndpointConnectionData"/>. </summary>
         public IotCentralPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

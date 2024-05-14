@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaServicesPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesPrivateEndpointConnectionData"/>. </summary>
         public MediaServicesPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

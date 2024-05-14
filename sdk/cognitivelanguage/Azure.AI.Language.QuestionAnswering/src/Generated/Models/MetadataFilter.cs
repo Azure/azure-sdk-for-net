@@ -13,10 +13,19 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
     public partial class MetadataFilter
     {
-        /// <summary> Initializes a new instance of MetadataFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
         public MetadataFilter()
         {
             Metadata = new ChangeTrackingList<MetadataRecord>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <param name="metadata"></param>
+        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
+        internal MetadataFilter(IList<MetadataRecord> metadata, LogicalOperationKind? logicalOperation)
+        {
+            Metadata = metadata;
+            LogicalOperation = logicalOperation;
         }
 
         /// <summary> Gets the metadata. </summary>

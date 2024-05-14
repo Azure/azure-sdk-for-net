@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Authorize request. </summary>
     public partial class NetAppVolumeAuthorizeReplicationContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeAuthorizeReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
         public NetAppVolumeAuthorizeReplicationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
+        /// <param name="remoteVolumeResourceId"> Resource id of the remote volume. </param>
+        internal NetAppVolumeAuthorizeReplicationContent(ResourceIdentifier remoteVolumeResourceId)
+        {
+            RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
         /// <summary> Resource id of the remote volume. </summary>

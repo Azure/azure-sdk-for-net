@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsDisasterRecoveryAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsDisasterRecoveryResource" /> using the GetEventHubsDisasterRecoveryAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsDisasterRecoveryAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsDisasterRecoveryResource"/> using the GetEventHubsDisasterRecoveryAuthorizationRule method.
     /// </summary>
     public partial class EventHubsDisasterRecoveryAuthorizationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="alias"> The alias. </param>
+        /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{@alias}/authorizationRules/{authorizationRuleName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly DisasterRecoveryConfigsRestOperations _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient;
         private readonly EventHubsAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> class for mocking. </summary>
         protected EventHubsDisasterRecoveryAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsDisasterRecoveryAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsDisasterRecoveryAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +103,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +142,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +183,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,6 +220,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

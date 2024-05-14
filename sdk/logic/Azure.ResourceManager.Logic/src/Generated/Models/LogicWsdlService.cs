@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The WSDL service. </summary>
     public partial class LogicWsdlService
     {
-        /// <summary> Initializes a new instance of LogicWsdlService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWsdlService"/>. </summary>
         internal LogicWsdlService()
         {
             EndpointQualifiedNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWsdlService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWsdlService"/>. </summary>
         /// <param name="qualifiedName"> The qualified name. </param>
         /// <param name="endpointQualifiedNames"> The list of endpoints' qualified names. </param>
         internal LogicWsdlService(string qualifiedName, IReadOnlyList<string> endpointQualifiedNames)

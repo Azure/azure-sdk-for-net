@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis environment. </summary>
     public partial class SsisEnvironment : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisEnvironment"/>. </summary>
         internal SsisEnvironment()
         {
             Variables = new ChangeTrackingList<SsisVariable>();
             MetadataType = SsisObjectMetadataType.Environment;
         }
 
-        /// <summary> Initializes a new instance of SsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisEnvironment"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

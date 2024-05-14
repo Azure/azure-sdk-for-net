@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     public static class SchemaType
     {
         /// <summary>
-        /// Xml schema type.
+        /// XML schema type.
         /// </summary>
         public const string Xml = "xml";
         /// <summary>

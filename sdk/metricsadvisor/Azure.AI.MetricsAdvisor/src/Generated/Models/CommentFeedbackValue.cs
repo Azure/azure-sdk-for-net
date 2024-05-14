@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The CommentFeedbackValue. </summary>
     internal partial class CommentFeedbackValue
     {
-        /// <summary> Initializes a new instance of CommentFeedbackValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommentFeedbackValue"/>. </summary>
         /// <param name="commentValue"> the comment string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commentValue"/> is null. </exception>
         public CommentFeedbackValue(string commentValue)

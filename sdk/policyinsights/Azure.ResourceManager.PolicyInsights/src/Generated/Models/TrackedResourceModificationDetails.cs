@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The details of the policy triggered deployment that created or modified the tracked resource. </summary>
     public partial class TrackedResourceModificationDetails
     {
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceModificationDetails"/>. </summary>
         internal TrackedResourceModificationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackedResourceModificationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceModificationDetails"/>. </summary>
         /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
         /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
         /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>

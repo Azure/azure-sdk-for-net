@@ -9,22 +9,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Identity that will be used to access key vault for encryption at rest. </summary>
+    /// <summary> Identity object used for encryption. </summary>
     internal partial class MachineLearningCmkIdentity
     {
-        /// <summary> Initializes a new instance of MachineLearningCmkIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCmkIdentity"/>. </summary>
         public MachineLearningCmkIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCmkIdentity. </summary>
-        /// <param name="userAssignedIdentity"> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCmkIdentity"/>. </summary>
+        /// <param name="userAssignedIdentity"> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </param>
         internal MachineLearningCmkIdentity(ResourceIdentifier userAssignedIdentity)
         {
             UserAssignedIdentity = userAssignedIdentity;
         }
 
-        /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
         public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

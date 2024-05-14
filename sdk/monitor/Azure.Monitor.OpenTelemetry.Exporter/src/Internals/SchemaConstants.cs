@@ -115,5 +115,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int TelemetryEnvelope_Name_MaxLength = 1024;
         public const int TelemetryEnvelope_Time_MaxLength = 64;
         public const int TelemetryEnvelope_InstrumentationKey_MaxLength = 40;
+
+        public const int Tags_AiOperationId_MaxLength = 128;
+        public const int Tags_AiOperationName_MaxLength = 1024;
+        public const int Tags_AiOperationParentId_MaxLength = 512;
+        public const int Tags_AiUserAuthUserId_MaxLength = 1024;
+        public const int Tags_AiCloudRole_MaxLength = 256;
+        public const int Tags_AiCloudRoleInstance_MaxLength = 256;
+        public const int Tags_AiInternalSdkVersion_MaxLength = 64;
     }
 }

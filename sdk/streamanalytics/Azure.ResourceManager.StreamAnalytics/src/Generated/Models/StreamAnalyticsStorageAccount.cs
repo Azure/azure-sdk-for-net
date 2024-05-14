@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with an Azure Storage account. </summary>
     public partial class StreamAnalyticsStorageAccount
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsStorageAccount"/>. </summary>
         public StreamAnalyticsStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsStorageAccount"/>. </summary>
         /// <param name="accountName"> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>

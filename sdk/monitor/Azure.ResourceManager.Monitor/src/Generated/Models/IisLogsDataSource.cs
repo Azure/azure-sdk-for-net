@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Enables IIS logs to be collected by this data collection rule. </summary>
     public partial class IisLogsDataSource
     {
-        /// <summary> Initializes a new instance of IisLogsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IisLogsDataSource"/>. </summary>
         /// <param name="streams"> IIS streams. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public IisLogsDataSource(IEnumerable<string> streams)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             LogDirectories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IisLogsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IisLogsDataSource"/>. </summary>
         /// <param name="streams"> IIS streams. </param>
         /// <param name="logDirectories"> Absolute paths file location. </param>
         /// <param name="name">

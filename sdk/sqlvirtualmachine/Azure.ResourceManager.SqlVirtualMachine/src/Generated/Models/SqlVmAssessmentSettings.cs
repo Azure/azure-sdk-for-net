@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Configure assessment for databases in your SQL virtual machine. </summary>
     public partial class SqlVmAssessmentSettings
     {
-        /// <summary> Initializes a new instance of SqlVmAssessmentSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAssessmentSettings"/>. </summary>
         public SqlVmAssessmentSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmAssessmentSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAssessmentSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable assessment feature on SQL virtual machine. </param>
         /// <param name="runImmediately"> Run assessment immediately on SQL virtual machine. </param>
         /// <param name="schedule"> Schedule for Assessment. </param>

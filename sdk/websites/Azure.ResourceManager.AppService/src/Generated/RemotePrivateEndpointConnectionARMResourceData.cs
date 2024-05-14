@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class RemotePrivateEndpointConnectionARMResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
         public RemotePrivateEndpointConnectionARMResourceData()
         {
             IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

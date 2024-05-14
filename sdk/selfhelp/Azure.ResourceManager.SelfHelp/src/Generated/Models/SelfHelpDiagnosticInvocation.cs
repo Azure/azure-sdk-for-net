@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution Invocation with additional params needed for invocation. </summary>
     public partial class SelfHelpDiagnosticInvocation
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
         public SelfHelpDiagnosticInvocation()
         {
             AdditionalParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInvocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
         /// <param name="solutionId"> Solution Id to invoke. </param>
         /// <param name="additionalParameters"> Additional parameters required to invoke the solutionId. </param>
         internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters)

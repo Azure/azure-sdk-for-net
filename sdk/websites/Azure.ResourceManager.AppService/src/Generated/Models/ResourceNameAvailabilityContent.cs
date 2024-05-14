@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Resource name availability request content. </summary>
     public partial class ResourceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ResourceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.AppService.Models
 
             Name = name;
             ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        internal ResourceNameAvailabilityContent(string name, CheckNameResourceType resourceType, bool? isFqdn)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            IsFqdn = isFqdn;
         }
 
         /// <summary> Resource name to verify. </summary>

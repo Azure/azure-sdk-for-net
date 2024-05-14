@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Video sink allows for video and audio to be recorded to the Video Analyzer service. The recorded video can be played from anywhere and further managed from the cloud. Due to security reasons, a given Video Analyzer edge module instance can only record content to new video entries, or existing video entries previously recorded by the same module. Any attempt to record content to an existing video which has not been created by the same module instance will result in failure to record. </summary>
     public partial class VideoSink : SinkNodeBase
     {
-        /// <summary> Initializes a new instance of VideoSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoSink"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="videoName"> Name of a new or existing Video Analyzer video resource used for the media recording. </param>
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.VideoSink";
         }
 
-        /// <summary> Initializes a new instance of VideoSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoSink"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Re-establish request object supplied in the body of the operation. </summary>
     public partial class NetAppVolumeReestablishReplicationContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeReestablishReplicationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
         public NetAppVolumeReestablishReplicationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
+        /// <param name="sourceVolumeId"> Resource id of the source volume for the replication. </param>
+        internal NetAppVolumeReestablishReplicationContent(ResourceIdentifier sourceVolumeId)
+        {
+            SourceVolumeId = sourceVolumeId;
         }
 
         /// <summary> Resource id of the source volume for the replication. </summary>

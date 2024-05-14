@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> and their operations.
-    /// Each <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseSqlPoolSecurityAlertPolicyCollection" /> instance call the GetSynapseSqlPoolSecurityAlertPolicies method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> and their operations.
+    /// Each <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseSqlPoolSecurityAlertPolicyCollection"/> instance call the GetSynapseSqlPoolSecurityAlertPolicies method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseSqlPoolSecurityAlertPolicyCollection : ArmCollection, IEnumerable<SynapseSqlPoolSecurityAlertPolicyResource>, IAsyncEnumerable<SynapseSqlPoolSecurityAlertPolicyResource>
     {
@@ -64,6 +65,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -102,6 +111,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +159,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -174,6 +199,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,15 +241,23 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseSqlPoolSecurityAlertPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,15 +271,23 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseSqlPoolSecurityAlertPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSecurityAlertPolicyResource(Client, SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(e)), _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics, Pipeline, "SynapseSqlPoolSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,6 +300,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,6 +340,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -295,6 +360,88 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SynapseSqlPoolSecurityAlertPolicyResource>> GetIfExistsAsync(SqlPoolSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics.CreateScope("SynapseSqlPoolSecurityAlertPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseSqlPoolSecurityAlertPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolSecurityAlertPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SynapseSqlPoolSecurityAlertPolicyResource> GetIfExists(SqlPoolSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesClientDiagnostics.CreateScope("SynapseSqlPoolSecurityAlertPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseSqlPoolSecurityAlertPolicySqlPoolSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseSqlPoolSecurityAlertPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseSqlPoolSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

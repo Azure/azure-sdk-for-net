@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SsmlSource. </summary>
     internal partial class SsmlSourceInternal
     {
-        /// <summary> Initializes a new instance of SsmlSourceInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/>. </summary>
         /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ssmlText"/> is null. </exception>
         public SsmlSourceInternal(string ssmlText)
@@ -21,6 +21,15 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(ssmlText, nameof(ssmlText));
 
             SsmlText = ssmlText;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/>. </summary>
+        /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
+        /// <param name="customVoiceEndpointId"> Endpoint where the custom voice was deployed. </param>
+        internal SsmlSourceInternal(string ssmlText, string customVoiceEndpointId)
+        {
+            SsmlText = ssmlText;
+            CustomVoiceEndpointId = customVoiceEndpointId;
         }
 
         /// <summary> Ssml string for the cognitive service to be played. </summary>

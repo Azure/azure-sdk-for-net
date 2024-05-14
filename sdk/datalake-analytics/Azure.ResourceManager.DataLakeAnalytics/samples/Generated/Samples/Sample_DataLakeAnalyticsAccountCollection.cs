@@ -191,5 +191,47 @@ new FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent("test_rule",IPA
 
             Console.WriteLine($"Succeeded: {result}");
         }
+
+        // Gets details of the specified Data Lake Analytics account.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetsDetailsOfTheSpecifiedDataLakeAnalyticsAccount()
+        {
+            // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/Accounts_Get.json
+            // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "contosorg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DataLakeAnalyticsAccountResource
+            DataLakeAnalyticsAccountCollection collection = resourceGroupResource.GetDataLakeAnalyticsAccounts();
+
+            // invoke the operation
+            string accountName = "contosoadla";
+            NullableResponse<DataLakeAnalyticsAccountResource> response = await collection.GetIfExistsAsync(accountName);
+            DataLakeAnalyticsAccountResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DataLakeAnalyticsAccountData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Notebook resource type. </summary>
     public partial class NotebookResource
     {
-        /// <summary> Initializes a new instance of NotebookResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookResource"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="properties"> Properties of Notebook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of NotebookResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookResource"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>

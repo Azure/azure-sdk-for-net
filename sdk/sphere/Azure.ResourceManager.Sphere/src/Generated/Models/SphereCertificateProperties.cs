@@ -9,46 +9,22 @@ using System;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The properties of certificate
-    /// Serialized Name: CertificateProperties
-    /// </summary>
+    /// <summary> The properties of certificate. </summary>
     public partial class SphereCertificateProperties
     {
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateProperties"/>. </summary>
         internal SphereCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
-        /// <param name="certificate">
-        /// The certificate as a UTF-8 encoded base 64 string.
-        /// Serialized Name: CertificateProperties.certificate
-        /// </param>
-        /// <param name="status">
-        /// The certificate status.
-        /// Serialized Name: CertificateProperties.status
-        /// </param>
-        /// <param name="subject">
-        /// The certificate subject.
-        /// Serialized Name: CertificateProperties.subject
-        /// </param>
-        /// <param name="thumbprint">
-        /// The certificate thumbprint.
-        /// Serialized Name: CertificateProperties.thumbprint
-        /// </param>
-        /// <param name="expiryUtc">
-        /// The certificate expiry date.
-        /// Serialized Name: CertificateProperties.expiryUtc
-        /// </param>
-        /// <param name="notBeforeUtc">
-        /// The certificate not before date.
-        /// Serialized Name: CertificateProperties.notBeforeUtc
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: CertificateProperties.provisioningState
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateProperties"/>. </summary>
+        /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
+        /// <param name="status"> The certificate status. </param>
+        /// <param name="subject"> The certificate subject. </param>
+        /// <param name="thumbprint"> The certificate thumbprint. </param>
+        /// <param name="expiryUtc"> The certificate expiry date. </param>
+        /// <param name="notBeforeUtc"> The certificate not before date. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         internal SphereCertificateProperties(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState)
         {
             Certificate = certificate;
@@ -60,40 +36,19 @@ namespace Azure.ResourceManager.Sphere.Models
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// The certificate as a UTF-8 encoded base 64 string.
-        /// Serialized Name: CertificateProperties.certificate
-        /// </summary>
+        /// <summary> The certificate as a UTF-8 encoded base 64 string. </summary>
         public string Certificate { get; }
-        /// <summary>
-        /// The certificate status.
-        /// Serialized Name: CertificateProperties.status
-        /// </summary>
+        /// <summary> The certificate status. </summary>
         public SphereCertificateStatus? Status { get; }
-        /// <summary>
-        /// The certificate subject.
-        /// Serialized Name: CertificateProperties.subject
-        /// </summary>
+        /// <summary> The certificate subject. </summary>
         public string Subject { get; }
-        /// <summary>
-        /// The certificate thumbprint.
-        /// Serialized Name: CertificateProperties.thumbprint
-        /// </summary>
+        /// <summary> The certificate thumbprint. </summary>
         public string Thumbprint { get; }
-        /// <summary>
-        /// The certificate expiry date.
-        /// Serialized Name: CertificateProperties.expiryUtc
-        /// </summary>
+        /// <summary> The certificate expiry date. </summary>
         public DateTimeOffset? ExpiryUtc { get; }
-        /// <summary>
-        /// The certificate not before date.
-        /// Serialized Name: CertificateProperties.notBeforeUtc
-        /// </summary>
+        /// <summary> The certificate not before date. </summary>
         public DateTimeOffset? NotBeforeUtc { get; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: CertificateProperties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public SphereProvisioningState? ProvisioningState { get; }
     }
 }

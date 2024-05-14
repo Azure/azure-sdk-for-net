@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     {
         public EventHubOptions()
         {
-            MaxEventBatchSize = 10;
+            MaxEventBatchSize = 100;
             MinEventBatchSize = 1;
             MaxWaitTime = TimeSpan.FromSeconds(60);
             ConnectionOptions = new EventHubConnectionOptions()
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         /// <summary>
         /// Gets or sets the maximum number of events delivered in a batch. This setting applies only to functions that
-        /// receive multiple events. Default 10.
+        /// receive multiple events. Default 100.
         /// </summary>
         public int MaxEventBatchSize
         {

@@ -37,15 +37,15 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
             }
-            if (Optional.IsDefined(CallbackUriOverride))
+            if (Optional.IsDefined(OperationCallbackUri))
             {
-                writer.WritePropertyName("callbackUriOverride"u8);
-                writer.WriteStringValue(CallbackUriOverride);
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The shared keys for a workspace. </summary>
     public partial class OperationalInsightsWorkspaceSharedKeys
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSharedKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSharedKeys"/>. </summary>
         internal OperationalInsightsWorkspaceSharedKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSharedKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSharedKeys"/>. </summary>
         /// <param name="primarySharedKey"> The primary shared key of a workspace. </param>
         /// <param name="secondarySharedKey"> The secondary shared key of a workspace. </param>
         internal OperationalInsightsWorkspaceSharedKeys(string primarySharedKey, string secondarySharedKey)

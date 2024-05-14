@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmTrafficManagerModelFactory
     {
-        /// <summary> Initializes a new instance of TrafficManagerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrafficManagerNameAvailabilityResult"/>. </summary>
         /// <param name="name"> The relative name. </param>
         /// <param name="resourceType"> Traffic Manager profile resource type. </param>
         /// <param name="isNameAvailable"> Describes whether the relative name is available or not. </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerNameAvailabilityResult(name, resourceType, isNameAvailable, unavailableReason, message);
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerDnsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrafficManagerDnsConfig"/>. </summary>
         /// <param name="relativeName"> The relative DNS name provided by this Traffic Manager profile. This value is combined with the DNS domain name used by Azure Traffic Manager to form the fully-qualified domain name (FQDN) of the profile. </param>
         /// <param name="fqdn"> The fully-qualified domain name (FQDN) of the Traffic Manager profile. This is formed from the concatenation of the RelativeName with the DNS domain used by Azure Traffic Manager. </param>
         /// <param name="ttl"> The DNS Time-To-Live (TTL), in seconds. This informs the local DNS resolvers and DNS clients how long to cache DNS responses provided by this Traffic Manager profile. </param>

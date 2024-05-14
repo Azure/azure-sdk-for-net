@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,53 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of cloud links. </summary>
     internal partial class CloudLinkList
     {
-        /// <summary> Initializes a new instance of CloudLinkList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudLinkList"/>. </summary>
         internal CloudLinkList()
         {
             Value = new ChangeTrackingList<AvsCloudLinkData>();
         }
 
-        /// <summary> Initializes a new instance of CloudLinkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudLinkList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal CloudLinkList(IReadOnlyList<AvsCloudLinkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudLinkList(IReadOnlyList<AvsCloudLinkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The items on a page. </summary>

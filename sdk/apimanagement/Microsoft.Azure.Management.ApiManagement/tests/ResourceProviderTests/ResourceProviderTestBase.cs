@@ -44,11 +44,13 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 Assert.NotNull(service.DeveloperPortalUrl);
                 Assert.NotNull(service.ScmUrl);
                 Assert.NotNull(service.PublicIPAddresses);
+                Assert.NotNull(service.OutboundPublicIPAddresses);
+                Assert.Equal("Enabled", service.PublicNetworkAccess);
+                Assert.Equal("Disabled", service.NatGatewayState);
             }
             Assert.Equal(expectedPublisherName, service.PublisherName);
             Assert.Equal(expectedPublisherEmail, service.PublisherEmail);
             Assert.Equal(platformVersion, service.PlatformVersion);
-            Assert.Equal("Enabled", service.PublicNetworkAccess);
             Assert.NotNull(service.SystemData);
             Assert.NotNull(service.SystemData.CreatedAt);
             Assert.NotNull(service.SystemData.CreatedBy);

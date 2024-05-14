@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupData"/>. </summary>
         public NetAppVolumeGroupData()
         {
             Volumes = new ChangeTrackingList<NetAppVolumeGroupVolume>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

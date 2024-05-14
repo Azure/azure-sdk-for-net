@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerRegistrationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PartnerRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PartnerRegistrationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

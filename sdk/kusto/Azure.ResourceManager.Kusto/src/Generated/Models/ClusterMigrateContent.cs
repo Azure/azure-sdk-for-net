@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A cluster migrate request. </summary>
     public partial class ClusterMigrateContent
     {
-        /// <summary> Initializes a new instance of ClusterMigrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMigrateContent"/>. </summary>
         /// <param name="clusterResourceId"> Resource ID of the destination cluster or kusto pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterResourceId"/> is null. </exception>
         public ClusterMigrateContent(string clusterResourceId)

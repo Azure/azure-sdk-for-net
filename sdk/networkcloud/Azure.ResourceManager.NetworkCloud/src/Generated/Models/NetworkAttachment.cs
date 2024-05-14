@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> NetworkAttachment represents the single network attachment. </summary>
     public partial class NetworkAttachment
     {
-        /// <summary> Initializes a new instance of NetworkAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAttachment"/>. </summary>
         /// <param name="attachedNetworkId">
         /// The resource ID of the associated network attached to the virtual machine.
         /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IPAllocationMethod = ipAllocationMethod;
         }
 
-        /// <summary> Initializes a new instance of NetworkAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAttachment"/>. </summary>
         /// <param name="attachedNetworkId">
         /// The resource ID of the associated network attached to the virtual machine.
         /// It can be one of cloudServicesNetwork, l3Network, l2Network or trunkedNetwork resources.

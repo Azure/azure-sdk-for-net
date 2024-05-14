@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A request that is made for pre-backup. </summary>
     public partial class PostgreSqlFlexibleServerLtrPreBackupContent : PostgreSqlBackupContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrPreBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
     public partial class AppServiceEnvironmentAddressResult : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentAddressResult"/>. </summary>
         public AppServiceEnvironmentAddressResult()
         {
             OutboundIPAddresses = new ChangeTrackingList<IPAddress>();
             VirtualIPMappings = new ChangeTrackingList<VirtualIPMapping>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentAddressResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

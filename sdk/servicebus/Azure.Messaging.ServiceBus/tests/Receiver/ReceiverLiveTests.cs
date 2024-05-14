@@ -495,7 +495,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore("Waiting for service fix for https://github.com/Azure/azure-sdk-for-net/issues/25275")]
         public async Task ServerBusyRespected()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

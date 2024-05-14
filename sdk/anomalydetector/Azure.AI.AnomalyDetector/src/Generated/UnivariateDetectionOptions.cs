@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of the entire or last anomaly detection. </summary>
     public partial class UnivariateDetectionOptions
     {
-        /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted
@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
             Series = series.ToList();
         }
 
-        /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateDetectionOptions"/>. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted

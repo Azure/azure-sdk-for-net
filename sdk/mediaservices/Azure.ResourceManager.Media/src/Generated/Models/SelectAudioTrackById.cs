@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Select audio tracks from the input by specifying a track identifier. </summary>
     public partial class SelectAudioTrackById : AudioTrackDescriptor
     {
-        /// <summary> Initializes a new instance of SelectAudioTrackById. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectAudioTrackById"/>. </summary>
         /// <param name="trackId"> Track identifier to select. </param>
         public SelectAudioTrackById(long trackId)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.SelectAudioTrackById";
         }
 
-        /// <summary> Initializes a new instance of SelectAudioTrackById. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectAudioTrackById"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="channelMapping"> Optional designation for single channel audio tracks.  Can be used to combine the tracks into stereo or multi-channel audio tracks. </param>
         /// <param name="trackId"> Track identifier to select. </param>

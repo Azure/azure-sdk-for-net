@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A Network Mapping fabric specific settings. </summary>
     public partial class A2ANetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
-        /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ANetworkMappingSettings"/>. </summary>
         internal A2ANetworkMappingSettings()
         {
             InstanceType = "AzureToAzure";
         }
 
-        /// <summary> Initializes a new instance of A2ANetworkMappingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ANetworkMappingSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="primaryFabricLocation"> The primary fabric location. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>

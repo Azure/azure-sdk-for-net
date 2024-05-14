@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The expression traces. </summary>
     internal partial class ExpressionTraces
     {
-        /// <summary> Initializes a new instance of ExpressionTraces. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
         internal ExpressionTraces()
         {
             Inputs = new ChangeTrackingList<LogicExpressionRoot>();
         }
 
-        /// <summary> Initializes a new instance of ExpressionTraces. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
         /// <param name="inputs"></param>
         internal ExpressionTraces(IReadOnlyList<LogicExpressionRoot> inputs)
         {

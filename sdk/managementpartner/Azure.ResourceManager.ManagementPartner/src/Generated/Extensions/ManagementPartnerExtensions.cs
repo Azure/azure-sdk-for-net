@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementPartner.Mocking;
 using Azure.ResourceManager.ManagementPartner.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,46 +20,50 @@ namespace Azure.ResourceManager.ManagementPartner
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagementPartner. </summary>
     public static partial class ManagementPartnerExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MockableManagementPartnerArmClient GetMockableManagementPartnerArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableManagementPartnerArmClient(client0));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableManagementPartnerTenantResource GetMockableManagementPartnerTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableManagementPartnerTenantResource(client, resource.Id));
         }
-        #region PartnerResponseResource
+
         /// <summary>
         /// Gets an object representing a <see cref="PartnerResponseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerResponseResource.CreateResourceIdentifier" /> to create a <see cref="PartnerResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerArmClient.GetPartnerResponseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PartnerResponseResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PartnerResponseResource"/> object. </returns>
         public static PartnerResponseResource GetPartnerResponseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PartnerResponseResource.ValidateResourceId(id);
-                return new PartnerResponseResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of PartnerResponseResources in the TenantResource. </summary>
+            return GetMockableManagementPartnerArmClient(client).GetPartnerResponseResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of PartnerResponseResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetPartnerResponses()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of PartnerResponseResources and their operations over a PartnerResponseResource. </returns>
         public static PartnerResponseCollection GetPartnerResponses(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPartnerResponses();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponses();
         }
 
         /// <summary>
@@ -72,17 +77,31 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetPartnerResponseAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="partnerId"> Id of the Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="partnerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PartnerResponseResource>> GetPartnerResponseAsync(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetPartnerResponses().GetAsync(partnerId, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponseAsync(partnerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -96,17 +115,31 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetPartnerResponse(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="partnerId"> Id of the Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="partnerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partnerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerId"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<PartnerResponseResource> GetPartnerResponse(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPartnerResponses().Get(partnerId, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponse(partnerId, cancellationToken);
         }
 
         /// <summary>
@@ -120,14 +153,25 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetOperations(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationResponse> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsAsync(cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetOperationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -141,14 +185,25 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetOperations(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationResponse"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationResponse> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperations(cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetOperations(cancellationToken);
         }
     }
 }

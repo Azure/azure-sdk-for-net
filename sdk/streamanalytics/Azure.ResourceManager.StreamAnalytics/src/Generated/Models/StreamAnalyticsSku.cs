@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with a SKU. </summary>
     internal partial class StreamAnalyticsSku
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSku"/>. </summary>
         public StreamAnalyticsSku()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSku"/>. </summary>
         /// <param name="name"> The name of the SKU. Required on PUT (CreateOrReplace) requests. </param>
         internal StreamAnalyticsSku(StreamAnalyticsSkuName? name)
         {

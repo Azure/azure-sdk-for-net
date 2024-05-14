@@ -18,9 +18,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> and their operations.
-    /// Each <see cref="ManagedDatabaseSensitivityLabelResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseColumnResource" />.
-    /// To get a <see cref="ManagedDatabaseSensitivityLabelCollection" /> instance call the GetManagedDatabaseSensitivityLabels method from an instance of <see cref="ManagedDatabaseColumnResource" />.
+    /// A class representing a collection of <see cref="ManagedDatabaseSensitivityLabelResource"/> and their operations.
+    /// Each <see cref="ManagedDatabaseSensitivityLabelResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseColumnResource"/>.
+    /// To get a <see cref="ManagedDatabaseSensitivityLabelCollection"/> instance call the GetManagedDatabaseSensitivityLabels method from an instance of <see cref="ManagedDatabaseColumnResource"/>.
     /// </summary>
     public partial class ManagedDatabaseSensitivityLabelCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSensitivityLabels_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSensitivityLabels_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSensitivityLabels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSensitivityLabels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +236,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSensitivityLabels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
@@ -235,6 +275,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSensitivityLabels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
@@ -247,6 +295,88 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedDatabaseSensitivityLabelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedDatabaseSensitivityLabelResource>> GetIfExistsAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseSensitivityLabelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedDatabaseSensitivityLabelResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDatabaseSensitivityLabels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSensitivityLabelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedDatabaseSensitivityLabelResource> GetIfExists(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseSensitivityLabelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedDatabaseSensitivityLabelResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an alert. </summary>
     public partial class SiteRecoveryAlertProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertProperties"/>. </summary>
         internal SiteRecoveryAlertProperties()
         {
             CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertProperties"/>. </summary>
         /// <param name="sendToOwners"> A value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> The custom email address for sending emails. </param>
         /// <param name="locale"> The locale for the email notification. </param>

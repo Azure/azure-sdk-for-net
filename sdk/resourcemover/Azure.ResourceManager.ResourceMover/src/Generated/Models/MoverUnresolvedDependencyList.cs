@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Unresolved dependency collection. </summary>
     internal partial class MoverUnresolvedDependencyList
     {
-        /// <summary> Initializes a new instance of MoverUnresolvedDependencyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverUnresolvedDependencyList"/>. </summary>
         internal MoverUnresolvedDependencyList()
         {
             Value = new ChangeTrackingList<MoverUnresolvedDependency>();
         }
 
-        /// <summary> Initializes a new instance of MoverUnresolvedDependencyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverUnresolvedDependencyList"/>. </summary>
         /// <param name="value"> Gets or sets the list of unresolved dependencies. </param>
         /// <param name="nextLink"> Gets or sets the value of  next link. </param>
         /// <param name="summaryCollection"> Gets or sets the list of summary items and the field on which summary is done. </param>

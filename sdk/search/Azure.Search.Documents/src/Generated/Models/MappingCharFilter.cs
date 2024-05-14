@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A character filter that applies mappings defined with the mappings option. Matching is greedy (longest pattern matching at a given point wins). Replacement is allowed to be the empty string. This character filter is implemented using Apache Lucene. </summary>
     public partial class MappingCharFilter : CharFilter
     {
-        /// <summary> Initializes a new instance of MappingCharFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MappingCharFilter"/>. </summary>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="mappings"> A list of mappings of the following format: "a=&gt;b" (all occurrences of the character "a" will be replaced with character "b"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mappings"/> is null. </exception>
@@ -28,8 +28,8 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.MappingCharFilter";
         }
 
-        /// <summary> Initializes a new instance of MappingCharFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the char filter. </param>
+        /// <summary> Initializes a new instance of <see cref="MappingCharFilter"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of char filter. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="mappings"> A list of mappings of the following format: "a=&gt;b" (all occurrences of the character "a" will be replaced with character "b"). </param>
         internal MappingCharFilter(string oDataType, string name, IList<string> mappings) : base(oDataType, name)

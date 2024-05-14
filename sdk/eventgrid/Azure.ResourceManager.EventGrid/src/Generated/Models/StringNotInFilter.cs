@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> StringNotIn Filter. </summary>
     public partial class StringNotInFilter : EventGridFilter
     {
-        /// <summary> Initializes a new instance of StringNotInFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringNotInFilter"/>. </summary>
         public StringNotInFilter()
         {
             Values = new ChangeTrackingList<string>();
             OperatorType = FilterOperatorType.StringNotIn;
         }
 
-        /// <summary> Initializes a new instance of StringNotInFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringNotInFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         /// <param name="values"> The set of filter values. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis parameter. </summary>
     public partial class SsisParameterInfo
     {
-        /// <summary> Initializes a new instance of SsisParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisParameterInfo"/>. </summary>
         internal SsisParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisParameterInfo"/>. </summary>
         /// <param name="id"> Parameter id. </param>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>

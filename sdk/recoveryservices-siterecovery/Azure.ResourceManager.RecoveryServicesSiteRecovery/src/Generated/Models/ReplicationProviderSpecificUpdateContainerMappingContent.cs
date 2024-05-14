@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ReplicationProviderSpecificUpdateContainerMappingContent
     {
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificUpdateContainerMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificUpdateContainerMappingContent"/>. </summary>
         protected ReplicationProviderSpecificUpdateContainerMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificUpdateContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal ReplicationProviderSpecificUpdateContainerMappingContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Limits))
-            {
-                writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits);
-            }
             if (Optional.IsCollectionDefined(SupportedRoleTypes))
             {
                 writer.WritePropertyName("supportedRoleTypes"u8);
@@ -79,10 +74,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string model = default;
             Optional<string> manufacturer = default;
             Optional<IList<SupportedVersionProperties>> supportedVersions = default;
-            Optional<DeviceLimits> limits = default;
             Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
-            Optional<IList<DeviceInterfaceProperties>> interfaces = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<NetworkDeviceInterfaceProperties>> interfaces = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -142,15 +136,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             supportedVersions = array;
                             continue;
                         }
-                        if (property0.NameEquals("limits"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            limits = DeviceLimits.DeserializeDeviceLimits(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("supportedRoleTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -171,10 +156,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<DeviceInterfaceProperties> array = new List<DeviceInterfaceProperties>();
+                            List<NetworkDeviceInterfaceProperties> array = new List<NetworkDeviceInterfaceProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceInterfaceProperties.DeserializeDeviceInterfaceProperties(item));
+                                array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item));
                             }
                             interfaces = array;
                             continue;
@@ -185,14 +170,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), limits.Value, Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState));
+            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState));
         }
     }
 }

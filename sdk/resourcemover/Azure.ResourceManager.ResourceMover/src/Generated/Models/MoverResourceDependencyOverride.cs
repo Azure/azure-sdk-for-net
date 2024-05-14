@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the dependency override of the move resource. </summary>
     public partial class MoverResourceDependencyOverride
     {
-        /// <summary> Initializes a new instance of MoverResourceDependencyOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceDependencyOverride"/>. </summary>
         public MoverResourceDependencyOverride()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceDependencyOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceDependencyOverride"/>. </summary>
         /// <param name="id"> Gets or sets the ARM ID of the dependent resource. </param>
         /// <param name="targetId">
         /// Gets or sets the resource ARM id of either the MoveResource or the resource ARM ID of

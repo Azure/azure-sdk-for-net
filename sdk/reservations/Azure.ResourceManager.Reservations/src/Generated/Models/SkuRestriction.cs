@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Restriction of a sku. </summary>
     public partial class SkuRestriction
     {
-        /// <summary> Initializes a new instance of SkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuRestriction"/>. </summary>
         internal SkuRestriction()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuRestriction"/>. </summary>
         /// <param name="skuRestrictionType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the sku is restricted. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>

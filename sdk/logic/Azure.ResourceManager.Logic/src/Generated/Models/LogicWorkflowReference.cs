@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow reference. </summary>
     public partial class LogicWorkflowReference : LogicResourceReference
     {
-        /// <summary> Initializes a new instance of LogicWorkflowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowReference"/>. </summary>
         public LogicWorkflowReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>

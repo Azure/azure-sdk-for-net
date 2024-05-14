@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageHcrpConfigurationProfileAssignmentReport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageHcrpConfigurationProfileAssignmentReportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> using the GetAutomanageHcrpConfigurationProfileAssignmentReport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageHcrpConfigurationProfileAssignmentReportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> using the GetAutomanageHcrpConfigurationProfileAssignmentReport method.
     /// </summary>
     public partial class AutomanageHcrpConfigurationProfileAssignmentReportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="machineName"> The machineName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
+        /// <param name="reportName"> The reportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, string reportName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly HcrpReportsRestOperations _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentReportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> class for mocking. </summary>
         protected AutomanageHcrpConfigurationProfileAssignmentReportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageHcrpConfigurationProfileAssignmentReportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageHcrpConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>HCRPReports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HCRPReports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

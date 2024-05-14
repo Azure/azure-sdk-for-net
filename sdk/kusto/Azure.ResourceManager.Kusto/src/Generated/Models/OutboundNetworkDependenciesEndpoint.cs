@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Endpoints accessed for a common purpose that the Kusto Service Environment requires outbound network access to. </summary>
     public partial class OutboundNetworkDependenciesEndpoint : ResourceData
     {
-        /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpoint"/>. </summary>
         public OutboundNetworkDependenciesEndpoint()
         {
             Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpoint"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -1,29 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.12.0-beta.1</Version>
+    <Version>5.14.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.11.0</ApiCompatVersion>
-    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
+    <!--Since we are adding a new target for net6.0, we need to temporarily condition on netstandard-->
+    <ApiCompatVersion>5.13.5</ApiCompatVersion>
+    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;AZC0007;AZC0015</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <InheritDocTrimLevel>internal</InheritDocTrimLevel>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Sources" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
-    <PackageReference Include ="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
+    <PackageReference Include="Grpc.Tools" />
+    <PackageReference Include="Google.Protobuf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Condition="'$(TargetFramework)' == 'net6.0'" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
 		<Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Administration\AdministrationClientConstants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Constants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Core\Argument.cs" LinkBase="Shared" />
@@ -33,9 +44,11 @@
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MessagingClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)MessagingDiagnosticOperation.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreAmqpSharedSources)AmqpAnnotatedMessageConverter.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
+    <Compile Include="$(AzureCoreAmqpSharedSources)MessageBody.cs" LinkBase="SharedSource\Azure.Core.Amqp" />
   </ItemGroup>
-
 </Project>

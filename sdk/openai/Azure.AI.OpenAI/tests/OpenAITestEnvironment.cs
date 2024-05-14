@@ -8,7 +8,29 @@ namespace Azure.AI.OpenAI.Tests
 {
     public class OpenAITestEnvironment : TestEnvironment
     {
-        public string PublicOpenAiApiKey => GetOptionalVariable("PUBLIC_OPENAI_API_KEY");
+        public string NonAzureOpenAIApiKey => GetOptionalVariable("OPENAI_API_KEY");
+
+        public string AzureCognitiveSearchApiKey => GetOptionalVariable("ACS_BYOD_API_KEY");
+
+        public string TestAudioInputPathEnglish => GetOptionalVariable("OAI_TEST_AUDIO_INPUT_ENGLISH_PATH");
+
+        public Uri GetUrlVariable(string variableName) => new(GetRecordedVariable(variableName));
+
+        public bool TryGetUrlVariable(string variableName, out Uri variableValue)
+        {
+            string maybeVariable = GetOptionalVariable(variableName);
+            variableValue = maybeVariable == null ? null : new Uri(GetRecordedVariable(variableName));
+            return variableValue != null;
+        }
+
+        public AzureKeyCredential GetKeyVariable(string variableName) => new(GetOptionalVariable(variableName) ?? "placeholder");
+
+        public bool TryGetKeyVariable(string variableName, out AzureKeyCredential keyFromVariable)
+        {
+            string maybeVariable = GetOptionalVariable(variableName);
+            keyFromVariable = maybeVariable == null ? null : new AzureKeyCredential(maybeVariable);
+            return keyFromVariable != null;
+        }
 
         public void ThrowIfCannotDeploy()
         {

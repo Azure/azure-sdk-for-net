@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateEndpointConnectionData"/>. </summary>
         public ServiceBusPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

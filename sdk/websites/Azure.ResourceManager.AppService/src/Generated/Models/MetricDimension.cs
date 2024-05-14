@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class MetricDimension
     {
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         internal MetricDimension()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="internalName"></param>

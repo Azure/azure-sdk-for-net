@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleEventHubDataSource. </summary>
     public partial class DataCollectionRuleEventHubDataSource
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         public DataCollectionRuleEventHubDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.

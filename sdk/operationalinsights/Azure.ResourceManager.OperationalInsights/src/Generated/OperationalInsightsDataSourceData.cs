@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsDataSourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsDataSourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataSourceData"/>. </summary>
         /// <param name="properties"> The data source properties in raw json format, each kind of data source have it's own schema. </param>
         /// <param name="kind"> The kind of the DataSource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsDataSourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataSourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

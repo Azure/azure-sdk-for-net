@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Access information for the storage account. </summary>
     public partial class StorageAccountCredentials
     {
-        /// <summary> Initializes a new instance of StorageAccountCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentials"/>. </summary>
         internal StorageAccountCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentials"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the storage account. </param>
         /// <param name="primaryKey"> The primary key of the storage account. </param>
         /// <param name="secondaryKey"> The secondary key of the storage account. </param>

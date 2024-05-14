@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> SSL certificate details. </summary>
     public partial class AppServiceCertificateDetails
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
         internal AppServiceCertificateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
         /// <param name="version"> Certificate Version. </param>
         /// <param name="serialNumber"> Certificate Serial Number. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>

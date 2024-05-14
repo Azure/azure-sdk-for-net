@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Consumption.Mocking;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
@@ -20,247 +21,42 @@ namespace Azure.ResourceManager.Consumption
     /// <summary> A class to add extension methods to Azure.ResourceManager.Consumption. </summary>
     public static partial class ConsumptionExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableConsumptionArmClient GetMockableConsumptionArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableConsumptionArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableConsumptionManagementGroupResource GetMockableConsumptionManagementGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableConsumptionManagementGroupResource(client, resource.Id));
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmResource resource)
+        private static MockableConsumptionSubscriptionResource GetMockableConsumptionSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ManagementGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableConsumptionSubscriptionResource(client, resource.Id));
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableConsumptionTenantResource GetMockableConsumptionTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ManagementGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableConsumptionTenantResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region ConsumptionBudgetResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConsumptionBudgetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConsumptionBudgetResource.CreateResourceIdentifier" /> to create a <see cref="ConsumptionBudgetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of ConsumptionBudgetResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionBudgets(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConsumptionBudgetResource" /> object. </returns>
-        public static ConsumptionBudgetResource GetConsumptionBudgetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConsumptionBudgetResource.ValidateResourceId(id);
-                return new ConsumptionBudgetResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region BillingAccountConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="BillingAccountConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingAccountConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingAccountConsumptionResource" /> object. </returns>
-        public static BillingAccountConsumptionResource GetBillingAccountConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                BillingAccountConsumptionResource.ValidateResourceId(id);
-                return new BillingAccountConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region BillingProfileConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="BillingProfileConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingProfileConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingProfileConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingProfileConsumptionResource" /> object. </returns>
-        public static BillingProfileConsumptionResource GetBillingProfileConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                BillingProfileConsumptionResource.ValidateResourceId(id);
-                return new BillingProfileConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region TenantBillingPeriodConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantBillingPeriodConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantBillingPeriodConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="TenantBillingPeriodConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantBillingPeriodConsumptionResource" /> object. </returns>
-        public static TenantBillingPeriodConsumptionResource GetTenantBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TenantBillingPeriodConsumptionResource.ValidateResourceId(id);
-                return new TenantBillingPeriodConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SubscriptionBillingPeriodConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionBillingPeriodConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionBillingPeriodConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionBillingPeriodConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionBillingPeriodConsumptionResource" /> object. </returns>
-        public static SubscriptionBillingPeriodConsumptionResource GetSubscriptionBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionBillingPeriodConsumptionResource.ValidateResourceId(id);
-                return new SubscriptionBillingPeriodConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagementGroupBillingPeriodConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagementGroupBillingPeriodConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> object. </returns>
-        public static ManagementGroupBillingPeriodConsumptionResource GetManagementGroupBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagementGroupBillingPeriodConsumptionResource.ValidateResourceId(id);
-                return new ManagementGroupBillingPeriodConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region BillingCustomerConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="BillingCustomerConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingCustomerConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingCustomerConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingCustomerConsumptionResource" /> object. </returns>
-        public static BillingCustomerConsumptionResource GetBillingCustomerConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                BillingCustomerConsumptionResource.ValidateResourceId(id);
-                return new BillingCustomerConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ReservationConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ReservationConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ReservationConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationConsumptionResource" /> object. </returns>
-        public static ReservationConsumptionResource GetReservationConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ReservationConsumptionResource.ValidateResourceId(id);
-                return new ReservationConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ReservationOrderConsumptionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ReservationOrderConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationOrderConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationOrderConsumptionResource" /> object. </returns>
-        public static ReservationOrderConsumptionResource GetReservationOrderConsumptionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ReservationOrderConsumptionResource.ValidateResourceId(id);
-                return new ReservationOrderConsumptionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of ConsumptionBudgetResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of ConsumptionBudgetResources and their operations over a ConsumptionBudgetResource. </returns>
         public static ConsumptionBudgetCollection GetConsumptionBudgets(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionBudgets();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionBudgets(scope);
         }
 
         /// <summary>
@@ -274,18 +70,32 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Budgets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionBudgetAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ConsumptionBudgetResource>> GetConsumptionBudgetAsync(this ArmClient client, ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            return await client.GetConsumptionBudgets(scope).GetAsync(budgetName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableConsumptionArmClient(client).GetConsumptionBudgetAsync(scope, budgetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,18 +109,32 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Budgets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionBudget(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ConsumptionBudgetResource> GetConsumptionBudget(this ArmClient client, ResourceIdentifier scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            return client.GetConsumptionBudgets(scope).Get(budgetName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionBudget(scope, budgetName, cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +148,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>UsageDetails_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionUsageDetails(ResourceIdentifier,string,string,string,int?,ConsumptionMetricType?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -334,9 +166,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionUsageDetailsAsync(expand, filter, skipToken, top, metric, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionUsageDetailsAsync(scope, expand, filter, skipToken, top, metric, cancellationToken);
         }
 
         /// <summary>
@@ -350,7 +185,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>UsageDetails_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionUsageDetails(ResourceIdentifier,string,string,string,int?,ConsumptionMetricType?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -360,9 +203,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="metric"> Allows to select different type of cost/usage records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(this ArmClient client, ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionUsageDetails(expand, filter, skipToken, top, metric, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionUsageDetails(scope, expand, filter, skipToken, top, metric, cancellationToken);
         }
 
         /// <summary>
@@ -376,7 +222,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Marketplaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionMarketPlaces(ResourceIdentifier,string,int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -384,9 +238,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionMarketPlacesAsync(filter, top, skipToken, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionMarketPlacesAsync(scope, filter, top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -400,7 +257,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Marketplaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionMarketPlaces(ResourceIdentifier,string,int?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -408,9 +273,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="top"> May be used to limit the number of results to the most recent N marketplaces. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(this ArmClient client, ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionMarketPlaces(filter, top, skipToken, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionMarketPlaces(scope, filter, top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -424,14 +292,25 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Tags_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionTags(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static async Task<Response<ConsumptionTagsResult>> GetConsumptionTagsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).GetConsumptionTagsAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableConsumptionArmClient(client).GetConsumptionTagsAsync(scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -445,14 +324,25 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Tags_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionTags(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Response<ConsumptionTagsResult> GetConsumptionTags(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionTags(cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionTags(scope, cancellationToken);
         }
 
         /// <summary>
@@ -466,7 +356,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Charges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionCharges(ResourceIdentifier,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -475,9 +373,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<ConsumptionChargeSummary> GetConsumptionChargesAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionChargesAsync(startDate, endDate, filter, apply, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionChargesAsync(scope, startDate, endDate, filter, apply, cancellationToken);
         }
 
         /// <summary>
@@ -491,7 +392,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Charges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionCharges(ResourceIdentifier,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -500,9 +409,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> May be used to filter charges by properties/usageEnd (Utc time), properties/usageStart (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="apply"> May be used to group charges for billingAccount scope by properties/billingProfileId, properties/invoiceSectionId, properties/customerId (specific for Partner Led), or for billingProfile scope by properties/invoiceSectionId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<ConsumptionChargeSummary> GetConsumptionCharges(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionCharges(startDate, endDate, filter, apply, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionCharges(scope, startDate, endDate, filter, apply, cancellationToken);
         }
 
         /// <summary>
@@ -516,18 +428,26 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationsSummaries(ResourceIdentifier,ArmResourceGetConsumptionReservationsSummariesOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="options"/> is null. </exception>
         public static AsyncPageable<ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsSummariesAsync(options, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationsSummariesAsync(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -541,18 +461,26 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationsSummaries(ResourceIdentifier,ArmResourceGetConsumptionReservationsSummariesOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="options"/> is null. </exception>
         public static Pageable<ConsumptionReservationSummary> GetConsumptionReservationsSummaries(this ArmClient client, ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsSummaries(options, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationsSummaries(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -566,7 +494,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsDetails_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationsDetails(ResourceIdentifier,string,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -576,9 +512,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<ConsumptionReservationDetail> GetConsumptionReservationsDetailsAsync(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsDetailsAsync(startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationsDetailsAsync(scope, startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
         }
 
         /// <summary>
@@ -592,7 +531,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsDetails_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationsDetails(ResourceIdentifier,string,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -602,9 +549,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="reservationId"> Reservation Id GUID. Only valid if reservationOrderId is also provided. Filter to a specific reservation. </param>
         /// <param name="reservationOrderId"> Reservation Order Id GUID. Required if reservationId is provided. Filter to a specific reservation order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<ConsumptionReservationDetail> GetConsumptionReservationsDetails(this ArmClient client, ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationsDetails(startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationsDetails(scope, startDate, endDate, filter, reservationId, reservationOrderId, cancellationToken);
         }
 
         /// <summary>
@@ -618,15 +568,26 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendations(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendationsAsync(filter, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationsAsync(scope, filter, cancellationToken);
         }
 
         /// <summary>
@@ -640,15 +601,26 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendations(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="filter"> May be used to filter reservationRecommendations by: properties/scope with allowed values ['Single', 'Shared'] and default value 'Single'; properties/resourceType with allowed values ['VirtualMachines', 'SQLDatabases', 'PostgreSQL', 'ManagedDisk', 'MySQL', 'RedHat', 'MariaDB', 'RedisCache', 'CosmosDB', 'SqlDataWarehouse', 'SUSELinux', 'AppService', 'BlockBlob', 'AzureDataExplorer', 'VMwareCloudSimple'] and default value 'VirtualMachines'; and properties/lookBackPeriod with allowed values ['Last7Days', 'Last30Days', 'Last60Days'] and default value 'Last7Days'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendations(filter, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendations(scope, filter, cancellationToken);
         }
 
         /// <summary>
@@ -662,7 +634,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendationDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails(ResourceIdentifier,ConsumptionReservationRecommendationScope,string,ConsumptionReservationRecommendationTerm,ConsumptionReservationRecommendationLookBackPeriod,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -672,13 +652,12 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="product"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         public static async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(region, nameof(region));
-            Argument.AssertNotNull(product, nameof(product));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendationDetailsAsync(reservationScope, region, term, lookBackPeriod, product, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationDetailsAsync(scope, reservationScope, region, term, lookBackPeriod, product, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -692,7 +671,15 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationRecommendationDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails(ResourceIdentifier,ConsumptionReservationRecommendationScope,string,ConsumptionReservationRecommendationTerm,ConsumptionReservationRecommendationLookBackPeriod,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -702,13 +689,183 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> or <paramref name="product"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(region, nameof(region));
-            Argument.AssertNotNull(product, nameof(product));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetArmResourceExtensionClient(client, scope).GetConsumptionReservationRecommendationDetails(reservationScope, region, term, lookBackPeriod, product, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationDetails(scope, reservationScope, region, term, lookBackPeriod, product, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConsumptionBudgetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConsumptionBudgetResource.CreateResourceIdentifier" /> to create a <see cref="ConsumptionBudgetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionBudgetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConsumptionBudgetResource"/> object. </returns>
+        public static ConsumptionBudgetResource GetConsumptionBudgetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetConsumptionBudgetResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetBillingAccountConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingAccountConsumptionResource"/> object. </returns>
+        public static BillingAccountConsumptionResource GetBillingAccountConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetBillingAccountConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingProfileConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingProfileConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingProfileConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetBillingProfileConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingProfileConsumptionResource"/> object. </returns>
+        public static BillingProfileConsumptionResource GetBillingProfileConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetBillingProfileConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantBillingPeriodConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantBillingPeriodConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="TenantBillingPeriodConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetTenantBillingPeriodConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantBillingPeriodConsumptionResource"/> object. </returns>
+        public static TenantBillingPeriodConsumptionResource GetTenantBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetTenantBillingPeriodConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionBillingPeriodConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionBillingPeriodConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionBillingPeriodConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetSubscriptionBillingPeriodConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionBillingPeriodConsumptionResource"/> object. </returns>
+        public static SubscriptionBillingPeriodConsumptionResource GetSubscriptionBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetSubscriptionBillingPeriodConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupBillingPeriodConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupBillingPeriodConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetManagementGroupBillingPeriodConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> object. </returns>
+        public static ManagementGroupBillingPeriodConsumptionResource GetManagementGroupBillingPeriodConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetManagementGroupBillingPeriodConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingCustomerConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingCustomerConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingCustomerConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetBillingCustomerConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BillingCustomerConsumptionResource"/> object. </returns>
+        public static BillingCustomerConsumptionResource GetBillingCustomerConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetBillingCustomerConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ReservationConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetReservationConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationConsumptionResource"/> object. </returns>
+        public static ReservationConsumptionResource GetReservationConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetReservationConsumptionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationOrderConsumptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationOrderConsumptionResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderConsumptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionArmClient.GetReservationOrderConsumptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationOrderConsumptionResource"/> object. </returns>
+        public static ReservationOrderConsumptionResource GetReservationOrderConsumptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConsumptionArmClient(client).GetReservationOrderConsumptionResource(id);
         }
 
         /// <summary>
@@ -722,14 +879,25 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionManagementGroupResource.GetAggregatedCost(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
         public static async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetManagementGroupResourceExtensionClient(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableConsumptionManagementGroupResource(managementGroupResource).GetAggregatedCostAsync(filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -743,14 +911,25 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionManagementGroupResource.GetAggregatedCost(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter aggregated cost by properties/usageStart (Utc time), properties/usageEnd (Utc time). The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
         public static Response<ConsumptionAggregatedCostResult> GetAggregatedCost(this ManagementGroupResource managementGroupResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableConsumptionManagementGroupResource(managementGroupResource).GetAggregatedCost(filter, cancellationToken);
         }
 
         /// <summary>
@@ -764,16 +943,27 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionSubscriptionResource.GetPriceSheet(string,string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableConsumptionSubscriptionResource(subscriptionResource).GetPriceSheetAsync(expand, skipToken, top, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -787,16 +977,27 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConsumptionSubscriptionResource.GetPriceSheet(string,string,int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableConsumptionSubscriptionResource(subscriptionResource).GetPriceSheet(expand, skipToken, top, cancellationToken);
         }
     }
 }

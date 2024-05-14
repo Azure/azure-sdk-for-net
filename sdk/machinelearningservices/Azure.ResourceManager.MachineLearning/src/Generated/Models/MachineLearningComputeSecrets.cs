@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningComputeSecrets
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSecrets"/>. </summary>
         protected MachineLearningComputeSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         internal MachineLearningComputeSecrets(ComputeType computeType)
         {

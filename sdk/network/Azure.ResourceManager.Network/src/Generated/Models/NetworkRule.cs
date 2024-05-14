@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rule of type network. </summary>
     public partial class NetworkRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of NetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRule"/>. </summary>
         public NetworkRule()
         {
             IPProtocols = new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
@@ -26,10 +27,11 @@ namespace Azure.ResourceManager.Network.Models
             RuleType = FirewallPolicyRuleType.NetworkRule;
         }
 
-        /// <summary> Initializes a new instance of NetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipProtocols"> Array of FirewallPolicyRuleNetworkProtocols. </param>
         /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
         /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
         /// <param name="destinationFqdns"> List of destination FQDNs. </param>
-        internal NetworkRule(string name, string description, FirewallPolicyRuleType ruleType, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IList<string> destinationFqdns) : base(name, description, ruleType)
+        internal NetworkRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IList<string> destinationFqdns) : base(name, description, ruleType, serializedAdditionalRawData)
         {
             IPProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;

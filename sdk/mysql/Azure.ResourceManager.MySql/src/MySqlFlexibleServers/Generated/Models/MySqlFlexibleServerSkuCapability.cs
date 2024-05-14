@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Sku capability. </summary>
     public partial class MySqlFlexibleServerSkuCapability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerSkuCapability"/>. </summary>
         internal MySqlFlexibleServerSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerSkuCapability"/>. </summary>
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>

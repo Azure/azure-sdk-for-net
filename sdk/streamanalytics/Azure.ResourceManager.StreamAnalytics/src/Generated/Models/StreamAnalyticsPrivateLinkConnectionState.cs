@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A collection of read-only information about the state of the connection to the private remote resource. </summary>
     public partial class StreamAnalyticsPrivateLinkConnectionState
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateLinkConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateLinkConnectionState"/>. </summary>
         public StreamAnalyticsPrivateLinkConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateLinkConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateLinkConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the remote resource/service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>

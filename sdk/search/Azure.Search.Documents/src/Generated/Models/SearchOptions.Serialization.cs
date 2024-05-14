@@ -92,15 +92,20 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("scoringProfile"u8);
                 writer.WriteStringValue(ScoringProfile);
             }
+            if (Optional.IsDefined(SemanticQuery))
+            {
+                writer.WritePropertyName("semanticQuery"u8);
+                writer.WriteStringValue(SemanticQuery);
+            }
             if (Optional.IsDefined(SemanticConfigurationName))
             {
                 writer.WritePropertyName("semanticConfiguration"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
-            if (Optional.IsDefined(SemanticErrorHandling))
+            if (Optional.IsDefined(SemanticErrorMode))
             {
                 writer.WritePropertyName("semanticErrorHandling"u8);
-                writer.WriteStringValue(SemanticErrorHandling.Value.ToString());
+                writer.WriteStringValue(SemanticErrorMode.Value.ToString());
             }
             if (Optional.IsDefined(SemanticMaxWaitInMilliseconds))
             {
@@ -174,10 +179,20 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("semanticFields"u8);
                 writer.WriteStringValue(SemanticFieldsRaw);
             }
-            if (Optional.IsDefined(Vector))
+            if (Optional.IsCollectionDefined(VectorQueries))
             {
-                writer.WritePropertyName("vector"u8);
-                writer.WriteObjectValue(Vector);
+                writer.WritePropertyName("vectorQueries"u8);
+                writer.WriteStartArray();
+                foreach (var item in VectorQueries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FilterMode))
+            {
+                writer.WritePropertyName("vectorFilterMode"u8);
+                writer.WriteStringValue(FilterMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -201,8 +216,9 @@ namespace Azure.Search.Documents
             Optional<string> sessionId = default;
             Optional<IList<string>> scoringParameters = default;
             Optional<string> scoringProfile = default;
+            Optional<string> semanticQuery = default;
             Optional<string> semanticConfiguration = default;
-            Optional<SemanticErrorHandling> semanticErrorHandling = default;
+            Optional<SemanticErrorMode> semanticErrorHandling = default;
             Optional<int?> semanticMaxWaitInMilliseconds = default;
             Optional<QueryDebugMode> debug = default;
             Optional<string> search = default;
@@ -216,7 +232,8 @@ namespace Azure.Search.Documents
             Optional<int> top = default;
             Optional<string> captions = default;
             Optional<string> semanticFields = default;
-            Optional<SearchQueryVector> vector = default;
+            Optional<IList<VectorQuery>> vectorQueries = default;
+            Optional<VectorFilterMode> vectorFilterMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -318,6 +335,11 @@ namespace Azure.Search.Documents
                     scoringProfile = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("semanticQuery"u8))
+                {
+                    semanticQuery = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("semanticConfiguration"u8))
                 {
                     semanticConfiguration = property.Value.GetString();
@@ -329,7 +351,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    semanticErrorHandling = new SemanticErrorHandling(property.Value.GetString());
+                    semanticErrorHandling = new SemanticErrorMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("semanticMaxWaitInMilliseconds"u8))
@@ -426,17 +448,31 @@ namespace Azure.Search.Documents
                     semanticFields = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vector"u8))
+                if (property.NameEquals("vectorQueries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vector = SearchQueryVector.DeserializeSearchQueryVector(property.Value);
+                    List<VectorQuery> array = new List<VectorQuery>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorQuery.DeserializeVectorQuery(item));
+                    }
+                    vectorQueries = array;
+                    continue;
+                }
+                if (property.NameEquals("vectorFilterMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vectorFilterMode = new VectorFilterMode(property.Value.GetString());
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, vector.Value);
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticQuery.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, Optional.ToList(vectorQueries), Optional.ToNullable(vectorFilterMode));
         }
     }
 }

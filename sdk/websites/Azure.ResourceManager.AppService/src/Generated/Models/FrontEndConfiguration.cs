@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The FrontEndConfiguration. </summary>
     internal partial class FrontEndConfiguration
     {
-        /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontEndConfiguration"/>. </summary>
         public FrontEndConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontEndConfiguration"/>. </summary>
         /// <param name="kind"></param>
         internal FrontEndConfiguration(FrontEndServiceType? kind)
         {

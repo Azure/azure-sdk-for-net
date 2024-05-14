@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDimensionQueryOptions. </summary>
     internal partial class MetricDimensionQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricDimensionQueryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/>. </summary>
         /// <param name="dimensionName"> dimension name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> is null. </exception>
         public MetricDimensionQueryOptions(string dimensionName)
@@ -21,6 +21,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(dimensionName, nameof(dimensionName));
 
             DimensionName = dimensionName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/>. </summary>
+        /// <param name="dimensionName"> dimension name. </param>
+        /// <param name="dimensionValueFilter"> dimension value to be filtered. </param>
+        internal MetricDimensionQueryOptions(string dimensionName, string dimensionValueFilter)
+        {
+            DimensionName = dimensionName;
+            DimensionValueFilter = dimensionValueFilter;
         }
 
         /// <summary> dimension name. </summary>

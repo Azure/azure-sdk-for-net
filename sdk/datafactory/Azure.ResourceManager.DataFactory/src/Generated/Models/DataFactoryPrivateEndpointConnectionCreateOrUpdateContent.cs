@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
     public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
         public DataFactoryPrivateEndpointConnectionCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Restore files/folders from a backup copy of IaaS VM. </summary>
     public partial class IaasVmIlrRegistrationContent : IlrContent
     {
-        /// <summary> Initializes a new instance of IaasVmIlrRegistrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmIlrRegistrationContent"/>. </summary>
         public IaasVmIlrRegistrationContent()
         {
             ObjectType = "IaasVMILRRegistrationRequest";
         }
 
-        /// <summary> Initializes a new instance of IaasVmIlrRegistrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmIlrRegistrationContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointId"> ID of the IaaS VM backup copy from where the files/folders have to be restored. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored. </param>

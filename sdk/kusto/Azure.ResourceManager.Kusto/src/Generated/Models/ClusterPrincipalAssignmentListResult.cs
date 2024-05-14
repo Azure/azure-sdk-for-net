@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto cluster principal assignments operation response. </summary>
     internal partial class ClusterPrincipalAssignmentListResult
     {
-        /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPrincipalAssignmentListResult"/>. </summary>
         internal ClusterPrincipalAssignmentListResult()
         {
             Value = new ChangeTrackingList<KustoClusterPrincipalAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPrincipalAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of Kusto cluster principal assignments. </param>
         internal ClusterPrincipalAssignmentListResult(IReadOnlyList<KustoClusterPrincipalAssignmentData> value)
         {

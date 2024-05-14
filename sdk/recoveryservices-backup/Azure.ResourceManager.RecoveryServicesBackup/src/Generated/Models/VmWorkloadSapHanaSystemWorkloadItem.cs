@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific workload item representing SAP HANA System. </summary>
     public partial class VmWorkloadSapHanaSystemWorkloadItem : VmWorkloadItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadSapHanaSystemWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>. </summary>
         public VmWorkloadSapHanaSystemWorkloadItem()
         {
             WorkloadItemType = "SAPHanaSystem";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSapHanaSystemWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="workloadItemType"> Type of the backup item. </param>

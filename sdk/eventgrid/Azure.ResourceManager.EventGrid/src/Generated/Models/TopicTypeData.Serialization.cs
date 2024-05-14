@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
+            if (Optional.IsCollectionDefined(AdditionalEnforcedPermissions))
+            {
+                writer.WritePropertyName("additionalEnforcedPermissions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalEnforcedPermissions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -98,6 +108,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> sourceResourceFormat = default;
             Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
             Optional<bool> areRegionalAndGlobalSourcesSupported = default;
+            Optional<IList<TopicTypeAdditionalEnforcedPermission>> additionalEnforcedPermissions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,11 +219,25 @@ namespace Azure.ResourceManager.EventGrid
                             areRegionalAndGlobalSourcesSupported = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("additionalEnforcedPermissions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<TopicTypeAdditionalEnforcedPermission> array = new List<TopicTypeAdditionalEnforcedPermission>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item));
+                            }
+                            additionalEnforcedPermissions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), Optional.ToList(additionalEnforcedPermissions));
         }
     }
 }

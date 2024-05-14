@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.CustomRolloutResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.CustomRolloutResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.CustomRolloutResource>> GetAsync(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.CustomRolloutResource> GetIfExists(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.CustomRolloutResource>> GetIfExistsAsync(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.CustomRolloutResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.CustomRolloutResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.CustomRolloutResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.CustomRolloutResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.DefaultRolloutResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.DefaultRolloutResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.DefaultRolloutResource>> GetAsync(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.DefaultRolloutResource> GetIfExists(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.DefaultRolloutResource>> GetIfExistsAsync(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.DefaultRolloutResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.DefaultRolloutResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.DefaultRolloutResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.DefaultRolloutResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -79,6 +83,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>> GetAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> GetIfExists(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>> GetIfExistsAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -108,6 +114,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>> GetAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> GetIfExists(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>> GetIfExistsAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -137,6 +145,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>> GetAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> GetIfExists(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>> GetIfExistsAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -166,6 +176,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource>> GetAsync(string notificationRegistrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> GetIfExists(string notificationRegistrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource>> GetIfExistsAsync(string notificationRegistrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.NotificationRegistrationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -215,6 +227,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>> GetAsync(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> GetIfExists(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>> GetIfExistsAsync(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -265,6 +279,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource>> GetAsync(string resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> GetIfExists(string resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource>> GetIfExistsAsync(string resourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -311,6 +327,8 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> GetAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> GetIfExists(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> GetIfExistsAsync(string sku, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -333,6 +351,29 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ProviderHub.ResourceTypeSkuData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ProviderHub.Mocking
+{
+    public partial class MockableProviderHubArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableProviderHubArmClient() { }
+        public virtual Azure.ResourceManager.ProviderHub.CustomRolloutResource GetCustomRolloutResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.DefaultRolloutResource GetDefaultRolloutResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.NotificationRegistrationResource GetNotificationRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.ProviderRegistrationResource GetProviderRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource GetResourceTypeSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableProviderHubSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableProviderHubSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> GetProviderRegistration(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>> GetProviderRegistrationAsync(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ProviderHub.ProviderRegistrationCollection GetProviderRegistrations() { throw null; }
     }
 }
 namespace Azure.ResourceManager.ProviderHub.Models

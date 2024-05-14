@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedDatabaseRestoreDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailData"/>. </summary>
         public ManagedDatabaseRestoreDetailData()
         {
             FullBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             UnrestorableFileList = new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

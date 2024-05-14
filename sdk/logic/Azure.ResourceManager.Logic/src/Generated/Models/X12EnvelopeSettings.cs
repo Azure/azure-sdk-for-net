@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement envelope settings. </summary>
     public partial class X12EnvelopeSettings
     {
-        /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/>. </summary>
         /// <param name="controlStandardsId"> The controls standards id. </param>
         /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
         /// <param name="senderApplicationId"> The sender application id. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
             UsageIndicator = usageIndicator;
         }
 
-        /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeSettings"/>. </summary>
         /// <param name="controlStandardsId"> The controls standards id. </param>
         /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
         /// <param name="senderApplicationId"> The sender application id. </param>

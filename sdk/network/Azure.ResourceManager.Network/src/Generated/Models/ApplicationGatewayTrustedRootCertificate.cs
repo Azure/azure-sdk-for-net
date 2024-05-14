@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,20 +15,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Trusted Root certificates of an application gateway. </summary>
     public partial class ApplicationGatewayTrustedRootCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         public ApplicationGatewayTrustedRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedRootCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, BinaryData data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Data = data;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

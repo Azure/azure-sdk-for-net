@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsConnectorStats. </summary>
     public partial class AzureDevOpsConnectorStats : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorStats"/>. </summary>
         public AzureDevOpsConnectorStats()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorStats"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

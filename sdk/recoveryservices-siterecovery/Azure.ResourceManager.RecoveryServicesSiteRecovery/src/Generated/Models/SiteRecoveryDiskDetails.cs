@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Onprem disk details data. </summary>
     public partial class SiteRecoveryDiskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskDetails"/>. </summary>
         internal SiteRecoveryDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskDetails"/>. </summary>
         /// <param name="maxSizeMB"> The hard disk max size in MB. </param>
         /// <param name="vhdType"> The type of the volume. </param>
         /// <param name="vhdId"> The VHD Id. </param>

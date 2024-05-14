@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The status of the operation. </summary>
     public partial class SsisObjectMetadataStatusResult
     {
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataStatusResult"/>. </summary>
         internal SsisObjectMetadataStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataStatusResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="properties"> The operation properties. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,56 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating triggers. </summary>
     public partial class ContainerRegistryTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTriggerUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerUpdateContent"/>. </summary>
         public ContainerRegistryTriggerUpdateContent()
         {
             TimerTriggers = new ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>();
             SourceTriggers = new ChangeTrackingList<ContainerRegistrySourceTriggerUpdateContent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerUpdateContent"/>. </summary>
+        /// <param name="timerTriggers"> The collection of timer triggers. </param>
+        /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
+        /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTriggerUpdateContent(IList<ContainerRegistryTimerTriggerUpdateContent> timerTriggers, IList<ContainerRegistrySourceTriggerUpdateContent> sourceTriggers, ContainerRegistryBaseImageTriggerUpdateContent baseImageTrigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TimerTriggers = timerTriggers;
+            SourceTriggers = sourceTriggers;
+            BaseImageTrigger = baseImageTrigger;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of timer triggers. </summary>

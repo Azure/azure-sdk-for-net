@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Parameters for a Redis Enterprise import operation. </summary>
     public partial class ImportRedisEnterpriseDatabaseContent
     {
-        /// <summary> Initializes a new instance of ImportRedisEnterpriseDatabaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportRedisEnterpriseDatabaseContent"/>. </summary>
         /// <param name="sasUris"> SAS URIs for the target blobs to import from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUris"/> is null. </exception>
         public ImportRedisEnterpriseDatabaseContent(IEnumerable<Uri> sasUris)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Argument.AssertNotNull(sasUris, nameof(sasUris));
 
             SasUris = sasUris.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportRedisEnterpriseDatabaseContent"/>. </summary>
+        /// <param name="sasUris"> SAS URIs for the target blobs to import from. </param>
+        internal ImportRedisEnterpriseDatabaseContent(IList<Uri> sasUris)
+        {
+            SasUris = sasUris;
         }
 
         /// <summary> SAS URIs for the target blobs to import from. </summary>

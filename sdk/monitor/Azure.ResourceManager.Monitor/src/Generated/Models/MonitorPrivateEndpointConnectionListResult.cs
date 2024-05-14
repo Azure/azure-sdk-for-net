@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class MonitorPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateEndpointConnectionListResult"/>. </summary>
         internal MonitorPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal MonitorPrivateEndpointConnectionListResult(IReadOnlyList<MonitorPrivateEndpointConnectionData> value)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of jobs. </summary>
     internal partial class SiteRecoveryJobListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobListResult"/>. </summary>
         internal SiteRecoveryJobListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryJobData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobListResult"/>. </summary>
         /// <param name="value"> The list of jobs. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryJobListResult(IReadOnlyList<SiteRecoveryJobData> value, string nextLink)

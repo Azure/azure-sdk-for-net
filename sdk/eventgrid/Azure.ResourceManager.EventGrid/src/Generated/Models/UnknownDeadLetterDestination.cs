@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The UnknownDeadLetterDestination. </summary>
     internal partial class UnknownDeadLetterDestination : DeadLetterDestination
     {
-        /// <summary> Initializes a new instance of UnknownDeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
         internal UnknownDeadLetterDestination(DeadLetterEndPointType endpointType) : base(endpointType)
         {

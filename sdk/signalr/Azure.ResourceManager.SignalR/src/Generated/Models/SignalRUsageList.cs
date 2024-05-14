@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Object that includes an array of the resource usages and a possible link for next set. </summary>
     internal partial class SignalRUsageList
     {
-        /// <summary> Initializes a new instance of SignalRUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsageList"/>. </summary>
         internal SignalRUsageList()
         {
             Value = new ChangeTrackingList<SignalRUsage>();
         }
 
-        /// <summary> Initializes a new instance of SignalRUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsageList"/>. </summary>
         /// <param name="value"> List of the resource usages. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

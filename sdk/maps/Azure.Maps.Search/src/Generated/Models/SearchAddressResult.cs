@@ -13,13 +13,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful Search calls. </summary>
     public partial class SearchAddressResult
     {
-        /// <summary> Initializes a new instance of SearchAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResult"/>. </summary>
         internal SearchAddressResult()
         {
             Results = new ChangeTrackingList<SearchAddressResultItem>();
         }
 
-        /// <summary> Initializes a new instance of SearchAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResult"/>. </summary>
         /// <param name="summary"> Summary object for a Search API response. </param>
         /// <param name="results"> A list of Search API results. </param>
         internal SearchAddressResult(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results)

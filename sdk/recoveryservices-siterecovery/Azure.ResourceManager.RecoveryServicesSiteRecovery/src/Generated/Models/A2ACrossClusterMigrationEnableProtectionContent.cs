@@ -12,10 +12,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A Cross-Cluster Migration enable protection input. </summary>
     public partial class A2ACrossClusterMigrationEnableProtectionContent : EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2ACrossClusterMigrationEnableProtectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>. </summary>
         public A2ACrossClusterMigrationEnableProtectionContent()
         {
             InstanceType = "A2ACrossClusterMigration";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationEnableProtectionContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        internal A2ACrossClusterMigrationEnableProtectionContent(string instanceType, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId) : base(instanceType)
+        {
+            FabricObjectId = fabricObjectId;
+            RecoveryContainerId = recoveryContainerId;
+            InstanceType = instanceType ?? "A2ACrossClusterMigration";
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Cache network settings. </summary>
     public partial class StorageCacheNetworkSettings
     {
-        /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheNetworkSettings"/>. </summary>
         public StorageCacheNetworkSettings()
         {
             UtilityAddresses = new ChangeTrackingList<IPAddress>();
             DnsServers = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheNetworkSettings"/>. </summary>
         /// <param name="mtu"> The IPv4 maximum transmission unit configured for the subnet. </param>
         /// <param name="utilityAddresses"> Array of additional IP addresses used by this cache. </param>
         /// <param name="dnsServers"> DNS servers for the cache to use.  It will be set from the network configuration if no value is provided. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,6 +16,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(NodesList))
+            {
+                writer.WritePropertyName("nodesList"u8);
+                writer.WriteStartArray();
+                foreach (var item in NodesList)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
@@ -55,6 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("prebackupvalidation"u8);
                 writer.WriteObjectValue(PreBackupValidation);
             }
+            if (Optional.IsDefined(IsProtectable))
+            {
+                writer.WritePropertyName("isProtectable"u8);
+                writer.WriteBooleanValue(IsProtectable.Value);
+            }
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
@@ -86,6 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
+            Optional<IList<DistributedNodesInfo>> nodesList = default;
             Optional<string> parentName = default;
             Optional<string> parentUniqueName = default;
             Optional<string> serverName = default;
@@ -94,6 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> subinquireditemcount = default;
             Optional<int> subprotectableitemcount = default;
             Optional<PreBackupValidation> prebackupvalidation = default;
+            Optional<bool> isProtectable = default;
             Optional<string> backupManagementType = default;
             Optional<string> workloadType = default;
             string protectableItemType = default;
@@ -101,6 +119,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nodesList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                    }
+                    nodesList = array;
+                    continue;
+                }
                 if (property.NameEquals("parentName"u8))
                 {
                     parentName = property.Value.GetString();
@@ -161,6 +193,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("isProtectable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isProtectable = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
@@ -191,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmWorkloadSqlAvailabilityGroupProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value);
+            return new VmWorkloadSqlAvailabilityGroupProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, Optional.ToNullable(isProtectable), Optional.ToList(nodesList));
         }
     }
 }

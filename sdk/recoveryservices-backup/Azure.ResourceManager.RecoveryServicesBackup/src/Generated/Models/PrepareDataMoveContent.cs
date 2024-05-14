@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Prepare DataMove Request. </summary>
     public partial class PrepareDataMoveContent
     {
-        /// <summary> Initializes a new instance of PrepareDataMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrepareDataMoveContent"/>. </summary>
         /// <param name="targetResourceId"> ARM Id of target vault. </param>
         /// <param name="targetRegion"> Target Region. </param>
         /// <param name="dataMoveLevel"> DataMove Level. </param>
@@ -27,6 +27,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetRegion = targetRegion;
             DataMoveLevel = dataMoveLevel;
             SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrepareDataMoveContent"/>. </summary>
+        /// <param name="targetResourceId"> ARM Id of target vault. </param>
+        /// <param name="targetRegion"> Target Region. </param>
+        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <param name="sourceContainerArmIds">
+        /// Source Container ArmIds
+        /// This needs to be populated only if DataMoveLevel is set to container
+        /// </param>
+        /// <param name="ignoreMoved"> Ignore the artifacts which are already moved. </param>
+        internal PrepareDataMoveContent(ResourceIdentifier targetResourceId, AzureLocation targetRegion, DataMoveLevel dataMoveLevel, IList<ResourceIdentifier> sourceContainerArmIds, bool? ignoreMoved)
+        {
+            TargetResourceId = targetResourceId;
+            TargetRegion = targetRegion;
+            DataMoveLevel = dataMoveLevel;
+            SourceContainerArmIds = sourceContainerArmIds;
+            IgnoreMoved = ignoreMoved;
         }
 
         /// <summary> ARM Id of target vault. </summary>

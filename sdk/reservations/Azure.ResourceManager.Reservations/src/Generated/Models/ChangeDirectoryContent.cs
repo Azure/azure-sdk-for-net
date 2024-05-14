@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Request body for change directory of a reservation. </summary>
     public partial class ChangeDirectoryContent
     {
-        /// <summary> Initializes a new instance of ChangeDirectoryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryContent"/>. </summary>
         public ChangeDirectoryContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryContent"/>. </summary>
+        /// <param name="destinationTenantId"> Tenant id GUID that reservation order is to be transferred to. </param>
+        internal ChangeDirectoryContent(Guid? destinationTenantId)
+        {
+            DestinationTenantId = destinationTenantId;
         }
 
         /// <summary> Tenant id GUID that reservation order is to be transferred to. </summary>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class HealthCheckStatusDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailData"/>. </summary>
         public HealthCheckStatusDetailData()
         {
             HealthChecks = new ChangeTrackingList<DevCenterHealthCheck>();
         }
 
-        /// <summary> Initializes a new instance of HealthCheckStatusDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

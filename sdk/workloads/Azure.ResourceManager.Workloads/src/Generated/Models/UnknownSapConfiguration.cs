@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The UnknownSapConfiguration. </summary>
     internal partial class UnknownSapConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownSapConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSapConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         internal UnknownSapConfiguration(SapConfigurationType configurationType) : base(configurationType)
         {

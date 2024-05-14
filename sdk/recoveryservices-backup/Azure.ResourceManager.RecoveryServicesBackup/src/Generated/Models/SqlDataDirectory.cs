@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> SQLDataDirectory info. </summary>
     public partial class SqlDataDirectory
     {
-        /// <summary> Initializes a new instance of SqlDataDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDataDirectory"/>. </summary>
         public SqlDataDirectory()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlDataDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDataDirectory"/>. </summary>
         /// <param name="directoryType"> Type of data directory mapping. </param>
         /// <param name="path"> File path. </param>
         /// <param name="logicalName"> Logical name of the file. </param>

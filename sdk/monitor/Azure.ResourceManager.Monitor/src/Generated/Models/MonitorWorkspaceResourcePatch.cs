@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of ARM tracked top level resource properties for update operation. </summary>
     public partial class MonitorWorkspaceResourcePatch
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourcePatch"/>. </summary>
         public MonitorWorkspaceResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourcePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal MonitorWorkspaceResourcePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

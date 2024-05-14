@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -85,6 +90,8 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<Uri> serviceUrl = default;
             Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<FhirServiceEventState> eventState = default;
+            Optional<Encryption> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -217,11 +224,29 @@ namespace Azure.ResourceManager.HealthcareApis
                             publicNetworkAccess = new HealthcareApisPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("eventState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eventState = new FhirServiceEventState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DicomServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), authenticationConfiguration.Value, corsConfiguration.Value, serviceUrl.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), identity, Optional.ToNullable(etag));
+            return new DicomServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), authenticationConfiguration.Value, corsConfiguration.Value, serviceUrl.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), encryption.Value, identity, Optional.ToNullable(etag));
         }
     }
 }

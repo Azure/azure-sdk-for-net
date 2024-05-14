@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceStartStopScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceStartStopScheduleData"/>. </summary>
         public ManagedInstanceStartStopScheduleData()
         {
             ScheduleList = new ChangeTrackingList<SqlScheduleItem>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceStartStopScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -4,13 +4,13 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <!--Azure.Core.Experimental reference can be removed when DynamicJson moves to Azure.Core.-->
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -21,38 +21,61 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj" />
+    <ProjectReference Include="common\Azure.Core.Tests.Common.csproj" />
     <ProjectReference Include="..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
-    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Shared\Multipart\*.cs" LinkBase="Shared\Multipart" />
     <Compile Remove="..\src\Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\ARMChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ChangeTrackingDictionary.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ChangeTrackingList.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\FormUrlEncodedContent.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\GZipUtf8JsonRequestContent.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\HttpPipelineExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\IUtf8JsonSerializable.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\IOperationSource.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\IXmlSerializable.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\JsonElementExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\LightweightPkcs8Decoder.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\NextLinkOperationImplementation.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NoBodyResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\ObjectNotDisposedException.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\OperationFinalStateVia.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\Optional.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\Page.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\PageableHelpers.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\PageResponseEnumerator.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\RetriableStream.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\RequestRequestContent.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\ValueStopwatch.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\LightweightPkcs8Decoder.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\PemReader.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ProtocolOperation.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ProtocolOperationHelpers.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RetriableStream.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RequestContentHelper.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RequestRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\RequestUriBuilderExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ResponseHeadersExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ResponseWithHeaders.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ResponseWithHeadersOfTHeaders.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ResponseWithHeadersOfTOfTHeaders.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\StringRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\TypeBinder.cs" LinkBase="Shared" />
-    <Compile Include="..\..\..\..\common\ManagementTestShared\Redesign\*.cs" LinkBase="Shared\Mgmt" />
+    <Compile Include="..\src\Shared\TypeFormatters.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\Utf8JsonRequestContent.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\Utf8JsonWriterExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\ValueStopwatch.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\XElementExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\XmlWriterContent.cs" LinkBase="Shared" />
+    <Compile Include="..\src\Shared\XmlWriterExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Core.TestFramework\src\Instrumentation\ZeroPollingStrategy.cs" LinkBase="Shared\TestFramework" />
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
-    <Compile Include="..\src\Shared\ApiVersionString.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\GuidUtilities.cs" LinkBase="Shared" />
     <Compile Remove="public/**" />
+    <Compile Remove="common/**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />

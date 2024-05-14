@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis environment reference. </summary>
     public partial class SsisEnvironmentReference
     {
-        /// <summary> Initializes a new instance of SsisEnvironmentReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisEnvironmentReference"/>. </summary>
         internal SsisEnvironmentReference()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisEnvironmentReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisEnvironmentReference"/>. </summary>
         /// <param name="id"> Environment reference id. </param>
         /// <param name="environmentFolderName"> Environment folder name. </param>
         /// <param name="environmentName"> Environment name. </param>

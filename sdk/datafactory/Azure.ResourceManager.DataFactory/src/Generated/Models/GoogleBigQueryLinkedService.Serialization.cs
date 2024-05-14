@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -114,11 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -127,7 +126,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> project = default;
             Optional<DataFactoryElement<string>> additionalProjects = default;
-            Optional<DataFactoryElement<string>> requestGoogleDriveScope = default;
+            Optional<DataFactoryElement<bool>> requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
             Optional<DataFactorySecretBaseDefinition> refreshToken = default;
             Optional<DataFactoryElement<string>> clientId = default;
@@ -155,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> keyFilePath = default;
             Optional<DataFactoryElement<string>> trustedCertPath = default;
             Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestGoogleDriveScope = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            requestGoogleDriveScope = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -316,11 +318,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }

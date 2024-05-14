@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaJobInputDefinition
     {
-        /// <summary> Initializes a new instance of MediaJobInputDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputDefinition"/>. </summary>
         protected MediaJobInputDefinition()
         {
             IncludedTracks = new ChangeTrackingList<TrackDescriptor>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputDefinition"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="includedTracks">
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.

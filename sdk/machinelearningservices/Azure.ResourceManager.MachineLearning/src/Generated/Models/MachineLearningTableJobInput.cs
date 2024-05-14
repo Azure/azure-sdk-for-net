@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningTableJobInput. </summary>
     public partial class MachineLearningTableJobInput : MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningTableJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTableJobInput"/>. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MachineLearningTableJobInput(Uri uri)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.Mltable;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTableJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTableJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>

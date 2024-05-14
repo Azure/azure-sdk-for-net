@@ -20,6 +20,19 @@ namespace Azure.Storage
         public bool AutoValidateChecksum { get { throw null; } set { } }
         public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
     }
+    public enum ExpectContinueMode
+    {
+        ApplyOnThrottle = 0,
+        On = 1,
+        Off = 2,
+    }
+    public partial class ExpectContinueOptions
+    {
+        public ExpectContinueOptions() { }
+        public long? ContentLengthThreshold { get { throw null; } set { } }
+        public Azure.Storage.ExpectContinueMode Mode { get { throw null; } set { } }
+        public System.TimeSpan ThrottleInterval { get { throw null; } set { } }
+    }
     public enum StorageChecksumAlgorithm
     {
         Auto = 0,
@@ -168,7 +181,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2023-08-03";
+        public const string DefaultSasVersion = "2024-02-04";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

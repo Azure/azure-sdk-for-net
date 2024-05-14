@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,6 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<string> displayName = default;
             Optional<CommunicationIdentifierModel> participantCommunicationIdentifier = default;
+            Optional<IReadOnlyDictionary<string, string>> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -36,8 +38,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     participantCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
             }
-            return new AcsChatThreadParticipantProperties(displayName.Value, participantCommunicationIdentifier.Value);
+            return new AcsChatThreadParticipantProperties(displayName.Value, participantCommunicationIdentifier.Value, Optional.ToDictionary(metadata));
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Private Endpoint Connection Response Properties. </summary>
     public partial class RecoveryServicesPrivateEndpointConnection
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnection"/>. </summary>
         internal RecoveryServicesPrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<VaultSubResourceType>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnection"/>. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The Private Endpoint network resource that is linked to the Private Endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>

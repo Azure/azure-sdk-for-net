@@ -25,6 +25,16 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
+            if (Optional.IsDefined(ScalingProperties))
+            {
+                writer.WritePropertyName("scalingProperties"u8);
+                writer.WriteObjectValue(ScalingProperties);
+            }
+            if (Optional.IsDefined(UserProfile))
+            {
+                writer.WritePropertyName("userProfile"u8);
+                writer.WriteObjectValue(UserProfile);
+            }
             writer.WriteEndObject();
         }
     }

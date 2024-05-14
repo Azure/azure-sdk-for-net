@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Structure of command payload. </summary>
     public partial class DataFlowDebugCommandPayload
     {
-        /// <summary> Initializes a new instance of DataFlowDebugCommandPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandPayload"/>. </summary>
         /// <param name="streamName"> The stream name which is used for preview. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamName"/> is null. </exception>
         public DataFlowDebugCommandPayload(string streamName)
@@ -23,6 +23,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             StreamName = streamName;
             Columns = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandPayload"/>. </summary>
+        /// <param name="streamName"> The stream name which is used for preview. </param>
+        /// <param name="rowLimits"> Row limits for preview response. </param>
+        /// <param name="columns"> Array of column names. </param>
+        /// <param name="expression"> The expression which is used for preview. </param>
+        internal DataFlowDebugCommandPayload(string streamName, int? rowLimits, IList<string> columns, string expression)
+        {
+            StreamName = streamName;
+            RowLimits = rowLimits;
+            Columns = columns;
+            Expression = expression;
         }
 
         /// <summary> The stream name which is used for preview. </summary>

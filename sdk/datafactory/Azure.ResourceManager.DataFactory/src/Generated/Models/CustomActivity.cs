@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Custom activity type. </summary>
     public partial class CustomActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Custom";
         }
 
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
-        internal CustomActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> command, DataFactoryLinkedServiceReference resourceLinkedService, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> command, DataFactoryLinkedServiceReference resourceLinkedService, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

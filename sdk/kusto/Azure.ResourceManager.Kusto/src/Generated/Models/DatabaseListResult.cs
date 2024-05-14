@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto databases operation response. </summary>
     internal partial class DatabaseListResult
     {
-        /// <summary> Initializes a new instance of DatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseListResult"/>. </summary>
         internal DatabaseListResult()
         {
             Value = new ChangeTrackingList<KustoDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value">
         /// The list of Kusto databases.

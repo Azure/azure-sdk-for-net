@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class LogProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </param>
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             RetentionPolicy = retentionPolicy;
         }
 
-        /// <summary> Initializes a new instance of LogProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

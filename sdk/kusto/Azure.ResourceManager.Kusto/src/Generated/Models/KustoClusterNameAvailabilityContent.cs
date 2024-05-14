@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a cluster check name availability request. </summary>
     public partial class KustoClusterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoClusterNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Cluster name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoClusterNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = KustoClusterType.MicrosoftKustoClusters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Cluster name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters. </param>
+        internal KustoClusterNameAvailabilityContent(string name, KustoClusterType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Cluster name. </summary>

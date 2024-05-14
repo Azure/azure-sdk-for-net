@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response from the List namespace operation. </summary>
     public partial class EventHubsNetworkRuleSetIPRules
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetIPRules"/>. </summary>
         public EventHubsNetworkRuleSetIPRules()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetIPRules"/>. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
         internal EventHubsNetworkRuleSetIPRules(string ipMask, EventHubsNetworkRuleIPAction? action)

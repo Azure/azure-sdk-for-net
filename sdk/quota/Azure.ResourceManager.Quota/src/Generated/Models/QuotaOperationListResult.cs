@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The QuotaOperationListResult. </summary>
     internal partial class QuotaOperationListResult
     {
-        /// <summary> Initializes a new instance of QuotaOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationListResult"/>. </summary>
         internal QuotaOperationListResult()
         {
             Value = new ChangeTrackingList<QuotaOperationResult>();
         }
 
-        /// <summary> Initializes a new instance of QuotaOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next page of items. </param>
         internal QuotaOperationListResult(IReadOnlyList<QuotaOperationResult> value, string nextLink)

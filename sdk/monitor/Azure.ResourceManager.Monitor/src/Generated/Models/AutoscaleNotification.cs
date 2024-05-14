@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Autoscale notification. </summary>
     public partial class AutoscaleNotification
     {
-        /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleNotification"/>. </summary>
         public AutoscaleNotification()
         {
             Operation = MonitorOperationType.Scale;
             Webhooks = new ChangeTrackingList<WebhookNotification>();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleNotification"/>. </summary>
         /// <param name="operation"> the operation associated with the notification and its value must be "scale". </param>
         /// <param name="email"> the email notification. </param>
         /// <param name="webhooks"> the collection of webhook notifications. </param>

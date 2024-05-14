@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.AI.Language.Conversations;
 using Azure.Core;
@@ -33,6 +34,32 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of ConversationAuthoringClient for mocking. </summary>
         protected ConversationAuthoringClient()
         {
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationsClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ConversationsClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary>
@@ -1015,7 +1042,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1036,7 +1063,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1062,7 +1089,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1088,7 +1115,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1114,7 +1141,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1140,7 +1167,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainedModels", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1170,7 +1197,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1200,7 +1227,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1226,7 +1253,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1252,7 +1279,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingJobs", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1277,7 +1304,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1302,7 +1329,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedLanguages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1325,7 +1352,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1348,7 +1375,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, language, multilingual, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1373,7 +1400,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1398,7 +1425,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", context);
         }
 
         /// <summary>

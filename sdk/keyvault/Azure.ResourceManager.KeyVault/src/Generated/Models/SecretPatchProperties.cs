@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the secret. </summary>
     public partial class SecretPatchProperties
     {
-        /// <summary> Initializes a new instance of SecretPatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretPatchProperties"/>. </summary>
         public SecretPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecretPatchProperties"/>. </summary>
+        /// <param name="value"> The value of the secret. </param>
+        /// <param name="contentType"> The content type of the secret. </param>
+        /// <param name="attributes"> The attributes of the secret. </param>
+        internal SecretPatchProperties(string value, string contentType, SecretAttributes attributes)
+        {
+            Value = value;
+            ContentType = contentType;
+            Attributes = attributes;
         }
 
         /// <summary> The value of the secret. </summary>

@@ -33,7 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -60,6 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
                     case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
                     case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
+                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element);
                     case "OracleCloudStorageLocation": return OracleCloudStorageLocation.DeserializeOracleCloudStorageLocation(element);
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }

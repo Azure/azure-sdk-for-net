@@ -1,7 +1,15 @@
 {
+  "displayNames": {
+    "Public,Preview,Canary": ""
+  },
   "include": [
     {
       "Agent": {
+        "msi_image": {
+          "OSVmImage": "ubuntu-22.04",
+          "Pool": "azsdk-pool-mms-ubuntu-2204-identitymsi",
+          "AdditionalTestFilters": "TestCategory=IdentityVM"
+        },
         "ubuntu_keyring_container": {
           "OSVmImage": "ubuntu-20.04",
           "Pool": "Azure Pipelines",

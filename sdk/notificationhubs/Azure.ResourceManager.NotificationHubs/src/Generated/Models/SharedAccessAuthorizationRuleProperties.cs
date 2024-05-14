@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> SharedAccessAuthorizationRule properties. </summary>
     public partial class SharedAccessAuthorizationRuleProperties
     {
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
         public SharedAccessAuthorizationRuleProperties()
         {
             Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/>. </summary>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The azure resource info when target service type is AzureResource. </summary>
     public partial class AzureResourceInfo : TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of AzureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceInfo"/>. </summary>
         public AzureResourceInfo()
         {
             TargetServiceType = TargetServiceType.AzureResource;
         }
 
-        /// <summary> Initializes a new instance of AzureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         /// <param name="id"> The Id of azure resource. </param>
         /// <param name="resourceProperties">

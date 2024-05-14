@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class AppServiceDeploymentLocations
     {
-        /// <summary> Initializes a new instance of AppServiceDeploymentLocations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDeploymentLocations"/>. </summary>
         internal AppServiceDeploymentLocations()
         {
             Locations = new ChangeTrackingList<AppServiceGeoRegion>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             HostingEnvironmentDeploymentInfos = new ChangeTrackingList<HostingEnvironmentDeploymentInfo>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDeploymentLocations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDeploymentLocations"/>. </summary>
         /// <param name="locations"> Available regions. </param>
         /// <param name="hostingEnvironments"> Available App Service Environments with full descriptions of the environments. </param>
         /// <param name="hostingEnvironmentDeploymentInfos"> Available App Service Environments with basic information. </param>

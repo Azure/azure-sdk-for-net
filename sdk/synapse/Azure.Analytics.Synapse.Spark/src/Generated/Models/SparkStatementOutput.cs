@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementOutput. </summary>
     public partial class SparkStatementOutput
     {
-        /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/>. </summary>
         /// <param name="executionCount"></param>
         internal SparkStatementOutput(int executionCount)
         {
@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Traceback = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SparkStatementOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/>. </summary>
         /// <param name="status"></param>
         /// <param name="executionCount"></param>
         /// <param name="data"> Any object. </param>

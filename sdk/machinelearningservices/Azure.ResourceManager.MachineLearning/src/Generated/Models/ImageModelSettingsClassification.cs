@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettingsClassification : ImageModelSettings
     {
-        /// <summary> Initializes a new instance of ImageModelSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsClassification"/>. </summary>
         public ImageModelSettingsClassification()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsClassification"/>. </summary>
         /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>

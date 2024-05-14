@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes all the filtering operations, such as de-interlacing, rotation etc. that are to be applied to the input media before encoding. </summary>
     public partial class FilteringOperations
     {
-        /// <summary> Initializes a new instance of FilteringOperations. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringOperations"/>. </summary>
         public FilteringOperations()
         {
             Overlays = new ChangeTrackingList<MediaOverlayBase>();
         }
 
-        /// <summary> Initializes a new instance of FilteringOperations. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringOperations"/>. </summary>
         /// <param name="deinterlace"> The de-interlacing settings. </param>
         /// <param name="rotation"> The rotation, if any, to be applied to the input video, before it is encoded. Default is Auto. </param>
         /// <param name="crop"> The parameters for the rectangular window with which to crop the input video. </param>

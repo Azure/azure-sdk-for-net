@@ -13,13 +13,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The ONVIF device properties. </summary>
     public partial class OnvifDevice
     {
-        /// <summary> Initializes a new instance of OnvifDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDevice"/>. </summary>
         public OnvifDevice()
         {
             MediaProfiles = new ChangeTrackingList<MediaProfile>();
         }
 
-        /// <summary> Initializes a new instance of OnvifDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDevice"/>. </summary>
         /// <param name="hostname"> The hostname of the ONVIF device. </param>
         /// <param name="systemDateTime"> The system date and time of the ONVIF device. </param>
         /// <param name="dns"> The ONVIF device DNS properties. </param>

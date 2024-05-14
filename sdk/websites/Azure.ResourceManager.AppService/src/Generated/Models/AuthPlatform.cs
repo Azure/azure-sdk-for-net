@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
     public partial class AuthPlatform
     {
-        /// <summary> Initializes a new instance of AuthPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthPlatform"/>. </summary>
         public AuthPlatform()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthPlatform"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.

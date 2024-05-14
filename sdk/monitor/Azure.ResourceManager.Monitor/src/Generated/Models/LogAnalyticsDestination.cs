@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Log Analytics destination. </summary>
     public partial class LogAnalyticsDestination
     {
-        /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDestination"/>. </summary>
         public LogAnalyticsDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDestination"/>. </summary>
         /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
         /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">

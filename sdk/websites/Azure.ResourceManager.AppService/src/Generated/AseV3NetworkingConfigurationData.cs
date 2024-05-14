@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AseV3NetworkingConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         public AseV3NetworkingConfigurationData()
         {
             WindowsOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             InternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The maintenance configuration capability. </summary>
     public partial class ManagedInstanceMaintenanceConfigurationCapability
     {
-        /// <summary> Initializes a new instance of ManagedInstanceMaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceMaintenanceConfigurationCapability"/>. </summary>
         internal ManagedInstanceMaintenanceConfigurationCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceMaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceMaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>

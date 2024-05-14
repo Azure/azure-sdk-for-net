@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class DomainTopicData : ResourceData
     {
-        /// <summary> Initializes a new instance of DomainTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainTopicData"/>. </summary>
         public DomainTopicData()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

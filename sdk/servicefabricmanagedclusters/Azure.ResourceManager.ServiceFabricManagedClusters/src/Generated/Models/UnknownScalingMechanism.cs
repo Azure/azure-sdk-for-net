@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The UnknownScalingMechanism. </summary>
     internal partial class UnknownScalingMechanism : ManagedServiceScalingMechanism
     {
-        /// <summary> Initializes a new instance of UnknownScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
         internal UnknownScalingMechanism(ServiceScalingMechanismKind kind) : base(kind)
         {

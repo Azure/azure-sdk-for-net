@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Response of get all organizations Operation. </summary>
     internal partial class NewRelicOrganizationsListResult
     {
-        /// <summary> Initializes a new instance of NewRelicOrganizationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationsListResult"/>. </summary>
         /// <param name="value"> The OrganizationResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicOrganizationsListResult(IEnumerable<NewRelicOrganizationResourceData> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicOrganizationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationsListResult"/>. </summary>
         /// <param name="value"> The OrganizationResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal NewRelicOrganizationsListResult(IReadOnlyList<NewRelicOrganizationResourceData> value, Uri nextLink)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes the properties of an existing Shared Private Link Resource managed by the Azure Cognitive Search service. </summary>
     public partial class SharedSearchServicePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceProperties"/>. </summary>
         public SharedSearchServicePrivateLinkResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceProperties"/>. </summary>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCustomerInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of HubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.HubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HubData(id, name, resourceType, systemData, tags, location, apiEndpoint, webEndpoint, provisioningState, tenantFeatures, hubBillingInfo);
+            return new HubData(id, name, resourceType, systemData, tags, location, apiEndpoint, webEndpoint, provisioningState, tenantFeatures, hubBillingInfo, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.ProfileResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             fields ??= new List<PropertyDefinition>();
             strongIds ??= new List<StrongId>();
 
-            return new ProfileResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, strongIds?.ToList());
+            return new ProfileResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, strongIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PropertyDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PropertyDefinition"/>. </summary>
         /// <param name="arrayValueSeparator"> Array value separator for properties with isArray set. </param>
         /// <param name="enumValidValues"> Describes valid values for an enum property. </param>
         /// <param name="fieldName"> Name of the property. </param>
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             enumValidValues ??= new List<ProfileEnumValidValuesFormat>();
             dataSourcePrecedenceRules ??= new List<DataSourcePrecedence>();
 
-            return new PropertyDefinition(arrayValueSeparator, enumValidValues?.ToList(), fieldName, fieldType, isArray, isEnum, isFlagEnum, isImage, isLocalizedString, isName, isRequired, propertyId, schemaItemPropLink, maxLength, isAvailableInGraph, dataSourcePrecedenceRules?.ToList());
+            return new PropertyDefinition(arrayValueSeparator, enumValidValues?.ToList(), fieldName, fieldType, isArray, isEnum, isFlagEnum, isImage, isLocalizedString, isName, isRequired, propertyId, schemaItemPropLink, maxLength, isAvailableInGraph, dataSourcePrecedenceRules?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataSourcePrecedence. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataSourcePrecedence"/>. </summary>
         /// <param name="precedence"> the precedence value. </param>
         /// <param name="name"> The data source name. </param>
         /// <param name="dataSourceType"> The data source type. </param>
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.DataSourcePrecedence"/> instance for mocking. </returns>
         public static DataSourcePrecedence DataSourcePrecedence(int? precedence = null, string name = null, DataSourceType? dataSourceType = null, Status? status = null, int? id = null, string dataSourceReferenceId = null)
         {
-            return new DataSourcePrecedence(precedence, name, dataSourceType, status, id, dataSourceReferenceId);
+            return new DataSourcePrecedence(precedence, name, dataSourceType, status, id, dataSourceReferenceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KpiDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KpiDefinition"/>. </summary>
         /// <param name="entityType"> The mapping entity type. </param>
         /// <param name="entityTypeName"> The mapping entity name. </param>
         /// <param name="tenantId"> The hub name. </param>
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             aliases ??= new List<KpiAlias>();
             extracts ??= new List<KpiExtract>();
 
-            return new KpiDefinition(entityType, entityTypeName, tenantId, kpiName, displayName, description, calculationWindow, calculationWindowFieldName, function, expression, unit, filter, groupBy?.ToList(), groupByMetadata?.ToList(), participantProfilesMetadata?.ToList(), provisioningState, thresHolds, aliases?.ToList(), extracts?.ToList());
+            return new KpiDefinition(entityType, entityTypeName, tenantId, kpiName, displayName, description, calculationWindow, calculationWindowFieldName, function, expression, unit, filter, groupBy?.ToList(), groupByMetadata?.ToList(), participantProfilesMetadata?.ToList(), provisioningState, thresHolds, aliases?.ToList(), extracts?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KpiGroupByMetadata"/>. </summary>
         /// <param name="displayName"> The display name. </param>
         /// <param name="fieldName"> The name of the field. </param>
         /// <param name="fieldType"> The type of the field. </param>
@@ -155,24 +155,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             displayName ??= new Dictionary<string, string>();
 
-            return new KpiGroupByMetadata(displayName, fieldName, fieldType);
+            return new KpiGroupByMetadata(displayName, fieldName, fieldType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KpiParticipantProfilesMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KpiParticipantProfilesMetadata"/>. </summary>
         /// <param name="typeName"> Name of the type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> A new <see cref="Models.KpiParticipantProfilesMetadata"/> instance for mocking. </returns>
         public static KpiParticipantProfilesMetadata KpiParticipantProfilesMetadata(string typeName = null)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-
-            return new KpiParticipantProfilesMetadata(typeName);
+            return new KpiParticipantProfilesMetadata(typeName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.InteractionResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -216,10 +210,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             participantProfiles ??= new List<Participant>();
             dataSourcePrecedenceRules ??= new List<DataSourcePrecedence>();
 
-            return new InteractionResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, idPropertyNames?.ToList(), participantProfiles?.ToList(), primaryParticipantProfilePropertyName, dataSourcePrecedenceRules?.ToList(), isActivity, namePropertiesDefaultDataSourceName, dataSourceType, status, idPropertiesDefaultDataSourceId, dataSourceReferenceId);
+            return new InteractionResourceFormatData(id, name, resourceType, systemData, attributes, description, displayName, localizedAttributes, smallImage, mediumImage, largeImage, apiEntitySetName, entityType, fields?.ToList(), instancesCount, lastChangedUtc, provisioningState, schemaItemTypeLink, tenantId, timestampFieldName, typeName, idPropertyNames?.ToList(), participantProfiles?.ToList(), primaryParticipantProfilePropertyName, dataSourcePrecedenceRules?.ToList(), isActivity, namePropertiesDefaultDataSourceName, dataSourceType, status, idPropertiesDefaultDataSourceId, dataSourceReferenceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SuggestRelationshipLinksResponse"/>. </summary>
         /// <param name="interactionName"> The interaction name. </param>
         /// <param name="suggestedRelationships"> Suggested relationships for the type. </param>
         /// <returns> A new <see cref="Models.SuggestRelationshipLinksResponse"/> instance for mocking. </returns>
@@ -227,10 +221,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             suggestedRelationships ??= new List<RelationshipsLookup>();
 
-            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships?.ToList());
+            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RelationshipsLookup. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RelationshipsLookup"/>. </summary>
         /// <param name="profileName"> The relationship profile. </param>
         /// <param name="profilePropertyReferences"> The property references for the profile type. </param>
         /// <param name="relatedProfileName"> The related profile. </param>
@@ -242,10 +236,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             profilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
             relatedProfilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
 
-            return new RelationshipsLookup(profileName, profilePropertyReferences?.ToList(), relatedProfileName, relatedProfilePropertyReferences?.ToList(), existingRelationshipName);
+            return new RelationshipsLookup(profileName, profilePropertyReferences?.ToList(), relatedProfileName, relatedProfilePropertyReferences?.ToList(), existingRelationshipName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.RelationshipResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -270,10 +264,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             fields ??= new List<PropertyDefinition>();
             lookupMappings ??= new List<RelationshipTypeMapping>();
 
-            return new RelationshipResourceFormatData(id, name, resourceType, systemData, cardinality, displayName, description, expiryDateTimeUtc, fields?.ToList(), lookupMappings?.ToList(), profileType, provisioningState, relationshipName, relatedProfileType, relationshipGuidId, tenantId);
+            return new RelationshipResourceFormatData(id, name, resourceType, systemData, cardinality, displayName, description, expiryDateTimeUtc, fields?.ToList(), lookupMappings?.ToList(), profileType, provisioningState, relationshipName, relatedProfileType, relationshipGuidId, tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RelationshipLinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.RelationshipLinkResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -298,10 +292,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             profilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
             relatedProfilePropertyReferences ??= new List<ParticipantProfilePropertyReference>();
 
-            return new RelationshipLinkResourceFormatData(id, name, resourceType, systemData, displayName, description, interactionType, linkName, mappings?.ToList(), profilePropertyReferences?.ToList(), provisioningState, relatedProfilePropertyReferences?.ToList(), relationshipName, relationshipGuidId, tenantId);
+            return new RelationshipLinkResourceFormatData(id, name, resourceType, systemData, displayName, description, interactionType, linkName, mappings?.ToList(), profilePropertyReferences?.ToList(), provisioningState, relatedProfilePropertyReferences?.ToList(), relationshipName, relationshipGuidId, tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.AuthorizationPolicyResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -315,10 +309,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             permissions ??= new List<PermissionType>();
 
-            return new AuthorizationPolicyResourceFormatData(id, name, resourceType, systemData, policyName, permissions?.ToList(), primaryKey, secondaryKey);
+            return new AuthorizationPolicyResourceFormatData(id, name, resourceType, systemData, policyName, permissions?.ToList(), primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationPolicy"/>. </summary>
         /// <param name="policyName"> Name of the policy. </param>
         /// <param name="permissions"> The permissions associated with the policy. </param>
         /// <param name="primaryKey"> Primary key associated with the policy. </param>
@@ -328,10 +322,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             permissions ??= new List<PermissionType>();
 
-            return new AuthorizationPolicy(policyName, permissions?.ToList(), primaryKey, secondaryKey);
+            return new AuthorizationPolicy(policyName, permissions?.ToList(), primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.ConnectorResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -352,10 +346,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             connectorProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ConnectorResourceFormatData(id, name, resourceType, systemData, connectorId, connectorName, connectorType, displayName, description, connectorProperties, created, lastModified, state, tenantId, isInternal);
+            return new ConnectorResourceFormatData(id, name, resourceType, systemData, connectorId, connectorName, connectorType, displayName, description, connectorProperties, created, lastModified, state, tenantId, isInternal, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.ConnectorMappingResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -378,10 +372,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="CustomerInsights.ConnectorMappingResourceFormatData"/> instance for mocking. </returns>
         public static ConnectorMappingResourceFormatData ConnectorMappingResourceFormatData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectorName = null, ConnectorType? connectorType = null, DateTimeOffset? created = null, DateTimeOffset? lastModified = null, EntityType? entityType = null, string entityTypeName = null, string connectorMappingName = null, string displayName = null, string description = null, string dataFormatId = null, ConnectorMappingProperties mappingProperties = null, DateTimeOffset? nextRunOn = null, string runId = null, ConnectorMappingState? state = null, Guid? tenantId = null)
         {
-            return new ConnectorMappingResourceFormatData(id, name, resourceType, systemData, connectorName, connectorType, created, lastModified, entityType, entityTypeName, connectorMappingName, displayName, description, dataFormatId, mappingProperties, nextRunOn, runId, state, tenantId);
+            return new ConnectorMappingResourceFormatData(id, name, resourceType, systemData, connectorName, connectorType, created, lastModified, entityType, entityTypeName, connectorMappingName, displayName, description, dataFormatId, mappingProperties, nextRunOn, runId, state, tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectorMappingFormat"/>. </summary>
         /// <param name="formatType"> The type mapping format. </param>
         /// <param name="columnDelimiter"> The character that signifies a break between columns. </param>
         /// <param name="acceptLanguage"> The oData language. </param>
@@ -391,10 +385,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.ConnectorMappingFormat"/> instance for mocking. </returns>
         public static ConnectorMappingFormat ConnectorMappingFormat(FormatType formatType = default, string columnDelimiter = null, string acceptLanguage = null, string quoteCharacter = null, string quoteEscapeCharacter = null, string arraySeparator = null)
         {
-            return new ConnectorMappingFormat(formatType, columnDelimiter, acceptLanguage, quoteCharacter, quoteEscapeCharacter, arraySeparator);
+            return new ConnectorMappingFormat(formatType, columnDelimiter, acceptLanguage, quoteCharacter, quoteEscapeCharacter, arraySeparator, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.KpiResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -429,10 +423,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             aliases ??= new List<KpiAlias>();
             extracts ??= new List<KpiExtract>();
 
-            return new KpiResourceFormatData(id, name, resourceType, systemData, entityType, entityTypeName, tenantId, kpiName, displayName, description, calculationWindow, calculationWindowFieldName, function, expression, unit, filter, groupBy?.ToList(), groupByMetadata?.ToList(), participantProfilesMetadata?.ToList(), provisioningState, thresHolds, aliases?.ToList(), extracts?.ToList());
+            return new KpiResourceFormatData(id, name, resourceType, systemData, entityType, entityTypeName, tenantId, kpiName, displayName, description, calculationWindow, calculationWindowFieldName, function, expression, unit, filter, groupBy?.ToList(), groupByMetadata?.ToList(), participantProfilesMetadata?.ToList(), provisioningState, thresHolds, aliases?.ToList(), extracts?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of WidgetTypeResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.WidgetTypeResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -451,10 +445,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             displayName ??= new Dictionary<string, string>();
 
-            return new WidgetTypeResourceFormatData(id, name, resourceType, systemData, widgetTypeName, definition, description, displayName, imageUri, tenantId, widgetVersion, changed, created);
+            return new WidgetTypeResourceFormatData(id, name, resourceType, systemData, widgetTypeName, definition, description, displayName, imageUri, tenantId, widgetVersion, changed, created, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ViewResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.ViewResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -471,10 +465,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             displayName ??= new Dictionary<string, string>();
 
-            return new ViewResourceFormatData(id, name, resourceType, systemData, viewName, userId, tenantId, displayName, definition, changed, created);
+            return new ViewResourceFormatData(id, name, resourceType, systemData, viewName, userId, tenantId, displayName, definition, changed, created, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of LinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.LinkResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -500,10 +494,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             mappings ??= new List<TypePropertiesMapping>();
             participantPropertyReferences ??= new List<ParticipantPropertyReference>();
 
-            return new LinkResourceFormatData(id, name, resourceType, systemData, tenantId, linkName, sourceEntityType, targetEntityType, sourceEntityTypeName, targetEntityTypeName, displayName, description, mappings?.ToList(), participantPropertyReferences?.ToList(), provisioningState, referenceOnly, operationType);
+            return new LinkResourceFormatData(id, name, resourceType, systemData, tenantId, linkName, sourceEntityType, targetEntityType, sourceEntityTypeName, targetEntityTypeName, displayName, description, mappings?.ToList(), participantPropertyReferences?.ToList(), provisioningState, referenceOnly, operationType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleResourceFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleResourceFormat"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -513,10 +507,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.RoleResourceFormat"/> instance for mocking. </returns>
         public static RoleResourceFormat RoleResourceFormat(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, string description = null)
         {
-            return new RoleResourceFormat(id, name, resourceType, systemData, roleName, description);
+            return new RoleResourceFormat(id, name, resourceType, systemData, roleName, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.RoleAssignmentResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -548,20 +542,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             description ??= new Dictionary<string, string>();
             principals ??= new List<AssignmentPrincipal>();
 
-            return new RoleAssignmentResourceFormatData(id, name, resourceType, systemData, tenantId, assignmentName, displayName, description, provisioningState, role, principals?.ToList(), profiles, interactions, links, kpis, sasPolicies, connectors, views, relationshipLinks, relationships, widgetTypes, roleAssignments, conflationPolicies, segments);
+            return new RoleAssignmentResourceFormatData(id, name, resourceType, systemData, tenantId, assignmentName, displayName, description, provisioningState, role, principals?.ToList(), profiles, interactions, links, kpis, sasPolicies, connectors, views, relationshipLinks, relationships, widgetTypes, roleAssignments, conflationPolicies, segments, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ImageDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImageDefinition"/>. </summary>
         /// <param name="imageExists"> Whether image exists already. </param>
         /// <param name="contentUri"> Content URL for the image blob. </param>
         /// <param name="relativePath"> Relative path of the image. </param>
         /// <returns> A new <see cref="Models.ImageDefinition"/> instance for mocking. </returns>
         public static ImageDefinition ImageDefinition(bool? imageExists = null, Uri contentUri = null, string relativePath = null)
         {
-            return new ImageDefinition(imageExists, contentUri, relativePath);
+            return new ImageDefinition(imageExists, contentUri, relativePath, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerInsights.PredictionResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -593,10 +587,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             involvedRelationships ??= new List<string>();
             grades ??= new List<PredictionGradesItem>();
 
-            return new PredictionResourceFormatData(id, name, resourceType, systemData, description, displayName, involvedInteractionTypes?.ToList(), involvedKpiTypes?.ToList(), involvedRelationships?.ToList(), negativeOutcomeExpression, positiveOutcomeExpression, primaryProfileType, provisioningState, predictionName, scopeExpression, tenantId, autoAnalyze, mappings, scoreLabel, grades?.ToList(), systemGeneratedEntities);
+            return new PredictionResourceFormatData(id, name, resourceType, systemData, description, displayName, involvedInteractionTypes?.ToList(), involvedKpiTypes?.ToList(), involvedRelationships?.ToList(), negativeOutcomeExpression, positiveOutcomeExpression, primaryProfileType, provisioningState, predictionName, scopeExpression, tenantId, autoAnalyze, mappings, scoreLabel, grades?.ToList(), systemGeneratedEntities, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionSystemGeneratedEntities"/>. </summary>
         /// <param name="generatedInteractionTypes"> Generated interaction types. </param>
         /// <param name="generatedLinks"> Generated links. </param>
         /// <param name="generatedKpis"> Generated KPIs. </param>
@@ -607,10 +601,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             generatedLinks ??= new List<string>();
             generatedKpis ??= new Dictionary<string, string>();
 
-            return new PredictionSystemGeneratedEntities(generatedInteractionTypes?.ToList(), generatedLinks?.ToList(), generatedKpis);
+            return new PredictionSystemGeneratedEntities(generatedInteractionTypes?.ToList(), generatedLinks?.ToList(), generatedKpis, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionTrainingResults"/>. </summary>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="scoreName"> Score name. </param>
         /// <param name="predictionDistribution"> Prediction distribution. </param>
@@ -621,10 +615,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             canonicalProfiles ??= new List<CanonicalProfileDefinition>();
 
-            return new PredictionTrainingResults(tenantId, scoreName, predictionDistribution, canonicalProfiles?.ToList(), primaryProfileInstanceCount);
+            return new PredictionTrainingResults(tenantId, scoreName, predictionDistribution, canonicalProfiles?.ToList(), primaryProfileInstanceCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PredictionDistributionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionDistributionDefinition"/>. </summary>
         /// <param name="totalPositives"> Total positive in the distribution. </param>
         /// <param name="totalNegatives"> Total negatives in the distribution. </param>
         /// <param name="distributions"> Distributions of the prediction. </param>
@@ -633,10 +627,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             distributions ??= new List<PredictionDistributionDefinitionDistributionsItem>();
 
-            return new PredictionDistributionDefinition(totalPositives, totalNegatives, distributions?.ToList());
+            return new PredictionDistributionDefinition(totalPositives, totalNegatives, distributions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PredictionDistributionDefinitionDistributionsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionDistributionDefinitionDistributionsItem"/>. </summary>
         /// <param name="scoreThreshold"> Score threshold. </param>
         /// <param name="positives"> Number of positives. </param>
         /// <param name="negatives"> Number of negatives. </param>
@@ -645,10 +639,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.PredictionDistributionDefinitionDistributionsItem"/> instance for mocking. </returns>
         public static PredictionDistributionDefinitionDistributionsItem PredictionDistributionDefinitionDistributionsItem(int? scoreThreshold = null, long? positives = null, long? negatives = null, long? positivesAboveThreshold = null, long? negativesAboveThreshold = null)
         {
-            return new PredictionDistributionDefinitionDistributionsItem(scoreThreshold, positives, negatives, positivesAboveThreshold, negativesAboveThreshold);
+            return new PredictionDistributionDefinitionDistributionsItem(scoreThreshold, positives, negatives, positivesAboveThreshold, negativesAboveThreshold, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CanonicalProfileDefinition"/>. </summary>
         /// <param name="canonicalProfileId"> Canonical profile ID. </param>
         /// <param name="properties"> Properties of the canonical profile. </param>
         /// <returns> A new <see cref="Models.CanonicalProfileDefinition"/> instance for mocking. </returns>
@@ -656,10 +650,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         {
             properties ??= new List<CanonicalProfileDefinitionPropertiesItem>();
 
-            return new CanonicalProfileDefinition(canonicalProfileId, properties?.ToList());
+            return new CanonicalProfileDefinition(canonicalProfileId, properties?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinitionPropertiesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CanonicalProfileDefinitionPropertiesItem"/>. </summary>
         /// <param name="profileName"> Profile name. </param>
         /// <param name="profilePropertyName"> Property name of profile. </param>
         /// <param name="rank"> The rank. </param>
@@ -668,10 +662,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.CanonicalProfileDefinitionPropertiesItem"/> instance for mocking. </returns>
         public static CanonicalProfileDefinitionPropertiesItem CanonicalProfileDefinitionPropertiesItem(string profileName = null, string profilePropertyName = null, int? rank = null, CanonicalPropertyValueType? valueType = null, string value = null)
         {
-            return new CanonicalProfileDefinitionPropertiesItem(profileName, profilePropertyName, rank, valueType, value);
+            return new CanonicalProfileDefinitionPropertiesItem(profileName, profilePropertyName, rank, valueType, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PredictionModelStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionModelStatus"/>. </summary>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="predictionName"> The prediction name. </param>
         /// <param name="predictionGuidId"> The prediction GUID ID. </param>
@@ -686,7 +680,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <returns> A new <see cref="Models.PredictionModelStatus"/> instance for mocking. </returns>
         public static PredictionModelStatus PredictionModelStatus(Guid? tenantId = null, string predictionName = null, string predictionGuidId = null, PredictionModelLifeCycle status = default, string message = null, int? trainingSetCount = null, int? testSetCount = null, int? validationSetCount = null, decimal? trainingAccuracy = null, int? signalsUsed = null, string modelVersion = null)
         {
-            return new PredictionModelStatus(tenantId, predictionName, predictionGuidId, status, message, trainingSetCount, testSetCount, validationSetCount, trainingAccuracy, signalsUsed, modelVersion);
+            return new PredictionModelStatus(tenantId, predictionName, predictionGuidId, status, message, trainingSetCount, testSetCount, validationSetCount, trainingAccuracy, signalsUsed, modelVersion, serializedAdditionalRawData: null);
         }
     }
 }

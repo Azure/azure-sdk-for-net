@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment on error behavior. </summary>
     public partial class ErrorDeployment
     {
-        /// <summary> Initializes a new instance of ErrorDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDeployment"/>. </summary>
         public ErrorDeployment()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDeployment"/>. </summary>
+        /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
+        /// <param name="deploymentName"> The deployment to be used on error case. </param>
+        internal ErrorDeployment(ErrorDeploymentType? deploymentType, string deploymentName)
+        {
+            DeploymentType = deploymentType;
+            DeploymentName = deploymentName;
         }
 
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>

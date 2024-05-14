@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application stack. </summary>
     public partial class ApplicationStack
     {
-        /// <summary> Initializes a new instance of ApplicationStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationStack"/>. </summary>
         public ApplicationStack()
         {
             MajorVersions = new ChangeTrackingList<StackMajorVersion>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsDeprecated = new ChangeTrackingList<ApplicationStack>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationStack"/>. </summary>
         /// <param name="name"> Application stack name. </param>
         /// <param name="display"> Application stack display name. </param>
         /// <param name="dependency"> Application stack dependency. </param>

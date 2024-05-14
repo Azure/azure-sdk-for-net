@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Details of the data lake storage account associated with the workspace. </summary>
     public partial class SynapseDataLakeStorageAccountDetails
     {
-        /// <summary> Initializes a new instance of SynapseDataLakeStorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataLakeStorageAccountDetails"/>. </summary>
         public SynapseDataLakeStorageAccountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataLakeStorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataLakeStorageAccountDetails"/>. </summary>
         /// <param name="accountUri"> Account URL. </param>
         /// <param name="filesystem"> Filesystem name. </param>
         /// <param name="resourceId"> ARM resource Id of this storage account. </param>

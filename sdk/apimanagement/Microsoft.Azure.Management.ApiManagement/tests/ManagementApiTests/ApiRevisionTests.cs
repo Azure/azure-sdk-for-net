@@ -282,12 +282,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         "*",
                         deleteRevisions: true);
 
-                    testBase.client.ApiRelease.Delete(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        newApiId,
-                        newReleaseId,
-                        "*");
+                    //testBase.client.ApiRelease.Delete(
+                    //    testBase.rgName,
+                    //    testBase.serviceName,
+                    //    newApiId,
+                    //    newReleaseId,
+                    //    "*");
                 }
             }
         }

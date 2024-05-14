@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a DigitalTwinsEndpointResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DigitalTwinsEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDigitalTwinsEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetDigitalTwinsEndpointResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DigitalTwinsEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDigitalTwinsEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetDigitalTwinsEndpointResource method.
     /// </summary>
     public partial class DigitalTwinsEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DigitalTwinsEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/endpoints/{endpointName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly DigitalTwinsEndpointRestOperations _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient;
         private readonly DigitalTwinsEndpointResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsEndpointResource"/> class for mocking. </summary>
         protected DigitalTwinsEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DigitalTwinsEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DigitalTwinsEndpointResource(ArmClient client, DigitalTwinsEndpointResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwinsEndpoint_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwinsEndpoint_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DigitalTwinsEndpoint_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwinsEndpoint_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DigitalTwinsEndpoint_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DigitalTwinsEndpoint_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

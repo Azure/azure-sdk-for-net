@@ -15,7 +15,7 @@ namespace Azure.Identity
 {
     internal class ImdsManagedIdentitySource : ManagedIdentitySource
     {
-        // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
+        // IMDS constants. Docs for IMDS are available at https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         internal const string imddsTokenPath = "/metadata/identity/oauth2/token";
 
@@ -40,15 +40,15 @@ namespace Azure.Identity
             _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
-			{
-				var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
-            	builder.Path = imddsTokenPath;
+            {
+                var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
+                builder.Path = imddsTokenPath;
                 _imdsEndpoint = builder.Uri;
-			}
-			else
-			{
-            	_imdsEndpoint = s_imdsEndpoint;
-			}
+            }
+            else
+            {
+                _imdsEndpoint = s_imdsEndpoint;
+            }
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -102,6 +102,10 @@ namespace Azure.Identity
             catch (AggregateException e)
             {
                 throw new CredentialUnavailableException(AggregateError, e);
+            }
+            catch (CredentialUnavailableException)
+            {
+                throw;
             }
         }
 

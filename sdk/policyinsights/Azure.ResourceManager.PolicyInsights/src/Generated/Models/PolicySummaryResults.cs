@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Compliance summary on a particular summary level. </summary>
     public partial class PolicySummaryResults
     {
-        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySummaryResults"/>. </summary>
         internal PolicySummaryResults()
         {
             ResourceDetails = new ChangeTrackingList<ComplianceDetail>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PolicyGroupDetails = new ChangeTrackingList<ComplianceDetail>();
         }
 
-        /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySummaryResults"/>. </summary>
         /// <param name="queryResultsUri"> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </param>
         /// <param name="nonCompliantResources"> Number of non-compliant resources. </param>
         /// <param name="nonCompliantPolicies"> Number of non-compliant policies. </param>

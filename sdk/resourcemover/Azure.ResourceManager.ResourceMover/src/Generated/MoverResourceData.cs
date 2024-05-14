@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ResourceMover
     /// </summary>
     public partial class MoverResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MoverResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceData"/>. </summary>
         public MoverResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

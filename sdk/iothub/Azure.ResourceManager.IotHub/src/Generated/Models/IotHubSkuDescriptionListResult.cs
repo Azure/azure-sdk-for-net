@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of IotHubSkuDescription objects with a next link. </summary>
     internal partial class IotHubSkuDescriptionListResult
     {
-        /// <summary> Initializes a new instance of IotHubSkuDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuDescriptionListResult"/>. </summary>
         internal IotHubSkuDescriptionListResult()
         {
             Value = new ChangeTrackingList<IotHubSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of IotHubSkuDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuDescriptionListResult"/>. </summary>
         /// <param name="value"> The array of IotHubSkuDescription. </param>
         /// <param name="nextLink"> The next link. </param>
         internal IotHubSkuDescriptionListResult(IReadOnlyList<IotHubSkuDescription> value, string nextLink)

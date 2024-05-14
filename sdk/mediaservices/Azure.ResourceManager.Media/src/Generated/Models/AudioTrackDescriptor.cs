@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class AudioTrackDescriptor : TrackDescriptor
     {
-        /// <summary> Initializes a new instance of AudioTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrackDescriptor"/>. </summary>
         public AudioTrackDescriptor()
         {
             OdataType = "#Microsoft.Media.AudioTrackDescriptor";
         }
 
-        /// <summary> Initializes a new instance of AudioTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTrackDescriptor"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="channelMapping"> Optional designation for single channel audio tracks.  Can be used to combine the tracks into stereo or multi-channel audio tracks. </param>
         internal AudioTrackDescriptor(string odataType, ChannelMapping? channelMapping) : base(odataType)

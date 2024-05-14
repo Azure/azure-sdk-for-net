@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Table column. </summary>
     public partial class OperationalInsightsColumn
     {
-        /// <summary> Initializes a new instance of OperationalInsightsColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumn"/>. </summary>
         public OperationalInsightsColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumn"/>. </summary>
         /// <param name="name"> Column name. </param>
         /// <param name="columnType"> Column data type. </param>
         /// <param name="dataTypeHint"> Column data type logical hint. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of exposure control features. </summary>
     public partial class ExposureControlBatchContent
     {
-        /// <summary> Initializes a new instance of ExposureControlBatchContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
         /// <param name="exposureControlRequests"> List of exposure control features. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlRequests"/> is null. </exception>
         public ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(exposureControlRequests, nameof(exposureControlRequests));
 
             ExposureControlRequests = exposureControlRequests.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
+        /// <param name="exposureControlRequests"> List of exposure control features. </param>
+        internal ExposureControlBatchContent(IList<ExposureControlContent> exposureControlRequests)
+        {
+            ExposureControlRequests = exposureControlRequests;
         }
 
         /// <summary> List of exposure control features. </summary>

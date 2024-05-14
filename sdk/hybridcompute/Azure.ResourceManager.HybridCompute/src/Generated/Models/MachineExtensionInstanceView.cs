@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the Machine Extension Instance View. </summary>
     public partial class MachineExtensionInstanceView
     {
-        /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceView"/>. </summary>
         public MachineExtensionInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceView"/>. </summary>
         /// <param name="name"> The machine extension name. </param>
         /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>

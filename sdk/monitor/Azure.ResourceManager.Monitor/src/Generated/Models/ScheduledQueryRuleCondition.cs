@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A condition of the scheduled query rule. </summary>
     public partial class ScheduledQueryRuleCondition
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCondition"/>. </summary>
         public ScheduledQueryRuleCondition()
         {
             Dimensions = new ChangeTrackingList<MonitorDimension>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCondition"/>. </summary>
         /// <param name="query"> Log query alert. </param>
         /// <param name="timeAggregation"> Aggregation type. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="metricMeasureColumn"> The column containing the metric measure number. Relevant only for rules of the kind LogAlert. </param>

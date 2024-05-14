@@ -2,12 +2,23 @@
 <doc>
   <members>
     <member name="GetProjectDetailsAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetProjectDetailsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetProjectDetailsAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetProjectDetailsAsync("<projectName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetProjectDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetProjectDetailsAsync("<projectName>");
 
@@ -20,22 +31,26 @@ Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").To
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetProjectDetails(string,RequestContext)">
-<example>
-This sample shows how to call GetProjectDetails with required parameters and parse the result.
+      <example>
+This sample shows how to call GetProjectDetails and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetProjectDetails("<projectName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetProjectDetails with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetProjectDetails("<projectName>");
 
@@ -48,48 +63,42 @@ Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").To
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
-
-</remarks>
+]]></code></example>
     </member>
     <member name="CreateProjectAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateProjectAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     language = "<language>",
-};
-
-Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+});
+Response response = await client.CreateProjectAsync("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateProjectAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     description = "<description>",
     language = "<language>",
     multilingualResource = true,
-    settings = new {
+    settings = new
+    {
         defaultAnswer = "<defaultAnswer>",
     },
-};
-
-Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
+});
+Response response = await client.CreateProjectAsync("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -100,48 +109,42 @@ Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").To
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
-
-</remarks>
+]]></code></example>
     </member>
     <member name="CreateProject(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
+      <example>
+This sample shows how to call CreateProject and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     language = "<language>",
-};
-
-Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+});
+Response response = client.CreateProject("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateProject with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     description = "<description>",
     language = "<language>",
     multilingualResource = true,
-    settings = new {
+    settings = new
+    {
         defaultAnswer = "<defaultAnswer>",
     },
-};
-
-Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
+});
+Response response = client.CreateProject("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -152,22 +155,29 @@ Console.WriteLine(result.GetProperty("settings").GetProperty("defaultAnswer").To
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetDeleteStatusAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetDeleteStatusAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetDeleteStatusAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetDeleteStatusAsync("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetDeleteStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetDeleteStatusAsync("<jobId>");
 
@@ -177,22 +187,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetDeleteStatus(string,RequestContext)">
-<example>
-This sample shows how to call GetDeleteStatus with required parameters and parse the result.
+      <example>
+This sample shows how to call GetDeleteStatus and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetDeleteStatus("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetDeleteStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetDeleteStatus("<jobId>");
 
@@ -202,22 +219,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetExportStatusAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetExportStatusAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetExportStatusAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetExportStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 
@@ -227,22 +251,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetExportStatus(string,string,RequestContext)">
-<example>
-This sample shows how to call GetExportStatus with required parameters and parse the result.
+      <example>
+This sample shows how to call GetExportStatus and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetExportStatus("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetExportStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetExportStatus("<projectName>", "<jobId>");
 
@@ -252,22 +283,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetImportStatusAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetImportStatusAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetImportStatusAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetImportStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 
@@ -277,22 +315,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetImportStatus(string,string,RequestContext)">
-<example>
-This sample shows how to call GetImportStatus with required parameters and parse the result.
+      <example>
+This sample shows how to call GetImportStatus and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetImportStatus("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetImportStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetImportStatus("<projectName>", "<jobId>");
 
@@ -302,22 +347,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetDeployStatusAsync(string,string,string,RequestContext)">
-<example>
-This sample shows how to call GetDeployStatusAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetDeployStatusAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetDeployStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 
@@ -327,22 +379,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetDeployStatus(string,string,string,RequestContext)">
-<example>
-This sample shows how to call GetDeployStatus with required parameters and parse the result.
+      <example>
+This sample shows how to call GetDeployStatus and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetDeployStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
 
@@ -352,104 +411,105 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="UpdateSynonymsAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateSynonymsAsync with required parameters.
+      <example>
+This sample shows how to call UpdateSynonymsAsync.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {};
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateSynonymsAsync("<projectName>", content);
 
-Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
-    value = new[] {
-        new {
-            alterations = new[] {
-                "<String>"
+using RequestContent content = RequestContent.Create(new
+{
+    value = new object[]
+    {
+        new
+        {
+            alterations = new object[]
+            {
+                "<alterations>"
             },
         }
     },
     nextLink = "<nextLink>",
-};
+});
+Response response = await client.UpdateSynonymsAsync("<projectName>", content);
 
-Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
-
-</remarks>
+]]></code></example>
     </member>
     <member name="UpdateSynonyms(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateSynonyms with required parameters.
+      <example>
+This sample shows how to call UpdateSynonyms.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {};
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateSynonyms("<projectName>", content);
 
-Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateSynonyms with all parameters and request content.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
-    value = new[] {
-        new {
-            alterations = new[] {
-                "<String>"
+using RequestContent content = RequestContent.Create(new
+{
+    value = new object[]
+    {
+        new
+        {
+            alterations = new object[]
+            {
+                "<alterations>"
             },
         }
     },
     nextLink = "<nextLink>",
-};
+});
+Response response = client.UpdateSynonyms("<projectName>", content);
 
-Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetUpdateSourcesStatusAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetUpdateSourcesStatusAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetUpdateSourcesStatusAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetUpdateSourcesStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
 
@@ -459,22 +519,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetUpdateSourcesStatus(string,string,RequestContext)">
-<example>
-This sample shows how to call GetUpdateSourcesStatus with required parameters and parse the result.
+      <example>
+This sample shows how to call GetUpdateSourcesStatus and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetUpdateSourcesStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
 
@@ -484,22 +551,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetUpdateQnasStatusAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetUpdateQnasStatusAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetUpdateQnasStatusAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetUpdateQnasStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
 
@@ -509,22 +583,29 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetUpdateQnasStatus(string,string,RequestContext)">
-<example>
-This sample shows how to call GetUpdateQnasStatus with required parameters and parse the result.
+      <example>
+This sample shows how to call GetUpdateQnasStatus and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetUpdateQnasStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
 Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
 
@@ -534,104 +615,101 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
-
-</remarks>
+]]></code></example>
     </member>
     <member name="AddFeedbackAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call AddFeedbackAsync with required parameters.
+      <example>
+This sample shows how to call AddFeedbackAsync.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {};
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.AddFeedbackAsync("<projectName>", content);
 
-Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddFeedbackAsync with all parameters and request content.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
-    records = new[] {
-        new {
+using RequestContent content = RequestContent.Create(new
+{
+    records = new object[]
+    {
+        new
+        {
             userId = "<userId>",
             userQuestion = "<userQuestion>",
             qnaId = 1234,
         }
     },
-};
+});
+Response response = await client.AddFeedbackAsync("<projectName>", content);
 
-Response response = await client.AddFeedbackAsync("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
-
-</remarks>
+]]></code></example>
     </member>
     <member name="AddFeedback(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call AddFeedback with required parameters.
+      <example>
+This sample shows how to call AddFeedback.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {};
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.AddFeedback("<projectName>", content);
 
-Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddFeedback with all parameters and request content.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
-    records = new[] {
-        new {
+using RequestContent content = RequestContent.Create(new
+{
+    records = new object[]
+    {
+        new
+        {
             userId = "<userId>",
             userQuestion = "<userQuestion>",
             qnaId = 1234,
         }
     },
-};
+});
+Response response = client.AddFeedback("<projectName>", content);
 
-Response response = client.AddFeedback("<projectName>", RequestContent.Create(data));
 Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetProjectsAsync(RequestContext)">
-<example>
+      <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetProjectsAsync())
+await foreach (BinaryData item in client.GetProjectsAsync())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetProjectsAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetProjectsAsync())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -643,24 +721,29 @@ await foreach (var item in client.GetProjectsAsync())
     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetProjects(RequestContext)">
-<example>
+      <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetProjects())
+foreach (BinaryData item in client.GetProjects())
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetProjects with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetProjects())
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("projectName").ToString());
@@ -672,114 +755,140 @@ foreach (var item in client.GetProjects())
     Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetDeploymentsAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetDeploymentsAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetDeploymentsAsync("<projectName>"))
+await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetDeploymentsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetDeployments(string,RequestContext)">
-<example>
-This sample shows how to call GetDeployments with required parameters and parse the result.
+      <example>
+This sample shows how to call GetDeployments and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetDeployments("<projectName>"))
+foreach (BinaryData item in client.GetDeployments("<projectName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetDeployments with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetDeployments("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("deploymentName").ToString());
     Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetSynonymsAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSynonymsAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetSynonymsAsync("<projectName>"))
+await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
 }
 ]]></code>
-</example>
-<remarks>
+This sample shows how to call GetSynonymsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
-
-</remarks>
+await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("alterations")[0].ToString());
+}
+]]></code></example>
     </member>
     <member name="GetSynonyms(string,RequestContext)">
-<example>
-This sample shows how to call GetSynonyms with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSynonyms and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetSynonyms("<projectName>"))
+foreach (BinaryData item in client.GetSynonyms("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("alterations")[0].ToString());
 }
 ]]></code>
-</example>
-<remarks>
+This sample shows how to call GetSynonyms with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
-
-</remarks>
+foreach (BinaryData item in client.GetSynonyms("<projectName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("alterations")[0].ToString());
+}
+]]></code></example>
     </member>
     <member name="GetSourcesAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetSourcesAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSourcesAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetSourcesAsync("<projectName>"))
+await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sourceUri").ToString());
+    Console.WriteLine(result.GetProperty("sourceKind").ToString());
+}
+]]></code>
+This sample shows how to call GetSourcesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -788,24 +897,30 @@ await foreach (var item in client.GetSourcesAsync("<projectName>"))
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetSources(string,RequestContext)">
-<example>
-This sample shows how to call GetSources with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSources and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetSources("<projectName>"))
+foreach (BinaryData item in client.GetSources("<projectName>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sourceUri").ToString());
+    Console.WriteLine(result.GetProperty("sourceKind").ToString());
+}
+]]></code>
+This sample shows how to call GetSources with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetSources("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -814,43 +929,36 @@ foreach (var item in client.GetSources("<projectName>"))
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetQnasAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetQnasAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetQnasAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetQnasAsync("<projectName>"))
+await foreach (BinaryData item in client.GetQnasAsync("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
+This sample shows how to call GetQnasAsync with all parameters and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-await foreach (var item in client.GetQnasAsync("<projectName>", "<source>"))
+await foreach (BinaryData item in client.GetQnasAsync("<projectName>", source: "<source>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -858,7 +966,7 @@ await foreach (var item in client.GetQnasAsync("<projectName>", "<source>"))
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -869,43 +977,36 @@ await foreach (var item in client.GetQnasAsync("<projectName>", "<source>"))
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
-
-</remarks>
+]]></code></example>
     </member>
     <member name="GetQnas(string,string,RequestContext)">
-<example>
-This sample shows how to call GetQnas with required parameters and parse the result.
+      <example>
+This sample shows how to call GetQnas and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetQnas("<projectName>"))
+foreach (BinaryData item in client.GetQnas("<projectName>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetQnas with all parameters, and how to parse the result.
+This sample shows how to call GetQnas with all parameters and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-foreach (var item in client.GetQnas("<projectName>", "<source>"))
+foreach (BinaryData item in client.GetQnas("<projectName>", source: "<source>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -913,7 +1014,7 @@ foreach (var item in client.GetQnas("<projectName>", "<source>"))
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -924,211 +1025,208 @@ foreach (var item in client.GetQnas("<projectName>", "<source>"))
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
-
-</remarks>
+]]></code></example>
     </member>
     <member name="DeleteProjectAsync(WaitUntil,string,RequestContext)">
-<example>
-This sample shows how to call DeleteProjectAsync with required parameters.
+      <example>
+This sample shows how to call DeleteProjectAsync.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-
-Console.WriteLine(operation.GetRawResponse().Status);
+Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
 ]]></code>
-</example>
-<remarks>
+This sample shows how to call DeleteProjectAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
-
-</remarks>
+Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+]]></code></example>
     </member>
     <member name="DeleteProject(WaitUntil,string,RequestContext)">
-<example>
-This sample shows how to call DeleteProject with required parameters.
+      <example>
+This sample shows how to call DeleteProject.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-
-Console.WriteLine(operation.GetRawResponse().Status);
+Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
 ]]></code>
-</example>
-<remarks>
+This sample shows how to call DeleteProject with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
-
-</remarks>
+Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+]]></code></example>
     </member>
     <member name="ExportAsync(WaitUntil,string,string,string,RequestContext)">
-<example>
-This sample shows how to call ExportAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call ExportAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
-
+Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call ExportAsync with all parameters, and how to parse the result.
+This sample shows how to call ExportAsync with all parameters and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
-
+Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", format: "json", assetKind: "qnas");
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
-
-</remarks>
+]]></code></example>
     </member>
     <member name="Export(WaitUntil,string,string,string,RequestContext)">
-<example>
-This sample shows how to call Export with required parameters and parse the result.
+      <example>
+This sample shows how to call Export and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.Export(WaitUntil.Completed, "<projectName>");
-
+Operation<BinaryData> operation = client.Export(WaitUntil.Completed, "<projectName>");
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call Export with all parameters, and how to parse the result.
+This sample shows how to call Export with all parameters and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
-
+Operation<BinaryData> operation = client.Export(WaitUntil.Completed, "<projectName>", format: "json", assetKind: "qnas");
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
-
-</remarks>
+]]></code></example>
     </member>
     <member name="ImportAsync(WaitUntil,string,RequestContent,string,string,RequestContext)">
-<example>
-This sample shows how to call ImportAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call ImportAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {};
-
-var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
+using RequestContent content = null;
+Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call ImportAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call ImportAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
-    metadata = new {
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
         description = "<description>",
         language = "<language>",
         multilingualResource = true,
-        settings = new {
+        settings = new
+        {
             defaultAnswer = "<defaultAnswer>",
         },
     },
-    assets = new {
-        synonyms = new[] {
-            new {
-                alterations = new[] {
-                    "<String>"
+    assets = new
+    {
+        synonyms = new object[]
+        {
+            new
+            {
+                alterations = new object[]
+                {
+                    "<alterations>"
                 },
             }
         },
-        qnas = new[] {
-            new {
+        qnas = new object[]
+        {
+            new
+            {
                 id = 1234,
                 answer = "<answer>",
                 source = "<source>",
-                questions = new[] {
-                    "<String>"
+                questions = new object[]
+                {
+                    "<questions>"
                 },
-                metadata = new {
-                    key = "<String>",
+                metadata = new
+                {
+                    key = "<metadata>",
                 },
-                dialog = new {
+                dialog = new
+                {
                     isContextOnly = true,
-                    prompts = new[] {
-                        new {
+                    prompts = new object[]
+                    {
+                        new
+                        {
                             displayOrder = 1234,
                             qnaId = 1234,
-                            qna = new {
+                            qna = new
+                            {
                                 id = 1234,
                                 answer = "<answer>",
                                 source = "<source>",
-                                questions = new[] {
-                                    "<String>"
+                                questions = new object[]
+                                {
+                                    "<questions>"
                                 },
-                                metadata = new {
-                                    key = "<String>",
+                                metadata = new
+                                {
+                                    key = "<metadata>",
                                 },
-                                activeLearningSuggestions = new[] {
-                                    new {
+                                activeLearningSuggestions = new object[]
+                                {
+                                    new
+                                    {
                                         clusterHead = "<clusterHead>",
-                                        suggestedQuestions = new[] {
-                                            new {
+                                        suggestedQuestions = new object[]
+                                        {
+                                            new
+                                            {
                                                 question = "<question>",
                                                 userSuggestedCount = 1234,
                                                 autoSuggestedCount = 1234,
@@ -1141,109 +1239,120 @@ var data = new {
                         }
                     },
                 },
-                activeLearningSuggestions = new[] {
-                    new {
-                        clusterHead = "<clusterHead>",
-                    }
+                activeLearningSuggestions = new object[]
+                {
+                    null
                 },
             }
         },
     },
     fileUri = "<fileUri>",
-};
-
-var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-
+});
+Operation<BinaryData> operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content, format: "json", assetKind: "qnas");
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
-
-</remarks>
+]]></code></example>
     </member>
     <member name="Import(WaitUntil,string,RequestContent,string,string,RequestContext)">
-<example>
-This sample shows how to call Import with required parameters and parse the result.
+      <example>
+This sample shows how to call Import and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {};
-
-var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
+using RequestContent content = null;
+Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content);
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call Import with all parameters and request content, and how to parse the result.
+This sample shows how to call Import with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new {
-    metadata = new {
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
         description = "<description>",
         language = "<language>",
         multilingualResource = true,
-        settings = new {
+        settings = new
+        {
             defaultAnswer = "<defaultAnswer>",
         },
     },
-    assets = new {
-        synonyms = new[] {
-            new {
-                alterations = new[] {
-                    "<String>"
+    assets = new
+    {
+        synonyms = new object[]
+        {
+            new
+            {
+                alterations = new object[]
+                {
+                    "<alterations>"
                 },
             }
         },
-        qnas = new[] {
-            new {
+        qnas = new object[]
+        {
+            new
+            {
                 id = 1234,
                 answer = "<answer>",
                 source = "<source>",
-                questions = new[] {
-                    "<String>"
+                questions = new object[]
+                {
+                    "<questions>"
                 },
-                metadata = new {
-                    key = "<String>",
+                metadata = new
+                {
+                    key = "<metadata>",
                 },
-                dialog = new {
+                dialog = new
+                {
                     isContextOnly = true,
-                    prompts = new[] {
-                        new {
+                    prompts = new object[]
+                    {
+                        new
+                        {
                             displayOrder = 1234,
                             qnaId = 1234,
-                            qna = new {
+                            qna = new
+                            {
                                 id = 1234,
                                 answer = "<answer>",
                                 source = "<source>",
-                                questions = new[] {
-                                    "<String>"
+                                questions = new object[]
+                                {
+                                    "<questions>"
                                 },
-                                metadata = new {
-                                    key = "<String>",
+                                metadata = new
+                                {
+                                    key = "<metadata>",
                                 },
-                                activeLearningSuggestions = new[] {
-                                    new {
+                                activeLearningSuggestions = new object[]
+                                {
+                                    new
+                                    {
                                         clusterHead = "<clusterHead>",
-                                        suggestedQuestions = new[] {
-                                            new {
+                                        suggestedQuestions = new object[]
+                                        {
+                                            new
+                                            {
                                                 question = "<question>",
                                                 userSuggestedCount = 1234,
                                                 autoSuggestedCount = 1234,
@@ -1256,93 +1365,124 @@ var data = new {
                         }
                     },
                 },
-                activeLearningSuggestions = new[] {
-                    new {
-                        clusterHead = "<clusterHead>",
-                    }
+                activeLearningSuggestions = new object[]
+                {
+                    null
                 },
             }
         },
     },
     fileUri = "<fileUri>",
-};
-
-var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
-
+});
+Operation<BinaryData> operation = client.Import(WaitUntil.Completed, "<projectName>", content, format: "json", assetKind: "qnas");
 BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
-
-</remarks>
+]]></code></example>
     </member>
     <member name="DeployProjectAsync(WaitUntil,string,string,RequestContext)">
-<example>
-This sample shows how to call DeployProjectAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call DeployProjectAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-
+Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DeployProjectAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Operation<BinaryData> operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
-
-</remarks>
+]]></code></example>
     </member>
     <member name="DeployProject(WaitUntil,string,string,RequestContext)">
-<example>
-This sample shows how to call DeployProject with required parameters and parse the result.
+      <example>
+This sample shows how to call DeployProject and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
-
+Operation<BinaryData> operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DeployProject with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+Operation<BinaryData> operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
+BinaryData responseData = operation.Value;
+
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
-
-</remarks>
+]]></code></example>
     </member>
     <member name="UpdateSourcesAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateSourcesAsync with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call UpdateSourcesAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new[] {
-    new {
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
         op = "add",
-        value = new {
+        value = new
+        {
+            sourceUri = "http://localhost:3000",
+            sourceKind = "file",
+        },
+    }
+});
+Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+AsyncPageable<BinaryData> responseData = operation.Value;
+await foreach (BinaryData item in operation.Value)
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sourceUri").ToString());
+    Console.WriteLine(result.GetProperty("sourceKind").ToString());
+}
+]]></code>
+This sample shows how to call UpdateSourcesAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        op = "add",
+        value = new
+        {
             displayName = "<displayName>",
             source = "<source>",
             sourceUri = "http://localhost:3000",
@@ -1350,11 +1490,10 @@ var data = new[] {
             contentStructureKind = "unstructured",
         },
     }
-};
-
-var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-await foreach (var item in operation.Value)
+});
+Operation<AsyncPageable<BinaryData>> operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", content);
+AsyncPageable<BinaryData> responseData = operation.Value;
+await foreach (BinaryData item in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -1363,27 +1502,50 @@ await foreach (var item in operation.Value)
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
-
-</remarks>
+]]></code></example>
     </member>
     <member name="UpdateSources(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateSources with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call UpdateSources and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new[] {
-    new {
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
         op = "add",
-        value = new {
+        value = new
+        {
+            sourceUri = "http://localhost:3000",
+            sourceKind = "file",
+        },
+    }
+});
+Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+Pageable<BinaryData> responseData = operation.Value;
+foreach (BinaryData item in operation.Value)
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("sourceUri").ToString());
+    Console.WriteLine(result.GetProperty("sourceKind").ToString());
+}
+]]></code>
+This sample shows how to call UpdateSources with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        op = "add",
+        value = new
+        {
             displayName = "<displayName>",
             source = "<source>",
             sourceUri = "http://localhost:3000",
@@ -1391,11 +1553,10 @@ var data = new[] {
             contentStructureKind = "unstructured",
         },
     }
-};
-
-var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-foreach (var item in operation.Value)
+});
+Operation<Pageable<BinaryData>> operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", content);
+Pageable<BinaryData> responseData = operation.Value;
+foreach (BinaryData item in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("displayName").ToString());
@@ -1404,51 +1565,78 @@ foreach (var item in operation.Value)
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
-
-</remarks>
+]]></code></example>
     </member>
     <member name="UpdateQnasAsync(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateQnasAsync with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call UpdateQnasAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new[] {
-    new {
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
         op = "add",
-        value = new {
+        value = new object(),
+    }
+});
+Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+AsyncPageable<BinaryData> responseData = operation.Value;
+await foreach (BinaryData item in operation.Value)
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call UpdateQnasAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        op = "add",
+        value = new
+        {
             id = 1234,
             answer = "<answer>",
             source = "<source>",
-            questions = new[] {
-                "<String>"
+            questions = new object[]
+            {
+                "<questions>"
             },
-            metadata = new {
-                key = "<String>",
+            metadata = new
+            {
+                key = "<metadata>",
             },
-            dialog = new {
+            dialog = new
+            {
                 isContextOnly = true,
-                prompts = new[] {
-                    new {
+                prompts = new object[]
+                {
+                    new
+                    {
                         displayOrder = 1234,
                         qnaId = 1234,
                         displayText = "<displayText>",
                     }
                 },
             },
-            activeLearningSuggestions = new[] {
-                new {
+            activeLearningSuggestions = new object[]
+            {
+                new
+                {
                     clusterHead = "<clusterHead>",
-                    suggestedQuestions = new[] {
-                        new {
+                    suggestedQuestions = new object[]
+                    {
+                        new
+                        {
                             question = "<question>",
                             userSuggestedCount = 1234,
                             autoSuggestedCount = 1234,
@@ -1458,18 +1646,17 @@ var data = new[] {
             },
         },
     }
-};
-
-var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-await foreach (var item in operation.Value)
+});
+Operation<AsyncPageable<BinaryData>> operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", content);
+AsyncPageable<BinaryData> responseData = operation.Value;
+await foreach (BinaryData item in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -1477,7 +1664,7 @@ await foreach (var item in operation.Value)
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -1488,51 +1675,78 @@ await foreach (var item in operation.Value)
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
-
-</remarks>
+]]></code></example>
     </member>
     <member name="UpdateQnas(WaitUntil,string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call UpdateQnas with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call UpdateQnas and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
-var data = new[] {
-    new {
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
         op = "add",
-        value = new {
+        value = new object(),
+    }
+});
+Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+Pageable<BinaryData> responseData = operation.Value;
+foreach (BinaryData item in operation.Value)
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call UpdateQnas with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        op = "add",
+        value = new
+        {
             id = 1234,
             answer = "<answer>",
             source = "<source>",
-            questions = new[] {
-                "<String>"
+            questions = new object[]
+            {
+                "<questions>"
             },
-            metadata = new {
-                key = "<String>",
+            metadata = new
+            {
+                key = "<metadata>",
             },
-            dialog = new {
+            dialog = new
+            {
                 isContextOnly = true,
-                prompts = new[] {
-                    new {
+                prompts = new object[]
+                {
+                    new
+                    {
                         displayOrder = 1234,
                         qnaId = 1234,
                         displayText = "<displayText>",
                     }
                 },
             },
-            activeLearningSuggestions = new[] {
-                new {
+            activeLearningSuggestions = new object[]
+            {
+                new
+                {
                     clusterHead = "<clusterHead>",
-                    suggestedQuestions = new[] {
-                        new {
+                    suggestedQuestions = new object[]
+                    {
+                        new
+                        {
                             question = "<question>",
                             userSuggestedCount = 1234,
                             autoSuggestedCount = 1234,
@@ -1542,18 +1756,17 @@ var data = new[] {
             },
         },
     }
-};
-
-var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
-
-foreach (var item in operation.Value)
+});
+Operation<Pageable<BinaryData>> operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", content);
+Pageable<BinaryData> responseData = operation.Value;
+foreach (BinaryData item in operation.Value)
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
@@ -1561,7 +1774,7 @@ foreach (var item in operation.Value)
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
-    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<key>").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
@@ -1572,14 +1785,7 @@ foreach (var item in operation.Value)
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
 }
-]]></code>
-</example>
-<remarks>
-
-Additional information can be found in the service REST API documentation:
-https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
-
-</remarks>
+]]></code></example>
     </member>
   </members>
 </doc>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Details of a hostname derived from a domain. </summary>
     public partial class AppServiceHostName
     {
-        /// <summary> Initializes a new instance of AppServiceHostName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHostName"/>. </summary>
         internal AppServiceHostName()
         {
             SiteNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceHostName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHostName"/>. </summary>
         /// <param name="name"> Name of the hostname. </param>
         /// <param name="siteNames"> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </param>
         /// <param name="azureResourceName"> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for packet core control planes API service call. </summary>
     internal partial class PacketCoreControlPlaneListResult
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneListResult"/>. </summary>
         internal PacketCoreControlPlaneListResult()
         {
             Value = new ChangeTrackingList<PacketCoreControlPlaneData>();
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneListResult"/>. </summary>
         /// <param name="value"> A list of packet core control planes in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PacketCoreControlPlaneListResult(IReadOnlyList<PacketCoreControlPlaneData> value, string nextLink)

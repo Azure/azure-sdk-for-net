@@ -454,12 +454,14 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
             : this(
-                  pathUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                pathUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(pathUri);
         }
@@ -1865,6 +1867,7 @@ namespace Azure.Storage.Files.DataLake
                     // Pagination only applies to service version 2023-08-03 and later, when using OAuth.
                     bool? paginated = null;
                     if (_clientConfiguration.ClientOptions.Version >= DataLakeClientOptions.ServiceVersion.V2023_08_03
+                        && recursive.GetValueOrDefault()
                         && _clientConfiguration.TokenCredential != null)
                     {
                         paginated = true;
@@ -2566,6 +2569,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<PathInfo> SetAccessControlList(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -2616,6 +2620,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<PathInfo>> SetAccessControlListAsync(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -2773,6 +2778,7 @@ namespace Azure.Storage.Files.DataLake
         /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
         /// type will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<AccessControlChangeResult> SetAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
             string continuationToken = default,
@@ -2820,6 +2826,7 @@ namespace Azure.Storage.Files.DataLake
         /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
         /// type will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<AccessControlChangeResult>> SetAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             string continuationToken = default,
@@ -2867,6 +2874,7 @@ namespace Azure.Storage.Files.DataLake
         /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
         /// type will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<AccessControlChangeResult> UpdateAccessControlRecursive(
             IList<PathAccessControlItem> accessControlList,
             string continuationToken = default,
@@ -2914,6 +2922,7 @@ namespace Azure.Storage.Files.DataLake
         /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
         /// type will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(
             IList<PathAccessControlItem> accessControlList,
             string continuationToken = default,
@@ -2961,6 +2970,7 @@ namespace Azure.Storage.Files.DataLake
         /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
         /// type will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<AccessControlChangeResult> RemoveAccessControlRecursive(
             IList<RemovePathAccessControlItem> accessControlList,
             string continuationToken = default,
@@ -3008,6 +3018,7 @@ namespace Azure.Storage.Files.DataLake
         /// Otherwise if a failure occurs outside the request, the respective <see cref="Exception"/>
         /// type will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(
             IList<RemovePathAccessControlItem> accessControlList,
             string continuationToken = default,
@@ -3269,6 +3280,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<PathInfo> SetPermissions(
             PathPermissions permissions,
             string owner = default,
@@ -3319,6 +3331,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<PathInfo>> SetPermissionsAsync(
             PathPermissions permissions,
             string owner = default,
@@ -3825,6 +3838,7 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Uri GenerateSasUri(DataLakeSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn)
             {
@@ -3855,6 +3869,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Uri GenerateSasUri(DataLakeSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis Package. </summary>
     public partial class SynapseSsisPackage : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisPackage"/>. </summary>
         internal SynapseSsisPackage()
         {
             Parameters = new ChangeTrackingList<SynapseSsisParameter>();
             MetadataType = SynapseSsisObjectMetadataType.Package;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisPackage"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

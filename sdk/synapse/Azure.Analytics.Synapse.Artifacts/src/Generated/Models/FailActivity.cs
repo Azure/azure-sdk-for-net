@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> This activity will fail within its own scope and output a custom error message and error code. The error message and code can provided either as a string literal or as an expression that can be evaluated to a string at runtime. The activity scope can be the whole pipeline or a control activity (e.g. foreach, switch, until), if the fail activity is contained in it. </summary>
     public partial class FailActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of FailActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
@@ -30,16 +30,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Fail";
         }
 
-        /// <summary> Initializes a new instance of FailActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        internal FailActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, object message, object errorCode) : base(name, type, description, dependsOn, userProperties, additionalProperties)
+        internal FailActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, object message, object errorCode) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Message = message;
             ErrorCode = errorCode;

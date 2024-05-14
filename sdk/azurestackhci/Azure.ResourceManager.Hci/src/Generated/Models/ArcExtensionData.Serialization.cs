@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +15,61 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class ArcExtensionData : IUtf8JsonSerializable
+    public partial class ArcExtensionData : IUtf8JsonSerializable, IJsonModel<ArcExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArcExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArcExtensionData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AggregateState))
+            {
+                writer.WritePropertyName("aggregateState"u8);
+                writer.WriteStringValue(AggregateState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PerNodeExtensionDetails))
+            {
+                writer.WritePropertyName("perNodeExtensionDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in PerNodeExtensionDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("extensionParameters"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
@@ -54,7 +103,10 @@ namespace Azure.ResourceManager.Hci
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Settings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ProtectedSettings))
@@ -63,7 +115,10 @@ namespace Azure.ResourceManager.Hci
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(EnableAutomaticUpgrade))
@@ -73,11 +128,40 @@ namespace Azure.ResourceManager.Hci
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArcExtensionData DeserializeArcExtensionData(JsonElement element)
+        ArcExtensionData IJsonModel<ArcExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArcExtensionData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArcExtensionData(document.RootElement, options);
+        }
+
+        internal static ArcExtensionData DeserializeArcExtensionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +181,8 @@ namespace Azure.ResourceManager.Hci
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
             Optional<bool> enableAutomaticUpgrade = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -235,8 +321,44 @@ namespace Azure.ResourceManager.Hci
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArcExtensionData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArcExtensionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArcExtensionData IPersistableModel<ArcExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArcExtensionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArcExtensionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArcExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

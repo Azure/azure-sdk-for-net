@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Collection of Big Data pool information. </summary>
     internal partial class SynapseBigDataPoolInfoListResult
     {
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoListResult"/>. </summary>
         internal SynapseBigDataPoolInfoListResult()
         {
             Value = new ChangeTrackingList<SynapseBigDataPoolInfoData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of Big Data pools. </param>
         internal SynapseBigDataPoolInfoListResult(string nextLink, IReadOnlyList<SynapseBigDataPoolInfoData> value)

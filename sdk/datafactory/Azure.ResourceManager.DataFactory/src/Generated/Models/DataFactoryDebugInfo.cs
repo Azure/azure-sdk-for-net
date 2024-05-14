@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Factory nested debug resource. </summary>
     public partial class DataFactoryDebugInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDebugInfo"/>. </summary>
         public DataFactoryDebugInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDebugInfo"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        internal DataFactoryDebugInfo(string name)
+        {
+            Name = name;
         }
 
         /// <summary> The resource name. </summary>

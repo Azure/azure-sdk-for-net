@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class BlobInventoryPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         public BlobInventoryPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

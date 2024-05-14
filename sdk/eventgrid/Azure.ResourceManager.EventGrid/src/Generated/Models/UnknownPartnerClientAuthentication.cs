@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The UnknownPartnerClientAuthentication. </summary>
     internal partial class UnknownPartnerClientAuthentication : PartnerClientAuthentication
     {
-        /// <summary> Initializes a new instance of UnknownPartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
         internal UnknownPartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType) : base(clientAuthenticationType)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Azure resource SKU definition. </summary>
     public partial class SynapseDataSourceResourceSku
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSku"/>. </summary>
         internal SynapseDataSourceResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSku"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>

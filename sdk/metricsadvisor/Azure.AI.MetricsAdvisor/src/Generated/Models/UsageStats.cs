@@ -12,12 +12,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The UsageStats. </summary>
     internal partial class UsageStats
     {
-        /// <summary> Initializes a new instance of UsageStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageStats"/>. </summary>
         internal UsageStats()
         {
         }
 
-        /// <summary> Initializes a new instance of UsageStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageStats"/>. </summary>
         /// <param name="timestamp"> The timestamp of the stats. </param>
         /// <param name="activeSeriesCount"> The active series count. </param>
         /// <param name="allSeriesCount"> All series count under non deleted data feed. </param>

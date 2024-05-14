@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Specifies policy and settings for SSH access. </summary>
     public partial class MachineLearningComputeInstanceSshSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceSshSettings"/>. </summary>
         public MachineLearningComputeInstanceSshSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceSshSettings"/>. </summary>
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
         /// <param name="sshPort"> Describes the port for connecting through SSH. </param>

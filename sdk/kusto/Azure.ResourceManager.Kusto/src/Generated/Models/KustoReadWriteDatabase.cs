@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing a read write database. </summary>
     public partial class KustoReadWriteDatabase : KustoDatabaseData
     {
-        /// <summary> Initializes a new instance of KustoReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadWriteDatabase"/>. </summary>
         public KustoReadWriteDatabase()
         {
             Kind = KustoKind.ReadWrite;
         }
 
-        /// <summary> Initializes a new instance of KustoReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadWriteDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

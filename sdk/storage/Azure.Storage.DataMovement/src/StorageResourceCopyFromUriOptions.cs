@@ -7,7 +7,7 @@ using System.Threading;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Options for <see cref="StorageResourceSingle.WriteFromStreamAsync(Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, CancellationToken)"/>
+    /// Options for <see cref="StorageResourceItem.CopyFromStreamAsync(Stream, long, bool, long, StorageResourceWriteToOffsetOptions, CancellationToken)"/>
     /// </summary>
     public class StorageResourceCopyFromUriOptions
     {

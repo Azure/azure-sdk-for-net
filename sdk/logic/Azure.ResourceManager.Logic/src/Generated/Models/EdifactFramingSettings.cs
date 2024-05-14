@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement framing settings. </summary>
     public partial class EdifactFramingSettings
     {
-        /// <summary> Initializes a new instance of EdifactFramingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactFramingSettings"/>. </summary>
         /// <param name="protocolVersion"> The protocol version. </param>
         /// <param name="dataElementSeparator"> The data element separator. </param>
         /// <param name="componentSeparator"> The component separator. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix = segmentTerminatorSuffix;
         }
 
-        /// <summary> Initializes a new instance of EdifactFramingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactFramingSettings"/>. </summary>
         /// <param name="serviceCodeListDirectoryVersion"> The service code list directory version. </param>
         /// <param name="characterEncoding"> The character encoding. </param>
         /// <param name="protocolVersion"> The protocol version. </param>

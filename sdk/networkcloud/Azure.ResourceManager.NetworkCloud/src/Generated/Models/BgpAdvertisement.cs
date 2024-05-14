@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BgpAdvertisement represents the association of IP address pools to the communities and peers. </summary>
     public partial class BgpAdvertisement
     {
-        /// <summary> Initializes a new instance of BgpAdvertisement. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpAdvertisement"/>. </summary>
         /// <param name="ipAddressPools"> The names of the IP address pools associated with this announcement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressPools"/> is null. </exception>
         public BgpAdvertisement(IEnumerable<string> ipAddressPools)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Peers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BgpAdvertisement. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpAdvertisement"/>. </summary>
         /// <param name="advertiseToFabric"> The indicator of if this advertisement is also made to the network fabric associated with the Network Cloud Cluster. This field is ignored if fabricPeeringEnabled is set to False. </param>
         /// <param name="communities"> The names of the BGP communities to be associated with the announcement, utilizing a BGP community string in 1234:1234 format. </param>
         /// <param name="ipAddressPools"> The names of the IP address pools associated with this announcement. </param>

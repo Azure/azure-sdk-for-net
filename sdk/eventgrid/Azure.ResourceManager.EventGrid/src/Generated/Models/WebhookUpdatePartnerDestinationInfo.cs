@@ -12,10 +12,27 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the update of the WebHook of the partner destination. </summary>
     public partial class WebhookUpdatePartnerDestinationInfo : PartnerUpdateDestinationInfo
     {
-        /// <summary> Initializes a new instance of WebhookUpdatePartnerDestinationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookUpdatePartnerDestinationInfo"/>. </summary>
         public WebhookUpdatePartnerDestinationInfo()
         {
             EndpointType = PartnerEndpointType.WebHook;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebhookUpdatePartnerDestinationInfo"/>. </summary>
+        /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
+        /// <param name="endpointUri"> The URL that represents the endpoint of the partner destination. </param>
+        /// <param name="endpointBaseUri"> The base URL that represents the endpoint of the partner destination. </param>
+        /// <param name="clientAuthentication">
+        /// Partner client authentication
+        /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
+        /// </param>
+        internal WebhookUpdatePartnerDestinationInfo(PartnerEndpointType endpointType, Uri endpointUri, Uri endpointBaseUri, PartnerClientAuthentication clientAuthentication) : base(endpointType)
+        {
+            EndpointUri = endpointUri;
+            EndpointBaseUri = endpointBaseUri;
+            ClientAuthentication = clientAuthentication;
+            EndpointType = endpointType;
         }
 
         /// <summary> The URL that represents the endpoint of the partner destination. </summary>

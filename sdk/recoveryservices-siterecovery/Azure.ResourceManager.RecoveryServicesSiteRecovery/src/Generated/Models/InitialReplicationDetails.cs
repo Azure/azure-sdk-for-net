@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Initial replication details. </summary>
     public partial class InitialReplicationDetails
     {
-        /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialReplicationDetails"/>. </summary>
         internal InitialReplicationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InitialReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialReplicationDetails"/>. </summary>
         /// <param name="initialReplicationType"> Initial replication type. </param>
         /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
         internal InitialReplicationDetails(string initialReplicationType, string initialReplicationProgressPercentage)

@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Withdraw properties. </summary>
     public partial class WithdrawPlanContent
     {
-        /// <summary> Initializes a new instance of WithdrawPlanContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
         public WithdrawPlanContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
+        /// <param name="planId"> Gets or sets Plan Id. </param>
+        /// <param name="publisherId"> The offer's publisher id. </param>
+        internal WithdrawPlanContent(string planId, string publisherId)
+        {
+            PlanId = planId;
+            PublisherId = publisherId;
         }
 
         /// <summary> Gets or sets Plan Id. </summary>

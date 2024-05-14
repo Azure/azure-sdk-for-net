@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseDatabasePrincipalAssignmentResource" /> and their operations.
-    /// Each <see cref="SynapseDatabasePrincipalAssignmentResource" /> in the collection will belong to the same instance of <see cref="SynapseDatabaseResource" />.
-    /// To get a <see cref="SynapseDatabasePrincipalAssignmentCollection" /> instance call the GetSynapseDatabasePrincipalAssignments method from an instance of <see cref="SynapseDatabaseResource" />.
+    /// A class representing a collection of <see cref="SynapseDatabasePrincipalAssignmentResource"/> and their operations.
+    /// Each <see cref="SynapseDatabasePrincipalAssignmentResource"/> in the collection will belong to the same instance of <see cref="SynapseDatabaseResource"/>.
+    /// To get a <see cref="SynapseDatabasePrincipalAssignmentCollection"/> instance call the GetSynapseDatabasePrincipalAssignments method from an instance of <see cref="SynapseDatabaseResource"/>.
     /// </summary>
     public partial class SynapseDatabasePrincipalAssignmentCollection : ArmCollection, IEnumerable<SynapseDatabasePrincipalAssignmentResource>, IAsyncEnumerable<SynapseDatabasePrincipalAssignmentResource>
     {
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -145,6 +162,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -181,6 +206,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,14 +252,22 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseDatabasePrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseDatabasePrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDatabasePrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDatabasePrincipalAssignmentResource(Client, SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(e)), _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDatabasePrincipalAssignmentResource(Client, SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(e)), _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -240,14 +281,22 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseDatabasePrincipalAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseDatabasePrincipalAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDatabasePrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDatabasePrincipalAssignmentResource(Client, SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(e)), _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDatabasePrincipalAssignmentResource(Client, SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(e)), _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -260,6 +309,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +353,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -312,6 +377,96 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseDatabasePrincipalAssignmentResource>> GetIfExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+
+            using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDatabasePrincipalAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDatabasePrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        public virtual NullableResponse<SynapseDatabasePrincipalAssignmentResource> GetIfExists(string principalAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+
+            using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, principalAssignmentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDatabasePrincipalAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDatabasePrincipalAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

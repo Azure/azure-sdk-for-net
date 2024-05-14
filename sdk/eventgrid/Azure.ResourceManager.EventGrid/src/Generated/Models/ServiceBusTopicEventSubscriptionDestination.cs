@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the service bus topic destination for an event subscription. </summary>
     public partial class ServiceBusTopicEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of ServiceBusTopicEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusTopicEventSubscriptionDestination"/>. </summary>
         public ServiceBusTopicEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.ServiceBusTopic;
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusTopicEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of the Service Bus Topic destination of an event subscription. </param>
         /// <param name="deliveryAttributeMappings">

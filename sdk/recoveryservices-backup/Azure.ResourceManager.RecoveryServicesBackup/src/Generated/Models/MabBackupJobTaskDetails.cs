@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific job task details. </summary>
     public partial class MabBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of MabBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJobTaskDetails"/>. </summary>
         public MabBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MabBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>

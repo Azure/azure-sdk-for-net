@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The streaming endpoint list result. </summary>
     internal partial class StreamingEndpointListResult
     {
-        /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointListResult"/>. </summary>
         internal StreamingEndpointListResult()
         {
             Value = new ChangeTrackingList<StreamingEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointListResult"/>. </summary>
         /// <param name="value"> The result of the List StreamingEndpoint operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of streaming endpoints. </param>

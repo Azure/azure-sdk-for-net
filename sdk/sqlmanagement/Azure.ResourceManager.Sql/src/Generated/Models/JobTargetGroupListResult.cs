@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of target groups. </summary>
     internal partial class JobTargetGroupListResult
     {
-        /// <summary> Initializes a new instance of JobTargetGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobTargetGroupListResult"/>. </summary>
         internal JobTargetGroupListResult()
         {
             Value = new ChangeTrackingList<SqlServerJobTargetGroupData>();
         }
 
-        /// <summary> Initializes a new instance of JobTargetGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobTargetGroupListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal JobTargetGroupListResult(IReadOnlyList<SqlServerJobTargetGroupData> value, string nextLink)

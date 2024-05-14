@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> ListRecoveryPointsRecommendedForMoveRequest Request. </summary>
     public partial class RecoveryPointsRecommendedForMoveContent
     {
-        /// <summary> Initializes a new instance of RecoveryPointsRecommendedForMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointsRecommendedForMoveContent"/>. </summary>
         public RecoveryPointsRecommendedForMoveContent()
         {
             ExcludedRPList = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointsRecommendedForMoveContent"/>. </summary>
+        /// <param name="objectType"> Gets the class type. </param>
+        /// <param name="excludedRPList"> List of Recovery Points excluded from Move. </param>
+        internal RecoveryPointsRecommendedForMoveContent(string objectType, IList<string> excludedRPList)
+        {
+            ObjectType = objectType;
+            ExcludedRPList = excludedRPList;
         }
 
         /// <summary> Gets the class type. </summary>

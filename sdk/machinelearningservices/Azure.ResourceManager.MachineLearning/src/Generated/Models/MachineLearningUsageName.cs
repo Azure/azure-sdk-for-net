@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The Usage Names. </summary>
     public partial class MachineLearningUsageName
     {
-        /// <summary> Initializes a new instance of MachineLearningUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsageName"/>. </summary>
         internal MachineLearningUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         internal MachineLearningUsageName(string value, string localizedValue)

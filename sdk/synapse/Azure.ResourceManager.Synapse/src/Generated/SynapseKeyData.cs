@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseKeyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKeyData"/>. </summary>
         public SynapseKeyData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

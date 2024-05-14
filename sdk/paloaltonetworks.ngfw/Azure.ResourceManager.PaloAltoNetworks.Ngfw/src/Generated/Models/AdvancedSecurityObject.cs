@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> List of custom and predefined url category. </summary>
     public partial class AdvancedSecurityObject
     {
-        /// <summary> Initializes a new instance of AdvancedSecurityObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObject"/>. </summary>
         /// <param name="entry"> URL entry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
         internal AdvancedSecurityObject(IEnumerable<NameDescriptionObject> entry)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Entry = entry.ToList();
         }
 
-        /// <summary> Initializes a new instance of AdvancedSecurityObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObject"/>. </summary>
         /// <param name="advSecurityObjectModelType"> type of object. </param>
         /// <param name="entry"> URL entry. </param>
         internal AdvancedSecurityObject(string advSecurityObjectModelType, IReadOnlyList<NameDescriptionObject> entry)

@@ -6,26 +6,75 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisGatewayDetails : IUtf8JsonSerializable
+    public partial class AnalysisGatewayDetails : IUtf8JsonSerializable, IJsonModel<AnalysisGatewayDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisGatewayDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalysisGatewayDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GatewayResourceId))
             {
                 writer.WritePropertyName("gatewayResourceId"u8);
                 writer.WriteStringValue(GatewayResourceId);
             }
+            if (options.Format != "W" && Optional.IsDefined(GatewayObjectId))
+            {
+                writer.WritePropertyName("gatewayObjectId"u8);
+                writer.WriteStringValue(GatewayObjectId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DmtsClusterUri))
+            {
+                writer.WritePropertyName("dmtsClusterUri"u8);
+                writer.WriteStringValue(DmtsClusterUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element)
+        AnalysisGatewayDetails IJsonModel<AnalysisGatewayDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalysisGatewayDetails(document.RootElement, options);
+        }
+
+        internal static AnalysisGatewayDetails DeserializeAnalysisGatewayDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +82,8 @@ namespace Azure.ResourceManager.Analysis.Models
             Optional<string> gatewayResourceId = default;
             Optional<string> gatewayObjectId = default;
             Optional<Uri> dmtsClusterUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gatewayResourceId"u8))
@@ -54,8 +105,44 @@ namespace Azure.ResourceManager.Analysis.Models
                     dmtsClusterUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalysisGatewayDetails(gatewayResourceId.Value, gatewayObjectId.Value, dmtsClusterUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalysisGatewayDetails(gatewayResourceId.Value, gatewayObjectId.Value, dmtsClusterUri.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalysisGatewayDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnalysisGatewayDetails IPersistableModel<AnalysisGatewayDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalysisGatewayDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalysisGatewayDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

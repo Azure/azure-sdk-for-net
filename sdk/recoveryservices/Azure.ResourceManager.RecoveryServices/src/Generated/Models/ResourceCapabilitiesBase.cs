@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Base class for request and response capabilities information for Microsoft.RecoveryServices. </summary>
     public partial class ResourceCapabilitiesBase
     {
-        /// <summary> Initializes a new instance of ResourceCapabilitiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCapabilitiesBase"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         public ResourceCapabilitiesBase(ResourceType resourceCapabilitiesBaseType)
         {

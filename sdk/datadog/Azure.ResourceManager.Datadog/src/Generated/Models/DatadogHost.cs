@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,58 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogHost. </summary>
     public partial class DatadogHost
     {
-        /// <summary> Initializes a new instance of DatadogHost. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogHost"/>. </summary>
         internal DatadogHost()
         {
             Aliases = new ChangeTrackingList<string>();
             Apps = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatadogHost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHost"/>. </summary>
         /// <param name="name"> The name of the host. </param>
         /// <param name="aliases"> The aliases for the host. </param>
         /// <param name="apps"> The Datadog integrations reporting metrics for the host. </param>
         /// <param name="meta"></param>
-        internal DatadogHost(string name, IReadOnlyList<string> aliases, IReadOnlyList<string> apps, DatadogHostMetadata meta)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogHost(string name, IReadOnlyList<string> aliases, IReadOnlyList<string> apps, DatadogHostMetadata meta, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Aliases = aliases;
             Apps = apps;
             Meta = meta;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the host. </summary>

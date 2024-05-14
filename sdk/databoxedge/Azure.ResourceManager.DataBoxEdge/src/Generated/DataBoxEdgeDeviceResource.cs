@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,13 +22,16 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeDeviceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataBoxEdgeDevice method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeDeviceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeDeviceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataBoxEdgeDevice method.
     /// </summary>
     public partial class DataBoxEdgeDeviceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeDeviceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}";
@@ -46,12 +50,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly SupportPackagesRestOperations _supportPackagesRestClient;
         private readonly DataBoxEdgeDeviceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class for mocking. </summary>
         protected DataBoxEdgeDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeDeviceResource(ArmClient client, DataBoxEdgeDeviceData data) : this(client, data.Id)
@@ -81,9 +88,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeAlertResources and their operations over a DataBoxEdgeAlertResource. </returns>
         public virtual DataBoxEdgeAlertCollection GetDataBoxEdgeAlerts()
         {
-            return GetCachedClient(Client => new DataBoxEdgeAlertCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeAlertCollection(client, Id));
         }
 
         /// <summary>
@@ -123,12 +127,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeAlertResource>> GetDataBoxEdgeAlertAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -146,12 +158,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeAlertResource> GetDataBoxEdgeAlert(string name, CancellationToken cancellationToken = default)
         {
@@ -162,7 +182,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of BandwidthScheduleResources and their operations over a BandwidthScheduleResource. </returns>
         public virtual BandwidthScheduleCollection GetBandwidthSchedules()
         {
-            return GetCachedClient(Client => new BandwidthScheduleCollection(Client, Id));
+            return GetCachedClient(client => new BandwidthScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -176,12 +196,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>BandwidthSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BandwidthScheduleResource>> GetBandwidthScheduleAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -199,12 +227,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>BandwidthSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BandwidthScheduleResource> GetBandwidthSchedule(string name, CancellationToken cancellationToken = default)
         {
@@ -212,14 +248,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets an object representing a DiagnosticProactiveLogCollectionSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting()
         {
             return new DiagnosticProactiveLogCollectionSettingResource(Client, Id.AppendChildResource("diagnosticProactiveLogCollectionSettings", "default"));
         }
 
         /// <summary> Gets an object representing a DiagnosticRemoteSupportSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting()
         {
             return new DiagnosticRemoteSupportSettingResource(Client, Id.AppendChildResource("diagnosticRemoteSupportSettings", "default"));
@@ -229,7 +265,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeJobResources and their operations over a DataBoxEdgeJobResource. </returns>
         public virtual DataBoxEdgeJobCollection GetDataBoxEdgeJobs()
         {
-            return GetCachedClient(Client => new DataBoxEdgeJobCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeJobCollection(client, Id));
         }
 
         /// <summary>
@@ -243,12 +279,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeJobResource>> GetDataBoxEdgeJobAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -266,12 +310,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeJobResource> GetDataBoxEdgeJob(string name, CancellationToken cancellationToken = default)
         {
@@ -279,7 +331,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets an object representing a DataBoxEdgeOrderResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrder()
         {
             return new DataBoxEdgeOrderResource(Client, Id.AppendChildResource("orders", "default"));
@@ -289,7 +341,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeRoleResources and their operations over a DataBoxEdgeRoleResource. </returns>
         public virtual DataBoxEdgeRoleCollection GetDataBoxEdgeRoles()
         {
-            return GetCachedClient(Client => new DataBoxEdgeRoleCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeRoleCollection(client, Id));
         }
 
         /// <summary>
@@ -303,12 +355,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Roles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The role name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeRoleResource>> GetDataBoxEdgeRoleAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -326,12 +386,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Roles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The role name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeRoleResource> GetDataBoxEdgeRole(string name, CancellationToken cancellationToken = default)
         {
@@ -342,7 +410,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeShareResources and their operations over a DataBoxEdgeShareResource. </returns>
         public virtual DataBoxEdgeShareCollection GetDataBoxEdgeShares()
         {
-            return GetCachedClient(Client => new DataBoxEdgeShareCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeShareCollection(client, Id));
         }
 
         /// <summary>
@@ -356,12 +424,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeShareResource>> GetDataBoxEdgeShareAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -379,12 +455,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The share name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeShareResource> GetDataBoxEdgeShare(string name, CancellationToken cancellationToken = default)
         {
@@ -395,7 +479,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeStorageAccountCredentialResources and their operations over a DataBoxEdgeStorageAccountCredentialResource. </returns>
         public virtual DataBoxEdgeStorageAccountCredentialCollection GetDataBoxEdgeStorageAccountCredentials()
         {
-            return GetCachedClient(Client => new DataBoxEdgeStorageAccountCredentialCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeStorageAccountCredentialCollection(client, Id));
         }
 
         /// <summary>
@@ -409,12 +493,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>StorageAccountCredentials_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeStorageAccountCredentialResource>> GetDataBoxEdgeStorageAccountCredentialAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -432,12 +524,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>StorageAccountCredentials_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeStorageAccountCredentialResource> GetDataBoxEdgeStorageAccountCredential(string name, CancellationToken cancellationToken = default)
         {
@@ -448,7 +548,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeStorageAccountResources and their operations over a DataBoxEdgeStorageAccountResource. </returns>
         public virtual DataBoxEdgeStorageAccountCollection GetDataBoxEdgeStorageAccounts()
         {
-            return GetCachedClient(Client => new DataBoxEdgeStorageAccountCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeStorageAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -462,12 +562,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeStorageAccountResource>> GetDataBoxEdgeStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
@@ -485,12 +593,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeStorageAccountResource> GetDataBoxEdgeStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
@@ -501,7 +617,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeTriggerResources and their operations over a DataBoxEdgeTriggerResource. </returns>
         public virtual DataBoxEdgeTriggerCollection GetDataBoxEdgeTriggers()
         {
-            return GetCachedClient(Client => new DataBoxEdgeTriggerCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeTriggerCollection(client, Id));
         }
 
         /// <summary>
@@ -515,12 +631,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeTriggerResource>> GetDataBoxEdgeTriggerAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -538,12 +662,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeTriggerResource> GetDataBoxEdgeTrigger(string name, CancellationToken cancellationToken = default)
         {
@@ -554,7 +686,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeUserResources and their operations over a DataBoxEdgeUserResource. </returns>
         public virtual DataBoxEdgeUserCollection GetDataBoxEdgeUsers()
         {
-            return GetCachedClient(Client => new DataBoxEdgeUserCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeUserCollection(client, Id));
         }
 
         /// <summary>
@@ -568,12 +700,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Users_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeUserResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The user name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeUserResource>> GetDataBoxEdgeUserAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -591,12 +731,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Users_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeUserResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The user name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeUserResource> GetDataBoxEdgeUser(string name, CancellationToken cancellationToken = default)
         {
@@ -613,6 +761,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,6 +802,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -677,6 +841,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -712,6 +884,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -745,6 +925,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -780,6 +968,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource parameters. </param>
@@ -813,6 +1009,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_DownloadUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -848,6 +1052,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_DownloadUpdates</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -882,6 +1094,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GenerateCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -911,6 +1131,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_GenerateCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -942,6 +1170,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GetExtendedInformation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -972,6 +1208,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GetExtendedInformation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1001,6 +1245,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_InstallUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1036,6 +1288,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_InstallUpdates</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1070,6 +1330,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GetNetworkSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1100,6 +1368,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GetNetworkSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1129,6 +1405,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_ScanForUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1164,6 +1448,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_ScanForUpdates</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1197,6 +1489,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_CreateOrUpdateSecuritySettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1236,6 +1536,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_CreateOrUpdateSecuritySettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1274,6 +1582,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_UpdateExtendedInformation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The patch object. </param>
@@ -1307,6 +1623,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_UpdateExtendedInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1342,6 +1666,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GetUpdateSummary</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1372,6 +1704,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_GetUpdateSummary</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1401,6 +1741,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_UploadCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1436,6 +1784,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_UploadCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The upload certificate request. </param>
@@ -1469,6 +1825,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeviceCapacityCheck_CheckResourceCreationFeasibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1509,6 +1869,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>DeviceCapacityCheck_CheckResourceCreationFeasibility</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1548,6 +1912,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>DeviceCapacityInfo_GetDeviceCapacityInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1577,6 +1945,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeviceCapacityInfo_GetDeviceCapacityInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1608,15 +1980,19 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Nodes_ListByDataBoxEdgeDevice</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataBoxEdgeNode.DeserializeDataBoxEdgeNode(e), _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1630,15 +2006,19 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Nodes_ListByDataBoxEdgeDevice</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataBoxEdgeNode.DeserializeDataBoxEdgeNode(e), _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1651,6 +2031,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportPackages_TriggerSupportPackage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1690,6 +2074,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>SupportPackages_TriggerSupportPackage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1727,6 +2115,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1782,6 +2178,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1836,6 +2240,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1885,6 +2297,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1933,6 +2353,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1985,6 +2413,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

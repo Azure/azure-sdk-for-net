@@ -30,6 +30,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -54,16 +64,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storedProcedureName"u8);
             writer.WriteObjectValue(StoredProcedureName);
-            if (Optional.IsCollectionDefined(StoredProcedureParameters))
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in StoredProcedureParameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(StoredProcedureParameters);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -84,10 +88,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             object storedProcedureName = default;
-            Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
+            Optional<object> storedProcedureParameters = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -110,6 +116,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -160,12 +184,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             {
                                 continue;
                             }
-                            Dictionary<string, StoredProcedureParameter> dictionary = new Dictionary<string, StoredProcedureParameter>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, StoredProcedureParameter.DeserializeStoredProcedureParameter(property1.Value));
-                            }
-                            storedProcedureParameters = dictionary;
+                            storedProcedureParameters = property0.Value.GetObject();
                             continue;
                         }
                     }
@@ -174,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlPoolStoredProcedureActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, sqlPool, storedProcedureName, Optional.ToDictionary(storedProcedureParameters));
+            return new SqlPoolStoredProcedureActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, sqlPool, storedProcedureName, storedProcedureParameters.Value);
         }
 
         internal partial class SqlPoolStoredProcedureActivityConverter : JsonConverter<SqlPoolStoredProcedureActivity>

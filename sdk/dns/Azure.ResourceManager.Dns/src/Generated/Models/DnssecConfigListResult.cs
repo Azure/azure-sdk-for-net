@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> The response to a List DNSSEC configurations operation. </summary>
     internal partial class DnssecConfigListResult
     {
-        /// <summary> Initializes a new instance of DnssecConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnssecConfigListResult"/>. </summary>
         internal DnssecConfigListResult()
         {
             Value = new ChangeTrackingList<DnssecConfigData>();
         }
 
-        /// <summary> Initializes a new instance of DnssecConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnssecConfigListResult"/>. </summary>
         /// <param name="value"> Information about the DNSSEC configurations in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal DnssecConfigListResult(IReadOnlyList<DnssecConfigData> value, string nextLink)

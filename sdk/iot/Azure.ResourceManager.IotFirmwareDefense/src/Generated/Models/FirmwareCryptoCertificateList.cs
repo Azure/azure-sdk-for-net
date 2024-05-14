@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Crypto certificates list. </summary>
     internal partial class FirmwareCryptoCertificateList
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateList"/>. </summary>
         internal FirmwareCryptoCertificateList()
         {
             Value = new ChangeTrackingList<FirmwareCryptoCertificate>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateList"/>. </summary>
         /// <param name="value"> Crypto certificates list. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         internal FirmwareCryptoCertificateList(IReadOnlyList<FirmwareCryptoCertificate> value, string nextLink)

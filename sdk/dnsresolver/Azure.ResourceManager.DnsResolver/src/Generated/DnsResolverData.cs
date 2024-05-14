@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsResolverData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsResolverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
             VirtualNetwork = virtualNetwork;
         }
 
-        /// <summary> Initializes a new instance of DnsResolverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -1,14 +1,44 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.6 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.5 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.4.0-beta.4 (2023-10-30)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-03-15' to 'package-preview-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/35215554aef59a30fa709e4b058931101a5ef26b/specification/cosmos-db/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.34.0 to 1.35.0
+
+## 1.4.0-beta.3 (2023-07-31)
+
+### Features Added
+
+ - Updated Microsoft.DocumentDB RP API version to `2023-03-15-preview`
+ - Adds support for Database partition merge operation.
+ - Adds support for Materialized view in Collections.
 
 ## 1.4.0-beta.2 (2023-05-29)
 
@@ -26,10 +56,11 @@
 - Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.4.0-beta.1 (2023-04-28)
+
 ### Features Added
 
 - Updated Microsoft.DocumentDB RP API version to `2022-11-15-preview`
-- Added support for restoring deleted table and gremlin resources within the same account 
+- Added support for restoring deleted table and gremlin resources within the same account
 - Added support for cross region restore
 - Added support for enabling burst capacity of the CosmosDB account
 
@@ -177,7 +208,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-
-
-
-

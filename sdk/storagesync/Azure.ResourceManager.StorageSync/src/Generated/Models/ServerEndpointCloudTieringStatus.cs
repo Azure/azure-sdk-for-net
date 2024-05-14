@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint cloud tiering status object. </summary>
     public partial class ServerEndpointCloudTieringStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointCloudTieringStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointCloudTieringStatus"/>. </summary>
         internal ServerEndpointCloudTieringStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointCloudTieringStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointCloudTieringStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="health"> Cloud tiering health state. </param>
         /// <param name="healthLastUpdatedOn"> The last updated timestamp of health state. </param>

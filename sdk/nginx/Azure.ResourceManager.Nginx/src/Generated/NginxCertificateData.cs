@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx.Models;
@@ -13,28 +12,29 @@ using Azure.ResourceManager.Nginx.Models;
 namespace Azure.ResourceManager.Nginx
 {
     /// <summary> A class representing the NginxCertificate data model. </summary>
-    public partial class NginxCertificateData : TrackedResourceData
+    public partial class NginxCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
-        /// <param name="location"> The location. </param>
-        public NginxCertificateData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateData"/>. </summary>
+        public NginxCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="properties"></param>
-        internal NginxCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NginxCertificateProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="location"></param>
+        internal NginxCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxCertificateProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Location = location;
         }
 
         /// <summary> Gets or sets the properties. </summary>
         public NginxCertificateProperties Properties { get; set; }
+        /// <summary> Gets or sets the location. </summary>
+        public AzureLocation? Location { get; set; }
     }
 }

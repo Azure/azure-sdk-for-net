@@ -12,9 +12,20 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The EntitiesTaskParameters. </summary>
     internal partial class EntitiesTaskParameters
     {
-        /// <summary> Initializes a new instance of EntitiesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
         public EntitiesTaskParameters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
+        /// <param name="modelVersion"></param>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="stringIndexType"></param>
+        internal EntitiesTaskParameters(string modelVersion, bool? loggingOptOut, StringIndexType? stringIndexType)
+        {
+            ModelVersion = modelVersion;
+            LoggingOptOut = loggingOptOut;
+            StringIndexType = stringIndexType;
         }
 
         /// <summary> Gets or sets the model version. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> VwanInfo for Firewall Networking. </summary>
     public partial class FirewallVwanConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallVwanConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallVwanConfiguration"/>. </summary>
         /// <param name="vhub"> vHub Address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vhub"/> is null. </exception>
         public FirewallVwanConfiguration(IPAddressSpaceInfo vhub)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Vhub = vhub;
         }
 
-        /// <summary> Initializes a new instance of FirewallVwanConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallVwanConfiguration"/>. </summary>
         /// <param name="networkVirtualApplianceId"> Network Virtual Appliance resource ID. </param>
         /// <param name="vhub"> vHub Address. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>

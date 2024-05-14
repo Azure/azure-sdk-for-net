@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapsePrivateLinkHubResource" /> and their operations.
-    /// Each <see cref="SynapsePrivateLinkHubResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SynapsePrivateLinkHubCollection" /> instance call the GetSynapsePrivateLinkHubs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SynapsePrivateLinkHubResource"/> and their operations.
+    /// Each <see cref="SynapsePrivateLinkHubResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SynapsePrivateLinkHubCollection"/> instance call the GetSynapsePrivateLinkHubs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SynapsePrivateLinkHubCollection : ArmCollection, IEnumerable<SynapsePrivateLinkHubResource>, IAsyncEnumerable<SynapsePrivateLinkHubResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,15 +253,23 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapsePrivateLinkHubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +283,23 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapsePrivateLinkHubResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +312,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +356,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -315,6 +380,96 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapsePrivateLinkHubPrivateLinkHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateLinkHubName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapsePrivateLinkHubResource>> GetIfExistsAsync(string privateLinkHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
+
+            using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapsePrivateLinkHubPrivateLinkHubsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateLinkHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapsePrivateLinkHubResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapsePrivateLinkHubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkHubName"/> is null. </exception>
+        public virtual NullableResponse<SynapsePrivateLinkHubResource> GetIfExists(string privateLinkHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
+
+            using var scope = _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics.CreateScope("SynapsePrivateLinkHubCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapsePrivateLinkHubPrivateLinkHubsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateLinkHubName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapsePrivateLinkHubResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapsePrivateLinkHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

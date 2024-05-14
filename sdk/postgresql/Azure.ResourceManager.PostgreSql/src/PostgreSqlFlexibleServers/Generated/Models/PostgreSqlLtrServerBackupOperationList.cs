@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A list of long term retention backup operations for server. </summary>
     internal partial class PostgreSqlLtrServerBackupOperationList
     {
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
         internal PostgreSqlLtrServerBackupOperationList()
         {
             Value = new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
         /// <param name="value"> The list of long term retention server backup operations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value, string nextLink)

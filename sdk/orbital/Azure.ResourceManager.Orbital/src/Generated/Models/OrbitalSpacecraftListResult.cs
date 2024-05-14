@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Response for the ListSpacecrafts API service call. </summary>
     internal partial class OrbitalSpacecraftListResult
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftListResult"/>. </summary>
         internal OrbitalSpacecraftListResult()
         {
             Value = new ChangeTrackingList<OrbitalSpacecraftData>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftListResult"/>. </summary>
         /// <param name="value"> A list of spacecraft resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal OrbitalSpacecraftListResult(IReadOnlyList<OrbitalSpacecraftData> value, string nextLink)

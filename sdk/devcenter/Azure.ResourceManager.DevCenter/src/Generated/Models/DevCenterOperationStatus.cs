@@ -16,15 +16,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The current status of an async operation. </summary>
     public partial class DevCenterOperationStatus : OperationStatusResult
     {
-        /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/>. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal DevCenterOperationStatus(string status) : base(status)
         {
-            Argument.AssertNotNull(status, nameof(status));
         }
 
-        /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -49,7 +47,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

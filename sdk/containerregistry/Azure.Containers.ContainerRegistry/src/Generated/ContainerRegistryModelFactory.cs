@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Model factory for models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRepositoryProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
             return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead);
         }
 
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
@@ -48,7 +48,7 @@ namespace Azure.Containers.ContainerRegistry
             return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, canDelete, canWrite, canList, canRead);
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
@@ -58,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry
             return new ArtifactManifestPlatform(digest, architecture, operatingSystem);
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactManifestProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="digest"> Manifest. </param>

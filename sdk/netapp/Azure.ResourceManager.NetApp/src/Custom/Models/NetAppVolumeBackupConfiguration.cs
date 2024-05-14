@@ -13,6 +13,12 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumeBackupConfiguration
     {
         /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppVolumeBackupConfiguration()
+        {
+        }
+
+        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
         /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
         /// <param name="isPolicyEnforced"> Policy Enforced. </param>
         /// <param name="vaultId"> Vault Resource ID. </param>
@@ -24,6 +30,27 @@ namespace Azure.ResourceManager.NetApp.Models
             VaultId = vaultId;
             IsBackupEnabled = isBackupEnabled;
         }
+
+        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="isPolicyEnforced"> Policy Enforced. </param>
+        /// <param name="isBackupEnabled"> Backup Enabled. </param>
+        internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, bool? isBackupEnabled)
+        {
+            BackupPolicyId = backupPolicyId;
+            IsPolicyEnforced = isPolicyEnforced;
+            IsBackupEnabled = isBackupEnabled;
+        }
+
+        /// <summary> Backup Policy Resource ID. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier BackupPolicyId { get; set; }
+
+        /// <summary> Policy Enforced. </summary>
+        public bool? IsPolicyEnforced { get; set; }
+
+        /// <summary> Backup Enabled. </summary>
+        public bool? IsBackupEnabled { get; set; }
 
         /// <summary> Vault Resource ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

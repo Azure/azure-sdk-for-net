@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a restore request. </summary>
     public partial class RestoreRequestInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
         public RestoreRequestInfo()
         {
             Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

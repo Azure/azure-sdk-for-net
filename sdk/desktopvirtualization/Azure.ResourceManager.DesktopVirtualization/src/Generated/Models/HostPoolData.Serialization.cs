@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class HostPoolData : IUtf8JsonSerializable
+    public partial class HostPoolData : IUtf8JsonSerializable, IJsonModel<HostPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HostPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HostPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HostPoolData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
@@ -28,6 +38,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -57,8 +72,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -108,6 +148,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("vmTemplate"u8);
                 writer.WriteStringValue(VmTemplate);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationGroupReferences))
+            {
+                writer.WritePropertyName("applicationGroupReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicationGroupReferences)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority"u8);
@@ -135,17 +185,66 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
+            {
+                writer.WritePropertyName("cloudPcResource"u8);
+                writer.WriteBooleanValue(IsCloudPCResource.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
                 writer.WriteObjectValue(AgentUpdate);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HostPoolData DeserializeHostPoolData(JsonElement element)
+        HostPoolData IJsonModel<HostPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HostPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HostPoolData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostPoolData(document.RootElement, options);
+        }
+
+        internal static HostPoolData DeserializeHostPoolData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -182,7 +281,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
             Optional<bool> cloudPCResource = default;
+            Optional<HostPoolPublicNetworkAccess> publicNetworkAccess = default;
             Optional<SessionHostAgentUpdateProperties> agentUpdate = default;
+            Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection>> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -428,6 +531,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new HostPoolPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("agentUpdate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -437,11 +549,61 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             agentUpdate = SessionHostAgentUpdateProperties.DeserializeSessionHostAgentUpdateProperties(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DesktopVirtualizationPrivateEndpointConnection> array = new List<DesktopVirtualizationPrivateEndpointConnection>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), Optional.ToNullable(cloudPCResource), agentUpdate.Value, managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), Optional.ToNullable(cloudPCResource), Optional.ToNullable(publicNetworkAccess), agentUpdate.Value, Optional.ToList(privateEndpointConnections), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HostPoolData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostPoolData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HostPoolData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HostPoolData IPersistableModel<HostPoolData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostPoolData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHostPoolData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostPoolData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HostPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

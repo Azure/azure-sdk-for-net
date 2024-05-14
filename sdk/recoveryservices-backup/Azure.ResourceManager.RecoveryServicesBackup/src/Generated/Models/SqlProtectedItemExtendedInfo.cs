@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on Azure Sql specific protected item. </summary>
     public partial class SqlProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItemExtendedInfo"/>. </summary>
         public SqlProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> State of the backup policy associated with this backup item. </param>

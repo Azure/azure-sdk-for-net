@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Orbital
     /// </summary>
     public partial class OrbitalContactData : ResourceData
     {
-        /// <summary> Initializes a new instance of OrbitalContactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactData"/>. </summary>
         public OrbitalContactData()
         {
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

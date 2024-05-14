@@ -12,12 +12,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The module identity on a device. </summary>
     public partial class ModuleIdentity
     {
-        /// <summary> Initializes a new instance of ModuleIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModuleIdentity"/>. </summary>
         public ModuleIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ModuleIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModuleIdentity"/>. </summary>
         /// <param name="moduleId"> The unique identifier of the module. </param>
         /// <param name="managedBy"> Identifies who manages this module. For instance, this value is \"IotEdge\" if the edge runtime owns this module. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>

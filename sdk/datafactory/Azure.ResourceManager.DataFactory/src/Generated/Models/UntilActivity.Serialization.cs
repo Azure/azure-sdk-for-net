@@ -80,7 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -95,13 +98,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
-            DataFactoryExpressionDefinition expression = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            DataFactoryExpression expression = default;
             Optional<DataFactoryElement<string>> timeout = default;
-            IList<DataFactoryActivity> activities = default;
+            IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    state = new ActivityState(property.Value.GetString());
+                    state = new PipelineActivityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onInactiveMarkAs"u8))
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -145,10 +148,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -159,10 +162,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -178,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = DataFactoryExpressionDefinition.DeserializeDataFactoryExpressionDefinition(property0.Value);
+                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("timeout"u8))
@@ -192,10 +195,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("activities"u8))
                         {
-                            List<DataFactoryActivity> array = new List<DataFactoryActivity>();
+                            List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeDataFactoryActivity(item));
+                                array.Add(DeserializePipelineActivity(item));
                             }
                             activities = array;
                             continue;

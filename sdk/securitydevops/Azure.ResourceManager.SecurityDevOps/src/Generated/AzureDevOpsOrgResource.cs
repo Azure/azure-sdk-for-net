@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
     /// A Class representing an AzureDevOpsOrg along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AzureDevOpsOrgResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAzureDevOpsOrgResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AzureDevOpsConnectorResource" /> using the GetAzureDevOpsOrg method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AzureDevOpsOrgResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAzureDevOpsOrgResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AzureDevOpsConnectorResource"/> using the GetAzureDevOpsOrg method.
     /// </summary>
     public partial class AzureDevOpsOrgResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AzureDevOpsOrgResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureDevOpsConnectorName"> The azureDevOpsConnectorName. </param>
+        /// <param name="azureDevOpsOrgName"> The azureDevOpsOrgName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly AzureDevOpsOrgRestOperations _azureDevOpsOrgRestClient;
         private readonly AzureDevOpsOrgData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors/orgs";
+
         /// <summary> Initializes a new instance of the <see cref="AzureDevOpsOrgResource"/> class for mocking. </summary>
         protected AzureDevOpsOrgResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AzureDevOpsOrgResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureDevOpsOrgResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AzureDevOpsOrgResource(ArmClient client, AzureDevOpsOrgData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors/orgs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of AzureDevOpsProjectResources and their operations over a AzureDevOpsProjectResource. </returns>
         public virtual AzureDevOpsProjectCollection GetAzureDevOpsProjects()
         {
-            return GetCachedClient(Client => new AzureDevOpsProjectCollection(Client, Id));
+            return GetCachedClient(client => new AzureDevOpsProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +108,20 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsProject_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsProjectName"> Name of the AzureDevOps Project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsProjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AzureDevOpsProjectResource>> GetAzureDevOpsProjectAsync(string azureDevOpsProjectName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +139,20 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsProject_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsProjectName"> Name of the AzureDevOps Project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsProjectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsProjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AzureDevOpsProjectResource> GetAzureDevOpsProject(string azureDevOpsProjectName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +169,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsOrg_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +210,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsOrg_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsOrgResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,6 +249,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsOrg_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +295,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsOrg_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsOrgResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

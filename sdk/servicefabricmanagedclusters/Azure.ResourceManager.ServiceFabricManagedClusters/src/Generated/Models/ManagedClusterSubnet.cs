@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a Subnet. </summary>
     public partial class ManagedClusterSubnet
     {
-        /// <summary> Initializes a new instance of ManagedClusterSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSubnet"/>. </summary>
         /// <param name="name"> Subnet name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedClusterSubnet(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSubnet"/>. </summary>
         /// <param name="name"> Subnet name. </param>
         /// <param name="isIPv6Enabled"> Indicates wether to enable Ipv6 or not. If not provided, it will take the same configuration as the cluster. </param>
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>

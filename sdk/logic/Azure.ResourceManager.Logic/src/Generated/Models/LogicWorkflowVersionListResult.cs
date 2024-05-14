@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow versions. </summary>
     internal partial class LogicWorkflowVersionListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionListResult"/>. </summary>
         internal LogicWorkflowVersionListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowVersionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionListResult"/>. </summary>
         /// <param name="value"> A list of workflow versions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LogicWorkflowVersionListResult(IReadOnlyList<LogicWorkflowVersionData> value, string nextLink)

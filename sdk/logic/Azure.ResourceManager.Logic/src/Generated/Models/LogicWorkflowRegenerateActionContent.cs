@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The access key regenerate action content. </summary>
     public partial class LogicWorkflowRegenerateActionContent
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRegenerateActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRegenerateActionContent"/>. </summary>
         public LogicWorkflowRegenerateActionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRegenerateActionContent"/>. </summary>
+        /// <param name="keyType"> The key type. </param>
+        internal LogicWorkflowRegenerateActionContent(LogicKeyType? keyType)
+        {
+            KeyType = keyType;
         }
 
         /// <summary> The key type. </summary>

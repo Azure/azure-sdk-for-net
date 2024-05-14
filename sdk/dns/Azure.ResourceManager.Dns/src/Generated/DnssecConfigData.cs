@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnssecConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of DnssecConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnssecConfigData"/>. </summary>
         internal DnssecConfigData()
         {
             SigningKeys = new ChangeTrackingList<DnsSigningKey>();
         }
 
-        /// <summary> Initializes a new instance of DnssecConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnssecConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

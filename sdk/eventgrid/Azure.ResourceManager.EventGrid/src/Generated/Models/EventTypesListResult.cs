@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Event Types operation. </summary>
     internal partial class EventTypesListResult
     {
-        /// <summary> Initializes a new instance of EventTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTypesListResult"/>. </summary>
         internal EventTypesListResult()
         {
             Value = new ChangeTrackingList<EventTypeUnderTopic>();
         }
 
-        /// <summary> Initializes a new instance of EventTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTypesListResult"/>. </summary>
         /// <param name="value"> A collection of event types. </param>
         internal EventTypesListResult(IReadOnlyList<EventTypeUnderTopic> value)
         {

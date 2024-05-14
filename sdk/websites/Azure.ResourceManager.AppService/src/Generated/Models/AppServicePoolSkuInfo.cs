@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> SKU discovery information. </summary>
     public partial class AppServicePoolSkuInfo
     {
-        /// <summary> Initializes a new instance of AppServicePoolSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePoolSkuInfo"/>. </summary>
         internal AppServicePoolSkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePoolSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePoolSkuInfo"/>. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="sku"> Name and tier of the SKU. </param>
         /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>

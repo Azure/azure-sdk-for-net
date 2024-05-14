@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines a rate limiting rule that can be included in a waf policy. </summary>
     public partial class RateLimitRule : CustomRule
     {
-        /// <summary> Initializes a new instance of RateLimitRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateLimitRule"/>. </summary>
         /// <param name="name"> Defines the name of the custom rule. </param>
         /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
@@ -31,18 +31,24 @@ namespace Azure.ResourceManager.Cdn.Models
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;
         }
 
-        /// <summary> Initializes a new instance of RateLimitRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateLimitRule"/>. </summary>
         /// <param name="name"> Defines the name of the custom rule. </param>
         /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
         /// <param name="priority"> Defines in what order this rule be evaluated in the overall list of custom rules. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rateLimitThreshold"> Defines rate limit threshold. </param>
         /// <param name="rateLimitDurationInMinutes"> Defines rate limit duration. Default is 1 minute. </param>
-        internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action)
+        internal RateLimitRule(string name, CustomRuleEnabledState? enabledState, int priority, IList<CustomRuleMatchCondition> matchConditions, OverrideActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, enabledState, priority, matchConditions, action, serializedAdditionalRawData)
         {
             RateLimitThreshold = rateLimitThreshold;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RateLimitRule"/> for deserialization. </summary>
+        internal RateLimitRule()
+        {
         }
 
         /// <summary> Defines rate limit threshold. </summary>

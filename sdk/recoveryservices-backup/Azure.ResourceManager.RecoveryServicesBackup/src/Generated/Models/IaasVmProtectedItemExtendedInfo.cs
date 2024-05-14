@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on Azure IaaS VM specific backup item. </summary>
     public partial class IaasVmProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of IaasVmProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemExtendedInfo"/>. </summary>
         public IaasVmProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
         /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
         /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>

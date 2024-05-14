@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> SKU of the namespace. </summary>
     public partial class ServiceBusSku
     {
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public ServiceBusSku(ServiceBusSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
         /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>

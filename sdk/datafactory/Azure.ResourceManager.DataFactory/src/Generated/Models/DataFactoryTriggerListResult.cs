@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of trigger resources. </summary>
     internal partial class DataFactoryTriggerListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerListResult"/>. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryTriggerListResult(IEnumerable<DataFactoryTriggerData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerListResult"/>. </summary>
         /// <param name="value"> List of triggers. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal DataFactoryTriggerListResult(IReadOnlyList<DataFactoryTriggerData> value, string nextLink)

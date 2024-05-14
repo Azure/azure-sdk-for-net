@@ -10,12 +10,12 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </summary>
     public partial class AcceptedAgeRange
     {
-        /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptedAgeRange"/>. </summary>
         public AcceptedAgeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptedAgeRange"/>. </summary>
         /// <param name="minimumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
         /// <param name="maximumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
         internal AcceptedAgeRange(AcceptedAge minimumAge, AcceptedAge maximumAge)

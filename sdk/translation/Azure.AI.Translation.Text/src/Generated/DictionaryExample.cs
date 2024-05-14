@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Dictionary Example. </summary>
     public partial class DictionaryExample
     {
-        /// <summary> Initializes a new instance of DictionaryExample. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryExample"/>. </summary>
         /// <param name="sourcePrefix">
         /// The string to concatenate before the value of sourceTerm to form a complete example.
         /// Do not add a space character, since it is already there when it should be.

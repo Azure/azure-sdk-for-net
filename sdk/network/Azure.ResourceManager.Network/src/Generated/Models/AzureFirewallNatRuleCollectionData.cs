@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,22 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> NAT rule collection resource. </summary>
     public partial class AzureFirewallNatRuleCollectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionData"/>. </summary>
         public AzureFirewallNatRuleCollectionData()
         {
             Rules = new ChangeTrackingList<AzureFirewallNatRule>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the NAT rule collection resource. </param>
         /// <param name="action"> The action type of a NAT rule collection. </param>
         /// <param name="rules"> Collection of rules used by a NAT rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT rule collection resource. </param>
-        internal AzureFirewallNatRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal AzureFirewallNatRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Priority = priority;

@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Partner Topic update. </summary>
     public partial class PartnerTopicPatch
     {
-        /// <summary> Initializes a new instance of PartnerTopicPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicPatch"/>. </summary>
         public PartnerTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicPatch"/>. </summary>
+        /// <param name="tags"> Tags of the Partner Topic resource. </param>
+        /// <param name="identity"> Identity information for the Partner Topic resource. </param>
+        internal PartnerTopicPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
         }
 
         /// <summary> Tags of the Partner Topic resource. </summary>

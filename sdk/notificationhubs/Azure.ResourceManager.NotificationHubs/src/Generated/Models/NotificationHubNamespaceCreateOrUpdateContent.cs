@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace operation. </summary>
     public partial class NotificationHubNamespaceCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubNamespaceCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubNamespaceCreateOrUpdateContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The type used for update operations of the Association. </summary>
     public partial class AssociationPatch
     {
-        /// <summary> Initializes a new instance of AssociationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationPatch"/>. </summary>
         public AssociationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssociationPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="associationType"> Association Type. </param>
+        /// <param name="subnet"> Association Subnet. </param>
+        internal AssociationPatch(IDictionary<string, string> tags, AssociationType? associationType, WritableSubResource subnet)
+        {
+            Tags = tags;
+            AssociationType = associationType;
+            Subnet = subnet;
         }
 
         /// <summary> Resource tags. </summary>

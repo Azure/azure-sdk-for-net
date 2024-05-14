@@ -13,10 +13,21 @@ namespace Azure.Communication.CallingServer
     /// <summary> Options for DTMF recognition. </summary>
     public partial class DtmfOptionsInternal
     {
-        /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DtmfOptionsInternal"/>. </summary>
         public DtmfOptionsInternal()
         {
             StopTones = new ChangeTrackingList<DtmfTone>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DtmfOptionsInternal"/>. </summary>
+        /// <param name="interToneTimeoutInSeconds"> Time to wait between DTMF inputs to stop recognizing. </param>
+        /// <param name="maxTonesToCollect"> Maximum number of DTMF tones to be collected. </param>
+        /// <param name="stopTones"> List of tones that will stop recognizing. </param>
+        internal DtmfOptionsInternal(int? interToneTimeoutInSeconds, int? maxTonesToCollect, IReadOnlyList<DtmfTone> stopTones)
+        {
+            InterToneTimeoutInSeconds = interToneTimeoutInSeconds;
+            MaxTonesToCollect = maxTonesToCollect;
+            StopTones = stopTones;
         }
 
         /// <summary> Time to wait between DTMF inputs to stop recognizing. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityCenterPublisherInfo : IUtf8JsonSerializable
+    public partial class SecurityCenterPublisherInfo : IUtf8JsonSerializable, IJsonModel<SecurityCenterPublisherInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterPublisherInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityCenterPublisherInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPublisherInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PublisherName))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityCenterPublisherInfo DeserializeSecurityCenterPublisherInfo(JsonElement element)
+        SecurityCenterPublisherInfo IJsonModel<SecurityCenterPublisherInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPublisherInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityCenterPublisherInfo(document.RootElement, options);
+        }
+
+        internal static SecurityCenterPublisherInfo DeserializeSecurityCenterPublisherInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> productName = default;
             Optional<string> binaryName = default;
             Optional<string> version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherName"u8))
@@ -70,8 +112,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityCenterPublisherInfo(publisherName.Value, productName.Value, binaryName.Value, version.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityCenterPublisherInfo(publisherName.Value, productName.Value, binaryName.Value, version.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityCenterPublisherInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPublisherInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityCenterPublisherInfo IPersistableModel<SecurityCenterPublisherInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterPublisherInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityCenterPublisherInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityCenterPublisherInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityCenterPublisherInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

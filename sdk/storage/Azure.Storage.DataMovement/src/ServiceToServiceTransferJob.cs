@@ -18,12 +18,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal ServiceToServiceTransferJob(
             DataTransfer dataTransfer,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
-            TransferOptions transferOptions,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer CheckPointFolderPath,
-            ErrorHandlingBehavior errorHandling,
+            DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
@@ -45,10 +45,10 @@ namespace Azure.Storage.DataMovement
             DataTransfer dataTransfer,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
-            TransferOptions transferOptions,
+            DataTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingBehavior errorHandling,
+            DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
+            await OnJobStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
             if (_jobParts.Count == 0)
@@ -83,9 +83,9 @@ namespace Azure.Storage.DataMovement
                         // Single resource transfer, we can skip to chunking the job.
                         part = await ServiceToServiceJobPart.CreateJobPartAsync(
                             job: this,
-                            partNumber: partNumber,
-                            isFinalPart: true).ConfigureAwait(false);
+                            partNumber: partNumber).ConfigureAwait(false);
                         AppendJobPart(part);
+                        await OnAllResourcesEnumerated().ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -105,22 +105,16 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Resuming old job with existing job parts
-                bool isFinalPartFound = false;
                 foreach (JobPartInternal part in _jobParts)
                 {
-                    if (part.JobPartStatus != StorageTransferStatus.Completed)
+                    if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        part.JobPartStatus = StorageTransferStatus.Queued;
+                        part.JobPartStatus.TrySetTransferStateChange(DataTransferState.Queued);
                         yield return part;
-
-                        if (part.IsFinalPart)
-                        {
-                            // If we found the final part then we don't have to relist the container.
-                            isFinalPartFound = true;
-                        }
                     }
                 }
-                if (!isFinalPartFound)
+
+                if (!await _checkpointer.IsEnumerationCompleteAsync(_dataTransfer.Id, _cancellationToken).ConfigureAwait(false))
                 {
                     await foreach (JobPartInternal jobPartInternal in GetStorageResourcesAsync().ConfigureAwait(false))
                     {
@@ -128,7 +122,8 @@ namespace Azure.Storage.DataMovement
                     }
                 }
             }
-            _enumerationComplete = true;
+
+            // Call regardless of the outcome of enumeration so job can pause/finish
             await OnEnumerationComplete().ConfigureAwait(false);
         }
 
@@ -137,7 +132,7 @@ namespace Azure.Storage.DataMovement
             // Start the partNumber based on the last part number. If this is a new job,
             // the count will automatically be at 0 (the beginning).
             int partNumber = _jobParts.Count;
-            List<string> existingSources = GetJobPartSourceResourcePaths();
+            HashSet<Uri> existingSources = GetJobPartSourceResourcePaths();
             // Call listing operation on the source container
             IAsyncEnumerator<StorageResource> enumerator;
 
@@ -154,16 +149,17 @@ namespace Azure.Storage.DataMovement
                 yield break;
             }
 
-            // List the container keep track of the last job part in order to store it properly
-            // so we know we finished enumerating/listed.
+            // List the container in this specific way because MoveNext needs to be separately wrapped
+            // in a try/catch as we can't yield return inside a try/catch.
             bool enumerationCompleted = false;
-            StorageResource lastResource = default;
             while (!enumerationCompleted)
             {
                 try
                 {
+                    _cancellationToken.ThrowIfCancellationRequested();
                     if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
                     {
+                        await OnAllResourcesEnumerated().ConfigureAwait(false);
                         enumerationCompleted = true;
                         continue;
                     }
@@ -175,26 +171,45 @@ namespace Azure.Storage.DataMovement
                 }
 
                 StorageResource current = enumerator.Current;
-                if (lastResource != default)
-                {
-                    string sourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
-                        ? lastResource.Path
-                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
 
-                    if (!existingSources.Contains(sourceName))
+                if (current.IsContainer)
+                {
+                    // Create sub-container
+                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                    string subContainerPath = string.IsNullOrEmpty(containerUriPath)
+                        ? current.Uri.GetPath()
+                        : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+                    StorageResourceContainer subContainer =
+                        _destinationResourceContainer.GetChildStorageResourceContainer(subContainerPath);
+
+                    try
                     {
-                        // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
-                        // we only yield return when we know this is not the last storage resource to be listed
-                        // from the container.
+                        await subContainer.CreateIfNotExistsAsync(_cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                        yield break;
+                    }
+                }
+                else
+                {
+                    if (!existingSources.Contains(current.Uri))
+                    {
+                        string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                        string sourceName = string.IsNullOrEmpty(containerUriPath)
+                            ? current.Uri.GetPath()
+                            : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+
                         ServiceToServiceJobPart part;
                         try
                         {
                             part = await ServiceToServiceJobPart.CreateJobPartAsync(
                                 job: this,
                                 partNumber: partNumber,
-                                sourceResource: (StorageResourceSingle)lastResource,
-                                destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
-                                isFinalPart: false).ConfigureAwait(false);
+                                sourceResource: (StorageResourceItem)current,
+                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
+                                .ConfigureAwait(false);
                             AppendJobPart(part);
                         }
                         catch (Exception ex)
@@ -206,35 +221,6 @@ namespace Azure.Storage.DataMovement
                         partNumber++;
                     }
                 }
-                lastResource = current;
-            }
-
-            // It's possible to have no job parts in a job
-            if (lastResource != default)
-            {
-                ServiceToServiceJobPart lastPart;
-                try
-                {
-                    // Return last part but enable the part to be the last job part of the entire job
-                    // so we know that we've finished listing in the container
-                    string lastSourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
-                        ? lastResource.Path
-                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
-
-                    lastPart = await ServiceToServiceJobPart.CreateJobPartAsync(
-                            job: this,
-                            partNumber: partNumber,
-                            sourceResource: (StorageResourceSingle)lastResource,
-                            destinationResource: _destinationResourceContainer.GetChildStorageResource(lastSourceName),
-                            isFinalPart: true).ConfigureAwait(false);
-                    AppendJobPart(lastPart);
-                }
-                catch (Exception ex)
-                {
-                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
-                    yield break;
-                }
-                yield return lastPart;
             }
         }
     }

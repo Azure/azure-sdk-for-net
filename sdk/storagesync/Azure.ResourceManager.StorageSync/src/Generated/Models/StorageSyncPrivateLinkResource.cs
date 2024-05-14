@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> A private link resource. </summary>
     public partial class StorageSyncPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateLinkResource"/>. </summary>
         public StorageSyncPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 message filter for odata query. </summary>
     public partial class X12MessageFilter
     {
-        /// <summary> Initializes a new instance of X12MessageFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12MessageFilter"/>. </summary>
         /// <param name="messageFilterType"> The message filter type. </param>
         public X12MessageFilter(MessageFilterType messageFilterType)
         {

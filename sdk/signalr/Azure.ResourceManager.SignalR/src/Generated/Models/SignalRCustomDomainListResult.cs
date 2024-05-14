@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Custom domains list. </summary>
     internal partial class SignalRCustomDomainListResult
     {
-        /// <summary> Initializes a new instance of SignalRCustomDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainListResult"/>. </summary>
         internal SignalRCustomDomainListResult()
         {
             Value = new ChangeTrackingList<SignalRCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomDomainListResult"/>. </summary>
         /// <param name="value"> List of custom domains that bind to this resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

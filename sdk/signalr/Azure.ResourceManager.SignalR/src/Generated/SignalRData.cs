@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SignalRData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SignalRData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SignalR
             Features = new ChangeTrackingList<SignalRFeature>();
         }
 
-        /// <summary> Initializes a new instance of SignalRData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Represents a log file. </summary>
     public partial class PostgreSqlLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLogFile"/>. </summary>
         public PostgreSqlLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

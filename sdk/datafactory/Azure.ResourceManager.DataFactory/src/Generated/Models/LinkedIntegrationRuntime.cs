@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The linked integration runtime information. </summary>
     public partial class LinkedIntegrationRuntime
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntime"/>. </summary>
         internal LinkedIntegrationRuntime()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntime"/>. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryName"> The name of the data factory for which the linked integration runtime belong to. </param>

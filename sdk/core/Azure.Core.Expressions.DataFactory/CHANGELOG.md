@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2023-11-02)
+
+### Bugs Fixed
+
+- Fixed deserialization of `DataFactoryElement<BinaryData>` properties where the underlying data 
+  is not a JSON object.
+
+## 1.0.0-beta.5 (2023-08-15)
+
+### Bugs Fixed
+
+- Added serialization support for `DataFactoryElement<BinaryData>` where the underlying 
+  `BinaryData` is a JSON object.
 
 ## 1.0.0-beta.4 (2023-07-13)
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A pageable list of resources. </summary>
     internal partial class DataCollectionEndpointResourceListResult
     {
-        /// <summary> Initializes a new instance of DataCollectionEndpointResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointResourceListResult"/>. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataCollectionEndpointResourceListResult(IEnumerable<DataCollectionEndpointData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointResourceListResult"/>. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal DataCollectionEndpointResourceListResult(IReadOnlyList<DataCollectionEndpointData> value, string nextLink)

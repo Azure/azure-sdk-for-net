@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerRegistryResource" /> and their operations.
-    /// Each <see cref="ContainerRegistryResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ContainerRegistryCollection" /> instance call the GetContainerRegistries method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ContainerRegistryResource"/> and their operations.
+    /// Each <see cref="ContainerRegistryResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ContainerRegistryCollection"/> instance call the GetContainerRegistries method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ContainerRegistryCollection : ArmCollection, IEnumerable<ContainerRegistryResource>, IAsyncEnumerable<ContainerRegistryResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,15 +253,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +283,23 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +312,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +356,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -315,6 +380,96 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 var response = _containerRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerRegistryResource>> GetIfExistsAsync(string registryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+
+            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        public virtual NullableResponse<ContainerRegistryResource> GetIfExists(string registryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+
+            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

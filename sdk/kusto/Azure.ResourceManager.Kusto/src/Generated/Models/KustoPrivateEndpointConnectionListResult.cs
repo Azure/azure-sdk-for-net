@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class KustoPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateEndpointConnectionListResult"/>. </summary>
         internal KustoPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal KustoPrivateEndpointConnectionListResult(IReadOnlyList<KustoPrivateEndpointConnectionData> value)
         {

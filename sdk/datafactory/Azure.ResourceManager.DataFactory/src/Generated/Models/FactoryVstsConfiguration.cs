@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Factory's VSTS repo information. </summary>
     public partial class FactoryVstsConfiguration : FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of FactoryVstsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryVstsConfiguration"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryRepoConfigurationType = "FactoryVSTSConfiguration";
         }
 
-        /// <summary> Initializes a new instance of FactoryVstsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryVstsConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>

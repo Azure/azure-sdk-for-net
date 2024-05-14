@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadMonitorModelFactory
     {
-        /// <summary> Initializes a new instance of HealthMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadMonitor.HealthMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             return new HealthMonitorData(id, name, resourceType, systemData, monitorName, monitorType, monitoredObject, parentMonitorName, previousMonitorState, currentMonitorState, evaluationTimestamp, currentStateFirstObservedTimestamp, lastReportedTimestamp, evidence, monitorConfiguration);
         }
 
-        /// <summary> Initializes a new instance of HealthMonitorStateChangeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadMonitor.HealthMonitorStateChangeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

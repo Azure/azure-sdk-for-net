@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmManagedServiceIdentitiesModelFactory
     {
-        /// <summary> Initializes a new instance of SystemAssignedIdentityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.SystemAssignedIdentityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             return new SystemAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, clientSecretUri);
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             return new UserAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId);
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             return new UserAssignedIdentityPatch(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId);
         }
 
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

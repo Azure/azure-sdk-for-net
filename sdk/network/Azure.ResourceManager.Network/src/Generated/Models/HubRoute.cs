@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> RouteTable route. </summary>
     public partial class HubRoute
     {
-        /// <summary> Initializes a new instance of HubRoute. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HubRoute"/>. </summary>
         /// <param name="name"> The name of the Route that is unique within a RouteTable. This name can be used to access this route. </param>
         /// <param name="destinationType"> The type of destinations (eg: CIDR, ResourceId, Service). </param>
         /// <param name="destinations"> List of all destinations. </param>
@@ -37,19 +69,26 @@ namespace Azure.ResourceManager.Network.Models
             NextHop = nextHop;
         }
 
-        /// <summary> Initializes a new instance of HubRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRoute"/>. </summary>
         /// <param name="name"> The name of the Route that is unique within a RouteTable. This name can be used to access this route. </param>
         /// <param name="destinationType"> The type of destinations (eg: CIDR, ResourceId, Service). </param>
         /// <param name="destinations"> List of all destinations. </param>
         /// <param name="nextHopType"> The type of next hop (eg: ResourceId). </param>
         /// <param name="nextHop"> NextHop resource ID. </param>
-        internal HubRoute(string name, string destinationType, IList<string> destinations, string nextHopType, string nextHop)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HubRoute(string name, string destinationType, IList<string> destinations, string nextHopType, string nextHop, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DestinationType = destinationType;
             Destinations = destinations;
             NextHopType = nextHopType;
             NextHop = nextHop;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HubRoute"/> for deserialization. </summary>
+        internal HubRoute()
+        {
         }
 
         /// <summary> The name of the Route that is unique within a RouteTable. This name can be used to access this route. </summary>

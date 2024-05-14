@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List of blob inventory policies returned. </summary>
     internal partial class ListBlobInventoryPolicy
     {
-        /// <summary> Initializes a new instance of ListBlobInventoryPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobInventoryPolicy"/>. </summary>
         internal ListBlobInventoryPolicy()
         {
             Value = new ChangeTrackingList<BlobInventoryPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ListBlobInventoryPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobInventoryPolicy"/>. </summary>
         /// <param name="value"> List of blob inventory policies. </param>
         internal ListBlobInventoryPolicy(IReadOnlyList<BlobInventoryPolicyData> value)
         {

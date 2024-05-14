@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Job Definition resource. </summary>
     public partial class JobDefinitionPatch
     {
-        /// <summary> Initializes a new instance of JobDefinitionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionPatch"/>. </summary>
         public JobDefinitionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionPatch"/>. </summary>
+        /// <param name="description"> A description for the Job Definition. </param>
+        /// <param name="copyMode"> Strategy to use for copy. </param>
+        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
+        internal JobDefinitionPatch(string description, StorageMoverCopyMode? copyMode, string agentName)
+        {
+            Description = description;
+            CopyMode = copyMode;
+            AgentName = agentName;
         }
 
         /// <summary> A description for the Job Definition. </summary>

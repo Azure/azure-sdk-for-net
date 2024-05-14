@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element);
                     case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element);
+                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element);
                     case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element);
                 }
             }

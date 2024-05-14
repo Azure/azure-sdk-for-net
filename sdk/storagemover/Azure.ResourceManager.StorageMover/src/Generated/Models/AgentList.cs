@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> List of Agents. </summary>
     internal partial class AgentList
     {
-        /// <summary> Initializes a new instance of AgentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentList"/>. </summary>
         internal AgentList()
         {
             Value = new ChangeTrackingList<StorageMoverAgentData>();
         }
 
-        /// <summary> Initializes a new instance of AgentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
         internal AgentList(IReadOnlyList<StorageMoverAgentData> value, string nextLink)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class PostgreSqlServerPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPrivateEndpointConnectionProperties"/>. </summary>
         internal PostgreSqlServerPrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>

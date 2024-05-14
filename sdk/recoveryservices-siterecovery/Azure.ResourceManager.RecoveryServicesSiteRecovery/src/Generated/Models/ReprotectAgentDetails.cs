@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Reprotect agent details. </summary>
     public partial class ReprotectAgentDetails
     {
-        /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReprotectAgentDetails"/>. </summary>
         internal ReprotectAgentDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
             AccessibleDatastores = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReprotectAgentDetails"/>. </summary>
         /// <param name="id"> The reprotect agent Id. </param>
         /// <param name="name"> The reprotect agent name. </param>
         /// <param name="biosId"> The reprotect agent Bios Id. </param>

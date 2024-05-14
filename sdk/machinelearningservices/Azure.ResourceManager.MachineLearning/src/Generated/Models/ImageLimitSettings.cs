@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Limit settings for the AutoML job. </summary>
     public partial class ImageLimitSettings
     {
-        /// <summary> Initializes a new instance of ImageLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
         public ImageLimitSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
         /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
         /// <param name="maxTrials"> Maximum number of AutoML iterations. </param>
         /// <param name="timeout"> AutoML job timeout. </param>

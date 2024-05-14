@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> HardwareInventoryNetworkInterface represents the network interface details as part of a hardware inventory. </summary>
     public partial class HardwareInventoryNetworkInterface
     {
-        /// <summary> Initializes a new instance of HardwareInventoryNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareInventoryNetworkInterface"/>. </summary>
         internal HardwareInventoryNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareInventoryNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareInventoryNetworkInterface"/>. </summary>
         /// <param name="linkStatus"> The current status of the link. </param>
         /// <param name="macAddress"> The MAC address associated with this interface. </param>
         /// <param name="name"> The name of the interface. </param>

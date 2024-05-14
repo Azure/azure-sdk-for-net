@@ -207,11 +207,13 @@ namespace Azure.Messaging.ServiceBus
         ///   an exception will be triggered and the send will fail. In order to ensure that the messages
         ///   being sent will fit in a batch, use <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/> instead.
         /// </summary>
-        ///
         /// <param name="messages">The set of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <remarks>
+        ///   When sending, the result is atomic; either all messages that belong to the set were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         /// <exception cref="ServiceBusException">
         ///   The set of messages exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
@@ -363,10 +365,13 @@ namespace Azure.Messaging.ServiceBus
         ///   containing a set of <see cref="ServiceBusMessage"/> to
         ///   the associated Service Bus entity.
         /// </summary>
-        ///
         /// <param name="messageBatch">The batch of messages to send. A batch may be created using <see cref="CreateMessageBatchAsync(CancellationToken)" />.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <remarks>
+        ///   When sending, the result is atomic; either all messages that belong to the batch were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         ///
         public virtual async Task SendMessagesAsync(
             ServiceBusMessageBatch messageBatch,
@@ -458,7 +463,10 @@ namespace Azure.Messaging.ServiceBus
         /// Messages can also be scheduled by setting <see cref="ServiceBusMessage.ScheduledEnqueueTime"/> and
         /// using <see cref="SendMessageAsync(ServiceBusMessage, CancellationToken)"/>,
         /// <see cref="SendMessagesAsync(IEnumerable{ServiceBusMessage}, CancellationToken)"/>, or
-        /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
+        /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.
+        ///
+        /// When scheduling, the result is atomic; either all messages that belong to the set were successful or all
+        /// have failed.  Partial success is not possible.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
         ///
@@ -612,8 +620,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
             await CloseAsync().ConfigureAwait(false);

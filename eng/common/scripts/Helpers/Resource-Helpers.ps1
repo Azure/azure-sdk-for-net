@@ -49,7 +49,7 @@ function Get-PurgeableResources {
   Write-Verbose "Retrieving deleted Managed HSMs from subscription $subscriptionId"
 
   # Get deleted Managed HSMs for the current subscription.
-  $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/deletedManagedHSMs?api-version=2021-04-01-preview" -ErrorAction Ignore
+  $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/deletedManagedHSMs?api-version=2023-02-01" -ErrorAction Ignore
   if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300 -and $response.Content) {
     $content = $response.Content | ConvertFrom-Json
 
@@ -123,7 +123,7 @@ filter Remove-PurgeableResources {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
           # We will try anyway but will ignore errors.
-          Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
+          Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
         }
 
         # Use `-AsJob` to start a lightweight, cancellable job and pass to `Wait-PurgeableResoruceJob` for consistent behavior.
@@ -134,11 +134,11 @@ filter Remove-PurgeableResources {
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
           # We will try anyway but will ignore errors.
-          Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
+          Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
         }
 
         # Use `GetNewClosure()` on the `-Action` ScriptBlock to make sure variables are captured.
-        Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore -AsJob `
+        Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2023-02-01" -ErrorAction Ignore -AsJob `
           | Wait-PurgeableResourceJob -Resource $r -Timeout $Timeout -PassThru:$PassThru -Action {
               param ( $response )
               if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {

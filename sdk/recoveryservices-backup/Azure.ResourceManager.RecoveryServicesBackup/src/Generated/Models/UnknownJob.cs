@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownJob. </summary>
     internal partial class UnknownJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of UnknownJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The SentimentDocumentResult. </summary>
     internal partial class SentimentDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of SentimentDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             Sentences = sentences.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentimentDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

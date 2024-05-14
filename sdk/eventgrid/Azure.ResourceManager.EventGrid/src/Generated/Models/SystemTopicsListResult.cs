@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List System topics operation. </summary>
     internal partial class SystemTopicsListResult
     {
-        /// <summary> Initializes a new instance of SystemTopicsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemTopicsListResult"/>. </summary>
         internal SystemTopicsListResult()
         {
             Value = new ChangeTrackingList<SystemTopicData>();
         }
 
-        /// <summary> Initializes a new instance of SystemTopicsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemTopicsListResult"/>. </summary>
         /// <param name="value"> A collection of system Topics. </param>
         /// <param name="nextLink"> A link for the next page of topics. </param>
         internal SystemTopicsListResult(IReadOnlyList<SystemTopicData> value, string nextLink)

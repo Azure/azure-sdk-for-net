@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. </summary>
     public partial class CalculatePriceResultPropertiesPricingCurrencyTotal
     {
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResultPropertiesPricingCurrencyTotal"/>. </summary>
         internal CalculatePriceResultPropertiesPricingCurrencyTotal()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResultPropertiesPricingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         internal CalculatePriceResultPropertiesPricingCurrencyTotal(string currencyCode, float? amount)

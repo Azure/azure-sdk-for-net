@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> A list of IoT Central Applications with a next link. </summary>
     internal partial class IotCentralAppListResult
     {
-        /// <summary> Initializes a new instance of IotCentralAppListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppListResult"/>. </summary>
         internal IotCentralAppListResult()
         {
             Value = new ChangeTrackingList<IotCentralAppData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Central Applications. </param>
         /// <param name="value"> A list of IoT Central Applications. </param>
         internal IotCentralAppListResult(string nextLink, IReadOnlyList<IotCentralAppData> value)

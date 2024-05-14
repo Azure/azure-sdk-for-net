@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class MySqlFlexibleServerStorage
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorage"/>. </summary>
         public MySqlFlexibleServerStorage()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorage"/>. </summary>
         /// <param name="storageSizeInGB"> Max storage size allowed for a server. </param>
         /// <param name="iops"> Storage IOPS for a server. </param>
         /// <param name="autoGrow"> Enable Storage Auto Grow or not. </param>

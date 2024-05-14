@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Automatic tuning properties for individual advisors. </summary>
     public partial class AutomaticTuningServerOptions
     {
-        /// <summary> Initializes a new instance of AutomaticTuningServerOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomaticTuningServerOptions"/>. </summary>
         public AutomaticTuningServerOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomaticTuningServerOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomaticTuningServerOptions"/>. </summary>
         /// <param name="desiredState"> Automatic tuning option desired state. </param>
         /// <param name="actualState"> Automatic tuning option actual state. </param>
         /// <param name="reasonCode"> Reason code if desired and actual state are different. </param>

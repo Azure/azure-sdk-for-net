@@ -150,6 +150,13 @@ namespace Azure.Core.TestFramework
         public bool CompareBodies { get; set; } = true;
 
         /// <summary>
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
+        /// should use the default Guid format. The default Guid format contains hyphens.
+        /// The default value is <value>false</value>.
+        /// </summary>
+        public bool UseDefaultGuidFormatForClientRequestId { get; set; } = false;
+
+        /// <summary>
         /// Request headers whose values can change between recording and playback without causing request matching
         /// to fail. The presence or absence of the header itself is still respected in matching.
         /// </summary>
@@ -458,7 +465,10 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            _proxy?.CheckForErrors();
+            if (_proxy != null)
+            {
+                await _proxy.CheckProxyOutputAsync();
+            }
         }
 
         protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)

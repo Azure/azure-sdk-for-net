@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The certificate authentication properties for the client. </summary>
     public partial class ClientCertificateAuthentication
     {
-        /// <summary> Initializes a new instance of ClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateAuthentication"/>. </summary>
         public ClientCertificateAuthentication()
         {
             AllowedThumbprints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ClientCertificateAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientCertificateAuthentication"/>. </summary>
         /// <param name="validationScheme"> The validation scheme used to authenticate the client. Default value is SubjectMatchesAuthenticationName. </param>
         /// <param name="allowedThumbprints"> The list of thumbprints that are allowed during client authentication. This property is required only if the validationScheme is 'ThumbprintMatch'. </param>
         internal ClientCertificateAuthentication(ClientCertificateValidationScheme? validationScheme, IList<string> allowedThumbprints)

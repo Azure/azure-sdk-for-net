@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupFeatureValidationResult
+    public partial class BackupFeatureValidationResult : IUtf8JsonSerializable, IJsonModel<BackupFeatureValidationResult>
     {
-        internal static BackupFeatureValidationResult DeserializeBackupFeatureValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFeatureValidationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupFeatureValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupFeatureValidationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FeatureType))
+            {
+                writer.WritePropertyName("featureType"u8);
+                writer.WriteStringValue(FeatureType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BackupFeatureValidationResult IJsonModel<BackupFeatureValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupFeatureValidationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupFeatureValidationResult(document.RootElement, options);
+        }
+
+        internal static BackupFeatureValidationResult DeserializeBackupFeatureValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +84,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<BackupSupportedFeatureType> featureType = default;
             Optional<IReadOnlyList<BackupSupportedFeature>> features = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureType"u8))
@@ -52,8 +116,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupFeatureValidationResult(objectType, Optional.ToNullable(featureType), Optional.ToList(features));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, Optional.ToNullable(featureType), Optional.ToList(features));
         }
+
+        BinaryData IPersistableModel<BackupFeatureValidationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupFeatureValidationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BackupFeatureValidationResult IPersistableModel<BackupFeatureValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFeatureValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupFeatureValidationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupFeatureValidationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupFeatureValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

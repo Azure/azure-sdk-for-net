@@ -5,7 +5,7 @@
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication Phone Numbers Service</AssemblyTitle>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.2.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Phone Numbers Service;Microsoft;Azure;Azure Communication Service;Azure Communication Phone Numbers Service;Phone Numbers;Communication;$(PackageCommonTags)</PackageTags>
@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

@@ -10,11 +10,20 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Parameters supplied to the Regenerate Authorization Rule operation, specifies which key needs to be reset. </summary>
     public partial class ServiceBusRegenerateAccessKeyContent
     {
-        /// <summary> Initializes a new instance of ServiceBusRegenerateAccessKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusRegenerateAccessKeyContent"/>. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
         public ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType keyType)
         {
             KeyType = keyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusRegenerateAccessKeyContent"/>. </summary>
+        /// <param name="keyType"> The access key to regenerate. </param>
+        /// <param name="key"> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </param>
+        internal ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType keyType, string key)
+        {
+            KeyType = keyType;
+            Key = key;
         }
 
         /// <summary> The access key to regenerate. </summary>

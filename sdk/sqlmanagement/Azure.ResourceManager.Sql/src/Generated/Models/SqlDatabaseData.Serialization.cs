@@ -185,6 +185,16 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
+            if (Optional.IsDefined(UseFreeLimit))
+            {
+                writer.WritePropertyName("useFreeLimit"u8);
+                writer.WriteBooleanValue(UseFreeLimit.Value);
+            }
+            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
+            {
+                writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
+                writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
+            }
             if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
@@ -204,6 +214,11 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
+            }
+            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
+            {
+                writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
+                writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -266,10 +281,13 @@ namespace Azure.ResourceManager.Sql
             Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
             Optional<string> encryptionProtector = default;
             Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
+            Optional<bool> useFreeLimit = default;
+            Optional<FreeLimitExhaustionBehavior> freeLimitExhaustionBehavior = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<bool> manualCutover = default;
             Optional<bool> performCutover = default;
             Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            Optional<bool> encryptionProtectorAutoRotation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -710,6 +728,24 @@ namespace Azure.ResourceManager.Sql
                             preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("useFreeLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useFreeLimit = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("freeLimitExhaustionBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            freeLimitExhaustionBehavior = new FreeLimitExhaustionBehavior(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("sourceResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -746,11 +782,20 @@ namespace Azure.ResourceManager.Sql
                             availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("encryptionProtectorAutoRotation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionProtectorAutoRotation = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone));
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone), Optional.ToNullable(encryptionProtectorAutoRotation));
         }
     }
 }

@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a GovernanceAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GovernanceAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGovernanceAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource" /> using the GetGovernanceAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GovernanceAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGovernanceAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource"/> using the GetGovernanceAssignment method.
     /// </summary>
     public partial class GovernanceAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GovernanceAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
+        /// <param name="assignmentKey"> The assignmentKey. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string assignmentKey)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly GovernanceAssignmentsRestOperations _governanceAssignmentRestClient;
         private readonly GovernanceAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/governanceAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class for mocking. </summary>
         protected GovernanceAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GovernanceAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GovernanceAssignmentResource(ArmClient client, GovernanceAssignmentData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/governanceAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +140,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +179,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +222,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +263,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +309,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

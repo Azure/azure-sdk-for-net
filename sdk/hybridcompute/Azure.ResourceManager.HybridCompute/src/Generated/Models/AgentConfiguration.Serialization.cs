@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             Optional<Uri> proxyUrl = default;
             Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
-            Optional<IReadOnlyList<ConfigurationExtension>> extensionsAllowList = default;
-            Optional<IReadOnlyList<ConfigurationExtension>> extensionsBlockList = default;
+            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsAllowList = default;
+            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsBlockList = default;
             Optional<IReadOnlyList<string>> proxyBypass = default;
             Optional<string> extensionsEnabled = default;
             Optional<string> guestConfigurationEnabled = default;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<ConfigurationExtension> array = new List<ConfigurationExtension>();
+                    List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationExtension.DeserializeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
                     }
                     extensionsAllowList = array;
                     continue;
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<ConfigurationExtension> array = new List<ConfigurationExtension>();
+                    List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationExtension.DeserializeConfigurationExtension(item));
+                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
                     }
                     extensionsBlockList = array;
                     continue;

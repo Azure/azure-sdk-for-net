@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The EventHub consumer group. </summary>
     public partial class EventHubConsumerGroupInfoCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> EventHub consumer group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public EventHubConsumerGroupInfoCreateOrUpdateContent(string name)

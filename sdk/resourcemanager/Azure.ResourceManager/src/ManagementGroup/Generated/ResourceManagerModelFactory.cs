@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ResourceManagerModelFactory
     {
-        /// <summary> Initializes a new instance of ManagementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.ManagementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildInfo>();
 
-            return new ManagementGroupData(id, name, resourceType, systemData, tenantId, displayName, details, children?.ToList());
+            return new ManagementGroupData(id, name, resourceType, systemData, tenantId, displayName, details, children?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupInfo"/>. </summary>
         /// <param name="version"> The version number of the object. </param>
         /// <param name="updatedOn"> The date and time when this object was last updated. </param>
         /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
@@ -49,29 +49,29 @@ namespace Azure.ResourceManager.Models
             managementGroupAncestors ??= new List<string>();
             managementGroupAncestorChain ??= new List<ManagementGroupPathElement>();
 
-            return new ManagementGroupInfo(version, updatedOn, updatedBy, parent, path?.ToList(), managementGroupAncestors?.ToList(), managementGroupAncestorChain?.ToList());
+            return new ManagementGroupInfo(version, updatedOn, updatedBy, parent, path?.ToList(), managementGroupAncestors?.ToList(), managementGroupAncestorChain?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ParentManagementGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ParentManagementGroupInfo"/>. </summary>
         /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="name"> The name of the parent management group. </param>
         /// <param name="displayName"> The friendly name of the parent management group. </param>
         /// <returns> A new <see cref="ManagementGroups.Models.ParentManagementGroupInfo"/> instance for mocking. </returns>
         public static ParentManagementGroupInfo ParentManagementGroupInfo(string id = null, string name = null, string displayName = null)
         {
-            return new ParentManagementGroupInfo(id, name, displayName);
+            return new ParentManagementGroupInfo(id, name, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupPathElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupPathElement"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <param name="displayName"> The friendly name of the group. </param>
         /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupPathElement"/> instance for mocking. </returns>
         public static ManagementGroupPathElement ManagementGroupPathElement(string name = null, string displayName = null)
         {
-            return new ManagementGroupPathElement(name, displayName);
+            return new ManagementGroupPathElement(name, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupChildInfo"/>. </summary>
         /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
         /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="name"> The name of the child entity. </param>
@@ -82,10 +82,61 @@ namespace Azure.ResourceManager.Models
         {
             children ??= new List<ManagementGroupChildInfo>();
 
-            return new ManagementGroupChildInfo(childType, id, name, displayName, children?.ToList());
+            return new ManagementGroupChildInfo(childType, id, name, displayName, children?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DescendantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="resourceType"> The type of the resource.  For example, Microsoft.Management/managementGroups. </param>
+        /// <param name="name"> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </param>
+        /// <param name="details"> The details of a management group used during creation. </param>
+        /// <param name="children"> The list of children. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ManagementGroupCreateOrUpdateContent ManagementGroupCreateOrUpdateContent(string id = null, ResourceType? resourceType = null, string name = null, Guid? tenantId = null, string displayName = null, CreateManagementGroupDetails details = null, IEnumerable<ManagementGroupChildOptions> children = null)
+        {
+            children ??= new List<ManagementGroupChildOptions>();
+
+            return new ManagementGroupCreateOrUpdateContent(id, resourceType, name, tenantId, displayName, details, children?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.CreateManagementGroupDetails"/>. </summary>
+        /// <param name="version"> The version number of the object. </param>
+        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
+        /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
+        /// <param name="parent"> (Optional) The ID of the parent management group used during creation. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.CreateManagementGroupDetails"/> instance for mocking. </returns>
+        public static CreateManagementGroupDetails CreateManagementGroupDetails(int? version = null, DateTimeOffset? updatedOn = null, string updatedBy = null, ManagementGroupParentCreateOptions parent = null)
+        {
+            return new CreateManagementGroupDetails(version, updatedOn, updatedBy, parent, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupParentCreateOptions"/>. </summary>
+        /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="name"> The name of the parent management group. </param>
+        /// <param name="displayName"> The friendly name of the parent management group. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupParentCreateOptions"/> instance for mocking. </returns>
+        public static ManagementGroupParentCreateOptions ManagementGroupParentCreateOptions(string id = null, string name = null, string displayName = null)
+        {
+            return new ManagementGroupParentCreateOptions(id, name, displayName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupChildOptions"/>. </summary>
+        /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
+        /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="name"> The name of the child entity. </param>
+        /// <param name="displayName"> The friendly name of the child resource. </param>
+        /// <param name="children"> The list of children. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupChildOptions"/> instance for mocking. </returns>
+        public static ManagementGroupChildOptions ManagementGroupChildOptions(ManagementGroupChildType? childType = null, string id = null, string name = null, string displayName = null, IEnumerable<ManagementGroupChildOptions> children = null)
+        {
+            children ??= new List<ManagementGroupChildOptions>();
+
+            return new ManagementGroupChildOptions(childType, id, name, displayName, children?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.DescendantData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,17 +146,41 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="ManagementGroups.Models.DescendantData"/> instance for mocking. </returns>
         public static DescendantData DescendantData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier parentId = null)
         {
-            return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId) : null);
+            return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </param>
         /// <returns> A new <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/> instance for mocking. </returns>
         public static ManagementGroupNameAvailabilityResult ManagementGroupNameAvailabilityResult(bool? nameAvailable = null, ManagementGroupNameUnavailableReason? reason = null, string message = null)
         {
-            return new ManagementGroupNameAvailabilityResult(nameAvailable, reason, message);
+            return new ManagementGroupNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.EntityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> The AAD Tenant ID associated with the entity. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="parentId"> (Optional) The ID of the parent management group. </param>
+        /// <param name="permissions"> The users specific permissions to this item. </param>
+        /// <param name="inheritedPermissions"> The users specific permissions to this item. </param>
+        /// <param name="numberOfDescendants"> Number of Descendants. </param>
+        /// <param name="numberOfChildren"> Number of children is the number of Groups and Subscriptions that are exactly one level underneath the current Group. </param>
+        /// <param name="numberOfChildGroups"> Number of children is the number of Groups that are exactly one level underneath the current Group. </param>
+        /// <param name="parentDisplayNameChain"> The parent display name chain from the root group to the immediate parent. </param>
+        /// <param name="parentNameChain"> The parent name chain from the root group to the immediate parent. </param>
+        /// <returns> A new <see cref="ManagementGroups.Models.EntityData"/> instance for mocking. </returns>
+        public static EntityData EntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, ResourceIdentifier parentId = null, EntityPermission? permissions = null, EntityPermission? inheritedPermissions = null, int? numberOfDescendants = null, int? numberOfChildren = null, int? numberOfChildGroups = null, IEnumerable<string> parentDisplayNameChain = null, IEnumerable<string> parentNameChain = null)
+        {
+            parentDisplayNameChain ??= new List<string>();
+            parentNameChain ??= new List<string>();
+
+            return new EntityData(id, name, resourceType, systemData, tenantId, displayName, parentId != null ? ResourceManagerModelFactory.SubResource(parentId) : null, permissions, inheritedPermissions, numberOfDescendants, numberOfChildren, numberOfChildGroups, parentDisplayNameChain?.ToList(), parentNameChain?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

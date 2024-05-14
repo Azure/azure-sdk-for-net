@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Container extended information. </summary>
     public partial class GenericContainerExtendedInfo
     {
-        /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericContainerExtendedInfo"/>. </summary>
         public GenericContainerExtendedInfo()
         {
             ServiceEndpoints = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericContainerExtendedInfo"/>. </summary>
         /// <param name="rawCertData"> Public key of container cert. </param>
         /// <param name="containerIdentityInfo"> Container identity information. </param>
         /// <param name="serviceEndpoints"> Azure Backup Service Endpoints for the container. </param>

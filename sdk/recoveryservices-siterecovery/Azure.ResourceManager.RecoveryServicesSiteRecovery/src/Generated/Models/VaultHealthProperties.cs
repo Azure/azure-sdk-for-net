@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> class to define the health summary of the Vault. </summary>
     public partial class VaultHealthProperties
     {
-        /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultHealthProperties"/>. </summary>
         internal VaultHealthProperties()
         {
             VaultErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultHealthProperties"/>. </summary>
         /// <param name="vaultErrors"> The list of errors on the vault. </param>
         /// <param name="protectedItemsHealth"> The list of the health detail of the protected items in the vault. </param>
         /// <param name="fabricsHealth"> The list of the health detail of the fabrics in the vault. </param>

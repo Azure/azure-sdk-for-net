@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of workspaces. </summary>
     internal partial class SynapseWorkspaceListResult
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceListResult"/>. </summary>
         internal SynapseWorkspaceListResult()
         {
             Value = new ChangeTrackingList<SynapseWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of workspaces. </param>
         internal SynapseWorkspaceListResult(string nextLink, IReadOnlyList<SynapseWorkspaceData> value)

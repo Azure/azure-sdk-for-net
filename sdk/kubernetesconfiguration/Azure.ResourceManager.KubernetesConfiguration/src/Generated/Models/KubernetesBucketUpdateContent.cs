@@ -12,9 +12,28 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
     public partial class KubernetesBucketUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesBucketUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucketUpdateContent"/>. </summary>
         public KubernetesBucketUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesBucketUpdateContent"/>. </summary>
+        /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
+        /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
+        /// <param name="useInsecureCommunication"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
+        /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster bucket source with the remote. </param>
+        /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster bucket source with the remote. </param>
+        /// <param name="accessKey"> Plaintext access key used to securely access the S3 bucket. </param>
+        /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
+        internal KubernetesBucketUpdateContent(Uri uri, string bucketName, bool? useInsecureCommunication, long? timeoutInSeconds, long? syncIntervalInSeconds, string accessKey, string localAuthRef)
+        {
+            Uri = uri;
+            BucketName = bucketName;
+            UseInsecureCommunication = useInsecureCommunication;
+            TimeoutInSeconds = timeoutInSeconds;
+            SyncIntervalInSeconds = syncIntervalInSeconds;
+            AccessKey = accessKey;
+            LocalAuthRef = localAuthRef;
         }
 
         /// <summary> The URL to sync for the flux configuration S3 bucket. </summary>

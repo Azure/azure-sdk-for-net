@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Lists all Products, which the API is part of.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

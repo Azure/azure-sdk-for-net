@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FrontDoor.Mocking;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,173 +20,155 @@ namespace Azure.ResourceManager.FrontDoor
     /// <summary> A class to add extension methods to Azure.ResourceManager.FrontDoor. </summary>
     public static partial class FrontDoorExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableFrontDoorArmClient GetMockableFrontDoorArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableFrontDoorArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableFrontDoorResourceGroupResource GetMockableFrontDoorResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableFrontDoorResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableFrontDoorSubscriptionResource GetMockableFrontDoorSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableFrontDoorSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableFrontDoorTenantResource GetMockableFrontDoorTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableFrontDoorTenantResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region FrontDoorWebApplicationFirewallPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorWebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorArmClient.GetFrontDoorWebApplicationFirewallPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> object. </returns>
         public static FrontDoorWebApplicationFirewallPolicyResource GetFrontDoorWebApplicationFirewallPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorWebApplicationFirewallPolicyResource.ValidateResourceId(id);
-                return new FrontDoorWebApplicationFirewallPolicyResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FrontDoorResource
+            return GetMockableFrontDoorArmClient(client).GetFrontDoorWebApplicationFirewallPolicyResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FrontDoorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorArmClient.GetFrontDoorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FrontDoorResource"/> object. </returns>
         public static FrontDoorResource GetFrontDoorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorResource.ValidateResourceId(id);
-                return new FrontDoorResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FrontendEndpointResource
+            return GetMockableFrontDoorArmClient(client).GetFrontDoorResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FrontendEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontendEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FrontendEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorArmClient.GetFrontendEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontendEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FrontendEndpointResource"/> object. </returns>
         public static FrontendEndpointResource GetFrontendEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontendEndpointResource.ValidateResourceId(id);
-                return new FrontendEndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FrontDoorRulesEngineResource
+            return GetMockableFrontDoorArmClient(client).GetFrontendEndpointResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FrontDoorRulesEngineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorRulesEngineResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRulesEngineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorArmClient.GetFrontDoorRulesEngineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorRulesEngineResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FrontDoorRulesEngineResource"/> object. </returns>
         public static FrontDoorRulesEngineResource GetFrontDoorRulesEngineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorRulesEngineResource.ValidateResourceId(id);
-                return new FrontDoorRulesEngineResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FrontDoorNetworkExperimentProfileResource
+            return GetMockableFrontDoorArmClient(client).GetFrontDoorRulesEngineResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FrontDoorNetworkExperimentProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorNetworkExperimentProfileResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorNetworkExperimentProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorArmClient.GetFrontDoorNetworkExperimentProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorNetworkExperimentProfileResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FrontDoorNetworkExperimentProfileResource"/> object. </returns>
         public static FrontDoorNetworkExperimentProfileResource GetFrontDoorNetworkExperimentProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorNetworkExperimentProfileResource.ValidateResourceId(id);
-                return new FrontDoorNetworkExperimentProfileResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FrontDoorExperimentResource
+            return GetMockableFrontDoorArmClient(client).GetFrontDoorNetworkExperimentProfileResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FrontDoorExperimentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontDoorExperimentResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorArmClient.GetFrontDoorExperimentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorExperimentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FrontDoorExperimentResource"/> object. </returns>
         public static FrontDoorExperimentResource GetFrontDoorExperimentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorExperimentResource.ValidateResourceId(id);
-                return new FrontDoorExperimentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of FrontDoorWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
+            return GetMockableFrontDoorArmClient(client).GetFrontDoorExperimentResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of FrontDoorWebApplicationFirewallPolicyResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorWebApplicationFirewallPolicies()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of FrontDoorWebApplicationFirewallPolicyResources and their operations over a FrontDoorWebApplicationFirewallPolicyResource. </returns>
         public static FrontDoorWebApplicationFirewallPolicyCollection GetFrontDoorWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFrontDoorWebApplicationFirewallPolicies();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -199,17 +182,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorWebApplicationFirewallPolicyAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="policyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> GetFrontDoorWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFrontDoorWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorWebApplicationFirewallPolicyAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -223,25 +220,48 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorWebApplicationFirewallPolicy(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="policyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFrontDoorWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorWebApplicationFirewallPolicy(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FrontDoorResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of FrontDoorResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoors()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of FrontDoorResources and their operations over a FrontDoorResource. </returns>
         public static FrontDoorCollection GetFrontDoors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFrontDoors();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoors();
         }
 
         /// <summary>
@@ -255,17 +275,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FrontDoorResource>> GetFrontDoorAsync(this ResourceGroupResource resourceGroupResource, string frontDoorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFrontDoors().GetAsync(frontDoorName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorAsync(frontDoorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -279,25 +313,48 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoor(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<FrontDoorResource> GetFrontDoor(this ResourceGroupResource resourceGroupResource, string frontDoorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFrontDoors().Get(frontDoorName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoor(frontDoorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FrontDoorNetworkExperimentProfileResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of FrontDoorNetworkExperimentProfileResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorNetworkExperimentProfiles()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of FrontDoorNetworkExperimentProfileResources and their operations over a FrontDoorNetworkExperimentProfileResource. </returns>
         public static FrontDoorNetworkExperimentProfileCollection GetFrontDoorNetworkExperimentProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFrontDoorNetworkExperimentProfiles();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorNetworkExperimentProfiles();
         }
 
         /// <summary>
@@ -311,17 +368,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorNetworkExperimentProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FrontDoorNetworkExperimentProfileResource>> GetFrontDoorNetworkExperimentProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFrontDoorNetworkExperimentProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorNetworkExperimentProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -335,17 +406,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorResourceGroupResource.GetFrontDoorNetworkExperimentProfile(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFrontDoorNetworkExperimentProfiles().Get(profileName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableFrontDoorResourceGroupResource(resourceGroupResource).GetFrontDoorNetworkExperimentProfile(profileName, cancellationToken);
         }
 
         /// <summary>
@@ -359,14 +444,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetManagedRuleSets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedRuleSetDefinition"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -380,14 +476,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetManagedRuleSets(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedRuleSetDefinition"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSets(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetManagedRuleSets(cancellationToken);
         }
 
         /// <summary>
@@ -401,17 +508,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(this SubscriptionResource subscriptionResource, FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableFrontDoorSubscriptionResource(subscriptionResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -425,17 +540,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(this SubscriptionResource subscriptionResource, FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckFrontDoorNameAvailability(content, cancellationToken);
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).CheckFrontDoorNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -449,14 +572,29 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetFrontDoors(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="FrontDoorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FrontDoorResource> GetFrontDoorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoorsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetFrontDoorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -470,14 +608,29 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetFrontDoors(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FrontDoorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FrontDoorResource> GetFrontDoors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoors(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetFrontDoors(cancellationToken);
         }
 
         /// <summary>
@@ -491,14 +644,29 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="FrontDoorNetworkExperimentProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoorNetworkExperimentProfilesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetFrontDoorNetworkExperimentProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -512,14 +680,29 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorSubscriptionResource.GetFrontDoorNetworkExperimentProfiles(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FrontDoorNetworkExperimentProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFrontDoorNetworkExperimentProfiles(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFrontDoorSubscriptionResource(subscriptionResource).GetFrontDoorNetworkExperimentProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -533,17 +716,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorTenantResource.CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(this TenantResource tenantResource, FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableFrontDoorTenantResource(tenantResource).CheckFrontDoorNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -557,17 +748,25 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableFrontDoorTenantResource.CheckFrontDoorNameAvailability(FrontDoorNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(this TenantResource tenantResource, FrontDoorNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckFrontDoorNameAvailability(content, cancellationToken);
+            return GetMockableFrontDoorTenantResource(tenantResource).CheckFrontDoorNameAvailability(content, cancellationToken);
         }
     }
 }

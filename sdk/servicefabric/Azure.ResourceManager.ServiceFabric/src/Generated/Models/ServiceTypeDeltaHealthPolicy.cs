@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ServiceTypeDeltaHealthPolicy
     {
-        /// <summary> Initializes a new instance of ServiceTypeDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeDeltaHealthPolicy"/>. </summary>
         public ServiceTypeDeltaHealthPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTypeDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyServices">
         /// The maximum allowed percentage of services health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the services at the beginning of upgrade and the state of the services at the time of the health evaluation.

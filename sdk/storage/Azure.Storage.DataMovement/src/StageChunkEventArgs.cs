@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
     /// will end up using this internal event argument to track the success
     /// and the bytes transferred to ensure the correct amount of bytes are tranferred.
     /// </summary>
-    internal class StageChunkEventArgs : StorageTransferEventArgs
+    internal class StageChunkEventArgs : DataTransferEventArgs
     {
         public bool Success { get; }
 

@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The parameters for enabling predictive autoscale. </summary>
     public partial class PredictiveAutoscalePolicy
     {
-        /// <summary> Initializes a new instance of PredictiveAutoscalePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictiveAutoscalePolicy"/>. </summary>
         /// <param name="scaleMode"> the predictive autoscale mode. </param>
         public PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode)
         {
             ScaleMode = scaleMode;
         }
 
-        /// <summary> Initializes a new instance of PredictiveAutoscalePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictiveAutoscalePolicy"/>. </summary>
         /// <param name="scaleMode"> the predictive autoscale mode. </param>
         /// <param name="scaleLookAheadTime"> the amount of time to specify by which instances are launched in advance. It must be between 1 minute and 60 minutes in ISO 8601 format. </param>
         internal PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode, TimeSpan? scaleLookAheadTime)

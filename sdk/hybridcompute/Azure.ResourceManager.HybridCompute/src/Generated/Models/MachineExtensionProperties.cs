@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the properties of a Machine Extension. </summary>
     public partial class MachineExtensionProperties
     {
-        /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionProperties"/>. </summary>
         public MachineExtensionProperties()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
             ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionProperties"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

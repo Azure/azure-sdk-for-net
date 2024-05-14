@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppAccountData(AzureLocation location) : base(location)
         {
             ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
-        /// <summary> Initializes a new instance of NetAppAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Disk Pool SKU Details. </summary>
     public partial class DiskPoolZoneInfo
     {
-        /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolZoneInfo"/>. </summary>
         internal DiskPoolZoneInfo()
         {
             AvailabilityZones = new ChangeTrackingList<string>();
             AdditionalCapabilities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolZoneInfo"/>. </summary>
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
         /// <param name="sku"> Determines the SKU of VM deployed for Disk Pool. </param>

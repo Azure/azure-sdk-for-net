@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.HDInsight.Containers.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\**\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+    <PackageReference Include="Microsoft.Identity.Client" />
+  </ItemGroup>
+</Project>

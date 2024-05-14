@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> IPTag associated with the object. </summary>
     public partial class ManagedClusterIPTag
     {
-        /// <summary> Initializes a new instance of ManagedClusterIPTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
         /// <param name="ipTagType"> The IP tag type. </param>
         /// <param name="tag"> The value of the IP tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>

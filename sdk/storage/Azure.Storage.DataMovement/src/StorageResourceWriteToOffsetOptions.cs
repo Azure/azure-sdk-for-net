@@ -7,7 +7,7 @@ using System.Threading;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Options for <see cref="StorageResourceSingle.WriteFromStreamAsync(Stream, long, bool, long, long, StorageResourceWriteToOffsetOptions, CancellationToken)"/>
+    /// Options for <see cref="StorageResourceItem.CopyFromStreamAsync(Stream, long, bool, long, StorageResourceWriteToOffsetOptions, CancellationToken)"/>
     /// </summary>
     public class StorageResourceWriteToOffsetOptions
     {
@@ -17,6 +17,11 @@ namespace Azure.Storage.DataMovement
         ///
         /// Applies only to block blobs.
         /// </summary>
-        public string BlockId { get; internal set; }
+        public string BlockId { get; set; }
+
+        /// <summary>
+        /// Optional. Specifies the position to write to. Will default to 0 if not specified.
+        /// </summary>
+        public long? Position { get; set; }
     }
 }

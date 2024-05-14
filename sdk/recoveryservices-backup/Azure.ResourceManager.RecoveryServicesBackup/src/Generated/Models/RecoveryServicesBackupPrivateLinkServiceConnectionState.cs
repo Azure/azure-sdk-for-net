@@ -10,20 +10,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Private Link Service Connection State. </summary>
     public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackupPrivateLinkServiceConnectionState"/>. </summary>
         public RecoveryServicesBackupPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackupPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
-        /// <param name="actionRequired"> Gets or sets actions required. </param>
-        internal RecoveryServicesBackupPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status, string description, string actionRequired)
+        /// <param name="actionsRequired"> Gets or sets actions required. </param>
+        internal RecoveryServicesBackupPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            ActionsRequired = actionsRequired;
         }
 
         /// <summary> Gets or sets the status. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets or sets description. </summary>
         public string Description { get; set; }
         /// <summary> Gets or sets actions required. </summary>
-        public string ActionRequired { get; set; }
+        public string ActionsRequired { get; set; }
     }
 }

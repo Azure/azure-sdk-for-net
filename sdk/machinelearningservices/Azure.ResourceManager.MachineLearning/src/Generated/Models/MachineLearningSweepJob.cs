@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Sweep job definition. </summary>
     public partial class MachineLearningSweepJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningSweepJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         /// <param name="objective"> [Required] Optimization objective. </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Sweep;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSweepJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -56,6 +56,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -78,20 +80,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
+        /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> [Required] Trial component definition. </param>
-        internal MachineLearningSweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        internal MachineLearningSweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, JobQueueSettings queueSettings, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             EarlyTermination = earlyTermination;
             Inputs = inputs;
             Limits = limits;
             Objective = objective;
             Outputs = outputs;
+            QueueSettings = queueSettings;
             SamplingAlgorithm = samplingAlgorithm;
             SearchSpace = searchSpace;
             Trial = trial;
@@ -120,9 +124,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </summary>
         public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
+        /// <summary> Queue settings for the job. </summary>
+        public JobQueueSettings QueueSettings { get; set; }
         /// <summary>
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </summary>
         public SamplingAlgorithm SamplingAlgorithm { get; set; }
@@ -132,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

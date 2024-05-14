@@ -11,26 +11,26 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of ExternalNetworks. </summary>
+    /// <summary> List of External Networks. </summary>
     internal partial class ExternalNetworksList
     {
-        /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
         internal ExternalNetworksList()
         {
-            Value = new ChangeTrackingList<ExternalNetworkData>();
+            Value = new ChangeTrackingList<NetworkFabricExternalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
-        /// <param name="value"> List of ExternalNetworks resources. </param>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
+        /// <param name="value"> List of External Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal ExternalNetworksList(IReadOnlyList<ExternalNetworkData> value, string nextLink)
+        internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of ExternalNetworks resources. </summary>
-        public IReadOnlyList<ExternalNetworkData> Value { get; }
+        /// <summary> List of External Network resources. </summary>
+        public IReadOnlyList<NetworkFabricExternalNetworkData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

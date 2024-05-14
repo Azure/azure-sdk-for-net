@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryGroupTaskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryGroupTaskDetails"/>. </summary>
         protected SiteRecoveryGroupTaskDetails()
         {
             ChildTasks = new ChangeTrackingList<AsrTask>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
         internal SiteRecoveryGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks)

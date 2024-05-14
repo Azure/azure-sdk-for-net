@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPurviewModelFactory
     {
-        /// <summary> Initializes a new instance of PurviewAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Purview.PurviewAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountData(id, name, resourceType, systemData, tags, location, sku, cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId) : null, createdOn, createdBy, createdByObjectId, endpoints, friendlyName, managedResourceGroupName, managedResources, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess, identity);
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountEndpoint"/>. </summary>
         /// <param name="catalog"> Gets the catalog endpoint. </param>
         /// <param name="guardian"> Gets the guardian endpoint. </param>
         /// <param name="scan"> Gets the scan endpoint. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountEndpoint(catalog, guardian, scan);
         }
 
-        /// <summary> Initializes a new instance of PurviewManagedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewManagedResource"/>. </summary>
         /// <param name="eventHubNamespace"> Gets the managed event hub namespace resource identifier. </param>
         /// <param name="resourceGroup"> Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account. </param>
         /// <param name="storageAccount"> Gets the managed storage account resource identifier. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewManagedResource(eventHubNamespace, resourceGroup, storageAccount);
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Purview.PurviewPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountSku"/>. </summary>
         /// <param name="capacity"> Gets or sets the sku capacity. </param>
         /// <param name="name"> Gets or sets the sku name. </param>
         /// <returns> A new <see cref="Models.PurviewAccountSku"/> instance for mocking. </returns>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountSku(capacity, name);
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountAccessKey"/>. </summary>
         /// <param name="atlasKafkaPrimaryEndpoint"> Gets or sets the primary connection string. </param>
         /// <param name="atlasKafkaSecondaryEndpoint"> Gets or sets the secondary connection string. </param>
         /// <returns> A new <see cref="Models.PurviewAccountAccessKey"/> instance for mocking. </returns>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountAccessKey(atlasKafkaPrimaryEndpoint, atlasKafkaSecondaryEndpoint);
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Purview.PurviewPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewPrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group identifier. </param>
         /// <param name="requiredMembers"> This translates to how many Private IPs should be created for each privately linkable resource. </param>
         /// <param name="requiredZoneNames"> The required zone names for private link resource. </param>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates if name is valid and available. </param>
         /// <param name="reason"> The reason the name is not available. </param>

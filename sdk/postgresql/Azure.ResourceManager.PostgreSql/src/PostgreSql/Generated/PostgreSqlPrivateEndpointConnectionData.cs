@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionData"/>. </summary>
         public PostgreSqlPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

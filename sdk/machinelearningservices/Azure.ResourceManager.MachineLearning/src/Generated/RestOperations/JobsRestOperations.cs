@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, MachineLearningListViewType? listViewType)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, MachineLearningListViewType? listViewType, string assetName, bool? scheduled, string scheduleId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -68,6 +68,18 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
             }
+            if (assetName != null)
+            {
+                uri.AppendQuery("assetName", assetName, true);
+            }
+            if (scheduled != null)
+            {
+                uri.AppendQuery("scheduled", scheduled.Value, true);
+            }
+            if (scheduleId != null)
+            {
+                uri.AppendQuery("scheduleId", scheduleId, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -82,16 +94,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="assetName"> Asset name the job's named output is registered with. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, string assetName = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, assetName, scheduled, scheduleId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -115,16 +130,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="assetName"> Asset name the job's named output is registered with. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobBaseResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public Response<JobBaseResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, string assetName = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, assetName, scheduled, scheduleId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -306,6 +324,98 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobPatch patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Updates a Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
+        /// <param name="patch"> Job definition to apply during the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MachineLearningJobData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, id, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MachineLearningJobData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = MachineLearningJobData.DeserializeMachineLearningJobData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Updates a Job. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="id"> The name and identifier for the Job. This is case-sensitive. </param>
+        /// <param name="patch"> Job definition to apply during the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MachineLearningJobData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, id, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MachineLearningJobData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = MachineLearningJobData.DeserializeMachineLearningJobData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobData data)
         {
             var message = _pipeline.CreateMessage();
@@ -477,7 +587,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, MachineLearningListViewType? listViewType)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string jobType, string tag, MachineLearningListViewType? listViewType, string assetName, bool? scheduled, string scheduleId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -500,17 +610,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="assetName"> Asset name the job's named output is registered with. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobBaseResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, string assetName = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, assetName, scheduled, scheduleId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -535,17 +648,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="jobType"> Type of job to be returned. </param>
         /// <param name="tag"> Jobs returned will have this tag key. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="assetName"> Asset name the job's named output is registered with. </param>
+        /// <param name="scheduled"> Indicator whether the job is scheduled job. </param>
+        /// <param name="scheduleId"> The scheduled id for listing the job triggered from. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobBaseResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public Response<JobBaseResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, string assetName = null, bool? scheduled = null, string scheduleId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, skip, jobType, tag, listViewType, assetName, scheduled, scheduleId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreControlPlaneVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionData"/>. </summary>
         public PacketCoreControlPlaneVersionData()
         {
-            Platforms = new ChangeTrackingList<Platform>();
+            Platforms = new ChangeTrackingList<MobileNetworkPlatform>();
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the packet core control plane version resource. </param>
         /// <param name="platforms"> Platform specific packet core control plane version properties. </param>
-        internal PacketCoreControlPlaneVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, IList<Platform> platforms) : base(id, name, resourceType, systemData)
+        internal PacketCoreControlPlaneVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, IList<MobileNetworkPlatform> platforms) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Platforms = platforms;
         }
 
         /// <summary> The provisioning state of the packet core control plane version resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Platform specific packet core control plane version properties. </summary>
-        public IList<Platform> Platforms { get; }
+        public IList<MobileNetworkPlatform> Platforms { get; }
     }
 }

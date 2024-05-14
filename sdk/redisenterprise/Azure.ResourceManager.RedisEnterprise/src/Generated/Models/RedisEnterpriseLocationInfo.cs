@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Information about location (for example: features that it supports). </summary>
     public partial class RedisEnterpriseLocationInfo
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseLocationInfo"/>. </summary>
         internal RedisEnterpriseLocationInfo()
         {
             Capabilities = new ChangeTrackingList<RedisEnterpriseCapability>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseLocationInfo"/>. </summary>
         /// <param name="location"> Location name. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         internal RedisEnterpriseLocationInfo(AzureLocation? location, IReadOnlyList<RedisEnterpriseCapability> capabilities)

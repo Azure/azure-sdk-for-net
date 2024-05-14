@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Sizing Recommendation request. </summary>
     public partial class SapSizingRecommendationContent
     {
-        /// <summary> Initializes a new instance of SapSizingRecommendationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
@@ -29,6 +29,29 @@ namespace Azure.ResourceManager.Workloads.Models
             Saps = saps;
             DBMemory = dbMemory;
             DatabaseType = databaseType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/>. </summary>
+        /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
+        /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
+        /// <param name="sapProduct"> Defines the SAP Product type. </param>
+        /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
+        /// <param name="saps"> The SAP Application Performance Standard measurement. </param>
+        /// <param name="dbMemory"> The database memory configuration. </param>
+        /// <param name="databaseType"> The database type. </param>
+        /// <param name="dbScaleMethod"> The DB scale method. </param>
+        /// <param name="highAvailabilityType"> The high availability type. </param>
+        internal SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType, SapDatabaseScaleMethod? dbScaleMethod, SapHighAvailabilityType? highAvailabilityType)
+        {
+            AppLocation = appLocation;
+            Environment = environment;
+            SapProduct = sapProduct;
+            DeploymentType = deploymentType;
+            Saps = saps;
+            DBMemory = dbMemory;
+            DatabaseType = databaseType;
+            DBScaleMethod = dbScaleMethod;
+            HighAvailabilityType = highAvailabilityType;
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     public partial class SecurityInsightsEntity : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntity"/>. </summary>
         public SecurityInsightsEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

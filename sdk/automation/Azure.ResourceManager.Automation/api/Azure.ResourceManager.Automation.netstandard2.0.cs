@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountResource>> GetAsync(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationAccountResource> GetIfExists(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationAccountResource>> GetIfExistsAsync(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationAccountData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class AutomationAccountData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationAccountData>
     {
-        public AutomationAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationAccountData(Azure.Core.AzureLocation location) { }
         public System.Uri AutomationHybridServiceUri { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -31,6 +33,11 @@ namespace Azure.ResourceManager.Automation
         public System.Collections.Generic.IList<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationAccountState? State { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationAccountModuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationAccountModuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationAccountModuleResource>, System.Collections.IEnumerable
     {
@@ -43,6 +50,8 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationAccountModuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationAccountModuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountModuleResource>> GetAsync(string moduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationAccountModuleResource> GetIfExists(string moduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationAccountModuleResource>> GetIfExistsAsync(string moduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationAccountModuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationAccountModuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationAccountModuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationAccountModuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -86,6 +95,8 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>> GetAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> GetIfExists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>> GetIfExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -238,11 +249,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationCertificateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationCertificateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationCertificateResource> GetIfExists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationCertificateResource>> GetIfExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationCertificateData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationCertificateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCertificateData>
     {
         public AutomationCertificateData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -254,6 +267,11 @@ namespace Azure.ResourceManager.Automation
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
         public string ThumbprintString { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationCertificateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationCertificateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCertificateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCertificateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCertificateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -280,11 +298,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationConnectionResource>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationConnectionResource> GetIfExists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationConnectionResource>> GetIfExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionData>
     {
         public AutomationConnectionData() { }
         public string ConnectionTypeName { get { throw null; } set { } }
@@ -292,6 +312,11 @@ namespace Azure.ResourceManager.Automation
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> FieldDefinitionValues { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -318,11 +343,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationConnectionTypeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationConnectionTypeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationConnectionTypeResource>> GetAsync(string connectionTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationConnectionTypeResource> GetIfExists(string connectionTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationConnectionTypeResource>> GetIfExistsAsync(string connectionTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationConnectionTypeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationConnectionTypeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationConnectionTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationConnectionTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationConnectionTypeData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationConnectionTypeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>
     {
         internal AutomationConnectionTypeData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -330,6 +357,11 @@ namespace Azure.ResourceManager.Automation
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition> FieldDefinitions { get { throw null; } }
         public bool? IsGlobal { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationConnectionTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationConnectionTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationConnectionTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationConnectionTypeResource : Azure.ResourceManager.ArmResource
     {
@@ -356,17 +388,24 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationCredentialResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationCredentialResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationCredentialResource>> GetAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationCredentialResource> GetIfExists(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationCredentialResource>> GetIfExistsAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationCredentialResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationCredentialResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationCredentialResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationCredentialData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationCredentialData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationCredentialData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCredentialData>
     {
         public AutomationCredentialData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationCredentialData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationCredentialData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationCredentialData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationCredentialData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCredentialData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCredentialData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationCredentialData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationCredentialResource : Azure.ResourceManager.ArmResource
     {
@@ -426,11 +465,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationJobResource>> GetAsync(string jobName, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationJobResource> GetIfExists(string jobName, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationJobResource>> GetIfExistsAsync(string jobName, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationJobData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobData>
     {
         public AutomationJobData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -447,6 +488,11 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationJobStatus? Status { get { throw null; } set { } }
         public string StatusDetails { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationJobResource : Azure.ResourceManager.ArmResource
     {
@@ -485,11 +531,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationJobScheduleResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationJobScheduleResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationJobScheduleResource>> GetAsync(System.Guid jobScheduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationJobScheduleResource> GetIfExists(System.Guid jobScheduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationJobScheduleResource>> GetIfExistsAsync(System.Guid jobScheduleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationJobScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationJobScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationJobScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationJobScheduleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationJobScheduleData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationJobScheduleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>
     {
         internal AutomationJobScheduleData() { }
         public System.Guid? JobScheduleId { get { throw null; } }
@@ -497,6 +545,11 @@ namespace Azure.ResourceManager.Automation
         public string RunbookName { get { throw null; } }
         public string RunOn { get { throw null; } }
         public string ScheduleName { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationJobScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationJobScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationJobScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationJobScheduleResource : Azure.ResourceManager.ArmResource
     {
@@ -512,9 +565,9 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationJobScheduleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationJobScheduleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AutomationModuleData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class AutomationModuleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationModuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>
     {
-        public AutomationModuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationModuleData(Azure.Core.AzureLocation location) { }
         public int? ActivityCount { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -527,6 +580,11 @@ namespace Azure.ResourceManager.Automation
         public Azure.ResourceManager.Automation.Models.ModuleProvisioningState? ProvisioningState { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationModuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationModuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationModuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationModuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -539,16 +597,23 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>
     {
         public AutomationPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -575,13 +640,15 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationRunbookResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationRunbookResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationRunbookResource>> GetAsync(string runbookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationRunbookResource> GetIfExists(string runbookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationRunbookResource>> GetIfExistsAsync(string runbookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationRunbookResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationRunbookResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationRunbookResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationRunbookResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationRunbookData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class AutomationRunbookData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationRunbookData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationRunbookData>
     {
-        public AutomationRunbookData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationRunbookData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationRunbookDraft Draft { get { throw null; } set { } }
@@ -598,6 +665,11 @@ namespace Azure.ResourceManager.Automation
         public Azure.ResourceManager.Automation.Models.AutomationContentLink PublishContentLink { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationRunbookType? RunbookType { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.RunbookState? State { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationRunbookData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationRunbookData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationRunbookData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationRunbookData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationRunbookData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationRunbookData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationRunbookData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationRunbookResource : Azure.ResourceManager.ArmResource
     {
@@ -656,11 +728,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationScheduleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationScheduleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationScheduleResource>> GetAsync(string scheduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationScheduleResource> GetIfExists(string scheduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationScheduleResource>> GetIfExistsAsync(string scheduleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationScheduleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationScheduleData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationScheduleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationScheduleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationScheduleData>
     {
         public AutomationScheduleData() { }
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
@@ -677,6 +751,11 @@ namespace Azure.ResourceManager.Automation
         public double? StartInMinutes { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationScheduleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationScheduleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationScheduleResource : Azure.ResourceManager.ArmResource
     {
@@ -703,11 +782,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationSourceControlResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationSourceControlResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationSourceControlResource>> GetAsync(string sourceControlName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationSourceControlResource> GetIfExists(string sourceControlName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationSourceControlResource>> GetIfExistsAsync(string sourceControlName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationSourceControlResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationSourceControlResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationSourceControlResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationSourceControlResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationSourceControlData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationSourceControlData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationSourceControlData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationSourceControlData>
     {
         public AutomationSourceControlData() { }
         public string Branch { get { throw null; } set { } }
@@ -719,6 +800,11 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.Uri RepoUri { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SourceControlSourceType? SourceType { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationSourceControlData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationSourceControlData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationSourceControlData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationSourceControlData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationSourceControlData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationSourceControlData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationSourceControlData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationSourceControlResource : Azure.ResourceManager.ArmResource
     {
@@ -755,11 +841,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationVariableResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationVariableResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationVariableResource>> GetAsync(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationVariableResource> GetIfExists(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationVariableResource>> GetIfExistsAsync(string variableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationVariableResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationVariableResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationVariableResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationVariableResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationVariableData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationVariableData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationVariableData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationVariableData>
     {
         public AutomationVariableData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -767,6 +855,11 @@ namespace Azure.ResourceManager.Automation
         public bool? IsEncrypted { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationVariableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationVariableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationVariableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationVariableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationVariableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationVariableData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationVariableData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationVariableResource : Azure.ResourceManager.ArmResource
     {
@@ -793,13 +886,15 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationWatcherResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationWatcherResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationWatcherResource>> GetAsync(string watcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationWatcherResource> GetIfExists(string watcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationWatcherResource>> GetIfExistsAsync(string watcherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationWatcherResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationWatcherResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationWatcherResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationWatcherResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationWatcherData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class AutomationWatcherData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationWatcherData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWatcherData>
     {
-        public AutomationWatcherData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationWatcherData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -810,6 +905,11 @@ namespace Azure.ResourceManager.Automation
         public System.Collections.Generic.IDictionary<string, string> ScriptParameters { get { throw null; } }
         public string ScriptRunOn { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Automation.AutomationWatcherData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationWatcherData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationWatcherData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationWatcherData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWatcherData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWatcherData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWatcherData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationWatcherResource : Azure.ResourceManager.ArmResource
     {
@@ -840,11 +940,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationWebhookResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationWebhookResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationWebhookResource>> GetAsync(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationWebhookResource> GetIfExists(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationWebhookResource>> GetIfExistsAsync(string webhookName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationWebhookResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationWebhookResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationWebhookResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationWebhookResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AutomationWebhookData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationWebhookData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationWebhookData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWebhookData>
     {
         public AutomationWebhookData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -858,6 +960,11 @@ namespace Azure.ResourceManager.Automation
         public string RunbookName { get { throw null; } set { } }
         public string RunOn { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.AutomationWebhookData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationWebhookData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationWebhookData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationWebhookData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWebhookData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWebhookData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationWebhookData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationWebhookResource : Azure.ResourceManager.ArmResource
     {
@@ -884,11 +991,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.DscCompilationJobResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.DscCompilationJobResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource>> GetAsync(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.DscCompilationJobResource> GetIfExists(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.DscCompilationJobResource>> GetIfExistsAsync(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.DscCompilationJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.DscCompilationJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DscCompilationJobData : Azure.ResourceManager.Models.ResourceData
+    public partial class DscCompilationJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>
     {
         public DscCompilationJobData() { }
         public string ConfigurationName { get { throw null; } set { } }
@@ -905,6 +1014,11 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationJobStatus? Status { get { throw null; } set { } }
         public string StatusDetails { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.DscCompilationJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscCompilationJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DscCompilationJobResource : Azure.ResourceManager.ArmResource
     {
@@ -929,13 +1043,15 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.DscConfigurationResource> GetAll(string filter = null, int? skip = default(int?), int? top = default(int?), string inlinecount = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.DscConfigurationResource> GetAllAsync(string filter = null, int? skip = default(int?), int? top = default(int?), string inlinecount = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscConfigurationResource>> GetAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.DscConfigurationResource> GetIfExists(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.DscConfigurationResource>> GetIfExistsAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.DscConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.DscConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DscConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DscConfigurationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscConfigurationData>
     {
-        public DscConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DscConfigurationData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -947,6 +1063,11 @@ namespace Azure.ResourceManager.Automation
         public Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentSource Source { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.DscConfigurationState? State { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.DscConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DscConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -979,6 +1100,8 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.DscNodeResource> GetAll(string filter = null, int? skip = default(int?), int? top = default(int?), string inlinecount = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.DscNodeResource> GetAllAsync(string filter = null, int? skip = default(int?), int? top = default(int?), string inlinecount = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscNodeResource>> GetAsync(string nodeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.DscNodeResource> GetIfExists(string nodeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.DscNodeResource>> GetIfExistsAsync(string nodeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.DscNodeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscNodeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.DscNodeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscNodeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -994,11 +1117,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.DscNodeConfigurationResource> GetAll(string filter = null, int? skip = default(int?), int? top = default(int?), string inlinecount = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.DscNodeConfigurationResource> GetAllAsync(string filter = null, int? skip = default(int?), int? top = default(int?), string inlinecount = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscNodeConfigurationResource>> GetAsync(string nodeConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.DscNodeConfigurationResource> GetIfExists(string nodeConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.DscNodeConfigurationResource>> GetIfExistsAsync(string nodeConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.DscNodeConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscNodeConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.DscNodeConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscNodeConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DscNodeConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class DscNodeConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>
     {
         public DscNodeConfigurationData() { }
         public string ConfigurationName { get { throw null; } set { } }
@@ -1007,6 +1132,11 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public long? NodeCount { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.DscNodeConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscNodeConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DscNodeConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -1022,7 +1152,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DscNodeData : Azure.ResourceManager.Models.ResourceData
+    public partial class DscNodeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscNodeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeData>
     {
         public DscNodeData() { }
         public string AccountId { get { throw null; } set { } }
@@ -1035,6 +1165,11 @@ namespace Azure.ResourceManager.Automation
         public System.DateTimeOffset? RegistrationOn { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
         public int? TotalCount { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.DscNodeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscNodeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscNodeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscNodeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscNodeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DscNodeResource : Azure.ResourceManager.ArmResource
     {
@@ -1067,11 +1202,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.HybridRunbookWorkerResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.HybridRunbookWorkerResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.HybridRunbookWorkerResource>> GetAsync(string hybridRunbookWorkerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.HybridRunbookWorkerResource> GetIfExists(string hybridRunbookWorkerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.HybridRunbookWorkerResource>> GetIfExistsAsync(string hybridRunbookWorkerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.HybridRunbookWorkerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.HybridRunbookWorkerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.HybridRunbookWorkerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.HybridRunbookWorkerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HybridRunbookWorkerData : Azure.ResourceManager.Models.ResourceData
+    public partial class HybridRunbookWorkerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>
     {
         public HybridRunbookWorkerData() { }
         public string IP { get { throw null; } set { } }
@@ -1080,6 +1217,11 @@ namespace Azure.ResourceManager.Automation
         public Azure.Core.ResourceIdentifier VmResourceId { get { throw null; } set { } }
         public string WorkerName { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.HybridWorkerType? WorkerType { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.HybridRunbookWorkerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.HybridRunbookWorkerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HybridRunbookWorkerGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource>, System.Collections.IEnumerable
     {
@@ -1092,15 +1234,22 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource>> GetAsync(string hybridRunbookWorkerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource> GetIfExists(string hybridRunbookWorkerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource>> GetIfExistsAsync(string hybridRunbookWorkerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HybridRunbookWorkerGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class HybridRunbookWorkerGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>
     {
         public HybridRunbookWorkerGroupData() { }
         public string CredentialName { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.HybridWorkerGroup? GroupType { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.HybridRunbookWorkerGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HybridRunbookWorkerGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1146,11 +1295,13 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> GetAll(string clientRequestId = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> GetAllAsync(string clientRequestId = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource>> GetAsync(string softwareUpdateConfigurationName, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource> GetIfExists(string softwareUpdateConfigurationName, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource>> GetIfExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class SoftwareUpdateConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>
     {
         public SoftwareUpdateConfigurationData(Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties updateConfiguration, Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties scheduleInfo) { }
         public string CreatedBy { get { throw null; } }
@@ -1162,6 +1313,11 @@ namespace Azure.ResourceManager.Automation
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties ScheduleInfo { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks Tasks { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SoftwareUpdateConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -1178,15 +1334,65 @@ namespace Azure.ResourceManager.Automation
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.SoftwareUpdateConfigurationData data, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Automation.Mocking
+{
+    public partial class MockableAutomationArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomationArmClient() { }
+        public virtual Azure.ResourceManager.Automation.AutomationAccountModuleResource GetAutomationAccountModuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationAccountResource GetAutomationAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationCertificateResource GetAutomationCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationConnectionResource GetAutomationConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationConnectionTypeResource GetAutomationConnectionTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationCredentialResource GetAutomationCredentialResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationJobResource GetAutomationJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationJobScheduleResource GetAutomationJobScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationRunbookResource GetAutomationRunbookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationScheduleResource GetAutomationScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationSourceControlResource GetAutomationSourceControlResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationVariableResource GetAutomationVariableResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationWatcherResource GetAutomationWatcherResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationWebhookResource GetAutomationWebhookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.DscCompilationJobResource GetDscCompilationJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.DscConfigurationResource GetDscConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.DscNodeConfigurationResource GetDscNodeConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.DscNodeResource GetDscNodeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.HybridRunbookWorkerResource GetHybridRunbookWorkerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableAutomationResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomationResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccount(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountResource>> GetAutomationAccountAsync(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationAccountCollection GetAutomationAccounts() { throw null; }
+    }
+    public partial class MockableAutomationSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAutomationSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AgentRegistration
+    public partial class AgentRegistration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistration>
     {
         internal AgentRegistration() { }
         public string DscMetaConfiguration { get { throw null; } }
         public System.Uri Endpoint { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AgentRegistrationKeys Keys { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AgentRegistration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AgentRegistration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AgentRegistrationKeyName : System.IEquatable<Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName>
@@ -1206,34 +1412,51 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName left, Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AgentRegistrationKeys
+    public partial class AgentRegistrationKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>
     {
         internal AgentRegistrationKeys() { }
         public string Primary { get { throw null; } }
         public string Secondary { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AgentRegistrationKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AgentRegistrationKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AgentRegistrationRegenerateKeyContent
+    public partial class AgentRegistrationRegenerateKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>
     {
         public AgentRegistrationRegenerateKeyContent(Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName keyName) { }
         public Azure.ResourceManager.Automation.Models.AgentRegistrationKeyName KeyName { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmAutomationModelFactory
     {
         public static Azure.ResourceManager.Automation.Models.AgentRegistration AgentRegistration(string dscMetaConfiguration = null, System.Uri endpoint = null, Azure.ResourceManager.Automation.Models.AgentRegistrationKeys keys = null, Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AgentRegistrationKeys AgentRegistrationKeys(string primary = null, string secondary = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationAccountData AutomationAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Automation.Models.AutomationSku sku = null, string lastModifiedBy = null, Azure.ResourceManager.Automation.Models.AutomationAccountState? state = default(Azure.ResourceManager.Automation.Models.AutomationAccountState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null, Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData> privateEndpointConnections = null, bool? isPublicNetworkAccessAllowed = default(bool?), bool? isLocalAuthDisabled = default(bool?), System.Uri automationHybridServiceUri = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent AutomationAccountModuleCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationAccountStatistics AutomationAccountStatistics(string counterProperty = null, long? counterValue = default(long?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string id = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationActivity AutomationActivity(Azure.Core.ResourceIdentifier id = null, string name = null, string definition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet> parameterSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType> outputTypes = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationActivityOutputType AutomationActivityOutputType(string name = null, string activityOutputType = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition AutomationActivityParameterDefinition(string name = null, string activityParameterType = null, bool? isMandatory = default(bool?), bool? isDynamic = default(bool?), long? position = default(long?), bool? canTakeValueFromPipeline = default(bool?), bool? canTakeValueFromPipelineByPropertyName = default(bool?), bool? canTakeValueValueFromRemainingArguments = default(bool?), string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet> validationSet = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet AutomationActivityParameterSet(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition> parameters = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet AutomationActivityParameterValidationSet(string memberValue = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent AutomationCertificateCreateOrUpdateContent(string name = null, string base64Value = null, string description = null, string thumbprintString = null, bool? isExportable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationCertificateData AutomationCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string thumbprintString = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? isExportable = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent AutomationConnectionCreateOrUpdateContent(string name = null, string description = null, string connectionTypeName = null, System.Collections.Generic.IDictionary<string, string> fieldDefinitionValues = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationConnectionData AutomationConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string connectionTypeName = null, System.Collections.Generic.IReadOnlyDictionary<string, string> fieldDefinitionValues = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent AutomationConnectionTypeCreateOrUpdateContent(string name = null, bool? isGlobal = default(bool?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition> fieldDefinitions = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationConnectionTypeData AutomationConnectionTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isGlobal = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition> fieldDefinitions = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent AutomationCredentialCreateOrUpdateContent(string name = null, string userName = null, string password = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationCredentialData AutomationCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string userName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData AutomationJobCollectionItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runbookName = null, System.Guid? jobId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.AutomationJobStatus? status = default(Azure.ResourceManager.Automation.Models.AutomationJobStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string provisioningState = null, string runOn = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationJobData AutomationJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runbookName = null, string startedBy = null, string runOn = null, System.Guid? jobId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.AutomationJobStatus? status = default(Azure.ResourceManager.Automation.Models.AutomationJobStatus?), string statusDetails = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string exception = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.Automation.Models.JobProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.JobProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent AutomationJobScheduleCreateOrUpdateContent(string scheduleName = null, string runbookName = null, string runOn = null, System.Collections.Generic.IDictionary<string, string> parameters = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationJobScheduleData AutomationJobScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? jobScheduleId = default(System.Guid?), string scheduleName = null, string runbookName = null, string runOn = null, System.Collections.Generic.IReadOnlyDictionary<string, string> parameters = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationJobStream AutomationJobStream(Azure.Core.ResourceIdentifier id = null, string jobStreamId = null, System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.AutomationJobStreamType? streamType = default(Azure.ResourceManager.Automation.Models.AutomationJobStreamType?), string streamText = null, string summary = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> value = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationKey AutomationKey(Azure.ResourceManager.Automation.Models.AutomationKeyName? keyName = default(Azure.ResourceManager.Automation.Models.AutomationKeyName?), Azure.ResourceManager.Automation.Models.AutomationKeyPermission? permissions = default(Azure.ResourceManager.Automation.Models.AutomationKeyPermission?), string value = null) { throw null; }
@@ -1243,16 +1466,22 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty connectionState = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource AutomationPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty AutomationPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), Azure.ResourceManager.Automation.Models.AutomationRunbookType runbookType = default(Azure.ResourceManager.Automation.Models.AutomationRunbookType), Azure.ResourceManager.Automation.Models.AutomationRunbookDraft draft = null, Azure.ResourceManager.Automation.Models.AutomationContentLink publishContentLink = null, string description = null, int? logActivityTrace = default(int?)) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationRunbookData AutomationRunbookData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Automation.Models.AutomationRunbookType? runbookType = default(Azure.ResourceManager.Automation.Models.AutomationRunbookType?), Azure.ResourceManager.Automation.Models.AutomationContentLink publishContentLink = null, Azure.ResourceManager.Automation.Models.RunbookState? state = default(Azure.ResourceManager.Automation.Models.RunbookState?), bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), int? logActivityTrace = default(int?), int? jobCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.RunbookParameterDefinition> parameters = null, System.Collections.Generic.IEnumerable<string> outputTypes = null, Azure.ResourceManager.Automation.Models.AutomationRunbookDraft draft = null, Azure.ResourceManager.Automation.Models.RunbookProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.RunbookProvisioningState?), string lastModifiedBy = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent AutomationScheduleCreateOrUpdateContent(string name = null, string description = null, System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.BinaryData interval = null, Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency frequency = default(Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency), string timeZone = null, Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule advancedSchedule = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationScheduleData AutomationScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), double? startInMinutes = default(double?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), double? expireInMinutes = default(double?), bool? isEnabled = default(bool?), System.DateTimeOffset? nextRunOn = default(System.DateTimeOffset?), double? nextRunInMinutes = default(double?), System.BinaryData interval = null, Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency? frequency = default(Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency?), string timeZone = null, Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule advancedSchedule = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationSourceControlData AutomationSourceControlData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri repoUri = null, string branch = null, string folderPath = null, bool? isAutoSyncEnabled = default(bool?), bool? isAutoPublishRunbookEnabled = default(bool?), Azure.ResourceManager.Automation.Models.SourceControlSourceType? sourceType = default(Azure.ResourceManager.Automation.Models.SourceControlSourceType?), string description = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationUsage AutomationUsage(string id = null, Azure.ResourceManager.Automation.Models.AutomationUsageCounterName name = null, string unit = null, double? currentValue = default(double?), long? limit = default(long?), string throttleStatus = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationUsageCounterName AutomationUsageCounterName(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent AutomationVariableCreateOrUpdateContent(string name = null, string value = null, string description = null, bool? isEncrypted = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationVariableData AutomationVariableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, bool? isEncrypted = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationWatcherData AutomationWatcherData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? executionFrequencyInSeconds = default(long?), string scriptName = null, System.Collections.Generic.IDictionary<string, string> scriptParameters = null, string scriptRunOn = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent AutomationWebhookCreateOrUpdateContent(string name = null, bool? isEnabled = default(bool?), System.Uri uri = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> parameters = null, string runbookName = null, string runOn = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationWebhookData AutomationWebhookData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isEnabled = default(bool?), System.Uri uri = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastInvokedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> parameters = null, string runbookName = null, string runOn = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string lastModifiedBy = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DeletedAutomationAccount DeletedAutomationAccount(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier automationAccountResourceId = null, string automationAccountId = null, string locationPropertiesLocation = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, string configurationName = null, System.Collections.Generic.IDictionary<string, string> parameters = null, bool? isIncrementNodeConfigurationBuildRequired = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Automation.DscCompilationJobData DscCompilationJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string configurationName = null, string startedBy = null, System.Guid? jobId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.JobProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.JobProvisioningState?), string runOn = null, Azure.ResourceManager.Automation.Models.AutomationJobStatus? status = default(Azure.ResourceManager.Automation.Models.AutomationJobStatus?), string statusDetails = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string exception = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> parameters = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), Azure.ResourceManager.Automation.Models.AutomationContentSource source = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition> parameters = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.DscConfigurationData DscConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState?), int? jobCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition> parameters = null, Azure.ResourceManager.Automation.Models.AutomationContentSource source = null, Azure.ResourceManager.Automation.Models.DscConfigurationState? state = default(Azure.ResourceManager.Automation.Models.DscConfigurationState?), bool? isLogVerboseEnabled = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), int? nodeConfigurationCount = default(int?), string description = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DscMetaConfiguration DscMetaConfiguration(int? configurationModeFrequencyMins = default(int?), bool? rebootNodeIfNeeded = default(bool?), string configurationMode = null, string actionAfterReboot = null, string certificateId = null, int? refreshFrequencyMins = default(int?), bool? allowModuleOverwrite = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Automation.DscNodeConfigurationData DscNodeConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string configurationName = null, string source = null, long? nodeCount = default(long?), bool? isIncrementNodeConfigurationBuildRequired = default(bool?)) { throw null; }
@@ -1278,7 +1507,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream SourceControlSyncJobStream(Azure.Core.ResourceIdentifier id = null, string sourceControlSyncJobStreamId = null, string summary = null, System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.SourceControlStreamType? streamType = default(Azure.ResourceManager.Automation.Models.SourceControlStreamType?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(Azure.Core.ResourceIdentifier id = null, string sourceControlSyncJobStreamId = null, string summary = null, System.DateTimeOffset? time = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.SourceControlStreamType? streamType = default(Azure.ResourceManager.Automation.Models.SourceControlStreamType?), string streamText = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> value = null) { throw null; }
     }
-    public partial class AutomationAccountCreateOrUpdateContent
+    public partial class AutomationAccountCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>
     {
         public AutomationAccountCreateOrUpdateContent() { }
         public Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties Encryption { get { throw null; } set { } }
@@ -1289,24 +1518,39 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAccountModuleCreateOrUpdateContent
+    public partial class AutomationAccountModuleCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>
     {
         public AutomationAccountModuleCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink) { }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModuleCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAccountModulePatch
+    public partial class AutomationAccountModulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>
     {
         public AutomationAccountModulePatch() { }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountModulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAccountPatch
+    public partial class AutomationAccountPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>
     {
         public AutomationAccountPatch() { }
         public Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties Encryption { get { throw null; } set { } }
@@ -1317,17 +1561,32 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAccountPython2PackageCreateOrUpdateContent
+    public partial class AutomationAccountPython2PackageCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>
     {
         public AutomationAccountPython2PackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink) { }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAccountPython2PackagePatch
+    public partial class AutomationAccountPython2PackagePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>
     {
         public AutomationAccountPython2PackagePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationAccountState : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationAccountState>
@@ -1348,7 +1607,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationAccountState left, Azure.ResourceManager.Automation.Models.AutomationAccountState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationAccountStatistics
+    public partial class AutomationAccountStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>
     {
         internal AutomationAccountStatistics() { }
         public string CounterProperty { get { throw null; } }
@@ -1356,8 +1615,13 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAccountStatistics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAccountStatistics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationActivity
+    public partial class AutomationActivity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivity>
     {
         internal AutomationActivity() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1368,14 +1632,24 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType> OutputTypes { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet> ParameterSets { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationActivity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationActivity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationActivityOutputType
+    public partial class AutomationActivityOutputType : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>
     {
         internal AutomationActivityOutputType() { }
         public string ActivityOutputType { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationActivityOutputType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationActivityOutputType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityOutputType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationActivityParameterDefinition
+    public partial class AutomationActivityParameterDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>
     {
         internal AutomationActivityParameterDefinition() { }
         public string ActivityParameterType { get { throw null; } }
@@ -1388,32 +1662,57 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } }
         public long? Position { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet> ValidationSet { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationActivityParameterSet
+    public partial class AutomationActivityParameterSet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>
     {
         internal AutomationActivityParameterSet() { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.AutomationActivityParameterDefinition> Parameters { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationActivityParameterValidationSet
+    public partial class AutomationActivityParameterValidationSet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>
     {
         internal AutomationActivityParameterValidationSet() { }
         public string MemberValue { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationActivityParameterValidationSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAdvancedSchedule
+    public partial class AutomationAdvancedSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>
     {
         public AutomationAdvancedSchedule() { }
         public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence> MonthlyOccurrences { get { throw null; } }
         public System.Collections.Generic.IList<string> WeekDays { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationAdvancedScheduleMonthlyOccurrence
+    public partial class AutomationAdvancedScheduleMonthlyOccurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>
     {
         public AutomationAdvancedScheduleMonthlyOccurrence() { }
         public Azure.ResourceManager.Automation.Models.AutomationDayOfWeek? Day { get { throw null; } set { } }
         public int? Occurrence { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationAdvancedScheduleMonthlyOccurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationCertificateCreateOrUpdateContent
+    public partial class AutomationCertificateCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>
     {
         public AutomationCertificateCreateOrUpdateContent(string name, string base64Value) { }
         public string Base64Value { get { throw null; } }
@@ -1424,62 +1723,107 @@ namespace Azure.ResourceManager.Automation.Models
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintString { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificateCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationCertificatePatch
+    public partial class AutomationCertificatePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>
     {
         public AutomationCertificatePatch() { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationCertificatePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationCertificatePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCertificatePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationConnectionCreateOrUpdateContent
+    public partial class AutomationConnectionCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>
     {
         public AutomationConnectionCreateOrUpdateContent(string name, Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty connectionType) { }
         public string ConnectionTypeName { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> FieldDefinitionValues { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationConnectionFieldDefinition
+    public partial class AutomationConnectionFieldDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>
     {
         public AutomationConnectionFieldDefinition(string fieldDefinitionType) { }
         public string FieldDefinitionType { get { throw null; } set { } }
         public bool? IsEncrypted { get { throw null; } set { } }
         public bool? IsOptional { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationConnectionPatch
+    public partial class AutomationConnectionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>
     {
         public AutomationConnectionPatch() { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> FieldDefinitionValues { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationConnectionTypeCreateOrUpdateContent
+    public partial class AutomationConnectionTypeCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>
     {
         public AutomationConnectionTypeCreateOrUpdateContent(string name, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition> fieldDefinitions) { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.AutomationConnectionFieldDefinition> FieldDefinitions { get { throw null; } }
         public bool? IsGlobal { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationConnectionTypeCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationContentHash
+    public partial class AutomationContentHash : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>
     {
         public AutomationContentHash(string algorithm, string value) { }
         public string Algorithm { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationContentHash System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationContentHash System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentHash>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationContentLink
+    public partial class AutomationContentLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>
     {
         public AutomationContentLink() { }
         public Azure.ResourceManager.Automation.Models.AutomationContentHash ContentHash { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationContentLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationContentLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationContentSource
+    public partial class AutomationContentSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>
     {
         public AutomationContentSource() { }
         public Azure.ResourceManager.Automation.Models.AutomationContentHash Hash { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentSourceType? SourceType { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationContentSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationContentSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationContentSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationContentSourceType : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationContentSourceType>
@@ -1517,21 +1861,31 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationCountType left, Azure.ResourceManager.Automation.Models.AutomationCountType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationCredentialCreateOrUpdateContent
+    public partial class AutomationCredentialCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>
     {
         public AutomationCredentialCreateOrUpdateContent(string name, string userName, string password) { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public string Password { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationCredentialPatch
+    public partial class AutomationCredentialPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>
     {
         public AutomationCredentialPatch() { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationCredentialPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationCredentialPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationCredentialPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationDayOfWeek : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationDayOfWeek>
@@ -1556,12 +1910,17 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationDayOfWeek left, Azure.ResourceManager.Automation.Models.AutomationDayOfWeek right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationEncryptionProperties
+    public partial class AutomationEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>
     {
         public AutomationEncryptionProperties() { }
         public Azure.ResourceManager.Automation.Models.EncryptionKeySourceType? KeySource { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public System.BinaryData UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationEncryptionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationHttpStatusCode : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode>
@@ -1626,7 +1985,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode left, Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationJobCollectionItemData : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationJobCollectionItemData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>
     {
         public AutomationJobCollectionItemData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1638,21 +1997,36 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationJobStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCollectionItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationJobCreateOrUpdateContent
+    public partial class AutomationJobCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>
     {
         public AutomationJobCreateOrUpdateContent() { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunbookName { get { throw null; } set { } }
         public string RunOn { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationJobScheduleCreateOrUpdateContent
+    public partial class AutomationJobScheduleCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>
     {
         public AutomationJobScheduleCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty schedule, Azure.ResourceManager.Automation.Models.RunbookAssociationProperty runbook) { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunbookName { get { throw null; } }
         public string RunOn { get { throw null; } set { } }
         public string ScheduleName { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationJobStatus : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationJobStatus>
@@ -1683,7 +2057,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationJobStatus left, Azure.ResourceManager.Automation.Models.AutomationJobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationJobStream
+    public partial class AutomationJobStream : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>
     {
         internal AutomationJobStream() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -1693,6 +2067,11 @@ namespace Azure.ResourceManager.Automation.Models
         public string Summary { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Value { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationJobStream System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationJobStream System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobStream>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationJobStreamType : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationJobStreamType>
@@ -1717,12 +2096,17 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationJobStreamType left, Azure.ResourceManager.Automation.Models.AutomationJobStreamType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationKey
+    public partial class AutomationKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKey>
     {
         internal AutomationKey() { }
         public Azure.ResourceManager.Automation.Models.AutomationKeyName? KeyName { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationKeyPermission? Permissions { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationKeyName : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationKeyName>
@@ -1760,50 +2144,85 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationKeyPermission left, Azure.ResourceManager.Automation.Models.AutomationKeyPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationKeyVaultProperties
+    public partial class AutomationKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>
     {
         public AutomationKeyVaultProperties() { }
         public string KeyName { get { throw null; } set { } }
         public System.Uri KeyvaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationLinkedWorkspace
+    public partial class AutomationLinkedWorkspace : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>
     {
         internal AutomationLinkedWorkspace() { }
         public string Id { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationModuleErrorInfo
+    public partial class AutomationModuleErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>
     {
         public AutomationModuleErrorInfo() { }
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationModuleField
+    public partial class AutomationModuleField : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>
     {
         internal AutomationModuleField() { }
         public string FieldType { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationModuleField System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationModuleField System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
+    public partial class AutomationPrivateLinkResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>
     {
         public AutomationPrivateLinkResource() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationPrivateLinkServiceConnectionStateProperty
+    public partial class AutomationPrivateLinkServiceConnectionStateProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>
     {
         public AutomationPrivateLinkServiceConnectionStateProperty() { }
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationResponseError
+    public partial class AutomationResponseError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>
     {
         public AutomationResponseError() { }
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationResponseError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationResponseError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationRunbookCreateOrUpdateContent
+    public partial class AutomationRunbookCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>
     {
         public AutomationRunbookCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationRunbookType runbookType) { }
         public string Description { get { throw null; } set { } }
@@ -1816,8 +2235,13 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.AutomationContentLink PublishContentLink { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationRunbookType RunbookType { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationRunbookDraft
+    public partial class AutomationRunbookDraft : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>
     {
         public AutomationRunbookDraft() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -1826,8 +2250,13 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OutputTypes { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.RunbookParameterDefinition> Parameters { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationRunbookDraft System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationRunbookDraft System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookDraft>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationRunbookPatch
+    public partial class AutomationRunbookPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>
     {
         public AutomationRunbookPatch() { }
         public string Description { get { throw null; } set { } }
@@ -1837,6 +2266,11 @@ namespace Azure.ResourceManager.Automation.Models
         public int? LogActivityTrace { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationRunbookPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationRunbookPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationRunbookPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationRunbookType : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationRunbookType>
@@ -1862,7 +2296,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationRunbookType left, Azure.ResourceManager.Automation.Models.AutomationRunbookType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationScheduleCreateOrUpdateContent
+    public partial class AutomationScheduleCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>
     {
         public AutomationScheduleCreateOrUpdateContent(string name, System.DateTimeOffset startOn, Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency frequency) { }
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
@@ -1873,6 +2307,11 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationScheduleCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationScheduleFrequency : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency>
@@ -1896,19 +2335,29 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency left, Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationSchedulePatch
+    public partial class AutomationSchedulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>
     {
         public AutomationSchedulePatch() { }
         public string Description { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationSchedulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationSchedulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSchedulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationSku
+    public partial class AutomationSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSku>
     {
         public AutomationSku(Azure.ResourceManager.Automation.Models.AutomationSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public string Family { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationSkuName Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutomationSkuName : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationSkuName>
@@ -1928,7 +2377,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationSkuName left, Azure.ResourceManager.Automation.Models.AutomationSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AutomationSourceControlCreateOrUpdateContent
+    public partial class AutomationSourceControlCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>
     {
         public AutomationSourceControlCreateOrUpdateContent() { }
         public string Branch { get { throw null; } set { } }
@@ -1939,8 +2388,13 @@ namespace Azure.ResourceManager.Automation.Models
         public System.Uri RepoUri { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties SecurityToken { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SourceControlSourceType? SourceType { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationSourceControlPatch
+    public partial class AutomationSourceControlPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>
     {
         public AutomationSourceControlPatch() { }
         public string Branch { get { throw null; } set { } }
@@ -1949,8 +2403,13 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsAutoPublishRunbookEnabled { get { throw null; } set { } }
         public bool? IsAutoSyncEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties SecurityToken { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationSourceControlPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationUsage
+    public partial class AutomationUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsage>
     {
         internal AutomationUsage() { }
         public double? CurrentValue { get { throw null; } }
@@ -1959,35 +2418,60 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.AutomationUsageCounterName Name { get { throw null; } }
         public string ThrottleStatus { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationUsageCounterName
+    public partial class AutomationUsageCounterName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>
     {
         internal AutomationUsageCounterName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.AutomationUsageCounterName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationUsageCounterName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationUsageCounterName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationVariableCreateOrUpdateContent
+    public partial class AutomationVariableCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>
     {
         public AutomationVariableCreateOrUpdateContent(string name) { }
         public string Description { get { throw null; } set { } }
         public bool? IsEncrypted { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariableCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationVariablePatch
+    public partial class AutomationVariablePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>
     {
         public AutomationVariablePatch() { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationVariablePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationVariablePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationVariablePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationWatcherPatch
+    public partial class AutomationWatcherPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>
     {
         public AutomationWatcherPatch() { }
         public long? ExecutionFrequencyInSeconds { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationWatcherPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationWatcherPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWatcherPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationWebhookCreateOrUpdateContent
+    public partial class AutomationWebhookCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>
     {
         public AutomationWebhookCreateOrUpdateContent(string name) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
@@ -1997,8 +2481,13 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunbookName { get { throw null; } set { } }
         public string RunOn { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AutomationWebhookPatch
+    public partial class AutomationWebhookPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>
     {
         public AutomationWebhookPatch() { }
         public string Description { get { throw null; } set { } }
@@ -2006,20 +2495,35 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunOn { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AutomationWebhookPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationWebhookPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationWebhookPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureQueryProperties
+    public partial class AzureQueryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>
     {
         public AzureQueryProperties() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IList<string> Scope { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties TagSettings { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.AzureQueryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AzureQueryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AzureQueryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConnectionTypeAssociationProperty
+    public partial class ConnectionTypeAssociationProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>
     {
         public ConnectionTypeAssociationProperty() { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ConnectionTypeAssociationProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeletedAutomationAccount : Azure.ResourceManager.Models.ResourceData
+    public partial class DeletedAutomationAccount : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>
     {
         internal DeletedAutomationAccount() { }
         public string AutomationAccountId { get { throw null; } }
@@ -2027,8 +2531,13 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string LocationPropertiesLocation { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DeletedAutomationAccount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DeletedAutomationAccount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscCompilationJobCreateOrUpdateContent
+    public partial class DscCompilationJobCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>
     {
         public DscCompilationJobCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty configuration) { }
         public string ConfigurationName { get { throw null; } }
@@ -2037,13 +2546,23 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscConfigurationAssociationProperty
+    public partial class DscConfigurationAssociationProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>
     {
         public DscConfigurationAssociationProperty() { }
         public string ConfigurationName { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscConfigurationCreateOrUpdateContent
+    public partial class DscConfigurationCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>
     {
         public DscConfigurationCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentSource source) { }
         public string Description { get { throw null; } set { } }
@@ -2054,16 +2573,26 @@ namespace Azure.ResourceManager.Automation.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition> Parameters { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationContentSource Source { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscConfigurationParameterDefinition
+    public partial class DscConfigurationParameterDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>
     {
         public DscConfigurationParameterDefinition() { }
         public string DefaultValue { get { throw null; } set { } }
         public string DscConfigurationParameterType { get { throw null; } set { } }
         public bool? IsMandatory { get { throw null; } set { } }
         public int? Position { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscConfigurationPatch
+    public partial class DscConfigurationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>
     {
         public DscConfigurationPatch() { }
         public string Description { get { throw null; } set { } }
@@ -2073,6 +2602,11 @@ namespace Azure.ResourceManager.Automation.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition> Parameters { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationContentSource Source { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscConfigurationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscConfigurationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DscConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.Automation.Models.DscConfigurationProvisioningState>
@@ -2110,7 +2644,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.DscConfigurationState left, Azure.ResourceManager.Automation.Models.DscConfigurationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DscMetaConfiguration
+    public partial class DscMetaConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>
     {
         internal DscMetaConfiguration() { }
         public string ActionAfterReboot { get { throw null; } }
@@ -2120,8 +2654,13 @@ namespace Azure.ResourceManager.Automation.Models
         public int? ConfigurationModeFrequencyMins { get { throw null; } }
         public bool? RebootNodeIfNeeded { get { throw null; } }
         public int? RefreshFrequencyMins { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscMetaConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscMetaConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscMetaConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscNodeConfigurationCreateOrUpdateContent
+    public partial class DscNodeConfigurationCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>
     {
         public DscNodeConfigurationCreateOrUpdateContent() { }
         public string ConfigurationName { get { throw null; } set { } }
@@ -2129,26 +2668,46 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentSource Source { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeConfigurationCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscNodeCount
+    public partial class DscNodeCount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeCount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeCount>
     {
         internal DscNodeCount() { }
         public string Name { get { throw null; } }
         public int? NameCount { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscNodeCount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeCount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeCount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscNodeCount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeCount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeCount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeCount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscNodeExtensionHandlerAssociationProperty
+    public partial class DscNodeExtensionHandlerAssociationProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>
     {
         public DscNodeExtensionHandlerAssociationProperty() { }
         public string Name { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeExtensionHandlerAssociationProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscNodePatch
+    public partial class DscNodePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodePatch>
     {
         public DscNodePatch() { }
         public string DscNodeUpdateParametersName { get { throw null; } set { } }
         public string NodeId { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.DscNodePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscNodePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscNodeReport
+    public partial class DscNodeReport : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeReport>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeReport>
     {
         internal DscNodeReport() { }
         public string ConfigurationVersion { get { throw null; } }
@@ -2170,8 +2729,13 @@ namespace Azure.ResourceManager.Automation.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.DscReportResource> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscNodeReport System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeReport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscNodeReport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscNodeReport System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeReport>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeReport>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscNodeReport>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscReportError
+    public partial class DscReportError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportError>
     {
         internal DscReportError() { }
         public string ErrorCode { get { throw null; } }
@@ -2180,8 +2744,13 @@ namespace Azure.ResourceManager.Automation.Models
         public string ErrorSource { get { throw null; } }
         public string Locale { get { throw null; } }
         public string ResourceId { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscReportError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscReportError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscReportResource
+    public partial class DscReportResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResource>
     {
         internal DscReportResource() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation> DependsOn { get { throw null; } }
@@ -2194,22 +2763,37 @@ namespace Azure.ResourceManager.Automation.Models
         public string SourceInfo { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscReportResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscReportResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DscReportResourceNavigation
+    public partial class DscReportResourceNavigation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>
     {
         internal DscReportResourceNavigation() { }
         public string ResourceId { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.DscReportResourceNavigation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscReportResourceNavigation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscReportResourceNavigation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum EncryptionKeySourceType
     {
         MicrosoftAutomation = 0,
         MicrosoftKeyvault = 1,
     }
-    public partial class GraphicalRunbookContent
+    public partial class GraphicalRunbookContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>
     {
         public GraphicalRunbookContent() { }
         public string GraphRunbookJson { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent RawContent { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.GraphicalRunbookContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.GraphicalRunbookContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.GraphicalRunbookContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GraphRunbookType : System.IEquatable<Azure.ResourceManager.Automation.Models.GraphRunbookType>
@@ -2229,22 +2813,37 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.GraphRunbookType left, Azure.ResourceManager.Automation.Models.GraphRunbookType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HybridRunbookWorkerCreateOrUpdateContent
+    public partial class HybridRunbookWorkerCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>
     {
         public HybridRunbookWorkerCreateOrUpdateContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VmResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridRunbookWorkerGroupCreateOrUpdateContent
+    public partial class HybridRunbookWorkerGroupCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>
     {
         public HybridRunbookWorkerGroupCreateOrUpdateContent() { }
         public string CredentialName { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerGroupCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HybridRunbookWorkerMoveContent
+    public partial class HybridRunbookWorkerMoveContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>
     {
         public HybridRunbookWorkerMoveContent() { }
         public string HybridRunbookWorkerGroupName { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HybridWorkerGroup : System.IEquatable<Azure.ResourceManager.Automation.Models.HybridWorkerGroup>
@@ -2322,13 +2921,18 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.LinuxUpdateClassification left, Azure.ResourceManager.Automation.Models.LinuxUpdateClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LinuxUpdateConfigurationProperties
+    public partial class LinuxUpdateConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>
     {
         public LinuxUpdateConfigurationProperties() { }
         public System.Collections.Generic.IList<string> ExcludedPackageNameMasks { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.LinuxUpdateClassification? IncludedPackageClassifications { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> IncludedPackageNameMasks { get { throw null; } }
         public string RebootSetting { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ModuleProvisioningState
     {
@@ -2349,48 +2953,78 @@ namespace Azure.ResourceManager.Automation.Models
         Cancelled = 14,
         Updating = 15,
     }
-    public partial class NonAzureQueryProperties
+    public partial class NonAzureQueryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>
     {
         public NonAzureQueryProperties() { }
         public string FunctionAlias { get { throw null; } set { } }
         public string WorkspaceId { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.NonAzureQueryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.NonAzureQueryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum QueryTagOperator
     {
         All = 0,
         Any = 1,
     }
-    public partial class QueryTagSettingsProperties
+    public partial class QueryTagSettingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>
     {
         public QueryTagSettingsProperties() { }
         public Azure.ResourceManager.Automation.Models.QueryTagOperator? FilterOperator { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Tags { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RawGraphicalRunbookContent
+    public partial class RawGraphicalRunbookContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>
     {
         public RawGraphicalRunbookContent() { }
         public string RunbookDefinition { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.GraphRunbookType? RunbookType { get { throw null; } set { } }
         public string SchemaVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RunbookAssociationProperty
+    public partial class RunbookAssociationProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>
     {
         public RunbookAssociationProperty() { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.RunbookAssociationProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.RunbookAssociationProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookAssociationProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RunbookDraftUndoEditResult
+    public partial class RunbookDraftUndoEditResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>
     {
         internal RunbookDraftUndoEditResult() { }
         public string RequestId { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationHttpStatusCode? StatusCode { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookDraftUndoEditResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RunbookParameterDefinition
+    public partial class RunbookParameterDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>
     {
         public RunbookParameterDefinition() { }
         public string DefaultValue { get { throw null; } set { } }
         public bool? IsMandatory { get { throw null; } set { } }
         public int? Position { get { throw null; } set { } }
         public string RunbookParameterType { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.RunbookParameterDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.RunbookParameterDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookParameterDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RunbookProvisioningState : System.IEquatable<Azure.ResourceManager.Automation.Models.RunbookProvisioningState>
@@ -2428,7 +3062,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.RunbookState left, Azure.ResourceManager.Automation.Models.RunbookState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RunbookTestJob
+    public partial class RunbookTestJob : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>
     {
         internal RunbookTestJob() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -2442,19 +3076,34 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.RunbookTestJob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.RunbookTestJob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RunbookTestJobCreateContent
+    public partial class RunbookTestJobCreateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>
     {
         public RunbookTestJobCreateContent() { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunOn { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.RunbookTestJobCreateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScheduleAssociationProperty
+    public partial class ScheduleAssociationProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>
     {
         public ScheduleAssociationProperty() { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationCollectionItem
+    public partial class SoftwareUpdateConfigurationCollectionItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>
     {
         internal SoftwareUpdateConfigurationCollectionItem() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -2467,8 +3116,13 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks Tasks { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties UpdateConfiguration { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationMachineRun
+    public partial class SoftwareUpdateConfigurationMachineRun : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>
     {
         internal SoftwareUpdateConfigurationMachineRun() { }
         public System.TimeSpan? ConfiguredDuration { get { throw null; } }
@@ -2489,13 +3143,18 @@ namespace Azure.ResourceManager.Automation.Models
         public string Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetComputerId { get { throw null; } }
         public string TargetComputerType { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationMachineRun>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SoftwareUpdateConfigurationOperatingSystemType
     {
         Windows = 0,
         Linux = 1,
     }
-    public partial class SoftwareUpdateConfigurationRun
+    public partial class SoftwareUpdateConfigurationRun : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>
     {
         internal SoftwareUpdateConfigurationRun() { }
         public int? ComputerCount { get { throw null; } }
@@ -2513,21 +3172,36 @@ namespace Azure.ResourceManager.Automation.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks Tasks { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationRunTaskProperties
+    public partial class SoftwareUpdateConfigurationRunTaskProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>
     {
         internal SoftwareUpdateConfigurationRunTaskProperties() { }
         public System.Guid? JobId { get { throw null; } }
         public string Source { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationRunTasks
+    public partial class SoftwareUpdateConfigurationRunTasks : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>
     {
         internal SoftwareUpdateConfigurationRunTasks() { }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties PostTask { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTaskProperties PreTask { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRunTasks>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationScheduleProperties
+    public partial class SoftwareUpdateConfigurationScheduleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>
     {
         public SoftwareUpdateConfigurationScheduleProperties() { }
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
@@ -2544,8 +3218,13 @@ namespace Azure.ResourceManager.Automation.Models
         public double? StartInMinutes { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationScheduleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationSpecificProperties
+    public partial class SoftwareUpdateConfigurationSpecificProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>
     {
         public SoftwareUpdateConfigurationSpecificProperties(Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationOperatingSystemType operatingSystem) { }
         public System.Collections.Generic.IList<string> AzureVirtualMachines { get { throw null; } }
@@ -2555,24 +3234,44 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationOperatingSystemType OperatingSystem { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties Targets { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties Windows { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationSpecificProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationTargetProperties
+    public partial class SoftwareUpdateConfigurationTargetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>
     {
         public SoftwareUpdateConfigurationTargetProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Automation.Models.AzureQueryProperties> AzureQueries { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties> NonAzureQueries { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTargetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationTaskProperties
+    public partial class SoftwareUpdateConfigurationTaskProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>
     {
         public SoftwareUpdateConfigurationTaskProperties() { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string Source { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SoftwareUpdateConfigurationTasks
+    public partial class SoftwareUpdateConfigurationTasks : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>
     {
         public SoftwareUpdateConfigurationTasks() { }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties PostTask { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTaskProperties PreTask { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationTasks>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceControlProvisioningState : System.IEquatable<Azure.ResourceManager.Automation.Models.SourceControlProvisioningState>
@@ -2593,12 +3292,17 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.SourceControlProvisioningState left, Azure.ResourceManager.Automation.Models.SourceControlProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SourceControlSecurityTokenProperties
+    public partial class SourceControlSecurityTokenProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>
     {
         public SourceControlSecurityTokenProperties() { }
         public string AccessToken { get { throw null; } set { } }
         public string RefreshToken { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.SourceControlTokenType? TokenType { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSecurityTokenProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceControlSourceType : System.IEquatable<Azure.ResourceManager.Automation.Models.SourceControlSourceType>
@@ -2637,7 +3341,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.SourceControlStreamType left, Azure.ResourceManager.Automation.Models.SourceControlStreamType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SourceControlSyncJob : Azure.ResourceManager.Models.ResourceData
+    public partial class SourceControlSyncJob : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>
     {
         internal SourceControlSyncJob() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -2646,13 +3350,23 @@ namespace Azure.ResourceManager.Automation.Models
         public string SourceControlSyncJobId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SourceControlSyncType? SyncType { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SourceControlSyncJobCreateContent
+    public partial class SourceControlSyncJobCreateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>
     {
         public SourceControlSyncJobCreateContent(string commitId) { }
         public string CommitId { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobCreateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SourceControlSyncJobResult
+    public partial class SourceControlSyncJobResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>
     {
         internal SourceControlSyncJobResult() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -2663,8 +3377,13 @@ namespace Azure.ResourceManager.Automation.Models
         public string SourceControlSyncJobId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.SourceControlSyncType? SyncType { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SourceControlSyncJobStream
+    public partial class SourceControlSyncJobStream : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>
     {
         internal SourceControlSyncJobStream() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -2672,8 +3391,13 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.SourceControlStreamType? StreamType { get { throw null; } }
         public string Summary { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStream>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SourceControlSyncJobStreamResult
+    public partial class SourceControlSyncJobStreamResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>
     {
         internal SourceControlSyncJobStreamResult() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -2683,6 +3407,11 @@ namespace Azure.ResourceManager.Automation.Models
         public string Summary { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Value { get { throw null; } }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.SourceControlSyncJobStreamResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceControlSyncType : System.IEquatable<Azure.ResourceManager.Automation.Models.SourceControlSyncType>
@@ -2745,12 +3474,17 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator !=(Azure.ResourceManager.Automation.Models.WindowsUpdateClassification left, Azure.ResourceManager.Automation.Models.WindowsUpdateClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WindowsUpdateConfigurationProperties
+    public partial class WindowsUpdateConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>
     {
         public WindowsUpdateConfigurationProperties() { }
         public System.Collections.Generic.IList<string> ExcludedKBNumbers { get { throw null; } }
         public System.Collections.Generic.IList<string> IncludedKBNumbers { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.WindowsUpdateClassification? IncludedUpdateClassifications { get { throw null; } set { } }
         public string RebootSetting { get { throw null; } set { } }
+        Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.WindowsUpdateConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

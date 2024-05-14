@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto database principals operation response. </summary>
     internal partial class SynapseFollowerDatabaseListResult
     {
-        /// <summary> Initializes a new instance of SynapseFollowerDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseFollowerDatabaseListResult"/>. </summary>
         internal SynapseFollowerDatabaseListResult()
         {
             Value = new ChangeTrackingList<SynapseFollowerDatabaseDefinition>();
         }
 
-        /// <summary> Initializes a new instance of SynapseFollowerDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseFollowerDatabaseListResult"/>. </summary>
         /// <param name="value"> The list of follower database result. </param>
         internal SynapseFollowerDatabaseListResult(IReadOnlyList<SynapseFollowerDatabaseDefinition> value)
         {

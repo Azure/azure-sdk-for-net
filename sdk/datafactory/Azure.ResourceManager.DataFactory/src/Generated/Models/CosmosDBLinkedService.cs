@@ -12,15 +12,15 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Microsoft Azure Cosmos Database (CosmosDB) linked service. </summary>
-    public partial class CosmosDBLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class CosmosDBLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLinkedService"/>. </summary>
         public CosmosDBLinkedService()
         {
             LinkedServiceType = "CosmosDb";
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionMode"> The connection mode used to access CosmosDB account. Type: string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal CosmosDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> accountEndpoint, DataFactoryElement<string> database, DataFactorySecretBaseDefinition accountKey, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecretBaseDefinition servicePrincipalCredential, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, CosmosDBConnectionMode? connectionMode, BinaryData encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> accountEndpoint, DataFactoryElement<string> database, DataFactorySecretBaseDefinition accountKey, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecretBaseDefinition servicePrincipalCredential, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, CosmosDBConnectionMode? connectionMode, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
@@ -76,37 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> AzureCloudType { get; set; }
         /// <summary> The connection mode used to access CosmosDB account. Type: string. </summary>
         public CosmosDBConnectionMode? ConnectionMode { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public DataFactoryCredentialReference Credential { get; set; }
     }

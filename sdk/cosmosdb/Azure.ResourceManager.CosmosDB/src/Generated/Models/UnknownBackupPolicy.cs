@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The UnknownBackupPolicy. </summary>
     internal partial class UnknownBackupPolicy : CosmosDBAccountBackupPolicy
     {
-        /// <summary> Initializes a new instance of UnknownBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupPolicy"/>. </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        internal UnknownBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState) : base(backupPolicyType, migrationState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(backupPolicyType, migrationState, serializedAdditionalRawData)
         {
             BackupPolicyType = backupPolicyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupPolicy"/> for deserialization. </summary>
+        internal UnknownBackupPolicy()
+        {
         }
     }
 }

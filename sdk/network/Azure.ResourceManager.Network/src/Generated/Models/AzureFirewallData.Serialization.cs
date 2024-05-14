@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class AzureFirewallData : IUtf8JsonSerializable
+    public partial class AzureFirewallData : IUtf8JsonSerializable, IJsonModel<AzureFirewallData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -29,10 +39,25 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -97,6 +122,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("managementIpConfiguration"u8);
                 writer.WriteObjectValue(ManagementIPConfiguration);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(ThreatIntelMode))
             {
                 writer.WritePropertyName("threatIntelMode"u8);
@@ -117,6 +147,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("hubIPAddresses"u8);
                 writer.WriteObjectValue(HubIPAddresses);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPGroups))
+            {
+                writer.WritePropertyName("ipGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -134,11 +174,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureFirewallData DeserializeAzureFirewallData(JsonElement element)
+        AzureFirewallData IJsonModel<AzureFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFirewallData(document.RootElement, options);
+        }
+
+        internal static AzureFirewallData DeserializeAzureFirewallData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -163,6 +232,8 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
             Optional<AzureFirewallSku> sku = default;
             Optional<IDictionary<string, string>> additionalProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -393,8 +464,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
         }
+
+        BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureFirewallData IPersistableModel<AzureFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureFirewallData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureFirewallData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

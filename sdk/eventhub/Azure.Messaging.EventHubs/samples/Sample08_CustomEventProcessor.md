@@ -92,8 +92,7 @@ public class CustomProcessor : PluggableCheckpointStoreEventProcessor<EventProce
             {
                 await UpdateCheckpointAsync(
                     partition.PartitionId,
-                    lastEvent.Offset,
-                    lastEvent.SequenceNumber,
+                    CheckpointPosition.FromEvent(lastEvent),
                     cancellationToken)
                 .ConfigureAwait(false);
             }

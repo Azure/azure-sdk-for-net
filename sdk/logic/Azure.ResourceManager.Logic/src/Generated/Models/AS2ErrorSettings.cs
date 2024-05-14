@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement error settings. </summary>
     public partial class AS2ErrorSettings
     {
-        /// <summary> Initializes a new instance of AS2ErrorSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2ErrorSettings"/>. </summary>
         /// <param name="suspendDuplicateMessage"> The value indicating whether to suspend duplicate message. </param>
         /// <param name="resendIfMdnNotReceived"> The value indicating whether to resend message If MDN is not received. </param>
         public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived)

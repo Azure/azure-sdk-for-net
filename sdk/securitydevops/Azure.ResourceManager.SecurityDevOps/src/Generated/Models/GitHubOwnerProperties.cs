@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> GitHub Repo Owner properties. </summary>
     public partial class GitHubOwnerProperties
     {
-        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubOwnerProperties"/>. </summary>
         public GitHubOwnerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubOwnerProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="ownerUri"> Gets or sets gitHub owner url. </param>
         internal GitHubOwnerProperties(ProvisioningState? provisioningState, Uri ownerUri)

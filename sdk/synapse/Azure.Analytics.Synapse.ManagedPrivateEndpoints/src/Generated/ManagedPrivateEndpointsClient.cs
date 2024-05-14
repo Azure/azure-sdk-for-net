@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models;
 using Azure.Core;
@@ -188,7 +189,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest(managedVirtualNetworkName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink, managedVirtualNetworkName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> List Managed Private Endpoints. </summary>
@@ -201,7 +202,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest(managedVirtualNetworkName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink, managedVirtualNetworkName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", cancellationToken);
         }
     }
 }

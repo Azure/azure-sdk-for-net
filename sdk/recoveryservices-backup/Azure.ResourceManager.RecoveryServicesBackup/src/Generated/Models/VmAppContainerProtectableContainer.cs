@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure workload-specific container. </summary>
     public partial class VmAppContainerProtectableContainer : ProtectableContainer
     {
-        /// <summary> Initializes a new instance of VmAppContainerProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectableContainer"/>. </summary>
         public VmAppContainerProtectableContainer()
         {
             ProtectableContainerType = ProtectableContainerType.VmAppContainer;
         }
 
-        /// <summary> Initializes a new instance of VmAppContainerProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectableContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">

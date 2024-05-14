@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A sensitivity label update operation. </summary>
     public partial class SynapseSensitivityLabelUpdate : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdate"/>. </summary>
         public SynapseSensitivityLabelUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

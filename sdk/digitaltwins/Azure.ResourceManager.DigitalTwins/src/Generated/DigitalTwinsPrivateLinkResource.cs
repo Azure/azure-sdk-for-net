@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a DigitalTwinsPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DigitalTwinsPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDigitalTwinsPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetDigitalTwinsPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DigitalTwinsPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDigitalTwinsPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetDigitalTwinsPrivateLinkResource method.
     /// </summary>
     public partial class DigitalTwinsPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DigitalTwinsPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="resourceId"> The resourceId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string resourceId)
         {
             var resourceId0 = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DigitalTwins/digitalTwinsInstances/{resourceName}/privateLinkResources/{resourceId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly PrivateLinkResourcesRestOperations _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly DigitalTwinsPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResource"/> class for mocking. </summary>
         protected DigitalTwinsPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DigitalTwinsPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DigitalTwinsPrivateLinkResource(ArmClient client, DigitalTwinsPrivateLinkResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

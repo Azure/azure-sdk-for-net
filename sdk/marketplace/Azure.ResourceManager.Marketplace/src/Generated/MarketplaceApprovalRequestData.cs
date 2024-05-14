@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class MarketplaceApprovalRequestData : ResourceData
     {
-        /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceApprovalRequestData"/>. </summary>
         public MarketplaceApprovalRequestData()
         {
             PlansDetails = new ChangeTrackingList<PrivateStorePlanDetails>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceApprovalRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceApprovalRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

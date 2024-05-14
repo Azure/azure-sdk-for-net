@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> This is used to express the source of an input schema mapping for a single target field in the Event Grid Event schema. This is currently used in the mappings for the 'id', 'topic' and 'eventtime' properties. This represents a field in the input event schema. </summary>
     internal partial class JsonField
     {
-        /// <summary> Initializes a new instance of JsonField. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonField"/>. </summary>
         public JsonField()
         {
         }
 
-        /// <summary> Initializes a new instance of JsonField. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonField"/>. </summary>
         /// <param name="sourceField"> Name of a field in the input event schema that's to be used as the source of a mapping. </param>
         internal JsonField(string sourceField)
         {

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the storage queue destination for an event subscription. </summary>
     public partial class StorageQueueEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of StorageQueueEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
         public StorageQueueEventSubscriptionDestination()
         {
             EndpointType = EndpointType.StorageQueue;
         }
 
-        /// <summary> Initializes a new instance of StorageQueueEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </param>
         /// <param name="queueName"> The name of the Storage queue under a storage account that is the destination of an event subscription. </param>

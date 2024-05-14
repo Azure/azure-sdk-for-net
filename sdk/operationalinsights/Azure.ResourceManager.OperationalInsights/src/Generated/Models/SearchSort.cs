@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The sort parameters for search. </summary>
     internal partial class SearchSort
     {
-        /// <summary> Initializes a new instance of SearchSort. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchSort"/>. </summary>
         internal SearchSort()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchSort. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchSort"/>. </summary>
         /// <param name="name"> The name of the field the search query is sorted on. </param>
         /// <param name="order"> The sort order of the search. </param>
         internal SearchSort(string name, SearchSortEnum? order)

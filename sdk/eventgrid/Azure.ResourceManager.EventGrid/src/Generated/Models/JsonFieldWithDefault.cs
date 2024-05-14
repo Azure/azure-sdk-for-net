@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public partial class JsonFieldWithDefault
     {
-        /// <summary> Initializes a new instance of JsonFieldWithDefault. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonFieldWithDefault"/>. </summary>
         public JsonFieldWithDefault()
         {
         }
 
-        /// <summary> Initializes a new instance of JsonFieldWithDefault. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonFieldWithDefault"/>. </summary>
         /// <param name="sourceField"> Name of a field in the input event schema that's to be used as the source of a mapping. </param>
         /// <param name="defaultValue"> The default value to be used for mapping when a SourceField is not provided or if there's no property with the specified name in the published JSON event payload. </param>
         internal JsonFieldWithDefault(string sourceField, string defaultValue)

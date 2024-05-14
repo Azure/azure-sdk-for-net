@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.LoadTesting
     /// </summary>
     public partial class LoadTestingQuotaData : ResourceData
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaData"/>. </summary>
         public LoadTestingQuotaData()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -117,7 +117,8 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
                     kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName)
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName ||
+                    kvp.Key == AmqpMessageConstants.PartitionIdName)
                 {
                     continue;
                 }
@@ -141,6 +142,15 @@ namespace Azure.Messaging.ServiceBus
                 }
                 AmqpMessage.ApplicationProperties.Add(kvp.Key, kvp.Value);
             }
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified <see cref="AmqpAnnotatedMessage"/> instance.
+        /// </summary>
+        /// <param name="message">The AMQP message.</param>
+        public ServiceBusMessage(AmqpAnnotatedMessage message)
+        {
+            AmqpMessage = message;
         }
 
         /// <summary>
@@ -293,7 +303,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the a correlation identifier.</summary>
+        /// <summary>Gets or sets the correlation identifier.</summary>
         /// <value>Correlation identifier.</value>
         /// <remarks>
         /// Allows an application to specify a context for the message for the purposes of correlation,
@@ -380,17 +390,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the date and time in UTC at which the message will be enqueued. This
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.
+        /// Gets or sets the date and time, in UTC, at which the message should be made available to receivers. This property does not control when a message is sent by the
+        /// client. Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
         /// </summary>
         /// <value>
-        /// The scheduled enqueue time in UTC. This value is for delayed message sending.
-        /// It is utilized to delay messages sending to a specific time in the future.
+        /// The date and time, in UTC, at which the message should be available to receivers. This time may not be exact; the actual time depends on the entity's workload and state.
         /// </value>
-        /// <remarks>
-        /// Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
-        /// depends on the queue's workload and its state.
-        /// </remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-sequencing#scheduled-messages">Scheduled messages</seealso>
         public DateTimeOffset ScheduledEnqueueTime
         {
             get
@@ -411,7 +417,7 @@ namespace Azure.Messaging.ServiceBus
         internal AmqpAnnotatedMessage AmqpMessage { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw AMQP message data that will be transmitted over the wire.
         /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>

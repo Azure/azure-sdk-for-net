@@ -13,13 +13,13 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The FileSystemList. </summary>
     internal partial class FileSystemList
     {
-        /// <summary> Initializes a new instance of FileSystemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemList"/>. </summary>
         internal FileSystemList()
         {
             Filesystems = new ChangeTrackingList<FileSystem>();
         }
 
-        /// <summary> Initializes a new instance of FileSystemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemList"/>. </summary>
         /// <param name="filesystems"></param>
         internal FileSystemList(IReadOnlyList<FileSystem> filesystems)
         {

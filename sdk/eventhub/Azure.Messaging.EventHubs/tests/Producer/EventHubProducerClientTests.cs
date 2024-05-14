@@ -2870,7 +2870,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true)
             {
                 InnerClientMock = new Mock<TransportClient>();
 

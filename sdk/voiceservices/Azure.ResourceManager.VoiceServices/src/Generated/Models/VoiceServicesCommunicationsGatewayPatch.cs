@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The type used for update operations of the CommunicationsGateway. </summary>
     public partial class VoiceServicesCommunicationsGatewayPatch
     {
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayPatch"/>. </summary>
         public VoiceServicesCommunicationsGatewayPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal VoiceServicesCommunicationsGatewayPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

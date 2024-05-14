@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataImportSources. </summary>
     internal partial class DataImportSources
     {
-        /// <summary> Initializes a new instance of DataImportSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportSources"/>. </summary>
         public DataImportSources()
         {
         }
 
-        /// <summary> Initializes a new instance of DataImportSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportSources"/>. </summary>
         /// <param name="eventHub"> Definition of Event Hub configuration. </param>
         internal DataImportSources(DataImportSourcesEventHub eventHub)
         {

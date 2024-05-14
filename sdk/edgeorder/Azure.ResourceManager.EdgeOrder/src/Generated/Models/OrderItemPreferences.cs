@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Preferences related to the order. </summary>
     public partial class OrderItemPreferences
     {
-        /// <summary> Initializes a new instance of OrderItemPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemPreferences"/>. </summary>
         public OrderItemPreferences()
         {
             NotificationPreferences = new ChangeTrackingList<NotificationPreference>();
         }
 
-        /// <summary> Initializes a new instance of OrderItemPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemPreferences"/>. </summary>
         /// <param name="notificationPreferences"> Notification preferences. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the order. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>

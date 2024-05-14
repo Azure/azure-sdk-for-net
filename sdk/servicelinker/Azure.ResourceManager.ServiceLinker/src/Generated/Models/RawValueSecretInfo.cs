@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The secret info when type is rawValue. It's for scenarios that user input the secret. </summary>
     public partial class RawValueSecretInfo : SecretBaseInfo
     {
-        /// <summary> Initializes a new instance of RawValueSecretInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawValueSecretInfo"/>. </summary>
         public RawValueSecretInfo()
         {
             SecretType = LinkerSecretType.RawValue;
         }
 
-        /// <summary> Initializes a new instance of RawValueSecretInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawValueSecretInfo"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
         /// <param name="value"> The actual value of the secret. </param>
         internal RawValueSecretInfo(LinkerSecretType secretType, string value) : base(secretType)

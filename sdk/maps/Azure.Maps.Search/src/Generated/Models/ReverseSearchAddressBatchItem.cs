@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> An item returned from Search Address Reverse Batch service call. </summary>
     internal partial class ReverseSearchAddressBatchItem : BatchResultItem
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchItem"/>. </summary>
         internal ReverseSearchAddressBatchItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressBatchItem"/>. </summary>
         /// <param name="statusCode"> HTTP request status code. </param>
         /// <param name="response"> The result of the query. SearchAddressReverseResponse if the query completed successfully, ErrorResponse otherwise. </param>
         internal ReverseSearchAddressBatchItem(int? statusCode, ReverseSearchAddressBatchItemResponse response) : base(statusCode)

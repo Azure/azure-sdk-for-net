@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Collection of ClientDiscovery details. </summary>
     internal partial class MoverOperationsDiscoveryList
     {
-        /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationsDiscoveryList"/>. </summary>
         internal MoverOperationsDiscoveryList()
         {
             Value = new ChangeTrackingList<MoverOperationsDiscovery>();
         }
 
-        /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationsDiscoveryList"/>. </summary>
         /// <param name="value"> Gets or sets the ClientDiscovery details. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal MoverOperationsDiscoveryList(IReadOnlyList<MoverOperationsDiscovery> value, string nextLink)

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a ScriptPackage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptPackageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScriptPackageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetScriptPackage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptPackageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptPackageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptPackage method.
     /// </summary>
     public partial class ScriptPackageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScriptPackageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptPackageName"> The scriptPackageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly ScriptPackagesRestOperations _scriptPackageRestClient;
         private readonly ScriptPackageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptPackageResource"/> class for mocking. </summary>
         protected ScriptPackageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScriptPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptPackageResource(ArmClient client, ScriptPackageData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of ScriptCmdletResources and their operations over a ScriptCmdletResource. </returns>
         public virtual ScriptCmdletCollection GetScriptCmdlets()
         {
-            return GetCachedClient(Client => new ScriptCmdletCollection(Client, Id));
+            return GetCachedClient(client => new ScriptCmdletCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +108,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScriptCmdletResource>> GetScriptCmdletAsync(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +139,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScriptCmdletResource> GetScriptCmdlet(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +169,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +209,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

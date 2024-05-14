@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Udr))
+            if (Optional.IsCollectionDefined(ApplicationInsights))
             {
-                writer.WritePropertyName("udr"u8);
+                writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartObject();
-                foreach (var item in Udr)
+                foreach (var item in ApplicationInsights)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -30,107 +30,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Nsg))
-            {
-                writer.WritePropertyName("nsg"u8);
-                writer.WriteStartObject();
-                foreach (var item in Nsg)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(ResourceLock))
-            {
-                writer.WritePropertyName("resourceLock"u8);
-                writer.WriteStartObject();
-                foreach (var item in ResourceLock)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(DnsResolution))
-            {
-                writer.WritePropertyName("dnsResolution"u8);
-                writer.WriteStartObject();
-                foreach (var item in DnsResolution)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(StorageAccount))
-            {
-                writer.WritePropertyName("storageAccount"u8);
-                writer.WriteStartObject();
-                foreach (var item in StorageAccount)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(KeyVault))
-            {
-                writer.WritePropertyName("keyVault"u8);
-                writer.WriteStartObject();
-                foreach (var item in KeyVault)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
 #endif
                 }
                 writer.WriteEndObject();
@@ -150,16 +53,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ApplicationInsights))
+            if (Optional.IsCollectionDefined(DnsResolution))
             {
-                writer.WritePropertyName("applicationInsights"u8);
+                writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
-                foreach (var item in ApplicationInsights)
+                foreach (var item in DnsResolution)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -170,7 +76,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(KeyVault))
+            {
+                writer.WritePropertyName("keyVault"u8);
+                writer.WriteStartObject();
+                foreach (var item in KeyVault)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Nsg))
+            {
+                writer.WritePropertyName("nsg"u8);
+                writer.WriteStartObject();
+                foreach (var item in Nsg)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
@@ -190,7 +145,79 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(ResourceLock))
+            {
+                writer.WritePropertyName("resourceLock"u8);
+                writer.WriteStartObject();
+                foreach (var item in ResourceLock)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(StorageAccount))
+            {
+                writer.WritePropertyName("storageAccount"u8);
+                writer.WriteStartObject();
+                foreach (var item in StorageAccount)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Udr))
+            {
+                writer.WritePropertyName("udr"u8);
+                writer.WriteStartObject();
+                foreach (var item in Udr)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();

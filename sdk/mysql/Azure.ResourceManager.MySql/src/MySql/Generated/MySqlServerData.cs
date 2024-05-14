@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MySqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MySqlServerData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<MySqlServerPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of MySqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

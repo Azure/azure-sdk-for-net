@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Active Directory. </summary>
     public partial class NetAppAccountActiveDirectory
     {
-        /// <summary> Initializes a new instance of NetAppAccountActiveDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountActiveDirectory"/>. </summary>
         public NetAppAccountActiveDirectory()
         {
             BackupOperators = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SecurityOperators = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetAppAccountActiveDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountActiveDirectory"/>. </summary>
         /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
         /// <param name="username"> A domain user account with permission to create machine accounts. </param>
         /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>

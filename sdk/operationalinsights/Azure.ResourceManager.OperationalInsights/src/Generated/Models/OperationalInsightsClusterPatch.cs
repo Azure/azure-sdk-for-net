@@ -14,10 +14,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The top level Log Analytics cluster resource container. </summary>
     public partial class OperationalInsightsClusterPatch
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
         public OperationalInsightsClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="sku"> The sku properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="keyVaultProperties"> The associated key properties. </param>
+        /// <param name="billingType"> The cluster's billing type. </param>
+        internal OperationalInsightsClusterPatch(ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, IDictionary<string, string> tags, OperationalInsightsKeyVaultProperties keyVaultProperties, OperationalInsightsBillingType? billingType)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+            KeyVaultProperties = keyVaultProperties;
+            BillingType = billingType;
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

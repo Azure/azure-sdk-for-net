@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
     public partial class DynatraceMonitorResourceLogRules
     {
-        /// <summary> Initializes a new instance of DynatraceMonitorResourceLogRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorResourceLogRules"/>. </summary>
         public DynatraceMonitorResourceLogRules()
         {
             FilteringTags = new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>();
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitorResourceLogRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorResourceLogRules"/>. </summary>
         /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
         /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
         /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A Class representing a ContainerRegistryPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerRegistryPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource"/> using the GetContainerRegistryPrivateLinkResource method.
     /// </summary>
     public partial class ContainerRegistryPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerRegistryPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly RegistriesRestOperations _containerRegistryPrivateLinkResourceRegistriesRestClient;
         private readonly ContainerRegistryPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryPrivateLinkResource"/> class for mocking. </summary>
         protected ContainerRegistryPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerRegistryPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerRegistryPrivateLinkResource(ArmClient client, ContainerRegistryPrivateLinkResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_GetPrivateLinkResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

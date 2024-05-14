@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,22 +15,22 @@ namespace Azure.Identity
         private const string AzureGermanyHostUrl = "https://login.microsoftonline.de/";
         private const string AzureGovernmentHostUrl = "https://login.microsoftonline.us/";
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure Public Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure Public Cloud.
         /// </summary>
         public static Uri AzurePublicCloud { get; } = new Uri(AzurePublicCloudHostUrl);
 
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure China Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure China Cloud.
         /// </summary>
         public static Uri AzureChina { get; } = new Uri(AzureChinaHostUrl);
 
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure German Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure German Cloud.
         /// </summary>
         public static Uri AzureGermany { get; } = new Uri(AzureGermanyHostUrl);
 
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure US Government Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure US Government Cloud.
         /// </summary>
         public static Uri AzureGovernment { get; } = new Uri(AzureGovernmentHostUrl);
 

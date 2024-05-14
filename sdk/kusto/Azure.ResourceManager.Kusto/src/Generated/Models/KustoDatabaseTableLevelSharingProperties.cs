@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Tables that will be included and excluded in the follower database. </summary>
     public partial class KustoDatabaseTableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseTableLevelSharingProperties"/>. </summary>
         public KustoDatabaseTableLevelSharingProperties()
         {
             TablesToInclude = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             FunctionsToExclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseTableLevelSharingProperties"/>. </summary>
         /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
         /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
         /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>

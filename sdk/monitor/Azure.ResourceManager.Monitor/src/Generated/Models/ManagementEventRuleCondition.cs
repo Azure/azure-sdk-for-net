@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A management event rule condition. </summary>
     public partial class ManagementEventRuleCondition : AlertRuleCondition
     {
-        /// <summary> Initializes a new instance of ManagementEventRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementEventRuleCondition"/>. </summary>
         public ManagementEventRuleCondition()
         {
             OdataType = "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition";
         }
 
-        /// <summary> Initializes a new instance of ManagementEventRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementEventRuleCondition"/>. </summary>
         /// <param name="odataType"> specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric). </param>
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.

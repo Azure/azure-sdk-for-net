@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the policy for a monitored application upgrade. </summary>
     public partial class ApplicationUpgradePolicy
     {
-        /// <summary> Initializes a new instance of ApplicationUpgradePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpgradePolicy"/>. </summary>
         public ApplicationUpgradePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationUpgradePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpgradePolicy"/>. </summary>
         /// <param name="upgradeReplicaSetCheckTimeout"> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. Valid values are between 0 and 42949672925 inclusive. (unsigned 32-bit integer). </param>
         /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
         /// <param name="rollingUpgradeMonitoringPolicy"> The policy used for monitoring the application upgrade. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The request body which contain contact detail metadata. </summary>
     public partial class NotificationContent
     {
-        /// <summary> Initializes a new instance of NotificationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
         /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
         public NotificationContent(string alertType)
@@ -33,6 +33,35 @@ namespace Azure.ResourceManager.Monitor.Models
             AzureFunctionReceivers = new ChangeTrackingList<MonitorAzureFunctionReceiver>();
             ArmRoleReceivers = new ChangeTrackingList<MonitorArmRoleReceiver>();
             EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
+        /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        internal NotificationContent(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers)
+        {
+            AlertType = alertType;
+            EmailReceivers = emailReceivers;
+            SmsReceivers = smsReceivers;
+            WebhookReceivers = webhookReceivers;
+            ItsmReceivers = itsmReceivers;
+            AzureAppPushReceivers = azureAppPushReceivers;
+            AutomationRunbookReceivers = automationRunbookReceivers;
+            VoiceReceivers = voiceReceivers;
+            LogicAppReceivers = logicAppReceivers;
+            AzureFunctionReceivers = azureFunctionReceivers;
+            ArmRoleReceivers = armRoleReceivers;
+            EventHubReceivers = eventHubReceivers;
         }
 
         /// <summary> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </summary>

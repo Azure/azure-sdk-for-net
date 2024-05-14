@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of static site user provided function apps. </summary>
     internal partial class StaticSiteUserProvidedFunctionAppsListResult
     {
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionAppsListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteUserProvidedFunctionAppsListResult(IEnumerable<StaticSiteUserProvidedFunctionAppData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionAppsListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal StaticSiteUserProvidedFunctionAppsListResult(IReadOnlyList<StaticSiteUserProvidedFunctionAppData> value, string nextLink)

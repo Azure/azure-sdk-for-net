@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Properties of this repository. </summary>
     public partial class ContainerRepositoryProperties
     {
-        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRepositoryProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
             TagCount = tagCount;
         }
 
-        /// <summary> Initializes a new instance of ContainerRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRepositoryProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>

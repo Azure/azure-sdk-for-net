@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> A TXT record. </summary>
     public partial class PrivateDnsTxtRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsTxtRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsTxtRecordInfo"/>. </summary>
         public PrivateDnsTxtRecordInfo()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsTxtRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsTxtRecordInfo"/>. </summary>
         /// <param name="values"> The text value of this TXT record. </param>
         internal PrivateDnsTxtRecordInfo(IList<string> values)
         {

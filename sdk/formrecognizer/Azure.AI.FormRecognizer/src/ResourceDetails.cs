@@ -13,11 +13,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
-        internal ResourceDetails(int customDocumentModelCount, int customDocumentModelLimit, QuotaDetails customNeuralDocumentModelBuilds)
+        internal ResourceDetails(int customDocumentModelCount, int customDocumentModelLimit, ResourceQuotaDetails neuralDocumentModelQuota)
         {
             CustomDocumentModelCount = customDocumentModelCount;
             CustomDocumentModelLimit = customDocumentModelLimit;
-            CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;
+            NeuralDocumentModelQuota = neuralDocumentModelQuota;
         }
 
         /// <summary>
@@ -31,8 +31,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public int CustomDocumentModelLimit { get; }
 
         /// <summary>
-        /// Quota used, limit, and next reset date/time.
+        /// Quota used, limit, and next reset date/time for custom neural document models.
         /// </summary>
-        public QuotaDetails CustomNeuralDocumentModelBuilds { get; }
+        public ResourceQuotaDetails NeuralDocumentModelQuota { get; }
     }
 }

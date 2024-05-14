@@ -13,28 +13,46 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options related to vector search. </summary>
     public partial class VectorSearch
     {
-        /// <summary> Initializes a new instance of VectorSearch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
         public VectorSearch()
         {
-            AlgorithmConfigurations = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
+            Profiles = new ChangeTrackingList<VectorSearchProfile>();
+            Algorithms = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
+            Vectorizers = new ChangeTrackingList<VectorSearchVectorizer>();
         }
 
-        /// <summary> Initializes a new instance of VectorSearch. </summary>
-        /// <param name="algorithmConfigurations">
-        /// Contains configuration options specific to the algorithm used during indexing time.
+        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
+        /// <param name="profiles"> Defines combinations of configurations to use with vector search. </param>
+        /// <param name="algorithms">
+        /// Contains configuration options specific to the algorithm used during indexing or querying.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
+        /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
         /// </param>
-        internal VectorSearch(IList<VectorSearchAlgorithmConfiguration> algorithmConfigurations)
+        /// <param name="vectorizers">
+        /// Contains configuration options on how to vectorize text vector queries.
+        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="CustomVectorizer"/>.
+        /// </param>
+        internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms, IList<VectorSearchVectorizer> vectorizers)
         {
-            AlgorithmConfigurations = algorithmConfigurations;
+            Profiles = profiles;
+            Algorithms = algorithms;
+            Vectorizers = vectorizers;
         }
 
+        /// <summary> Defines combinations of configurations to use with vector search. </summary>
+        public IList<VectorSearchProfile> Profiles { get; }
         /// <summary>
-        /// Contains configuration options specific to the algorithm used during indexing time.
+        /// Contains configuration options specific to the algorithm used during indexing or querying.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
+        /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
         /// </summary>
-        public IList<VectorSearchAlgorithmConfiguration> AlgorithmConfigurations { get; }
+        public IList<VectorSearchAlgorithmConfiguration> Algorithms { get; }
+        /// <summary>
+        /// Contains configuration options on how to vectorize text vector queries.
+        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="CustomVectorizer"/>.
+        /// </summary>
+        public IList<VectorSearchVectorizer> Vectorizers { get; }
     }
 }

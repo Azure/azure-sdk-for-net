@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing a diagnostic analysis done on an application. </summary>
     public partial class DiagnosticAnalysis : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticAnalysis. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysis"/>. </summary>
         public DiagnosticAnalysis()
         {
             AbnormalTimePeriods = new ChangeTrackingList<AbnormalTimePeriod>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             NonCorrelatedDetectors = new ChangeTrackingList<DetectorDefinition>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticAnalysis. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysis"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

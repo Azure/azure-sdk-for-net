@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The DASH setting for a track. </summary>
     internal partial class TrackDashSettings
     {
-        /// <summary> Initializes a new instance of TrackDashSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackDashSettings"/>. </summary>
         public TrackDashSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackDashSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackDashSettings"/>. </summary>
         /// <param name="role"> The role for the DASH setting. </param>
         internal TrackDashSettings(string role)
         {

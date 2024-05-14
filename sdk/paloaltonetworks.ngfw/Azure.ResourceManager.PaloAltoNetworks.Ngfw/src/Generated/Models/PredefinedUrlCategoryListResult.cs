@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> predefined url categories response. </summary>
     internal partial class PredefinedUrlCategoryListResult
     {
-        /// <summary> Initializes a new instance of PredefinedUrlCategoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategoryListResult"/>. </summary>
         /// <param name="value"> predefined url categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PredefinedUrlCategoryListResult(IEnumerable<PredefinedUrlCategory> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PredefinedUrlCategoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategoryListResult"/>. </summary>
         /// <param name="value"> predefined url categories. </param>
         /// <param name="nextLink"> next link. </param>
         internal PredefinedUrlCategoryListResult(IReadOnlyList<PredefinedUrlCategory> value, string nextLink)

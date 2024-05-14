@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the login flow, including the scopes that should be requested. </summary>
     internal partial class LoginScopes
     {
-        /// <summary> Initializes a new instance of LoginScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoginScopes"/>. </summary>
         public LoginScopes()
         {
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LoginScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoginScopes"/>. </summary>
         /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
         internal LoginScopes(IList<string> scopes)
         {

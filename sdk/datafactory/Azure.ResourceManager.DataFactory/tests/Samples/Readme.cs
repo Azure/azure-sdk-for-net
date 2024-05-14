@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
         public void DataFactoryElementFromLiteralInt()
         {
             #region Snippet:Readme_DataFactoryElementInt
-            var policy = new ActivityPolicy
+            var policy = new PipelineActivityPolicy
             {
                 Retry = DataFactoryElement<int>.FromLiteral(1),
             };
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
             };
             var activity = new AzureMLExecutePipelineActivity("name")
             {
-                MlPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
+                MLPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
             };
             #endregion Snippet:Readme_DataFactoryElementDictionary
         }

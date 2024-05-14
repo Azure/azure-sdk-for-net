@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 switch provider blocking error details. </summary>
     public partial class InMageAzureV2SwitchProviderBlockingErrorDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderBlockingErrorDetails"/>. </summary>
         internal InMageAzureV2SwitchProviderBlockingErrorDetails()
         {
             ErrorMessageParameters = new ChangeTrackingDictionary<string, string>();
             ErrorTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>

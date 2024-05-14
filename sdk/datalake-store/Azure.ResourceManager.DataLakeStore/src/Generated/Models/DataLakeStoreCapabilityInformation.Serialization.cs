@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    public partial class DataLakeStoreCapabilityInformation
+    public partial class DataLakeStoreCapabilityInformation : IUtf8JsonSerializable, IJsonModel<DataLakeStoreCapabilityInformation>
     {
-        internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreCapabilityInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataLakeStoreCapabilityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxAccountCount))
+            {
+                writer.WritePropertyName("maxAccountCount"u8);
+                writer.WriteNumberValue(MaxAccountCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AccountCount))
+            {
+                writer.WritePropertyName("accountCount"u8);
+                writer.WriteNumberValue(AccountCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsUnderMigrationState))
+            {
+                writer.WritePropertyName("migrationState"u8);
+                writer.WriteBooleanValue(IsUnderMigrationState.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataLakeStoreCapabilityInformation IJsonModel<DataLakeStoreCapabilityInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreCapabilityInformation(document.RootElement, options);
+        }
+
+        internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Optional<int> maxAccountCount = default;
             Optional<int> accountCount = default;
             Optional<bool> migrationState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -71,8 +143,44 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     migrationState = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLakeStoreCapabilityInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataLakeStoreCapabilityInformation IPersistableModel<DataLakeStoreCapabilityInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataLakeStoreCapabilityInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataLakeStoreCapabilityInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

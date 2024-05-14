@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> ConnectionState information. </summary>
     public partial class EventGridPrivateEndpointConnectionState
     {
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionState"/>. </summary>
         public EventGridPrivateEndpointConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         /// <param name="actionsRequired"> Actions required (if any). </param>

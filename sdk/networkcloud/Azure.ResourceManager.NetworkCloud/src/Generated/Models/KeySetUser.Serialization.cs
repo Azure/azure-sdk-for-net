@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             string azureUserName = default;
             Optional<string> description = default;
-            SshPublicKey sshPublicKey = default;
+            NetworkCloudSshPublicKey sshPublicKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureUserName"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("sshPublicKey"u8))
                 {
-                    sshPublicKey = SshPublicKey.DeserializeSshPublicKey(property.Value);
+                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value);
                     continue;
                 }
             }

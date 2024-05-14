@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The new name of the subscription. </summary>
     public partial class SubscriptionName
     {
-        /// <summary> Initializes a new instance of SubscriptionName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionName"/>. </summary>
         public SubscriptionName()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionName"/>. </summary>
+        /// <param name="subscriptionNameValue"> New subscription name. </param>
+        internal SubscriptionName(string subscriptionNameValue)
+        {
+            SubscriptionNameValue = subscriptionNameValue;
         }
 
         /// <summary> New subscription name. </summary>

@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The content trust policy for a container registry. </summary>
     public partial class ContainerRegistryTrustPolicy
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTrustPolicy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTrustPolicy"/>. </summary>
         public ContainerRegistryTrustPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTrustPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTrustPolicy"/>. </summary>
         /// <param name="policyType"> The type of trust policy. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
-        internal ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? policyType, ContainerRegistryPolicyStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? policyType, ContainerRegistryPolicyStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyType = policyType;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of trust policy. </summary>

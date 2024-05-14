@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     public abstract partial class SecurityInsightsAutomationRuleAction
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/>. </summary>
         /// <param name="order"></param>
         protected SecurityInsightsAutomationRuleAction(int order)
         {
             Order = order;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
         internal SecurityInsightsAutomationRuleAction(int order, ActionType actionType)

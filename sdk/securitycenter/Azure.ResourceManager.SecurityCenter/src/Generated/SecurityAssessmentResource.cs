@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityAssessment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAssessmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAssessmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetSecurityAssessment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAssessmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAssessmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSecurityAssessment method.
     /// </summary>
     public partial class SecurityAssessmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityAssessmentResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string assessmentName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AssessmentsRestOperations _securityAssessmentAssessmentsRestClient;
         private readonly SecurityAssessmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityAssessmentResource"/> class for mocking. </summary>
         protected SecurityAssessmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAssessmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAssessmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAssessmentResource(ArmClient client, SecurityAssessmentData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecuritySubAssessmentResources and their operations over a SecuritySubAssessmentResource. </returns>
         public virtual SecuritySubAssessmentCollection GetSecuritySubAssessments()
         {
-            return GetCachedClient(Client => new SecuritySubAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new SecuritySubAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -105,12 +107,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecuritySubAssessmentResource>> GetSecuritySubAssessmentAsync(string subAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -128,12 +138,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecuritySubAssessmentResource> GetSecuritySubAssessment(string subAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of GovernanceAssignmentResources and their operations over a GovernanceAssignmentResource. </returns>
         public virtual GovernanceAssignmentCollection GetGovernanceAssignments()
         {
-            return GetCachedClient(Client => new GovernanceAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new GovernanceAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -158,12 +176,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GovernanceAssignmentResource>> GetGovernanceAssignmentAsync(string assignmentKey, CancellationToken cancellationToken = default)
         {
@@ -181,12 +207,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>GovernanceAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GovernanceAssignmentResource> GetGovernanceAssignment(string assignmentKey, CancellationToken cancellationToken = default)
         {
@@ -203,6 +237,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,6 +279,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
@@ -269,6 +319,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +362,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Assessments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -337,6 +403,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +449,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

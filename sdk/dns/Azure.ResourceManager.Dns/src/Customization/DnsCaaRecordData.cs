@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal DnsCaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsCaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsCaaRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile,  IList<DnsCaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, trafficManagementProfile)
         {
             DnsCaaRecords = caaRecords;
         }

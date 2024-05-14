@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Daily retention schedule. </summary>
     public partial class DailyRetentionSchedule
     {
-        /// <summary> Initializes a new instance of DailyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRetentionSchedule"/>. </summary>
         public DailyRetentionSchedule()
         {
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of DailyRetentionSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRetentionSchedule"/>. </summary>
         /// <param name="retentionTimes"> Retention times of retention policy. </param>
         /// <param name="retentionDuration"> Retention duration of retention Policy. </param>
         internal DailyRetentionSchedule(IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)

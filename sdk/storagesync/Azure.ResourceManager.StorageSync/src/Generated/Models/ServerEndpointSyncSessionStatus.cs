@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Sync Session status object. </summary>
     public partial class ServerEndpointSyncSessionStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncSessionStatus"/>. </summary>
         internal ServerEndpointSyncSessionStatus()
         {
             FilesNotSyncingErrors = new ChangeTrackingList<ServerEndpointFilesNotSyncingError>();
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncSessionStatus"/>. </summary>
         /// <param name="lastSyncResult"> Last sync result (HResult). </param>
         /// <param name="lastSyncTimestamp"> Last sync timestamp. </param>
         /// <param name="lastSyncSuccessTimestamp"> Last sync success timestamp. </param>

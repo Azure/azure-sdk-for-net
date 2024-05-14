@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Subnet first address, scope, and/or last address. </summary>
     public partial class TrafficManagerEndpointSubnetInfo
     {
-        /// <summary> Initializes a new instance of TrafficManagerEndpointSubnetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointSubnetInfo"/>. </summary>
         public TrafficManagerEndpointSubnetInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerEndpointSubnetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointSubnetInfo"/>. </summary>
         /// <param name="first"> First address in the subnet. </param>
         /// <param name="last"> Last address in the subnet. </param>
         /// <param name="scope"> Block size (number of leading bits in the subnet mask). </param>

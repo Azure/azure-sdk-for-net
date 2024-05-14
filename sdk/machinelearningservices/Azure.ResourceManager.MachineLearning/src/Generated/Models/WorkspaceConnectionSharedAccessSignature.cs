@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The WorkspaceConnectionSharedAccessSignature. </summary>
     internal partial class WorkspaceConnectionSharedAccessSignature
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionSharedAccessSignature. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionSharedAccessSignature"/>. </summary>
         public WorkspaceConnectionSharedAccessSignature()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionSharedAccessSignature. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionSharedAccessSignature"/>. </summary>
         /// <param name="sas"></param>
         internal WorkspaceConnectionSharedAccessSignature(string sas)
         {

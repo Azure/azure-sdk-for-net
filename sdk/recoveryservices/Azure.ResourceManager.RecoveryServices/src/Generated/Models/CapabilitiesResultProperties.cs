@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Capabilities properties in response. </summary>
     internal partial class CapabilitiesResultProperties
     {
-        /// <summary> Initializes a new instance of CapabilitiesResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
         public CapabilitiesResultProperties()
         {
             DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
 
-        /// <summary> Initializes a new instance of CapabilitiesResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
         /// <param name="dnsZones"></param>
         internal CapabilitiesResultProperties(IList<DnsZoneResult> dnsZones)
         {

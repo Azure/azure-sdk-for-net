@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Frontend setting for Firewall. </summary>
     public partial class FirewallFrontendSetting
     {
-        /// <summary> Initializes a new instance of FirewallFrontendSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallFrontendSetting"/>. </summary>
         /// <param name="name"> Settings name. </param>
         /// <param name="protocol"> Protocol Type. </param>
         /// <param name="frontendConfiguration"> Frontend configurations. </param>

@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
-                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+                writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
+                writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
             writer.WriteEndObject();
         }
@@ -183,7 +183,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriod = default;
+            Optional<int> softDeleteRetentionPeriodInDays = default;
+            Optional<string> vaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -426,17 +427,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionPeriod"u8))
+                if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    softDeleteRetentionPeriod = property.Value.GetInt32();
+                    softDeleteRetentionPeriodInDays = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("vaultId"u8))
+                {
+                    vaultId = property.Value.GetString();
                     continue;
                 }
             }
-            return new IaasComputeVmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod), friendlyName.Value, virtualMachineId.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(healthStatus), Optional.ToList(healthDetails), Optional.ToDictionary(kpisHealths), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), protectedItemDataId.Value, extendedInfo.Value, extendedProperties.Value);
+            return new IaasComputeVmProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, friendlyName.Value, virtualMachineId.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(healthStatus), Optional.ToList(healthDetails), Optional.ToDictionary(kpisHealths), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), protectedItemDataId.Value, extendedInfo.Value, extendedProperties.Value);
         }
     }
 }

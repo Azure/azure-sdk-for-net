@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Get private store notifications state. </summary>
     public partial class PrivateStoreNotificationsState
     {
-        /// <summary> Initializes a new instance of PrivateStoreNotificationsState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreNotificationsState"/>. </summary>
         internal PrivateStoreNotificationsState()
         {
             StopSellNotifications = new ChangeTrackingList<StopSellNotifications>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             ApprovalRequests = new ChangeTrackingList<RequestApprovalsDetails>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreNotificationsState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreNotificationsState"/>. </summary>
         /// <param name="stopSellNotifications"></param>
         /// <param name="newNotifications"></param>
         /// <param name="approvalRequests"></param>

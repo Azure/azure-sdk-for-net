@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the collection of SAP Database Instances. </summary>
     internal partial class SapDatabaseInstanceList
     {
-        /// <summary> Initializes a new instance of SapDatabaseInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceList"/>. </summary>
         internal SapDatabaseInstanceList()
         {
             Value = new ChangeTrackingList<SapDatabaseInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of SapDatabaseInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDatabaseInstanceList"/>. </summary>
         /// <param name="value"> Gets the list of SAP Database instances. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
         internal SapDatabaseInstanceList(IReadOnlyList<SapDatabaseInstanceData> value, string nextLink)

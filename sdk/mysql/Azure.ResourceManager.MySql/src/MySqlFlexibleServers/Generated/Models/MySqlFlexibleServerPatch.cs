@@ -14,10 +14,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class MySqlFlexibleServerPatch
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
         public MySqlFlexibleServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
+        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="version"> Server version. </param>
+        /// <param name="storage"> Storage related properties of a server. </param>
+        /// <param name="backup"> Backup related properties of a server. </param>
+        /// <param name="highAvailability"> High availability related properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
+        /// <param name="replicationRole"> The replication role of the server. </param>
+        /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
+        /// <param name="network"> Network related properties of a server. </param>
+        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, string> tags, string administratorLoginPassword, MySqlFlexibleServerVersion? version, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, MySqlFlexibleServerReplicationRole? replicationRole, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerNetwork network)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+            AdministratorLoginPassword = administratorLoginPassword;
+            Version = version;
+            Storage = storage;
+            Backup = backup;
+            HighAvailability = highAvailability;
+            MaintenanceWindow = maintenanceWindow;
+            ReplicationRole = replicationRole;
+            DataEncryption = dataEncryption;
+            Network = network;
         }
 
         /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>

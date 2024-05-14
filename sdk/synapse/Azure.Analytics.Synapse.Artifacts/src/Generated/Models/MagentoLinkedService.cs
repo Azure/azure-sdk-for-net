@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Magento server linked service. </summary>
     public partial class MagentoLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/>. </summary>
         /// <param name="host"> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public MagentoLinkedService(object host)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Magento";
         }
 
-        /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

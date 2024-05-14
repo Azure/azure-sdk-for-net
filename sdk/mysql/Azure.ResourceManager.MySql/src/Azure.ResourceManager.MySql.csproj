@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.3</Version>
+    <Version>1.1.0-beta.5</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.MySql</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DBforMySQL.</Description>
     <PackageTags>azure;management;arm;resource manager;mysql</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 </Project>

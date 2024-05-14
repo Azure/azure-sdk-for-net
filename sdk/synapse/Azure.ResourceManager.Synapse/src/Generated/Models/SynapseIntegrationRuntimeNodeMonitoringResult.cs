@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Monitoring data for integration runtime node. </summary>
     public partial class SynapseIntegrationRuntimeNodeMonitoringResult
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeMonitoringResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeNodeMonitoringResult"/>. </summary>
         internal SynapseIntegrationRuntimeNodeMonitoringResult()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeMonitoringResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeNodeMonitoringResult"/>. </summary>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
         /// <param name="cpuUtilization"> CPU percentage on the integration runtime node. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

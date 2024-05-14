@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskProperties"/>. </summary>
         public GetUserTablesSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<GetUserTablesSqlSyncTaskOutput>();
             TaskType = TaskType.GetUserTablesAzureSqlDBSync;
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -30,9 +31,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
-        internal GetUserTablesSqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, GetUserTablesSqlSyncTaskInput input, IReadOnlyList<GetUserTablesSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        internal GetUserTablesSqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, GetUserTablesSqlSyncTaskInput input, IReadOnlyList<GetUserTablesSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

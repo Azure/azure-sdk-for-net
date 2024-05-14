@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayHybridConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayHybridConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> GetAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.RelayHybridConnectionResource> GetIfExists(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.RelayHybridConnectionResource>> GetIfExistsAsync(string hybridConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayHybridConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayHybridConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -111,6 +115,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -144,13 +150,15 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayNamespaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayNamespaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> GetAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.RelayNamespaceResource> GetIfExists(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.RelayNamespaceResource>> GetIfExistsAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayNamespaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayNamespaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayNamespaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayNamespaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class RelayNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RelayNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RelayNamespaceData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string MetricId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -228,6 +236,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -273,6 +283,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayPrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayPrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayPrivateLinkResource>> GetAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.RelayPrivateLinkResource> GetIfExists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.RelayPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.RelayPrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.RelayPrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.RelayPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.RelayPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -295,6 +307,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>> GetAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> GetIfExists(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -328,6 +342,8 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.WcfRelayResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.WcfRelayResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.WcfRelayResource>> GetAsync(string relayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Relay.WcfRelayResource> GetIfExists(string relayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Relay.WcfRelayResource>> GetIfExistsAsync(string relayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Relay.WcfRelayResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Relay.WcfRelayResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Relay.WcfRelayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Relay.WcfRelayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -361,6 +377,37 @@ namespace Azure.ResourceManager.Relay
         public virtual Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleCollection GetWcfRelayAuthorizationRules() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.WcfRelayResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.WcfRelayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Relay.WcfRelayResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Relay.WcfRelayData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Relay.Mocking
+{
+    public partial class MockableRelayArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRelayArmClient() { }
+        public virtual Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayHybridConnectionResource GetRelayHybridConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayNamespaceResource GetRelayNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayNetworkRuleSetResource GetRelayNetworkRuleSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionResource GetRelayPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayPrivateLinkResource GetRelayPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Relay.WcfRelayResource GetWcfRelayResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableRelayResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRelayResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource> GetRelayNamespace(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> GetRelayNamespaceAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Relay.RelayNamespaceCollection GetRelayNamespaces() { throw null; }
+    }
+    public partial class MockableRelaySubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableRelaySubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayNamespaceResource> GetRelayNamespaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Relay.RelayNamespaceResource> GetRelayNamespacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Relay.Models

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BareMetalMachineData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudBareMetalMachineData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<BareMetalMachineData> array = new List<BareMetalMachineData>();
+                    List<NetworkCloudBareMetalMachineData> array = new List<NetworkCloudBareMetalMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineData.DeserializeBareMetalMachineData(item));
+                        array.Add(NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(item));
                     }
                     value = array;
                     continue;

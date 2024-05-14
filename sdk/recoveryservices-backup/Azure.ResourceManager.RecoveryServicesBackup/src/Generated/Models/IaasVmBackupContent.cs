@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup request. </summary>
     public partial class IaasVmBackupContent : BackupContent
     {
-        /// <summary> Initializes a new instance of IaasVmBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupContent"/>. </summary>
         public IaasVmBackupContent()
         {
             ObjectType = "IaasVMBackupRequest";
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointExpireOn"> Backup copy will expire after the time specified (UTC). </param>
         internal IaasVmBackupContent(string objectType, DateTimeOffset? recoveryPointExpireOn) : base(objectType)

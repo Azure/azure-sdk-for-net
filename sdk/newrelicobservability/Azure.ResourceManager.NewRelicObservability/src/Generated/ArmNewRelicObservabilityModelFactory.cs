@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNewRelicObservabilityModelFactory
     {
-        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicAccountResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicAccountResourceData(id, name, resourceType, systemData, organizationId, accountId, accountName, region);
         }
 
-        /// <summary> Initializes a new instance of NewRelicMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservability.NewRelicMonitorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMonitorResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, monitoringStatus, marketplaceSubscriptionStatus, marketplaceSubscriptionId, newRelicAccountProperties, userInfo, planData, liftrResourceCategory, liftrResourcePreference, orgCreationSource, accountCreationSource);
         }
 
-        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicOrganizationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicOrganizationResourceData(id, name, resourceType, systemData, organizationId, organizationName, billingSource);
         }
 
-        /// <summary> Initializes a new instance of NewRelicPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicPlanData(id, name, resourceType, systemData, planData, orgCreationSource, accountCreationSource);
         }
 
-        /// <summary> Initializes a new instance of NewRelicMetricsStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicMetricsStatusResult"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <returns> A new <see cref="Models.NewRelicMetricsStatusResult"/> instance for mocking. </returns>
         public static NewRelicMetricsStatusResult NewRelicMetricsStatusResult(IEnumerable<string> azureResourceIds = null)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMetricsStatusResult(azureResourceIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityAppServiceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityAppServiceInfo"/>. </summary>
         /// <param name="azureResourceId"> Azure App service resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus);
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityVmInfo"/>. </summary>
         /// <param name="vmId"> Azure VM resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityVmInfo(vmId, agentVersion, agentStatus);
         }
 
-        /// <summary> Initializes a new instance of NewRelicResourceMonitorResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicResourceMonitorResult"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicResourceMonitorResult(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus);
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservability.NewRelicObservabilityTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityTagRuleData(id, name, resourceType, systemData, provisioningState, logRules, metricRules);
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmExtensionPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicObservabilityVmExtensionPayload"/>. </summary>
         /// <param name="ingestionKey"> Ingestion key of the account. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilityVmExtensionPayload"/> instance for mocking. </returns>
         public static NewRelicObservabilityVmExtensionPayload NewRelicObservabilityVmExtensionPayload(string ingestionKey = null)

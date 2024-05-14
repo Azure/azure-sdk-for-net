@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack runtimes. </summary>
     public partial class WebAppRuntimes
     {
-        /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppRuntimes"/>. </summary>
         internal WebAppRuntimes()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppRuntimes"/>. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         /// <param name="linuxContainerSettings"> Linux-specific settings associated with the Java container minor version. </param>

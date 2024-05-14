@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set disk storage settings for SQL Server. </summary>
     public partial class SqlStorageSettings
     {
-        /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStorageSettings"/>. </summary>
         public SqlStorageSettings()
         {
             Luns = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStorageSettings"/>. </summary>
         /// <param name="luns"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
         internal SqlStorageSettings(IList<int> luns, string defaultFilePath)

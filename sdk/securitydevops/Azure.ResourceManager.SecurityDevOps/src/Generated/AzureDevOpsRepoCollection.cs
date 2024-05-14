@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureDevOpsRepoResource" /> and their operations.
-    /// Each <see cref="AzureDevOpsRepoResource" /> in the collection will belong to the same instance of <see cref="AzureDevOpsProjectResource" />.
-    /// To get an <see cref="AzureDevOpsRepoCollection" /> instance call the GetAzureDevOpsRepos method from an instance of <see cref="AzureDevOpsProjectResource" />.
+    /// A class representing a collection of <see cref="AzureDevOpsRepoResource"/> and their operations.
+    /// Each <see cref="AzureDevOpsRepoResource"/> in the collection will belong to the same instance of <see cref="AzureDevOpsProjectResource"/>.
+    /// To get an <see cref="AzureDevOpsRepoCollection"/> instance call the GetAzureDevOpsRepos method from an instance of <see cref="AzureDevOpsProjectResource"/>.
     /// </summary>
     public partial class AzureDevOpsRepoCollection : ArmCollection, IEnumerable<AzureDevOpsRepoResource>, IAsyncEnumerable<AzureDevOpsRepoResource>
     {
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -145,6 +162,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
@@ -218,15 +251,23 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsRepoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,15 +280,23 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsRepoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsRepoRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsRepoResource(Client, AzureDevOpsRepoData.DeserializeAzureDevOpsRepoData(e)), _azureDevOpsRepoClientDiagnostics, Pipeline, "AzureDevOpsRepoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,6 +309,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +353,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
@@ -312,6 +377,96 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 var response = _azureDevOpsRepoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}/projects/{azureDevOpsProjectName}/repos/{azureDevOpsRepoName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsRepoName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AzureDevOpsRepoResource>> GetIfExistsAsync(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
+
+            using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _azureDevOpsRepoRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsRepoResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsRepoResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}/projects/{azureDevOpsProjectName}/repos/{azureDevOpsRepoName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsRepoName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
+        public virtual NullableResponse<AzureDevOpsRepoResource> GetIfExists(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
+
+            using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _azureDevOpsRepoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsRepoResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsRepoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

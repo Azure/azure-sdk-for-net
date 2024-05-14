@@ -477,6 +477,29 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
+        [Test]
+        public void SupportsVectorType()
+        {
+            IList<SearchField> fields = new FieldBuilder().Build(typeof(ModelWithVectorProperty));
+            foreach (SearchField field in fields)
+            {
+                switch (field.Name)
+                {
+                    case nameof(ModelWithVectorProperty.ID):
+                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        break;
+
+                    case nameof(ModelWithVectorProperty.TitleVector):
+                        Assert.AreEqual(SearchFieldDataType.Collection(SearchFieldDataType.Single), field.Type);
+                        break;
+
+                    default:
+                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        break;
+                }
+            }
+        }
+
         private static IEnumerable<(Type ModelType, SearchFieldDataType DataType, string FieldName)> CombineTestData(
             IEnumerable<Type> modelTypes,
             IEnumerable<(SearchFieldDataType DataType, string FieldName)> testData) =>
@@ -644,6 +667,15 @@ namespace Azure.Search.Documents.Tests
             public GeometryLineString GeometryLineString { get; set; }
 
             public GeometryPolygon GeometryPolygon { get; set; }
+        }
+
+        private class ModelWithVectorProperty
+        {
+            [SimpleField(IsKey = true)]
+            public string ID { get; set; }
+
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "test-config")]
+            public IReadOnlyList<float> TitleVector { get; set; }
         }
     }
 }

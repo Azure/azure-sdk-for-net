@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Support.Mocking;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
@@ -19,119 +20,264 @@ namespace Azure.ResourceManager.Support
     /// <summary> A class to add extension methods to Azure.ResourceManager.Support. </summary>
     public static partial class SupportExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableSupportArmClient GetMockableSupportArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableSupportArmClient(client0));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableSupportSubscriptionResource GetMockableSupportSubscriptionResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableSupportSubscriptionResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MockableSupportTenantResource GetMockableSupportTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableSupportTenantResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region SupportAzureServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="SupportAzureServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportAzureServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportAzureServiceResource"/> object. </returns>
         public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SupportAzureServiceResource.ValidateResourceId(id);
-                return new SupportAzureServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ProblemClassificationResource
+            return GetMockableSupportArmClient(client).GetSupportAzureServiceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ProblemClassificationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProblemClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ProblemClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetProblemClassificationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProblemClassificationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProblemClassificationResource"/> object. </returns>
         public static ProblemClassificationResource GetProblemClassificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProblemClassificationResource.ValidateResourceId(id);
-                return new ProblemClassificationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SupportTicketResource
+            return GetMockableSupportArmClient(client).GetProblemClassificationResource(id);
+        }
+
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionSupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSubscriptionSupportTicketResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketResource" /> object. </returns>
-        public static SupportTicketResource GetSupportTicketResource(this ArmClient client, ResourceIdentifier id)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionSupportTicketResource"/> object. </returns>
+        public static SubscriptionSupportTicketResource GetSubscriptionSupportTicketResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SupportTicketResource.ValidateResourceId(id);
-                return new SupportTicketResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SupportTicketCommunicationResource
+            return GetMockableSupportArmClient(client).GetSubscriptionSupportTicketResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantSupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="TenantSupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetTenantSupportTicketResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantSupportTicketResource"/> object. </returns>
+        public static TenantSupportTicketResource GetTenantSupportTicketResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetTenantSupportTicketResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SupportTicketCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketCommunicationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportTicketCommunicationResource"/> object. </returns>
         public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SupportTicketCommunicationResource.ValidateResourceId(id);
-                return new SupportTicketCommunicationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of SupportTicketResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
-        public static SupportTicketCollection GetSupportTickets(this SubscriptionResource subscriptionResource)
+            return GetMockableSupportArmClient(client).GetSupportTicketCommunicationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketNoSubCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketNoSubCommunicationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportTicketNoSubCommunicationResource"/> object. </returns>
+        public static SupportTicketNoSubCommunicationResource GetSupportTicketNoSubCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSupportTickets();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetSupportTicketNoSubCommunicationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketChatTranscriptResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketChatTranscriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketChatTranscriptResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportTicketChatTranscriptResource"/> object. </returns>
+        public static SupportTicketChatTranscriptResource GetSupportTicketChatTranscriptResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetSupportTicketChatTranscriptResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketNoSubChatTranscriptResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubChatTranscriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketNoSubChatTranscriptResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportTicketNoSubChatTranscriptResource"/> object. </returns>
+        public static SupportTicketNoSubChatTranscriptResource GetSupportTicketNoSubChatTranscriptResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetSupportTicketNoSubChatTranscriptResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionFileWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionFileWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSubscriptionFileWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SubscriptionFileWorkspaceResource"/> object. </returns>
+        public static SubscriptionFileWorkspaceResource GetSubscriptionFileWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetSubscriptionFileWorkspaceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantFileWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="TenantFileWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetTenantFileWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TenantFileWorkspaceResource"/> object. </returns>
+        public static TenantFileWorkspaceResource GetTenantFileWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetTenantFileWorkspaceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketFileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketFileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportTicketFileResource"/> object. </returns>
+        public static SupportTicketFileResource GetSupportTicketFileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetSupportTicketFileResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketNoSubFileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketNoSubFileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SupportTicketNoSubFileResource"/> object. </returns>
+        public static SupportTicketNoSubFileResource GetSupportTicketNoSubFileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSupportArmClient(client).GetSupportTicketNoSubFileResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionSupportTicketResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSubscriptionSupportTickets()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of SubscriptionSupportTicketResources and their operations over a SubscriptionSupportTicketResource. </returns>
+        public static SubscriptionSupportTicketCollection GetSubscriptionSupportTickets(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionSupportTickets();
         }
 
         /// <summary>
@@ -145,17 +291,31 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSubscriptionSupportTicketAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SupportTicketResource>> GetSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionSupportTicketResource>> GetSubscriptionSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,17 +329,124 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSubscriptionSupportTicket(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SupportTicketResource> GetSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionSupportTicketResource> GetSubscriptionSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSupportTickets().Get(supportTicketName, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionSupportTicket(supportTicketName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SubscriptionFileWorkspaceResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSubscriptionFileWorkspaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of SubscriptionFileWorkspaceResources and their operations over a SubscriptionFileWorkspaceResource. </returns>
+        public static SubscriptionFileWorkspaceCollection GetSubscriptionFileWorkspaces(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionFileWorkspaces();
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace in an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSubscriptionFileWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(this SubscriptionResource subscriptionResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionFileWorkspaceAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace in an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionFileWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSubscriptionFileWorkspace(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(this SubscriptionResource subscriptionResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionFileWorkspace(fileWorkspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -193,17 +460,29 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -217,25 +496,46 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
+            return GetMockableSupportSubscriptionResource(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of SupportAzureServiceResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportAzureServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSupportAzureServices();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).GetSupportAzureServices();
         }
 
         /// <summary>
@@ -249,17 +549,31 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportAzureServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SupportAzureServiceResource>> GetSupportAzureServiceAsync(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSupportAzureServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSupportTenantResource(tenantResource).GetSupportAzureServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,17 +587,289 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportAzureServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportAzureService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the Azure service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SupportAzureServiceResource> GetSupportAzureService(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSupportAzureServices().Get(serviceName, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).GetSupportAzureService(serviceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantSupportTicketResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetTenantSupportTickets()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of TenantSupportTicketResources and their operations over a TenantSupportTicketResource. </returns>
+        public static TenantSupportTicketCollection GetTenantSupportTickets(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).GetTenantSupportTickets();
+        }
+
+        /// <summary>
+        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetTenantSupportTicketAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantSupportTicketResource>> GetTenantSupportTicketAsync(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSupportTenantResource(tenantResource).GetTenantSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetTenantSupportTicket(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="supportTicketName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantSupportTicketResource> GetTenantSupportTicket(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).GetTenantSupportTicket(supportTicketName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TenantFileWorkspaceResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetTenantFileWorkspaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of TenantFileWorkspaceResources and their operations over a TenantFileWorkspaceResource. </returns>
+        public static TenantFileWorkspaceCollection GetTenantFileWorkspaces(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).GetTenantFileWorkspaces();
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetTenantFileWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantFileWorkspaceResource>> GetTenantFileWorkspaceAsync(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSupportTenantResource(tenantResource).GetTenantFileWorkspaceAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetTenantFileWorkspace(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantFileWorkspaceResource> GetTenantFileWorkspace(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).GetTenantFileWorkspace(fileWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.CheckNameAvailabilitySupportTicketsNoSubscription(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(this TenantResource tenantResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSupportTenantResource(tenantResource).CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantSupportTicketResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.CheckNameAvailabilitySupportTicketsNoSubscription(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(this TenantResource tenantResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).CheckNameAvailabilitySupportTicketsNoSubscription(content, cancellationToken);
         }
     }
 }

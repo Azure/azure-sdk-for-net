@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_KustoDatabasesListByCluster()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoDatabasesListByCluster.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesListByCluster.json
             // this example is just showing the usage of "Databases_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,12 +122,55 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // KustoDatabasesGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_KustoDatabasesGet()
+        {
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesGet.json
+            // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KustoClusterResource created on azure
+            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string clusterName = "kustoCluster";
+            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
+
+            // get the collection of this KustoDatabaseResource
+            KustoDatabaseCollection collection = kustoCluster.GetKustoDatabases();
+
+            // invoke the operation
+            string databaseName = "KustoDatabase8";
+            NullableResponse<KustoDatabaseResource> response = await collection.GetIfExistsAsync(databaseName);
+            KustoDatabaseResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                KustoDatabaseData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // KustoSuspendedDatabasesGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_KustoSuspendedDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoSuspendedDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSuspendedDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +205,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_KustoSuspendedDatabasesGet()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoSuspendedDatabasesGet.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSuspendedDatabasesGet.json
             // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,12 +231,55 @@ namespace Azure.ResourceManager.Kusto.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // KustoSuspendedDatabasesGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_KustoSuspendedDatabasesGet()
+        {
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoSuspendedDatabasesGet.json
+            // this example is just showing the usage of "Databases_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KustoClusterResource created on azure
+            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string clusterName = "kustoCluster";
+            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
+
+            // get the collection of this KustoDatabaseResource
+            KustoDatabaseCollection collection = kustoCluster.GetKustoDatabases();
+
+            // invoke the operation
+            string databaseName = "KustoDatabase9";
+            NullableResponse<KustoDatabaseResource> response = await collection.GetIfExistsAsync(databaseName);
+            KustoDatabaseResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                KustoDatabaseData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Kusto ReadOnly database update
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoReadOnlyDatabaseUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoDatabaseReadonlyUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabaseReadonlyUpdate.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +320,7 @@ namespace Azure.ResourceManager.Kusto.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_KustoReadWriteDatabaseCreateOrUpdate()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-05-02/examples/KustoDatabasesCreateOrUpdate.json
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDatabasesCreateOrUpdate.json
             // this example is just showing the usage of "Databases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

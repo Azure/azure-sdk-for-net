@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class IaasVmRestoreContent : RestoreContent
     {
-        /// <summary> Initializes a new instance of IaasVmRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRestoreContent"/>. </summary>
         public IaasVmRestoreContent()
         {
             RestoreDiskLunList = new ChangeTrackingList<int>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "IaasVMRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of IaasVmRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointId"> ID of the backup copy to be recovered. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>

@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
+    <PackageReference Include="Microsoft.Azure.EventHubs" />
+    <PackageReference Include="Microsoft.Azure.EventHubs.Processor" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />

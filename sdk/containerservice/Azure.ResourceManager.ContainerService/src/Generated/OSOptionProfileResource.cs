@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing an OSOptionProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OSOptionProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOSOptionProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetOSOptionProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OSOptionProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOSOptionProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetOSOptionProfile method.
     /// </summary>
     public partial class OSOptionProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OSOptionProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.ContainerService
         private readonly ManagedClustersRestOperations _osOptionProfileManagedClustersRestClient;
         private readonly OSOptionProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/locations/osOptions";
+
         /// <summary> Initializes a new instance of the <see cref="OSOptionProfileResource"/> class for mocking. </summary>
         protected OSOptionProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OSOptionProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OSOptionProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OSOptionProfileResource(ArmClient client, OSOptionProfileData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/locations/osOptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetOSOptions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OSOptionProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetOSOptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OSOptionProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -10,10 +10,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm policy creation input. </summary>
     public partial class InMageRcmPolicyCreationContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageRcmPolicyCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmPolicyCreationContent"/>. </summary>
         public InMageRcmPolicyCreationContent()
         {
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmPolicyCreationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
+        /// <param name="enableMultiVmSync"> A value indicating whether multi-VM sync has to be enabled. </param>
+        internal InMageRcmPolicyCreationContent(string instanceType, int? recoveryPointHistoryInMinutes, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, string enableMultiVmSync) : base(instanceType)
+        {
+            RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
+            CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
+            AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
+            EnableMultiVmSync = enableMultiVmSync;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>

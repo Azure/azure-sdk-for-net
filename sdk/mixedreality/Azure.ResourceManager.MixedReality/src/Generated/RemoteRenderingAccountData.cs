@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MixedReality
     /// </summary>
     public partial class RemoteRenderingAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RemoteRenderingAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RemoteRenderingAccountData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of RemoteRenderingAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

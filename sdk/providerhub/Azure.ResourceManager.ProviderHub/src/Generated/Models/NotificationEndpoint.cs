@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The NotificationEndpoint. </summary>
     public partial class NotificationEndpoint
     {
-        /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationEndpoint"/>. </summary>
         public NotificationEndpoint()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationEndpoint"/>. </summary>
         /// <param name="notificationDestination"></param>
         /// <param name="locations"></param>
         internal NotificationEndpoint(ResourceIdentifier notificationDestination, IList<AzureLocation> locations)

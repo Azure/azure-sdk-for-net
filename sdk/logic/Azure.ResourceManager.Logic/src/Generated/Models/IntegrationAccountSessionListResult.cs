@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account sessions. </summary>
     internal partial class IntegrationAccountSessionListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountSessionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSessionListResult"/>. </summary>
         internal IntegrationAccountSessionListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountSessionData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountSessionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSessionListResult"/>. </summary>
         /// <param name="value"> The list of integration account sessions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountSessionListResult(IReadOnlyList<IntegrationAccountSessionData> value, string nextLink)

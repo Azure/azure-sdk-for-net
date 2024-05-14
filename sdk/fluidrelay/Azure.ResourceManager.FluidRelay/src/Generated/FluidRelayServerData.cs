@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.FluidRelay
     /// </summary>
     public partial class FluidRelayServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FluidRelayServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FluidRelayServerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of FluidRelayServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

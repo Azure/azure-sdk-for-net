@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -99,126 +98,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element);
                 }
             }
-            Optional<string> provisioningState = default;
-            ServiceKind serviceKind = default;
-            string serviceTypeName = default;
-            ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
-            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    provisioningState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serviceKind"u8))
-                {
-                    serviceKind = new ServiceKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("serviceTypeName"u8))
-                {
-                    serviceTypeName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("partitionDescription"u8))
-                {
-                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("servicePackageActivationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePackageActivationMode = new ManagedServicePackageActivationMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("serviceDnsName"u8))
-                {
-                    serviceDnsName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("placementConstraints"u8))
-                {
-                    placementConstraints = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationScheme"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServiceCorrelation> array = new List<ManagedServiceCorrelation>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item));
-                    }
-                    correlationScheme = array;
-                    continue;
-                }
-                if (property.NameEquals("serviceLoadMetrics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServiceLoadMetric> array = new List<ManagedServiceLoadMetric>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item));
-                    }
-                    serviceLoadMetrics = array;
-                    continue;
-                }
-                if (property.NameEquals("servicePlacementPolicies"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServicePlacementPolicy> array = new List<ManagedServicePlacementPolicy>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item));
-                    }
-                    servicePlacementPolicies = array;
-                    continue;
-                }
-                if (property.NameEquals("defaultMoveCost"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    defaultMoveCost = new ServiceFabricManagedServiceMoveCost(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("scalingPolicies"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ManagedServiceScalingPolicy> array = new List<ManagedServiceScalingPolicy>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item));
-                    }
-                    scalingPolicies = array;
-                    continue;
-                }
-            }
-            return new ManagedServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value);
+            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element);
         }
     }
 }

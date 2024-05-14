@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class EnableProtectionProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of EnableProtectionProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableProtectionProviderSpecificContent"/>. </summary>
         protected EnableProtectionProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnableProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal EnableProtectionProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

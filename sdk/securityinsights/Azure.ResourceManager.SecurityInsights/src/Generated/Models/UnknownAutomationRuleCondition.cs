@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The UnknownAutomationRuleCondition. </summary>
     internal partial class UnknownAutomationRuleCondition : SecurityInsightsAutomationRuleCondition
     {
-        /// <summary> Initializes a new instance of UnknownAutomationRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleCondition"/>. </summary>
         /// <param name="conditionType"></param>
         internal UnknownAutomationRuleCondition(ConditionType conditionType) : base(conditionType)
         {

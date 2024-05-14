@@ -11,9 +11,16 @@ namespace: Azure.ResourceManager.CognitiveServices
 require: https://github.com/Azure/azure-rest-api-specs/blob/ba1884683c35d1ea63d229a7106f207e507c3861/specification/cognitiveservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 list-exception:
   - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
@@ -89,7 +96,7 @@ prepend-rp-prefix:
   - AccountProperties
   - AccountSku
   - AccountSkuListResult
-  - IPRule
+  - IpRule
   - NetworkRuleAction
   - NetworkRuleSet
   - SkuCapability
@@ -107,7 +114,7 @@ format-by-name-rules:
   'aadTenantId': 'uuid'
   'identityClientId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

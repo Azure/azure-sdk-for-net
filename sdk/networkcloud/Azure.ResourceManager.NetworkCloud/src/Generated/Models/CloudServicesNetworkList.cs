@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> CloudServicesNetworkList represents a list of cloud services networks. </summary>
     internal partial class CloudServicesNetworkList
     {
-        /// <summary> Initializes a new instance of CloudServicesNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkList"/>. </summary>
         internal CloudServicesNetworkList()
         {
-            Value = new ChangeTrackingList<CloudServicesNetworkData>();
+            Value = new ChangeTrackingList<NetworkCloudCloudServicesNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of CloudServicesNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of cloud services networks. </param>
-        internal CloudServicesNetworkList(string nextLink, IReadOnlyList<CloudServicesNetworkData> value)
+        internal CloudServicesNetworkList(string nextLink, IReadOnlyList<NetworkCloudCloudServicesNetworkData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of cloud services networks. </summary>
-        public IReadOnlyList<CloudServicesNetworkData> Value { get; }
+        public IReadOnlyList<NetworkCloudCloudServicesNetworkData> Value { get; }
     }
 }

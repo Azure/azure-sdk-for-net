@@ -10,19 +10,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CosmosDbSettings. </summary>
     internal partial class CosmosDbSettings
     {
-        /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
         public CosmosDbSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
-        /// <param name="collectionsThroughput"> The throughput of the collections in cosmosdb database. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
+        /// <param name="collectionsThroughput"></param>
         internal CosmosDbSettings(int? collectionsThroughput)
         {
             CollectionsThroughput = collectionsThroughput;
         }
 
-        /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        /// <summary> Gets or sets the collections throughput. </summary>
         public int? CollectionsThroughput { get; set; }
     }
 }

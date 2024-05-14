@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -13,10 +15,141 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleEligibilityScheduleInstanceData
+    public partial class RoleEligibilityScheduleInstanceData : IUtf8JsonSerializable, IJsonModel<RoleEligibilityScheduleInstanceData>
     {
-        internal static RoleEligibilityScheduleInstanceData DeserializeRoleEligibilityScheduleInstanceData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoleEligibilityScheduleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleInstanceData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                writer.WritePropertyName("roleDefinitionId"u8);
+                writer.WriteStringValue(RoleDefinitionId);
+            }
+            if (Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            if (Optional.IsDefined(RoleEligibilityScheduleId))
+            {
+                writer.WritePropertyName("roleEligibilityScheduleId"u8);
+                writer.WriteStringValue(RoleEligibilityScheduleId);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDateTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(MemberType))
+            {
+                writer.WritePropertyName("memberType"u8);
+                writer.WriteStringValue(MemberType.Value.ToString());
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion"u8);
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpandedProperties))
+            {
+                writer.WritePropertyName("expandedProperties"u8);
+                writer.WriteObjectValue(ExpandedProperties);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RoleEligibilityScheduleInstanceData IJsonModel<RoleEligibilityScheduleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleInstanceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleEligibilityScheduleInstanceData(document.RootElement, options);
+        }
+
+        internal static RoleEligibilityScheduleInstanceData DeserializeRoleEligibilityScheduleInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +171,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> conditionVersion = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -181,8 +316,44 @@ namespace Azure.ResourceManager.Authorization
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleEligibilityScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoleEligibilityScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoleEligibilityScheduleInstanceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleInstanceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RoleEligibilityScheduleInstanceData IPersistableModel<RoleEligibilityScheduleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleEligibilityScheduleInstanceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleInstanceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleEligibilityScheduleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

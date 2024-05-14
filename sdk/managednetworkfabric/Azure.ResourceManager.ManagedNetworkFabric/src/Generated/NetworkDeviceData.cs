@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -14,17 +15,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the NetworkDevice data model.
-    /// The NetworkDevice resource definition.
+    /// The Network Device resource definition.
     /// </summary>
     public partial class NetworkDeviceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkDeviceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,14 +33,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host Name of the device. </param>
-        /// <param name="serialNumber"> serialNumber of the format Make;Model;HardwareRevisionId;SerialNumber. Example: Arista;DCS-7280DR3-24;12.05;JPE21116969. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="version"> Current version of the device as defined in SKU. </param>
         /// <param name="networkDeviceSku"> Network Device SKU name. </param>
-        /// <param name="networkDeviceRole"> networkDeviceRole is the device role: Example: CE | ToR. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
+        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
         /// <param name="networkRackId"> Reference to network rack resource id. </param>
-        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRoleType? networkDeviceRole, ProvisioningState? provisioningState, string networkRackId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
+        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        internal NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -47,25 +52,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Version = version;
             NetworkDeviceSku = networkDeviceSku;
             NetworkDeviceRole = networkDeviceRole;
-            ProvisioningState = provisioningState;
             NetworkRackId = networkRackId;
+            ManagementIPv4Address = managementIPv4Address;
+            ManagementIPv6Address = managementIPv6Address;
+            ConfigurationState = configurationState;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
         }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> The host Name of the device. </summary>
+        /// <summary> The host name of the device. </summary>
         public string HostName { get; set; }
-        /// <summary> serialNumber of the format Make;Model;HardwareRevisionId;SerialNumber. Example: Arista;DCS-7280DR3-24;12.05;JPE21116969. </summary>
+        /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
         /// <summary> Current version of the device as defined in SKU. </summary>
         public string Version { get; }
         /// <summary> Network Device SKU name. </summary>
         public string NetworkDeviceSku { get; set; }
-        /// <summary> networkDeviceRole is the device role: Example: CE | ToR. </summary>
-        public NetworkDeviceRoleType? NetworkDeviceRole { get; set; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> NetworkDeviceRole is the device role: Example: CE | ToR. </summary>
+        public NetworkDeviceRole? NetworkDeviceRole { get; }
         /// <summary> Reference to network rack resource id. </summary>
-        public string NetworkRackId { get; }
+        public ResourceIdentifier NetworkRackId { get; }
+        /// <summary> Management IPv4 Address. </summary>
+        public IPAddress ManagementIPv4Address { get; }
+        /// <summary> Management IPv6 Address. </summary>
+        public string ManagementIPv6Address { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

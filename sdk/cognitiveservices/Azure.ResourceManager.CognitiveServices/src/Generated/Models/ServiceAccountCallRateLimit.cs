@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The call rate limit Cognitive Services account. </summary>
     public partial class ServiceAccountCallRateLimit
     {
-        /// <summary> Initializes a new instance of ServiceAccountCallRateLimit. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountCallRateLimit"/>. </summary>
         internal ServiceAccountCallRateLimit()
         {
             Rules = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountCallRateLimit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountCallRateLimit"/>. </summary>
         /// <param name="count"> The count value of Call Rate Limit. </param>
         /// <param name="renewalPeriod"> The renewal period in seconds of Call Rate Limit. </param>
         /// <param name="rules"></param>
-        internal ServiceAccountCallRateLimit(float? count, float? renewalPeriod, IReadOnlyList<ServiceAccountThrottlingRule> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountCallRateLimit(float? count, float? renewalPeriod, IReadOnlyList<ServiceAccountThrottlingRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             RenewalPeriod = renewalPeriod;
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The count value of Call Rate Limit. </summary>

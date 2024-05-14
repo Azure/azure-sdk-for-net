@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resume replication input properties. </summary>
     public partial class ResumeReplicationProperties
     {
-        /// <summary> Initializes a new instance of ResumeReplicationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific input for resume replication.
         /// Please note <see cref="ResumeReplicationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

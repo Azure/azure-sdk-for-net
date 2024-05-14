@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The disk billing meters. </summary>
     public partial class HDInsightDiskBillingMeters
     {
-        /// <summary> Initializes a new instance of HDInsightDiskBillingMeters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightDiskBillingMeters"/>. </summary>
         internal HDInsightDiskBillingMeters()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightDiskBillingMeters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightDiskBillingMeters"/>. </summary>
         /// <param name="diskRpMeter"> The managed disk meter guid. </param>
         /// <param name="sku"> The managed disk billing sku, P30 or S30. </param>
         /// <param name="tier"> The managed disk billing tier, Standard or Premium. </param>

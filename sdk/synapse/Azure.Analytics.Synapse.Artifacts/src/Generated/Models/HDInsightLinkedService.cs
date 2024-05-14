@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> HDInsight linked service. </summary>
     public partial class HDInsightLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
         public HDInsightLinkedService(object clusterUri)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HDInsight";
         }
 
-        /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

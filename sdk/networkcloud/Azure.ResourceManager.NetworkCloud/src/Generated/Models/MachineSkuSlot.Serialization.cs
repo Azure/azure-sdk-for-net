@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> hardwareVersion = default;
             Optional<long> memoryCapacityGB = default;
             Optional<string> model = default;
-            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
+            Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
             Optional<long> totalThreads = default;
             Optional<string> vendor = default;
             foreach (var property in element.EnumerateObject())
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            List<NetworkInterface> array = new List<NetworkInterface>();
+                            List<NetworkCloudNetworkInterface> array = new List<NetworkCloudNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterface.DeserializeNetworkInterface(item));
+                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item));
                             }
                             networkInterfaces = array;
                             continue;

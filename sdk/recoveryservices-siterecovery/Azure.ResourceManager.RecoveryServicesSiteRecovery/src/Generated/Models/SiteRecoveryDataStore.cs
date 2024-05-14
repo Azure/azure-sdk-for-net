@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The datastore details of the MT. </summary>
     public partial class SiteRecoveryDataStore
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDataStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDataStore"/>. </summary>
         internal SiteRecoveryDataStore()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDataStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDataStore"/>. </summary>
         /// <param name="symbolicName"> The symbolic name of data store. </param>
         /// <param name="uuid"> The uuid of data store. </param>
         /// <param name="capacity"> The capacity of data store in GBs. </param>

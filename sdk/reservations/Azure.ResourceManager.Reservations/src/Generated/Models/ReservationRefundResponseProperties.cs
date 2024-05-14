@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The refund properties of reservation. </summary>
     public partial class ReservationRefundResponseProperties
     {
-        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundResponseProperties"/>. </summary>
         internal ReservationRefundResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundResponseProperties"/>. </summary>
         /// <param name="sessionId"> Refund session identifier. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>

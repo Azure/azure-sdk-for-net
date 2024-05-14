@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The Streaming Locators associated with this Asset. </summary>
     internal partial class ListStreamingLocatorsResponse
     {
-        /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListStreamingLocatorsResponse"/>. </summary>
         internal ListStreamingLocatorsResponse()
         {
             StreamingLocators = new ChangeTrackingList<MediaAssetStreamingLocator>();
         }
 
-        /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListStreamingLocatorsResponse"/>. </summary>
         /// <param name="streamingLocators"> The list of Streaming Locators. </param>
         internal ListStreamingLocatorsResponse(IReadOnlyList<MediaAssetStreamingLocator> streamingLocators)
         {

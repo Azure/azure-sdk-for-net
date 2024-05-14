@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderResourceType. </summary>
     public partial class ProviderResourceType
     {
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         internal ProviderResourceType()
         {
             AllowedUnauthorizedActions = new ChangeTrackingList<string>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LinkedOperationRules = new ChangeTrackingList<LinkedOperationRule>();
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         /// <param name="name"></param>
         /// <param name="routingType"></param>
         /// <param name="resourceValidation"></param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

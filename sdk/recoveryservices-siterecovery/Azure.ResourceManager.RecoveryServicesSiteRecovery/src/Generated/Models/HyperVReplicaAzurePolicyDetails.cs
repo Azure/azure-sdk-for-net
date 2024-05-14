@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper-V Replica Azure specific protection profile details. </summary>
     public partial class HyperVReplicaAzurePolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePolicyDetails"/>. </summary>
         internal HyperVReplicaAzurePolicyDetails()
         {
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzurePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPointHistoryDurationInHours"> The duration (in hours) to which point the recovery history needs to be maintained. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </param>

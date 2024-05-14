@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A namespace junction. </summary>
     public partial class NamespaceJunction
     {
-        /// <summary> Initializes a new instance of NamespaceJunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceJunction"/>. </summary>
         public NamespaceJunction()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceJunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceJunction"/>. </summary>
         /// <param name="namespacePath"> Namespace path on a cache for a Storage Target. </param>
         /// <param name="targetPath"> Path in Storage Target to which namespacePath points. </param>
         /// <param name="nfsExport"> NFS export where targetPath exists. </param>

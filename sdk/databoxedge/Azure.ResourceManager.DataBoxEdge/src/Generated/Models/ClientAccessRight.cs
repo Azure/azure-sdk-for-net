@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The mapping between a particular client IP and the type of access client has on the NFS share. </summary>
     public partial class ClientAccessRight
     {
-        /// <summary> Initializes a new instance of ClientAccessRight. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientAccessRight"/>. </summary>
         /// <param name="client"> IP of the client. </param>
         /// <param name="accessPermission"> Type of access to be allowed for the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -23,6 +56,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             Client = client;
             AccessPermission = accessPermission;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClientAccessRight"/>. </summary>
+        /// <param name="client"> IP of the client. </param>
+        /// <param name="accessPermission"> Type of access to be allowed for the client. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientAccessRight(string client, EdgeClientPermissionType accessPermission, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Client = client;
+            AccessPermission = accessPermission;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClientAccessRight"/> for deserialization. </summary>
+        internal ClientAccessRight()
+        {
         }
 
         /// <summary> IP of the client. </summary>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the partner. </summary>
     public partial class PartnerDetails
     {
-        /// <summary> Initializes a new instance of PartnerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDetails"/>. </summary>
         public PartnerDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDetails"/>. </summary>
         /// <param name="description"> This is short description about the partner. The length of this description should not exceed 256 characters. </param>
         /// <param name="longDescription"> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </param>
         /// <param name="setupUri">

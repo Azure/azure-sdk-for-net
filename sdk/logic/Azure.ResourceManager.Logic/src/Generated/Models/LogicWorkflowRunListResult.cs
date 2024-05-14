@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow runs. </summary>
     internal partial class LogicWorkflowRunListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunListResult"/>. </summary>
         internal LogicWorkflowRunListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowRunData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunListResult"/>. </summary>
         /// <param name="value"> A list of workflow runs. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LogicWorkflowRunListResult(IReadOnlyList<LogicWorkflowRunData> value, string nextLink)

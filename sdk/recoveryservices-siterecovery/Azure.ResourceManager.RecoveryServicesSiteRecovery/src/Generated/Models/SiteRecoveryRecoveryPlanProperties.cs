@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan properties. </summary>
     public partial class SiteRecoveryRecoveryPlanProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanProperties"/>. </summary>
         internal SiteRecoveryRecoveryPlanProperties()
         {
             ReplicationProviders = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanProperties"/>. </summary>
         /// <param name="friendlyName"> The friendly name. </param>
         /// <param name="primaryFabricId"> The primary fabric Id. </param>
         /// <param name="primaryFabricFriendlyName"> The primary fabric friendly name. </param>

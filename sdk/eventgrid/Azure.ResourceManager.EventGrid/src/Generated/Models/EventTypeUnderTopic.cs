@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Event Type for a subject under a topic. </summary>
     public partial class EventTypeUnderTopic : ResourceData
     {
-        /// <summary> Initializes a new instance of EventTypeUnderTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTypeUnderTopic"/>. </summary>
         public EventTypeUnderTopic()
         {
         }
 
-        /// <summary> Initializes a new instance of EventTypeUnderTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventTypeUnderTopic"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

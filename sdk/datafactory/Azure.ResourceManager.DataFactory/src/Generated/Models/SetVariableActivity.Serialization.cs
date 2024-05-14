@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -81,7 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -93,13 +101,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            Optional<SecureInputOutputPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             Optional<string> variableName = default;
             Optional<DataFactoryElement<BinaryData>> value = default;
             Optional<bool> setSystemVariable = default;
@@ -107,6 +116,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("policy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -128,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    state = new ActivityState(property.Value.GetString());
+                    state = new PipelineActivityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onInactiveMarkAs"u8))
@@ -137,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -146,10 +164,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -160,10 +178,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -206,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SetVariableActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, variableName.Value, value.Value, Optional.ToNullable(setSystemVariable));
+            return new SetVariableActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, policy.Value, variableName.Value, value.Value, Optional.ToNullable(setSystemVariable));
         }
     }
 }

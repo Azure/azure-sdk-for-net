@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an update mobility service request. </summary>
     internal partial class UpdateMobilityServiceRequestProperties
     {
-        /// <summary> Initializes a new instance of UpdateMobilityServiceRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceRequestProperties"/>. </summary>
         public UpdateMobilityServiceRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceRequestProperties"/>. </summary>
+        /// <param name="runAsAccountId"> The CS run as account Id. </param>
+        internal UpdateMobilityServiceRequestProperties(string runAsAccountId)
+        {
+            RunAsAccountId = runAsAccountId;
         }
 
         /// <summary> The CS run as account Id. </summary>

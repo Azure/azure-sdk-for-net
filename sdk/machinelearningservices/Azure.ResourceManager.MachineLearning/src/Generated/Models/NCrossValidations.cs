@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class NCrossValidations
     {
-        /// <summary> Initializes a new instance of NCrossValidations. </summary>
+        /// <summary> Initializes a new instance of <see cref="NCrossValidations"/>. </summary>
         protected NCrossValidations()
         {
         }
 
-        /// <summary> Initializes a new instance of NCrossValidations. </summary>
+        /// <summary> Initializes a new instance of <see cref="NCrossValidations"/>. </summary>
         /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
         internal NCrossValidations(NCrossValidationsMode mode)
         {

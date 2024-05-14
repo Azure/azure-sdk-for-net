@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class MaintenanceWindowsData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowsData"/>. </summary>
         public MaintenanceWindowsData()
         {
             TimeRanges = new ChangeTrackingList<MaintenanceWindowTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

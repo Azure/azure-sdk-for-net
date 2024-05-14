@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication protection intent custom data details. </summary>
     public partial class ReplicationProtectionIntentProperties
     {
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentProperties"/>. </summary>
         internal ReplicationProtectionIntentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentProperties"/>. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="jobId"> The job Id. </param>
         /// <param name="jobState"> The job state. </param>

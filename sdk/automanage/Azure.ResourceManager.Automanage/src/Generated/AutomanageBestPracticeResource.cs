@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageBestPractice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageBestPracticeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageBestPracticeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetAutomanageBestPractice method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageBestPracticeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageBestPracticeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAutomanageBestPractice method.
     /// </summary>
     public partial class AutomanageBestPracticeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageBestPracticeResource"/> instance. </summary>
+        /// <param name="bestPracticeName"> The bestPracticeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string bestPracticeName)
         {
             var resourceId = $"/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly BestPracticesRestOperations _automanageBestPracticeBestPracticesRestClient;
         private readonly AutomanageBestPracticeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/bestPractices";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageBestPracticeResource"/> class for mocking. </summary>
         protected AutomanageBestPracticeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageBestPracticeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageBestPracticeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageBestPracticeResource(ArmClient client, AutomanageBestPracticeData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/bestPractices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +99,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>BestPractices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageBestPracticeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +138,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BestPractices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageBestPracticeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

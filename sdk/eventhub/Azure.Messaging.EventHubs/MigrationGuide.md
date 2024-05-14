@@ -116,7 +116,7 @@ AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
     };
 
 EventHubClient client = EventHubClient.CreateWithAzureActiveDirectory(
-    new Uri(fullyQualifiedNamespace),
+    new Uri($"sb://{ fullyQualifiedNamespace }"),
     eventHubName,
     authCallback,
     authority);
@@ -643,9 +643,12 @@ try
 
     IEnumerable<EventData> events = await receiver.ReceiveAsync(50);
 
-    foreach (var eventData in events)
+    if (events != null)
     {
-       Debug.WriteLine($"Read event of length { eventData.Body.Count } from { firstPartition }");
+        foreach (var eventData in events)
+        {
+           Debug.WriteLine($"Read event of length { eventData.Body.Count } from { firstPartition }");
+        }
     }
 }
 finally

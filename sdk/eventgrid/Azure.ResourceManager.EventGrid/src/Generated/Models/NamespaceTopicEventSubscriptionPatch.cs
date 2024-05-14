@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Event Subscription update. </summary>
     public partial class NamespaceTopicEventSubscriptionPatch
     {
-        /// <summary> Initializes a new instance of NamespaceTopicEventSubscriptionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
         public NamespaceTopicEventSubscriptionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
+        /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
+        /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
+        /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
+        internal NamespaceTopicEventSubscriptionPatch(DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration)
+        {
+            DeliveryConfiguration = deliveryConfiguration;
+            EventDeliverySchema = eventDeliverySchema;
+            FiltersConfiguration = filtersConfiguration;
         }
 
         /// <summary> Information about the delivery configuration of the event subscription. </summary>

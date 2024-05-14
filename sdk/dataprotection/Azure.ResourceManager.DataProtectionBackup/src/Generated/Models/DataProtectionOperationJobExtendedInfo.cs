@@ -5,29 +5,31 @@
 
 #nullable disable
 
-using Azure.Core;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Operation Job Extended Info. </summary>
     public partial class DataProtectionOperationJobExtendedInfo : DataProtectionOperationExtendedInfo
     {
-        /// <summary> Initializes a new instance of DataProtectionOperationJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationJobExtendedInfo"/>. </summary>
         internal DataProtectionOperationJobExtendedInfo()
         {
             ObjectType = "OperationJobExtendedInfo";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionOperationJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationJobExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="jobResourceId"> Arm Id of the job created for this operation. </param>
-        internal DataProtectionOperationJobExtendedInfo(string objectType, ResourceIdentifier jobResourceId) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="jobIdentifier"> Name or Arm Id of the job created for this operation. </param>
+        internal DataProtectionOperationJobExtendedInfo(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string jobIdentifier) : base(objectType, serializedAdditionalRawData)
         {
-            JobResourceId = jobResourceId;
+            JobIdentifier = jobIdentifier;
             ObjectType = objectType ?? "OperationJobExtendedInfo";
         }
 
-        /// <summary> Arm Id of the job created for this operation. </summary>
-        public ResourceIdentifier JobResourceId { get; }
+        /// <summary> Name or Arm Id of the job created for this operation. </summary>
+        public string JobIdentifier { get; }
     }
 }

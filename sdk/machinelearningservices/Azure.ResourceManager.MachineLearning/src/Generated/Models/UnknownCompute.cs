@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownCompute. </summary>
     internal partial class UnknownCompute : MachineLearningComputeProperties
     {
-        /// <summary> Initializes a new instance of UnknownCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCompute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

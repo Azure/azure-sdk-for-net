@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input to create vault setting. </summary>
     public partial class SiteRecoveryVaultSettingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Vault setting creation input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryVaultSettingCreateOrUpdateContent(VaultSettingCreationProperties properties)

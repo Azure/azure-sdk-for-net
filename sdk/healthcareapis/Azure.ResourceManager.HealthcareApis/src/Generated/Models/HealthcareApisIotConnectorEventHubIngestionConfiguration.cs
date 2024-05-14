@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Event Hub ingestion endpoint configuration. </summary>
     public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorEventHubIngestionConfiguration"/>. </summary>
         public HealthcareApisIotConnectorEventHubIngestionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorEventHubIngestionConfiguration"/>. </summary>
         /// <param name="eventHubName"> Event Hub name to connect to. </param>
         /// <param name="consumerGroup"> Consumer group of the event hub to connected to. </param>
         /// <param name="fullyQualifiedEventHubNamespace"> Fully qualified namespace of the Event Hub to connect to. </param>

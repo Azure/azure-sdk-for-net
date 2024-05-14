@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> A name/value pair to describe a capability. </summary>
     public partial class DevCenterCapability
     {
-        /// <summary> Initializes a new instance of DevCenterCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCapability"/>. </summary>
         internal DevCenterCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCapability"/>. </summary>
         /// <param name="name"> Name of the capability. </param>
         /// <param name="value"> Value of the capability. </param>
         internal DevCenterCapability(string name, string value)

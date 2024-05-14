@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed instance capability. </summary>
     public partial class ManagedInstanceVersionCapability
     {
-        /// <summary> Initializes a new instance of ManagedInstanceVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceVersionCapability"/>. </summary>
         internal ManagedInstanceVersionCapability()
         {
             SupportedEditions = new ChangeTrackingList<ManagedInstanceEditionCapability>();
             SupportedInstancePoolEditions = new ChangeTrackingList<InstancePoolEditionCapability>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceVersionCapability"/>. </summary>
         /// <param name="name"> The server version name. </param>
         /// <param name="supportedEditions"> The list of supported managed instance editions. </param>
         /// <param name="supportedInstancePoolEditions"> The list of supported instance pool editions. </param>

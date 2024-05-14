@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The List availabilityStatus operation response. </summary>
     internal partial class ResourceHealthAvailabilityStatusListResult
     {
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceHealthAvailabilityStatusListResult(IEnumerable<ResourceHealthAvailabilityStatus> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <param name="nextLink"> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </param>
         internal ResourceHealthAvailabilityStatusListResult(IReadOnlyList<ResourceHealthAvailabilityStatus> value, string nextLink)

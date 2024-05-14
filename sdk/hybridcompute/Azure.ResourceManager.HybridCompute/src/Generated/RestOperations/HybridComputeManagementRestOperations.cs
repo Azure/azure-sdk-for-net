@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-10-preview";
+            _apiVersion = apiVersion ?? "2023-10-03-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

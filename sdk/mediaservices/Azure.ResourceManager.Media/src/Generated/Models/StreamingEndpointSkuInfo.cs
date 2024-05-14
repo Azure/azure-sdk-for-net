@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The StreamingEndpointSkuInfo. </summary>
     public partial class StreamingEndpointSkuInfo
     {
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSkuInfo"/>. </summary>
         internal StreamingEndpointSkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSkuInfo"/>. </summary>
         /// <param name="resourceType"></param>
         /// <param name="capacity"> The streaming endpoint sku capacity. </param>
         /// <param name="sku"> The streaming endpoint sku. </param>

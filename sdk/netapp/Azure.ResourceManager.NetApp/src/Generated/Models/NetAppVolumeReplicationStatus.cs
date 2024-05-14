@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication status. </summary>
     public partial class NetAppVolumeReplicationStatus
     {
-        /// <summary> Initializes a new instance of NetAppVolumeReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplicationStatus"/>. </summary>
         internal NetAppVolumeReplicationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplicationStatus"/>. </summary>
         /// <param name="isHealthy"> Replication health check. </param>
         /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
         /// <param name="mirrorState"> The status of the replication. </param>

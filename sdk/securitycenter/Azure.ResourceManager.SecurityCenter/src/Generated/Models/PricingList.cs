@@ -16,7 +16,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of pricing configurations response. </summary>
     internal partial class PricingList
     {
-        /// <summary> Initializes a new instance of PricingList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PricingList"/>. </summary>
         /// <param name="value"> List of pricing configurations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PricingList(IEnumerable<SecurityCenterPricingData> value)
@@ -26,11 +58,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PricingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PricingList"/>. </summary>
         /// <param name="value"> List of pricing configurations. </param>
-        internal PricingList(IReadOnlyList<SecurityCenterPricingData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PricingList(IReadOnlyList<SecurityCenterPricingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PricingList"/> for deserialization. </summary>
+        internal PricingList()
+        {
         }
 
         /// <summary> List of pricing configurations. </summary>

@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
+            if (Optional.IsDefined(VaultRetentionPolicy))
+            {
+                writer.WritePropertyName("vaultRetentionPolicy"u8);
+                writer.WriteObjectValue(VaultRetentionPolicy);
+            }
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
@@ -65,6 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupWorkloadType> workLoadType = default;
             Optional<BackupSchedulePolicy> schedulePolicy = default;
             Optional<BackupRetentionPolicy> retentionPolicy = default;
+            Optional<VaultRetentionPolicy> vaultRetentionPolicy = default;
             Optional<string> timeZone = default;
             Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
@@ -96,6 +102,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("vaultRetentionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vaultRetentionPolicy = VaultRetentionPolicy.DeserializeVaultRetentionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -132,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new FileShareProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(workLoadType), schedulePolicy.Value, retentionPolicy.Value, timeZone.Value);
+            return new FileShareProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(workLoadType), schedulePolicy.Value, retentionPolicy.Value, vaultRetentionPolicy.Value, timeZone.Value);
         }
     }
 }

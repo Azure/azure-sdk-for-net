@@ -13,17 +13,11 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The response of a Catalog list operation.
-    /// Serialized Name: CatalogListResult
-    /// </summary>
+    /// <summary> The response of a Catalog list operation. </summary>
     internal partial class CatalogListResult
     {
-        /// <summary> Initializes a new instance of CatalogListResult. </summary>
-        /// <param name="value">
-        /// The Catalog items on this page
-        /// Serialized Name: CatalogListResult.value
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="CatalogListResult"/>. </summary>
+        /// <param name="value"> The Catalog items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CatalogListResult(IEnumerable<SphereCatalogData> value)
         {
@@ -32,30 +26,18 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CatalogListResult. </summary>
-        /// <param name="value">
-        /// The Catalog items on this page
-        /// Serialized Name: CatalogListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: CatalogListResult.nextLink
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="CatalogListResult"/>. </summary>
+        /// <param name="value"> The Catalog items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal CatalogListResult(IReadOnlyList<SphereCatalogData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The Catalog items on this page
-        /// Serialized Name: CatalogListResult.value
-        /// </summary>
+        /// <summary> The Catalog items on this page. </summary>
         public IReadOnlyList<SphereCatalogData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: CatalogListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String list resource. </summary>
     public partial class StaticSiteStringList : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteStringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteStringList"/>. </summary>
         public StaticSiteStringList()
         {
             Properties = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteStringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteStringList"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

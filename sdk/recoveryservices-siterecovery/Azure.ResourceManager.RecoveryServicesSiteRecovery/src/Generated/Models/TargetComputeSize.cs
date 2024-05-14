@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Represents applicable recovery vm sizes. </summary>
     public partial class TargetComputeSize : ResourceData
     {
-        /// <summary> Initializes a new instance of TargetComputeSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSize"/>. </summary>
         internal TargetComputeSize()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSize"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

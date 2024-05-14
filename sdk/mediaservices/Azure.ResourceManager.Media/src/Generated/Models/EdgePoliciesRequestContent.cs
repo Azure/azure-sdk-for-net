@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The EdgePoliciesRequestContent. </summary>
     public partial class EdgePoliciesRequestContent
     {
-        /// <summary> Initializes a new instance of EdgePoliciesRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgePoliciesRequestContent"/>. </summary>
         public EdgePoliciesRequestContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgePoliciesRequestContent"/>. </summary>
+        /// <param name="deviceId"> Unique identifier of the edge device. </param>
+        internal EdgePoliciesRequestContent(string deviceId)
+        {
+            DeviceId = deviceId;
         }
 
         /// <summary> Unique identifier of the edge device. </summary>

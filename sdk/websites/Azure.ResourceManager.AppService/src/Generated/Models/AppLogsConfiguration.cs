@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The AppLogsConfiguration. </summary>
     public partial class AppLogsConfiguration
     {
-        /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLogsConfiguration"/>. </summary>
         public AppLogsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLogsConfiguration"/>. </summary>
         /// <param name="destination"></param>
         /// <param name="logAnalyticsConfiguration"></param>
         internal AppLogsConfiguration(string destination, LogAnalyticsConfiguration logAnalyticsConfiguration)

@@ -17,13 +17,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public RackSkusTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task RackSkus()
         {
             string subscriptionId = TestEnvironment.SubscriptionId;
 
             // List by Subscription
-            RackSkuCollection rackSkusCollection = SubscriptionResource.GetRackSkus();
-            var listBySubscription = new List<RackSkuResource>();
+            NetworkCloudRackSkuCollection rackSkusCollection = SubscriptionResource.GetNetworkCloudRackSkus();
+            var listBySubscription = new List<NetworkCloudRackSkuResource>();
             await foreach (var item in rackSkusCollection.GetAllAsync())
             {
                 listBySubscription.Add(item);
@@ -33,9 +34,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var rackSkuName = listBySubscription[0].Data.Name;
 
             // Get
-            ResourceIdentifier rackSkuResourceId = RackSkuResource.CreateResourceIdentifier(subscriptionId, rackSkuName);
-            RackSkuResource rackSkuResource = Client.GetRackSkuResource(rackSkuResourceId);
-            RackSkuResource getResult = await rackSkuResource.GetAsync();
+            ResourceIdentifier rackSkuResourceId = NetworkCloudRackSkuResource.CreateResourceIdentifier(subscriptionId, rackSkuName);
+            NetworkCloudRackSkuResource rackSkuResource = Client.GetNetworkCloudRackSkuResource(rackSkuResourceId);
+            NetworkCloudRackSkuResource getResult = await rackSkuResource.GetAsync();
             Assert.AreEqual(rackSkuName, getResult.Data.Name);
         }
     }

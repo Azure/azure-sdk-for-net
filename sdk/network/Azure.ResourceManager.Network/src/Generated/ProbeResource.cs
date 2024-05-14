@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a Probe along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProbeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProbeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource" /> using the GetProbe method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProbeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProbeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource"/> using the GetProbe method.
     /// </summary>
     public partial class ProbeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProbeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
+        /// <param name="probeName"> The probeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string probeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly LoadBalancerProbesRestOperations _probeLoadBalancerProbesRestClient;
         private readonly ProbeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/probes";
+
         /// <summary> Initializes a new instance of the <see cref="ProbeResource"/> class for mocking. </summary>
         protected ProbeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProbeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProbeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProbeResource(ArmClient client, ProbeData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/probes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

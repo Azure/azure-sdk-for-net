@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource" /> using the GetPostgreSqlDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlServerResource"/> using the GetPostgreSqlDatabase method.
     /// </summary>
     public partial class PostgreSqlDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/databases/{databaseName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly DatabasesRestOperations _postgreSqlDatabaseDatabasesRestClient;
         private readonly PostgreSqlDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/databases";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlDatabaseResource"/> class for mocking. </summary>
         protected PostgreSqlDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlDatabaseResource(ArmClient client, PostgreSqlDatabaseData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

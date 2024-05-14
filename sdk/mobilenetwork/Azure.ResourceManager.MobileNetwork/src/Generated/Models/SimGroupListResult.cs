@@ -14,23 +14,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for list SIM groups API service call. </summary>
     internal partial class SimGroupListResult
     {
-        /// <summary> Initializes a new instance of SimGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimGroupListResult"/>. </summary>
         internal SimGroupListResult()
         {
-            Value = new ChangeTrackingList<SimGroupData>();
+            Value = new ChangeTrackingList<MobileNetworkSimGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SimGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimGroupListResult"/>. </summary>
         /// <param name="value"> A list of SIM groups in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SimGroupListResult(IReadOnlyList<SimGroupData> value, string nextLink)
+        internal SimGroupListResult(IReadOnlyList<MobileNetworkSimGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of SIM groups in a resource group. </summary>
-        public IReadOnlyList<SimGroupData> Value { get; }
+        public IReadOnlyList<MobileNetworkSimGroupData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

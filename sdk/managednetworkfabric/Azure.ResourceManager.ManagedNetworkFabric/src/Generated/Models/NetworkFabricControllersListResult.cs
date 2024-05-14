@@ -11,17 +11,17 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkFabricControllers. </summary>
+    /// <summary> List of Network Fabric Controllers. </summary>
     internal partial class NetworkFabricControllersListResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricControllersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllersListResult"/>. </summary>
         internal NetworkFabricControllersListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricControllerData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricControllersListResult. </summary>
-        /// <param name="value"> List of NetworkFabricController resources. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllersListResult"/>. </summary>
+        /// <param name="value"> List of Network Fabric Controller resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkFabricControllersListResult(IReadOnlyList<NetworkFabricControllerData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of NetworkFabricController resources. </summary>
+        /// <summary> List of Network Fabric Controller resources. </summary>
         public IReadOnlyList<NetworkFabricControllerData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

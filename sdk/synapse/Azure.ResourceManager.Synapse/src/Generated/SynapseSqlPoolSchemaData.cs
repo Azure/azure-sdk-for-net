@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSqlPoolSchemaData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolSchemaData"/>. </summary>
         public SynapseSqlPoolSchemaData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

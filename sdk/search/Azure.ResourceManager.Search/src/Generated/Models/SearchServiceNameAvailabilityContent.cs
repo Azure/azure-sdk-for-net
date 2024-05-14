@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Input of check name availability API. </summary>
     public partial class SearchServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SearchServiceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SearchServiceNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Search.Models
 
             Name = name;
             ResourceType = SearchServiceResourceType.SearchServices;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
+        internal SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </summary>

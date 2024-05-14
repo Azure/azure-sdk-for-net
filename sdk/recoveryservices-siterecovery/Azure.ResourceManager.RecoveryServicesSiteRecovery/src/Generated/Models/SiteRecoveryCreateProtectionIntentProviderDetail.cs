@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryCreateProtectionIntentProviderDetail
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionIntentProviderDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionIntentProviderDetail"/>. </summary>
         protected SiteRecoveryCreateProtectionIntentProviderDetail()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionIntentProviderDetail"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal SiteRecoveryCreateProtectionIntentProviderDetail(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

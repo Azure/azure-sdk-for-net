@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -18,11 +17,6 @@ namespace Azure.ResourceManager.HybridContainerService
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -33,19 +27,6 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
@@ -55,33 +36,21 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ProvisionedClustersResponseProperties> properties = default;
-            Optional<ProvisionedClustersResponseExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
+            Optional<ProvisionedClusterProperties> properties = default;
+            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = ProvisionedClustersResponseProperties.DeserializeProvisionedClustersResponseProperties(property.Value);
+                    properties = ProvisionedClusterProperties.DeserializeProvisionedClusterProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -90,26 +59,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = ProvisionedClustersResponseExtendedLocation.DeserializeProvisionedClustersResponseExtendedLocation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -137,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     continue;
                 }
             }
-            return new ProvisionedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, extendedLocation.Value);
+            return new ProvisionedClusterData(id, name, type, systemData.Value, properties.Value, extendedLocation.Value);
         }
     }
 }

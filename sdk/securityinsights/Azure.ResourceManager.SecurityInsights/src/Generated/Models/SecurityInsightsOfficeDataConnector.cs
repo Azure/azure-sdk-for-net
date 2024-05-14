@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents office data connector. </summary>
     public partial class SecurityInsightsOfficeDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsOfficeDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnector"/>. </summary>
         public SecurityInsightsOfficeDataConnector()
         {
             Kind = DataConnectorKind.Office365;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsOfficeDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

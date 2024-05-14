@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ClusterData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudClusterData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<ClusterData> array = new List<ClusterData>();
+                    List<NetworkCloudClusterData> array = new List<NetworkCloudClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterData.DeserializeClusterData(item));
+                        array.Add(NetworkCloudClusterData.DeserializeNetworkCloudClusterData(item));
                     }
                     value = array;
                     continue;

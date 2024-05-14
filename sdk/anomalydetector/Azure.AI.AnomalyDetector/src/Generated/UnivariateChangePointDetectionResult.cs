@@ -13,14 +13,14 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Response of change point detection. </summary>
     public partial class UnivariateChangePointDetectionResult
     {
-        /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionResult"/>. </summary>
         internal UnivariateChangePointDetectionResult()
         {
             IsChangePoint = new ChangeTrackingList<bool>();
             ConfidenceScores = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.

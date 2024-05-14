@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Topic Space operation. </summary>
     internal partial class TopicSpacesListResult
     {
-        /// <summary> Initializes a new instance of TopicSpacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesListResult"/>. </summary>
         internal TopicSpacesListResult()
         {
             Value = new ChangeTrackingList<TopicSpaceData>();
         }
 
-        /// <summary> Initializes a new instance of TopicSpacesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesListResult"/>. </summary>
         /// <param name="value"> A collection of Topic Space. </param>
         /// <param name="nextLink"> A link for the next page of Topic Space. </param>
         internal TopicSpacesListResult(IReadOnlyList<TopicSpaceData> value, string nextLink)

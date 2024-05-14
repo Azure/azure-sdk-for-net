@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
     public partial class AppServiceAadLoginFlow
     {
-        /// <summary> Initializes a new instance of AppServiceAadLoginFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadLoginFlow"/>. </summary>
         public AppServiceAadLoginFlow()
         {
             LoginParameters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceAadLoginFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadLoginFlow"/>. </summary>
         /// <param name="loginParameters">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".

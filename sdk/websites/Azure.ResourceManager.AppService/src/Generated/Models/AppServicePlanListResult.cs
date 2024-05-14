@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of App Service plans. </summary>
     internal partial class AppServicePlanListResult
     {
-        /// <summary> Initializes a new instance of AppServicePlanListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServicePlanListResult(IEnumerable<AppServicePlanData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal AppServicePlanListResult(IReadOnlyList<AppServicePlanData> value, string nextLink)

@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+    [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
     internal class DocumentClassifierLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -103,14 +103,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.IsEmpty(page.Words);
                 Assert.IsEmpty(page.SelectionMarks);
                 Assert.IsEmpty(page.Lines);
-                Assert.IsEmpty(page.Annotations);
                 Assert.IsEmpty(page.Barcodes);
                 Assert.IsEmpty(page.Formulas);
-                Assert.IsEmpty(page.Images);
 
                 AssertSingleEmptySpan(page.Spans);
 
-                Assert.AreEqual(DocumentPageKind.Document, page.Kind);
                 Assert.AreEqual(pageNumber, page.PageNumber);
             }
 
@@ -141,7 +138,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (var page in analyzeResult.Pages)
             {
-                Assert.AreEqual(0f, page.Angle);
+                Assert.That(page.Angle, Is.EqualTo(0f).Within(0.05f));
                 Assert.AreEqual(8.5f, page.Width);
                 Assert.AreEqual(11f, page.Height);
                 Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);

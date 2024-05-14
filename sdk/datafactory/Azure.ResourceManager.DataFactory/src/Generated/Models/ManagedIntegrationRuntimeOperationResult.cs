@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Properties of managed integration runtime operation result. </summary>
     public partial class ManagedIntegrationRuntimeOperationResult
     {
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeOperationResult"/>. </summary>
         internal ManagedIntegrationRuntimeOperationResult()
         {
             Parameters = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeOperationResult"/>. </summary>
         /// <param name="managedIntegrationRuntimeOperationResultType"> The operation type. Could be start or stop. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="result"> The operation result. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

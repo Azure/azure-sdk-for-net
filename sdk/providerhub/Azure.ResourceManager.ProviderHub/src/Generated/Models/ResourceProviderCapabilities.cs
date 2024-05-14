@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderCapabilities. </summary>
     public partial class ResourceProviderCapabilities
     {
-        /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
         /// <param name="quotaId"></param>
         /// <param name="effect"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
         /// <param name="quotaId"></param>
         /// <param name="effect"></param>
         /// <param name="requiredFeatures"></param>

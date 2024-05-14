@@ -13,9 +13,9 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Batch linked service. </summary>
-    public partial class AzureBatchLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureBatchLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureBatch";
         }
 
-        /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountName, DataFactorySecretBaseDefinition accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName, BinaryData encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountName, DataFactorySecretBaseDefinition accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             AccessKey = accessKey;
@@ -71,37 +71,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> PoolName { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public DataFactoryCredentialReference Credential { get; set; }
     }

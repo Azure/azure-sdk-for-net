@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> EventHub configurations. </summary>
     public partial class EventHubConfiguration
     {
-        /// <summary> Initializes a new instance of EventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConfiguration"/>. </summary>
         public EventHubConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConfiguration"/>. </summary>
         /// <param name="id"> Resource ID of EventHub. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="name"> EventHub name. </param>

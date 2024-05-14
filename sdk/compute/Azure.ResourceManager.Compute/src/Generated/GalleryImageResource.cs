@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a GalleryImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GalleryImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGalleryImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GalleryResource" /> using the GetGalleryImage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGalleryImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GalleryResource"/> using the GetGalleryImage method.
     /// </summary>
     public partial class GalleryImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.Compute
         private readonly GalleryImagesRestOperations _galleryImageRestClient;
         private readonly GalleryImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/images";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryImageResource"/> class for mocking. </summary>
         protected GalleryImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GalleryImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GalleryImageResource(ArmClient client, GalleryImageData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/images";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryImageVersionResources and their operations over a GalleryImageVersionResource. </returns>
         public virtual GalleryImageVersionCollection GetGalleryImageVersions()
         {
-            return GetCachedClient(Client => new GalleryImageVersionCollection(Client, Id));
+            return GetCachedClient(client => new GalleryImageVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -106,13 +110,21 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImageVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryImageVersionResource>> GetGalleryImageVersionAsync(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -130,13 +142,21 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImageVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be retrieved. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryImageVersionResource> GetGalleryImageVersion(string galleryImageVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -153,6 +173,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +214,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +253,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +296,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -285,6 +337,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,6 +384,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -361,6 +429,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,6 +493,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -472,6 +556,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -522,6 +614,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -571,6 +671,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -624,6 +732,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

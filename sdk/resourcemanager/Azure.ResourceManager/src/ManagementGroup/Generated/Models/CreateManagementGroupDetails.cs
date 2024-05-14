@@ -6,15 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The details of a management group used during creation. </summary>
     public partial class CreateManagementGroupDetails
     {
-        /// <summary> Initializes a new instance of CreateManagementGroupDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateManagementGroupDetails"/>. </summary>
         public CreateManagementGroupDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateManagementGroupDetails"/>. </summary>
+        /// <param name="version"> The version number of the object. </param>
+        /// <param name="updatedOn"> The date and time when this object was last updated. </param>
+        /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
+        /// <param name="parent"> (Optional) The ID of the parent management group used during creation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateManagementGroupDetails(int? version, DateTimeOffset? updatedOn, string updatedBy, ManagementGroupParentCreateOptions parent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Version = version;
+            UpdatedOn = updatedOn;
+            UpdatedBy = updatedBy;
+            Parent = parent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version number of the object. </summary>

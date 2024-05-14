@@ -13,13 +13,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DtmfResult. </summary>
     public partial class DtmfResult
     {
-        /// <summary> Initializes a new instance of DtmfResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DtmfResult"/>. </summary>
         internal DtmfResult()
         {
             Tones = new ChangeTrackingList<DtmfTone>();
         }
 
-        /// <summary> Initializes a new instance of DtmfResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DtmfResult"/>. </summary>
         /// <param name="tones"></param>
         internal DtmfResult(IReadOnlyList<DtmfTone> tones)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of the server's dedicated sql minimal tls settings. </summary>
     internal partial class SynapseDedicatedSqlMinimalTlsSettingListResult
     {
-        /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDedicatedSqlMinimalTlsSettingListResult"/>. </summary>
         internal SynapseDedicatedSqlMinimalTlsSettingListResult()
         {
             Value = new ChangeTrackingList<SynapseDedicatedSqlMinimalTlsSettingData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDedicatedSqlMinimalTlsSettingListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseDedicatedSqlMinimalTlsSettingListResult(IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData> value, string nextLink)

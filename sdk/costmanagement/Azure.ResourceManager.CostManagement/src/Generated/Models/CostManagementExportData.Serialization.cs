@@ -6,23 +6,49 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementExportData : IUtf8JsonSerializable
+    public partial class CostManagementExportData : IUtf8JsonSerializable, IJsonModel<CostManagementExportData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementExportData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CostManagementExportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementExportData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -51,13 +77,76 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
+            {
+                writer.WritePropertyName("nextRunTimeEstimate"u8);
+                writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
+            }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CostManagementExportData IJsonModel<CostManagementExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementExportData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCostManagementExportData(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<CostManagementExportData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementExportData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CostManagementExportData IPersistableModel<CostManagementExportData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementExportData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCostManagementExportData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CostManagementExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

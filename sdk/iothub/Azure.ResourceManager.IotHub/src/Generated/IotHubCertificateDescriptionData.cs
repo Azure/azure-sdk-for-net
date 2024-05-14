@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     public partial class IotHubCertificateDescriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of IotHubCertificateDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateDescriptionData"/>. </summary>
         public IotHubCertificateDescriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

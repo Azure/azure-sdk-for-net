@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> A digest. </summary>
     public partial class DSRecordDigest
     {
-        /// <summary> Initializes a new instance of DSRecordDigest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DSRecordDigest"/>. </summary>
         public DSRecordDigest()
         {
         }
 
-        /// <summary> Initializes a new instance of DSRecordDigest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DSRecordDigest"/>. </summary>
         /// <param name="algorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
         /// <param name="value"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
         internal DSRecordDigest(int? algorithmType, string value)

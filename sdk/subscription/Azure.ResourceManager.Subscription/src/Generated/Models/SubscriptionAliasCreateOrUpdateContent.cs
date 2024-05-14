@@ -10,9 +10,31 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The parameters required to create a new subscription. </summary>
     public partial class SubscriptionAliasCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
         public SubscriptionAliasCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="workload"> The workload type of the subscription. It can be either Production or DevTest. </param>
+        /// <param name="billingScope">
+        /// Billing scope of the subscription.
+        /// For CustomerLed and FieldLed - /billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}
+        /// For PartnerLed - /billingAccounts/{billingAccountName}/customers/{customerName}
+        /// For Legacy EA - /billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}
+        /// </param>
+        /// <param name="subscriptionId"> This parameter can be used to create alias for existing subscription Id. </param>
+        /// <param name="resellerId"> Reseller Id. </param>
+        /// <param name="additionalProperties"> Put alias request additional properties. </param>
+        internal SubscriptionAliasCreateOrUpdateContent(string displayName, SubscriptionWorkload? workload, string billingScope, string subscriptionId, string resellerId, SubscriptionAliasAdditionalProperties additionalProperties)
+        {
+            DisplayName = displayName;
+            Workload = workload;
+            BillingScope = billingScope;
+            SubscriptionId = subscriptionId;
+            ResellerId = resellerId;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The friendly name of the subscription. </summary>

@@ -85,6 +85,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
             Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
             Assert.AreEqual(uri, fileClient.Uri);
+            Assert.IsNotNull(fileClient.ClientConfiguration.SharedKeyCredential);
         }
 
         [RecordedTest]
@@ -112,6 +113,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileSystemName, fileClient.FileSystemName);
             Assert.AreEqual($"{directoryName}/{fileName}", fileClient.Path);
             Assert.AreEqual(uri, fileClient.Uri);
+            Assert.IsNotNull(fileClient.ClientConfiguration.TokenCredential);
         }
 
         [RecordedTest]
@@ -148,6 +150,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             await connStringFile.GetPropertiesAsync();
             await connStringFile.GetAccessControlAsync();
+            Assert.IsNotNull(connStringFile.ClientConfiguration.SharedKeyCredential);
         }
 
         [RecordedTest]
@@ -187,6 +190,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(properties);
+            Assert.IsNotNull(sasClient.ClientConfiguration.SasCredential);
         }
 
         [RecordedTest]
@@ -219,6 +223,119 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => new DataLakeFileClient(httpUri, dataLakeClientOptions),
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            DataLakeFileClient pathClient = test.FileSystem.GetFileClient(GetNewFileName());
+            await pathClient.CreateIfNotExistsAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DefaultAudience);
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = pathClient.FileSystemName,
+                DirectoryOrFilePath = pathClient.Name
+            };
+
+            DataLakeFileClient aadPathClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadPathClient.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            DataLakeFileClient fileClient = test.FileSystem.GetFileClient(GetNewFileName());
+            await fileClient.CreateIfNotExistsAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{test.FileSystem.AccountName}.blob.core.windows.net/"));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = fileClient.FileSystemName,
+                DirectoryOrFilePath = fileClient.Name
+            };
+
+            DataLakeFileClient aadFileClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            DataLakeFileClient pathClient = test.FileSystem.GetFileClient(GetNewFileName());
+            await pathClient.CreateIfNotExistsAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.CreateDataLakeServiceAccountAudience(test.FileSystem.AccountName));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = pathClient.FileSystemName,
+                DirectoryOrFilePath = pathClient.Name
+            };
+
+            DataLakeFileClient aadFileClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            DataLakeFileClient pathClient = test.FileSystem.GetFileClient(GetNewFileName());
+            await pathClient.CreateIfNotExistsAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience("https://badaudience.blob.core.windows.net"));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                FileSystemName = pathClient.FileSystemName,
+                DirectoryOrFilePath = pathClient.Name
+            };
+
+            DataLakeFileClient aadFileClient = InstrumentClient(new DataLakeFileClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadFileClient.ExistsAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -942,6 +1059,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Arrange
+            DataLakeFileClient fileClient = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            await fileClient.DeleteAsync();
+        }
+
+        [RecordedTest]
+        public async Task DeleteAsync_OAuth()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Arrange

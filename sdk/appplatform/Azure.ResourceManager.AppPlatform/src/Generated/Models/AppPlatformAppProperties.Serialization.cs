@@ -6,21 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformAppProperties : IUtf8JsonSerializable
+    public partial class AppPlatformAppProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UriString))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(UriString);
             }
             if (Optional.IsCollectionDefined(AddonConfigs))
             {
@@ -46,12 +60,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
-                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item0.Value.ToString()).RootElement);
+                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
@@ -103,11 +130,40 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("ingressSettings"u8);
                 writer.WriteObjectValue(IngressSettings);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element)
+        AppPlatformAppProperties IJsonModel<AppPlatformAppProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformAppProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +181,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IList<AppLoadedCertificate>> loadedCertificates = default;
             Optional<AppVnetAddons> vnetAddons = default;
             Optional<AppIngressSettings> ingressSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("public"u8))
@@ -270,8 +328,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformAppProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformAppProperties IPersistableModel<AppPlatformAppProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformAppProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformAppProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a resource name availability. </summary>
     public partial class MySqlFlexibleServerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNameAvailabilityResult"/>. </summary>
         internal MySqlFlexibleServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes how input data is compressed. </summary>
     internal partial class StreamingCompression
     {
-        /// <summary> Initializes a new instance of StreamingCompression. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingCompression"/>. </summary>
         /// <param name="compressionType"> Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests. </param>
         public StreamingCompression(StreamingCompressionType compressionType)
         {

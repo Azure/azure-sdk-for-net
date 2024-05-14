@@ -44,7 +44,7 @@ namespace Azure.Identity
             DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
             ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
             _tokenCachePersistenceOptions = cacheOptions?.TokenCachePersistenceOptions;
-            IsSupportLoggingEnabled = options?.IsSupportLoggingEnabled ?? false;
+            IsSupportLoggingEnabled = options?.IsUnsafeSupportLoggingEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;

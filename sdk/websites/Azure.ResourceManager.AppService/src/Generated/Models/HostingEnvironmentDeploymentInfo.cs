@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Information needed to create resources on an App Service Environment. </summary>
     public partial class HostingEnvironmentDeploymentInfo
     {
-        /// <summary> Initializes a new instance of HostingEnvironmentDeploymentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDeploymentInfo"/>. </summary>
         internal HostingEnvironmentDeploymentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentDeploymentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDeploymentInfo"/>. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="location"> Location of the App Service Environment. </param>
         internal HostingEnvironmentDeploymentInfo(string name, AzureLocation? location)

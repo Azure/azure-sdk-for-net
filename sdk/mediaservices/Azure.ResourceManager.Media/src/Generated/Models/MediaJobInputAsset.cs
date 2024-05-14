@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an Asset for input into a Job. </summary>
     public partial class MediaJobInputAsset : MediaJobInputClip
     {
-        /// <summary> Initializes a new instance of MediaJobInputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputAsset"/>. </summary>
         /// <param name="assetName"> The name of the input Asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public MediaJobInputAsset(string assetName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.JobInputAsset";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputAsset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="files"> List of files. Required for JobInputHttp. Maximum of 4000 characters each. Query strings will not be returned in service responses to prevent sensitive data exposure. </param>
         /// <param name="start">

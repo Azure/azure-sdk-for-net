@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeRegistrationProperties. </summary>
     public partial class ResourceTypeRegistrationProperties
     {
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationProperties"/>. </summary>
         public ResourceTypeRegistrationProperties()
         {
             Endpoints = new ChangeTrackingList<ResourceTypeEndpoint>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationProperties"/>. </summary>
         /// <param name="routingType"></param>
         /// <param name="regionality"></param>
         /// <param name="endpoints"></param>

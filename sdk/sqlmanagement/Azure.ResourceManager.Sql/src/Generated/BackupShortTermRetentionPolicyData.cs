@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class BackupShortTermRetentionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupShortTermRetentionPolicyData"/>. </summary>
         public BackupShortTermRetentionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupShortTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

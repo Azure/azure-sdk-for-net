@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Target compute size collection. </summary>
     internal partial class TargetComputeSizeListResult
     {
-        /// <summary> Initializes a new instance of TargetComputeSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSizeListResult"/>. </summary>
         internal TargetComputeSizeListResult()
         {
             Value = new ChangeTrackingList<TargetComputeSize>();
         }
 
-        /// <summary> Initializes a new instance of TargetComputeSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetComputeSizeListResult"/>. </summary>
         /// <param name="value"> The list of target compute sizes. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal TargetComputeSizeListResult(IReadOnlyList<TargetComputeSize> value, string nextLink)

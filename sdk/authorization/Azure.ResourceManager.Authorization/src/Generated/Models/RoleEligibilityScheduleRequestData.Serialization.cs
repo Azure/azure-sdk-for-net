@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -13,13 +15,46 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleEligibilityScheduleRequestData : IUtf8JsonSerializable
+    public partial class RoleEligibilityScheduleRequestData : IUtf8JsonSerializable, IJsonModel<RoleEligibilityScheduleRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoleEligibilityScheduleRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
             if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
@@ -30,10 +65,25 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
             if (Optional.IsDefined(RequestType))
             {
                 writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApprovalId))
+            {
+                writer.WritePropertyName("approvalId"u8);
+                writer.WriteStringValue(ApprovalId);
             }
             if (Optional.IsDefined(TargetRoleEligibilityScheduleId))
             {
@@ -65,6 +115,21 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RequestorId))
+            {
+                writer.WritePropertyName("requestorId"u8);
+                writer.WriteStringValue(RequestorId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
+            {
+                writer.WritePropertyName("expandedProperties"u8);
+                writer.WriteObjectValue(ExpandedProperties);
+            }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
@@ -92,11 +157,40 @@ namespace Azure.ResourceManager.Authorization
             writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleEligibilityScheduleRequestData DeserializeRoleEligibilityScheduleRequestData(JsonElement element)
+        RoleEligibilityScheduleRequestData IJsonModel<RoleEligibilityScheduleRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleEligibilityScheduleRequestData(document.RootElement, options);
+        }
+
+        internal static RoleEligibilityScheduleRequestData DeserializeRoleEligibilityScheduleRequestData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +219,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<RoleManagementScheduleExpirationType> type0 = default;
             Optional<DateTimeOffset> endDateTime = default;
             Optional<TimeSpan> duration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -347,8 +443,44 @@ namespace Azure.ResourceManager.Authorization
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, targetRoleEligibilityScheduleId.Value, targetRoleEligibilityScheduleInstanceId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, targetRoleEligibilityScheduleId.Value, targetRoleEligibilityScheduleInstanceId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoleEligibilityScheduleRequestData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RoleEligibilityScheduleRequestData IPersistableModel<RoleEligibilityScheduleRequestData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleEligibilityScheduleRequestData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleEligibilityScheduleRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

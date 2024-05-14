@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of StreamingPolicy items. </summary>
     internal partial class StreamingPolicyListResult
     {
-        /// <summary> Initializes a new instance of StreamingPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyListResult"/>. </summary>
         internal StreamingPolicyListResult()
         {
             Value = new ChangeTrackingList<StreamingPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyListResult"/>. </summary>
         /// <param name="value"> A collection of StreamingPolicy items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal StreamingPolicyListResult(IReadOnlyList<StreamingPolicyData> value, string odataNextLink)

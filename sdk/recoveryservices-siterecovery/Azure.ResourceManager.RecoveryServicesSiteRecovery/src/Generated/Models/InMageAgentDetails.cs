@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The details of the InMage agent. </summary>
     public partial class InMageAgentDetails
     {
-        /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAgentDetails"/>. </summary>
         internal InMageAgentDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAgentDetails"/>. </summary>
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>

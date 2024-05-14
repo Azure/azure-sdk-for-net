@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Scope of the extension. It can be either Cluster or Namespace; but not both. </summary>
     public partial class KubernetesClusterExtensionScope
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         public KubernetesClusterExtensionScope()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         /// <param name="cluster"> Specifies that the scope of the extension is Cluster. </param>
         /// <param name="namespace"> Specifies that the scope of the extension is Namespace. </param>
         internal KubernetesClusterExtensionScope(ScopeCluster cluster, ScopeNamespace @namespace)

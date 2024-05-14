@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> HDInsight ondemand linked service. </summary>
     public partial class HDInsightOnDemandLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HDInsightOnDemandLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
         /// <param name="timeToLive"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HDInsightOnDemand";
         }
 
-        /// <summary> Initializes a new instance of HDInsightOnDemandLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -97,7 +97,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="scriptActions"> Custom script actions to run on HDI ondemand cluster once it's up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </param>
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
-        internal HDInsightOnDemandLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal HDInsightOnDemandLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
@@ -132,6 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ScriptActions = scriptActions;
             VirtualNetworkId = virtualNetworkId;
             SubnetName = subnetName;
+            Credential = credential;
             Type = type ?? "HDInsightOnDemand";
         }
 
@@ -213,5 +215,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object VirtualNetworkId { get; set; }
         /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>
         public object SubnetName { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

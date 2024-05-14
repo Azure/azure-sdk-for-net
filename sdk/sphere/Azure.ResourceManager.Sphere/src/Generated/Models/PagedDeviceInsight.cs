@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Paged collection of DeviceInsight items
-    /// Serialized Name: PagedDeviceInsight
-    /// </summary>
+    /// <summary> Paged collection of DeviceInsight items. </summary>
     internal partial class PagedDeviceInsight
     {
-        /// <summary> Initializes a new instance of PagedDeviceInsight. </summary>
-        /// <param name="value">
-        /// The DeviceInsight items on this page
-        /// Serialized Name: PagedDeviceInsight.value
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="PagedDeviceInsight"/>. </summary>
+        /// <param name="value"> The DeviceInsight items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PagedDeviceInsight(IEnumerable<SphereDeviceInsight> value)
         {
@@ -31,30 +25,18 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PagedDeviceInsight. </summary>
-        /// <param name="value">
-        /// The DeviceInsight items on this page
-        /// Serialized Name: PagedDeviceInsight.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: PagedDeviceInsight.nextLink
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="PagedDeviceInsight"/>. </summary>
+        /// <param name="value"> The DeviceInsight items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal PagedDeviceInsight(IReadOnlyList<SphereDeviceInsight> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The DeviceInsight items on this page
-        /// Serialized Name: PagedDeviceInsight.value
-        /// </summary>
+        /// <summary> The DeviceInsight items on this page. </summary>
         public IReadOnlyList<SphereDeviceInsight> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: PagedDeviceInsight.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

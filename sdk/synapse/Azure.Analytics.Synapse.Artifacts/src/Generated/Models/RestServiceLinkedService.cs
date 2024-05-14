@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Rest Service linked service. </summary>
     public partial class RestServiceLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/>. </summary>
         /// <param name="url"> The base URL of the REST service. </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "RestService";
         }
 
-        /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -54,6 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> The resource you are requesting authorization to use. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="clientId"> The client ID associated with your application. Type: string (or Expression with resultType string). </param>
         /// <param name="clientSecret">
         /// The client secret associated with your application.
@@ -63,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="tokenEndpoint"> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </param>
         /// <param name="resource"> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </param>
         /// <param name="scope"> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </param>
-        internal RestServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, object userName, SecretBase password, object authHeaders, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object aadResourceId, object encryptedCredential, object clientId, SecretBase clientSecret, object tokenEndpoint, object resource, object scope) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal RestServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, object userName, SecretBase password, object authHeaders, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object aadResourceId, object encryptedCredential, CredentialReference credential, object clientId, SecretBase clientSecret, object tokenEndpoint, object resource, object scope) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -77,6 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             ClientId = clientId;
             ClientSecret = clientSecret;
             TokenEndpoint = tokenEndpoint;
@@ -117,6 +119,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object AadResourceId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
         /// <summary> The client ID associated with your application. Type: string (or Expression with resultType string). </summary>
         public object ClientId { get; set; }
         /// <summary>

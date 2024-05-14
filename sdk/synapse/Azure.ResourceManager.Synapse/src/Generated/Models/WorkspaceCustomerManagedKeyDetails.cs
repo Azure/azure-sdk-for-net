@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class WorkspaceCustomerManagedKeyDetails
     {
-        /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyDetails"/>. </summary>
         public WorkspaceCustomerManagedKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyDetails"/>. </summary>
         /// <param name="status"> The customer managed key status on the workspace. </param>
         /// <param name="key"> The key object of the workspace. </param>
         /// <param name="kekIdentity"> Key encryption key. </param>

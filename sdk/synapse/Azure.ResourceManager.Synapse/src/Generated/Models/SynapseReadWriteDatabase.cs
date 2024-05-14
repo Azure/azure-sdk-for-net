@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing a read write database. </summary>
     public partial class SynapseReadWriteDatabase : SynapseDatabaseData
     {
-        /// <summary> Initializes a new instance of SynapseReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseReadWriteDatabase"/>. </summary>
         public SynapseReadWriteDatabase()
         {
             Kind = SynapseKind.ReadWrite;
         }
 
-        /// <summary> Initializes a new instance of SynapseReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseReadWriteDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Availability group replica configuration. </summary>
     public partial class AvailabilityGroupReplica
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupReplica. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupReplica"/>. </summary>
         public AvailabilityGroupReplica()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityGroupReplica. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupReplica"/>. </summary>
         /// <param name="sqlVmInstanceId"> Sql VirtualMachine Instance Id. </param>
         /// <param name="role"> Replica Role in availability group. </param>
         /// <param name="commit"> Replica commit mode in availability group. </param>

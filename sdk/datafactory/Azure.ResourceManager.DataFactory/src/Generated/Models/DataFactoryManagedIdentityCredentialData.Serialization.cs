@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            DataFactoryManagedIdentityCredentialDefinition properties = default;
+            DataFactoryManagedIdentityCredentialProperties properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryManagedIdentityCredentialDefinition.DeserializeDataFactoryManagedIdentityCredentialDefinition(property.Value);
+                    properties = DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

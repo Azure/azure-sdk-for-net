@@ -14,12 +14,27 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Request payload for Update Disk Pool request. </summary>
     public partial class DiskPoolPatch
     {
-        /// <summary> Initializes a new instance of DiskPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolPatch"/>. </summary>
         public DiskPoolPatch()
         {
             ManagedByExtended = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
             Disks = new ChangeTrackingList<WritableSubResource>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolPatch"/>. </summary>
+        /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
+        /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
+        /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
+        internal DiskPoolPatch(string managedBy, IList<string> managedByExtended, StoragePoolSku sku, IDictionary<string, string> tags, IList<WritableSubResource> disks)
+        {
+            ManagedBy = managedBy;
+            ManagedByExtended = managedByExtended;
+            Sku = sku;
+            Tags = tags;
+            Disks = disks;
         }
 
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>

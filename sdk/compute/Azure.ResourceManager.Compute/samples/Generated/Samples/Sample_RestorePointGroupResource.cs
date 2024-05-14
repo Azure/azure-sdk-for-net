@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_RestorePointCollectionUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "RestorePointCollections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_RestorePointCollectionUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "RestorePointCollections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_RestorePointCollectionDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "RestorePointCollections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_RestorePointCollectionDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "RestorePointCollections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetARestorePointCollectionButNotTheRestorePointsContainedInTheRestorePointCollection()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_Get.json
             // this example is just showing the usage of "RestorePointCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetARestorePointCollectionIncludingTheRestorePointsContainedInTheRestorePointCollection()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_Get_WithContainedRestorePoints.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_Get_WithContainedRestorePoints.json
             // this example is just showing the usage of "RestorePointCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRestorePointGroups_GetsTheListOfRestorePointCollectionsInASubscription()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-03-01/examples/restorePointExamples/RestorePointCollection_ListBySubscription.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/restorePointExamples/RestorePointCollection_ListBySubscription.json
             // this example is just showing the usage of "RestorePointCollections_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

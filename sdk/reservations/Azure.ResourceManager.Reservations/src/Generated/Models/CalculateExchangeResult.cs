@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> CalculateExchange operation result. </summary>
     public partial class CalculateExchangeResult
     {
-        /// <summary> Initializes a new instance of CalculateExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResult"/>. </summary>
         internal CalculateExchangeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculateExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResult"/>. </summary>
         /// <param name="id"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>

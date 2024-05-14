@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Table's schema. </summary>
     public partial class OperationalInsightsSchema
     {
-        /// <summary> Initializes a new instance of OperationalInsightsSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSchema"/>. </summary>
         public OperationalInsightsSchema()
         {
             Columns = new ChangeTrackingList<OperationalInsightsColumn>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Solutions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSchema"/>. </summary>
         /// <param name="name"> Table name. </param>
         /// <param name="displayName"> Table display name. </param>
         /// <param name="description"> Table description. </param>

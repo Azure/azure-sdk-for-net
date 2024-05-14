@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Result of the request to check name availability. It contains a flag and possible reason of failure. </summary>
     public partial class SignalRNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of SignalRNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNameAvailabilityResult"/>. </summary>
         internal SignalRNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>

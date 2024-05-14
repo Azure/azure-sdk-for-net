@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The restrictions on a field imposed by a specific policy. </summary>
     public partial class FieldRestriction
     {
-        /// <summary> Initializes a new instance of FieldRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldRestriction"/>. </summary>
         internal FieldRestriction()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FieldRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldRestriction"/>. </summary>
         /// <param name="result"> The type of restriction that is imposed on the field. </param>
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>

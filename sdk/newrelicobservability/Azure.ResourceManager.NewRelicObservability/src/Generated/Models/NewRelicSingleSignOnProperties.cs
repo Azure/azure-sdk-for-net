@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Single sign on Info of the NewRelic account. </summary>
     public partial class NewRelicSingleSignOnProperties
     {
-        /// <summary> Initializes a new instance of NewRelicSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicSingleSignOnProperties"/>. </summary>
         public NewRelicSingleSignOnProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicSingleSignOnProperties"/>. </summary>
         /// <param name="singleSignOnState"> Single sign-on state. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this NewRelic Organization. </param>

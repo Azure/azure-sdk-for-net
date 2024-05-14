@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class of response for listPaths action. </summary>
     public partial class StreamingPathsResult
     {
-        /// <summary> Initializes a new instance of StreamingPathsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPathsResult"/>. </summary>
         internal StreamingPathsResult()
         {
             StreamingPaths = new ChangeTrackingList<StreamingPath>();
             DownloadPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPathsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPathsResult"/>. </summary>
         /// <param name="streamingPaths"> Streaming Paths supported by current Streaming Locator. </param>
         /// <param name="downloadPaths"> Download Paths supported by current Streaming Locator. </param>
         internal StreamingPathsResult(IReadOnlyList<StreamingPath> streamingPaths, IReadOnlyList<string> downloadPaths)

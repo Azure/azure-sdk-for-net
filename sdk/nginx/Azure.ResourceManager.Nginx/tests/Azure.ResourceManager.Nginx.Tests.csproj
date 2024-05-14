@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Nginx.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Network" />

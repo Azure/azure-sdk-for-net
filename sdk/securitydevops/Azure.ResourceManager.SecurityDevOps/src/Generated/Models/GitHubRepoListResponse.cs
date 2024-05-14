@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The GitHubRepoListResponse. </summary>
     internal partial class GitHubRepoListResponse
     {
-        /// <summary> Initializes a new instance of GitHubRepoListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoListResponse"/>. </summary>
         internal GitHubRepoListResponse()
         {
             Value = new ChangeTrackingList<GitHubRepoData>();
         }
 
-        /// <summary> Initializes a new instance of GitHubRepoListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         internal GitHubRepoListResponse(IReadOnlyList<GitHubRepoData> value, string nextLink)

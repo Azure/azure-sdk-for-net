@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SourceControlSecurityTokenProperties : IUtf8JsonSerializable
+    public partial class SourceControlSecurityTokenProperties : IUtf8JsonSerializable, IJsonModel<SourceControlSecurityTokenProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSecurityTokenProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SourceControlSecurityTokenProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSecurityTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceControlSecurityTokenProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessToken))
             {
@@ -30,7 +41,108 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SourceControlSecurityTokenProperties IJsonModel<SourceControlSecurityTokenProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSecurityTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceControlSecurityTokenProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceControlSecurityTokenProperties(document.RootElement, options);
+        }
+
+        internal static SourceControlSecurityTokenProperties DeserializeSourceControlSecurityTokenProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> accessToken = default;
+            Optional<string> refreshToken = default;
+            Optional<SourceControlTokenType> tokenType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("accessToken"u8))
+                {
+                    accessToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("refreshToken"u8))
+                {
+                    refreshToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tokenType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenType = new SourceControlTokenType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SourceControlSecurityTokenProperties(accessToken.Value, refreshToken.Value, Optional.ToNullable(tokenType), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SourceControlSecurityTokenProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSecurityTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SourceControlSecurityTokenProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SourceControlSecurityTokenProperties IPersistableModel<SourceControlSecurityTokenProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSecurityTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSourceControlSecurityTokenProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SourceControlSecurityTokenProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SourceControlSecurityTokenProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

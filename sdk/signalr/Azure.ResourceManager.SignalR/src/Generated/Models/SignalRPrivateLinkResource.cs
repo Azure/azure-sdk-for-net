@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Private link resource. </summary>
     public partial class SignalRPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResource"/>. </summary>
         public SignalRPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SignalR.Models
             ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareablePrivateLinkResourceType>();
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

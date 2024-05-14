@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class VmHostListResponse
     {
-        /// <summary> Initializes a new instance of VmHostListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostListResponse"/>. </summary>
         internal VmHostListResponse()
         {
             Value = new ChangeTrackingList<VmResources>();
         }
 
-        /// <summary> Initializes a new instance of VmHostListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next Vm resource Id, if any. </param>
         internal VmHostListResponse(IReadOnlyList<VmResources> value, string nextLink)

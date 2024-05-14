@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> High-level information about a Template Spec version. </summary>
     public partial class TemplateSpecVersionInfo
     {
-        /// <summary> Initializes a new instance of TemplateSpecVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionInfo"/>. </summary>
         internal TemplateSpecVersionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionInfo"/>. </summary>
         /// <param name="description"> Template Spec version description. </param>
         /// <param name="timeCreated"> The timestamp of when the version was created. </param>
         /// <param name="timeModified"> The timestamp of when the version was last modified. </param>

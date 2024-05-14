@@ -259,8 +259,14 @@ namespace Azure
                     return false;
                 }
                 // Try the ErrorResponse format and fallback to the ResponseError format.
+
+#if NET6_0_OR_GREATER
+                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, ResponseErrorSourceGenerationContext.Default.ErrorResponse)?.Error;
+                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content, ResponseErrorSourceGenerationContext.Default.ResponseError);
+#else
                 error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
                 error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
+#endif
             }
             catch (Exception)
             {
@@ -271,7 +277,8 @@ namespace Azure
             return error != null;
         }
 
-        private class ErrorResponse
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
+        internal class ErrorResponse
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }

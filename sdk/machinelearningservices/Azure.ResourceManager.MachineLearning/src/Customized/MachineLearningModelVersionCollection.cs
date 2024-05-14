@@ -1,15 +1,20 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+#nullable disable
+
 using System.Collections.Generic;
-using System.Text;
-using Azure.ResourceManager.MachineLearning.Models;
 using System.Threading;
+using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningModelVersionCollection
+    /// <summary>
+    /// A class representing a collection of <see cref="MachineLearningModelVersionResource" /> and their operations.
+    /// Each <see cref="MachineLearningModelVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningModelContainerResource" />.
+    /// To get a <see cref="MachineLearningModelVersionCollection" /> instance call the GetMachineLearningModelVersions method from an instance of <see cref="MachineLearningModelContainerResource" />.
+    /// </summary>
+    public partial class MachineLearningModelVersionCollection : ArmCollection, IEnumerable<MachineLearningModelVersionResource>, IAsyncEnumerable<MachineLearningModelVersionResource>
     {
         /// <summary>
         /// List model versions.
@@ -36,22 +41,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningModelVersionResource> GetAllAsync(string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
-        {
-            MachineLearningModelVersionCollectionGetAllOptions options = new MachineLearningModelVersionCollectionGetAllOptions();
-            options.Skip = skip;
-            options.OrderBy = orderBy;
-            options.Top = top;
-            options.Version = version;
-            options.Description = description;
-            options.Offset = offset;
-            options.Tags = tags;
-            options.Properties = properties;
-            options.Feed = feed;
-            options.ListViewType = listViewType;
-
-            return GetAllAsync(options, cancellationToken);
-        }
+        public virtual AsyncPageable<MachineLearningModelVersionResource> GetAllAsync(string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
+            => GetAllAsync(new MachineLearningModelVersionCollectionGetAllOptions() { Skip = skip, OrderBy = orderBy, Top = top, Version = version, Description = description, Offset = offset, Tags = tags, Properties = properties, Feed = feed, ListViewType = listViewType, Stage = null }, cancellationToken);
 
         /// <summary>
         /// List model versions.
@@ -78,21 +69,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningModelVersionResource> GetAll(string skip = null, string orderBy = null, int? top = null, string version = null, string description = null, int? offset = null, string tags = null, string properties = null, string feed = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
-        {
-            MachineLearningModelVersionCollectionGetAllOptions options = new MachineLearningModelVersionCollectionGetAllOptions();
-            options.Skip = skip;
-            options.OrderBy = orderBy;
-            options.Top = top;
-            options.Version = version;
-            options.Description = description;
-            options.Offset = offset;
-            options.Tags = tags;
-            options.Properties = properties;
-            options.Feed = feed;
-            options.ListViewType = listViewType;
-
-            return GetAll(options, cancellationToken);
-        }
+        public virtual Pageable<MachineLearningModelVersionResource> GetAll(string skip, string orderBy, int? top, string version, string description, int? offset, string tags, string properties, string feed, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
+            => GetAll(new MachineLearningModelVersionCollectionGetAllOptions() { Skip = skip, OrderBy = orderBy, Top = top, Version = version, Description = description, Offset = offset, Tags = tags, Properties = properties, Feed = feed, ListViewType = listViewType, Stage = null }, cancellationToken);
     }
 }

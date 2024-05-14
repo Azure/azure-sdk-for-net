@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Schedule info describing when the server should be started or stopped. </summary>
     public partial class SqlScheduleItem
     {
-        /// <summary> Initializes a new instance of SqlScheduleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScheduleItem"/>. </summary>
         /// <param name="startDay"> Start day. </param>
         /// <param name="startTime"> Start time. </param>
         /// <param name="stopDay"> Stop day. </param>

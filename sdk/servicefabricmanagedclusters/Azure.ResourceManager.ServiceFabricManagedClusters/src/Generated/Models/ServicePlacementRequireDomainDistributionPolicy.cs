@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public partial class ServicePlacementRequireDomainDistributionPolicy : ManagedServicePlacementPolicy
     {
-        /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public ServicePlacementRequireDomainDistributionPolicy(string domainName)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServicePlacementPolicyType = ServicePlacementPolicyType.RequiredDomainDistribution;
         }
 
-        /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementRequireDomainDistributionPolicy"/>. </summary>
         /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a AttachedDatabaseConfigurations check name availability request. </summary>
     public partial class KustoAttachedDatabaseConfigurationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Attached database resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = AttachedDatabaseType.MicrosoftKustoClustersAttachedDatabaseConfigurations;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Attached database resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Kusto/clusters/attachedDatabaseConfigurations. </param>
+        internal KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name, AttachedDatabaseType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Attached database resource name. </summary>

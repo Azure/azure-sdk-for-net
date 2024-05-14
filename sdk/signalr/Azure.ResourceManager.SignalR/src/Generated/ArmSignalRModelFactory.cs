@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSignalRModelFactory
     {
-        /// <summary> Initializes a new instance of SignalRNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SignalRUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRUsage"/>. </summary>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="currentValue"> Current value for the usage quota. </param>
         /// <param name="limit"> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRUsage(id, currentValue, limit, name, unit);
         }
 
-        /// <summary> Initializes a new instance of SignalRUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRUsageName"/>. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
         /// <returns> A new <see cref="Models.SignalRUsageName"/> instance for mocking. </returns>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of SignalRData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRData(id, name, resourceType, systemData, tags, location, sku, kind, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), isClientCertEnabled != null ? new SignalRTlsSettings(isClientCertEnabled) : null, hostNamePrefix, features?.ToList(), liveTraceConfiguration, resourceLogCategories != null ? new SignalRResourceLogCategoryListResult(resourceLogCategories?.ToList()) : null, corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList()) : null, upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList()) : null, networkACLs, publicNetworkAccess, disableLocalAuth, disableAadAuth);
         }
 
-        /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRResourceSku(name, tier, size, family, capacity);
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRSharedPrivateLinkResourceData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRCustomCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRCustomCertificateData(id, name, resourceType, systemData, provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion);
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalR.SignalRCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRCustomDomainData(id, name, resourceType, systemData, provisioningState, domainName, customCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(customCertificateId) : null);
         }
 
-        /// <summary> Initializes a new instance of SignalRKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), shareablePrivateLinkResourceTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SignalRSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRSku(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of SignalRSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignalRSkuCapacity"/>. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>

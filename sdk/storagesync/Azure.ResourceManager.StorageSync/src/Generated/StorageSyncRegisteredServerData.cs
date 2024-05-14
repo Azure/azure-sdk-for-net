@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncRegisteredServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerData"/>. </summary>
         public StorageSyncRegisteredServerData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageSync
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of a Master Target Server. </summary>
     public partial class MasterTargetServer
     {
-        /// <summary> Initializes a new instance of MasterTargetServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MasterTargetServer"/>. </summary>
         internal MasterTargetServer()
         {
             RetentionVolumes = new ChangeTrackingList<SiteRecoveryRetentionVolume>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of MasterTargetServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MasterTargetServer"/>. </summary>
         /// <param name="id"> The server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
         /// <param name="name"> The server name. </param>

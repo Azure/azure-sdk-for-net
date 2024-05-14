@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a predictive metric value in the given bucket. </summary>
     public partial class PredictiveValue
     {
-        /// <summary> Initializes a new instance of PredictiveValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictiveValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="value"> Predictive value in this time bucket. </param>
         internal PredictiveValue(DateTimeOffset timeStamp, double value)

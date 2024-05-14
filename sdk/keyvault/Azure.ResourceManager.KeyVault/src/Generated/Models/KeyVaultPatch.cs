@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for creating or updating a vault. </summary>
     public partial class KeyVaultPatch
     {
-        /// <summary> Initializes a new instance of KeyVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPatch"/>. </summary>
         public KeyVaultPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPatch"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        internal KeyVaultPatch(IDictionary<string, string> tags, KeyVaultPatchProperties properties)
+        {
+            Tags = tags;
+            Properties = properties;
         }
 
         /// <summary> The tags that will be assigned to the key vault. </summary>

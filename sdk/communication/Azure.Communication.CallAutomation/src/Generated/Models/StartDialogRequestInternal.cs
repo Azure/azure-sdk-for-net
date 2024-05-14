@@ -13,22 +13,49 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartDialogRequest. </summary>
     internal partial class StartDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of StartDialogRequestInternal. </summary>
-        /// <param name="dialogOptions"> Defines options for dialog. </param>
-        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dialogOptions"/> is null. </exception>
-        public StartDialogRequestInternal(DialogOptionsInternal dialogOptions, DialogInputType dialogInputType)
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
+        /// <param name="dialog">
+        /// Defines the dialog.
+        /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dialog"/> is null. </exception>
+        public StartDialogRequestInternal(BaseDialog dialog)
         {
-            Argument.AssertNotNull(dialogOptions, nameof(dialogOptions));
+            Argument.AssertNotNull(dialog, nameof(dialog));
 
-            DialogOptions = dialogOptions;
-            DialogInputType = dialogInputType;
+            Dialog = dialog;
         }
 
-        /// <summary> Defines options for dialog. </summary>
-        public DialogOptionsInternal DialogOptions { get; }
-        /// <summary> Determines the type of the dialog. </summary>
-        public DialogInputType DialogInputType { get; }
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
+        /// <param name="dialog">
+        /// Defines the dialog.
+        /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal StartDialogRequestInternal(BaseDialog dialog, string operationCallbackUri, string operationContext)
+        {
+            Dialog = dialog;
+            OperationCallbackUri = operationCallbackUri;
+            OperationContext = operationContext;
+        }
+
+        /// <summary>
+        /// Defines the dialog.
+        /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// </summary>
+        public BaseDialog Dialog { get; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

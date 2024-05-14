@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute spark job activity. </summary>
     public partial class SynapseSparkJobDefinitionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="sparkJob"> Synapse spark job reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "SparkJob";
         }
 
-        /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="configurationType"> The type of the spark config. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal SynapseSparkJobDefinitionActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<BinaryData> arguments, DataFactoryElement<string> file, DataFactoryElement<bool> scanFolder, DataFactoryElement<string> className, IList<BinaryData> files, IList<BinaryData> pythonCodeReference, IList<BinaryData> filesV2, BigDataPoolParametrizationReference targetBigDataPool, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SynapseSparkJobDefinitionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<BinaryData> arguments, DataFactoryElement<string> file, DataFactoryElement<bool> scanFolder, DataFactoryElement<string> className, IList<BinaryData> files, IList<BinaryData> pythonCodeReference, IList<BinaryData> filesV2, BigDataPoolParametrizationReference targetBigDataPool, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, DataFactorySparkConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
             Arguments = arguments;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Number of executors to launch for this job, which will override the 'numExecutors' of the spark job definition you provide. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> NumExecutors { get; set; }
         /// <summary> The type of the spark config. </summary>
-        public ConfigurationType? ConfigurationType { get; set; }
+        public DataFactorySparkConfigurationType? ConfigurationType { get; set; }
         /// <summary> The spark configuration of the spark job. </summary>
         public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

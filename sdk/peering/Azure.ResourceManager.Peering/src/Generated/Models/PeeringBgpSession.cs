@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a BGP session. </summary>
     public partial class PeeringBgpSession
     {
-        /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringBgpSession"/>. </summary>
         public PeeringBgpSession()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringBgpSession"/>. </summary>
         /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends' IPv4 addresses. </param>
         /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends' IPv6 addresses. </param>
         /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft's end. </param>

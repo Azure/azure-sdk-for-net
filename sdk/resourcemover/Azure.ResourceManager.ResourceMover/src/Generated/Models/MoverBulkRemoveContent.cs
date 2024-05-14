@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for bulk remove of move resources operation. </summary>
     public partial class MoverBulkRemoveContent
     {
-        /// <summary> Initializes a new instance of MoverBulkRemoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverBulkRemoveContent"/>. </summary>
         public MoverBulkRemoveContent()
         {
             MoverResources = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverBulkRemoveContent"/>. </summary>
+        /// <param name="validateOnly"> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </param>
+        /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
+        /// <param name="moverResourceInputType"> Defines the move resource input type. </param>
+        internal MoverBulkRemoveContent(bool? validateOnly, IList<ResourceIdentifier> moverResources, MoverResourceInputType? moverResourceInputType)
+        {
+            ValidateOnly = validateOnly;
+            MoverResources = moverResources;
+            MoverResourceInputType = moverResourceInputType;
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>

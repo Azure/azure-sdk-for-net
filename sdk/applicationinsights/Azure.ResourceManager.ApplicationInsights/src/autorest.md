@@ -11,9 +11,20 @@ namespace: Azure.ResourceManager.ApplicationInsights
 require: https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - LiveToken_Get
+  - WorkItemConfigurations_Create
+  - WorkItemConfigurations_UpdateItem
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -22,7 +33,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -68,6 +79,9 @@ rename-mapping:
   WebTestPropertiesValidationRules.SSLCheck: CheckSsl
   ApplicationInsightsComponentFeature.ResouceId: ResourceId
   ItemScopePath.myanalyticsItems: MyAnalyticsItems
+  MyWorkbookResource: MyWorkbookResourceContent
+  PrivateLinkScopedResource: PrivateLinkScopedResourceContent
+  TagsResource: ComponentTag
 
 directive:
   - from: webTestLocations_API.json
@@ -88,7 +102,20 @@ directive:
     debug: true
     transform: >
       delete $["x-ms-pageable"]
-
+  - from: workbookTemplates_API.json
+    where: $.definitions
+    transform: >
+      $["WorkbookTemplatesListResult"] = {
+        "description": "WorkbookTemplate list result.",
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/WorkbookTemplate"
+        }
+      }
+    reason: workaround incorrect definition in swagger
+  - where-operation: WorkbookTemplates_ListByResourceGroup
+    transform: >
+      delete $["x-ms-pageable"]
 override-operation-name:
   ComponentQuotaStatus_Get: GetComponentQuotaStatus
 ```

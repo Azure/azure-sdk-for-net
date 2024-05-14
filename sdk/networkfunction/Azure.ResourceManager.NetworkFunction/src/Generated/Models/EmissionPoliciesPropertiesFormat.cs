@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Emission policy properties. </summary>
     public partial class EmissionPoliciesPropertiesFormat
     {
-        /// <summary> Initializes a new instance of EmissionPoliciesPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmissionPoliciesPropertiesFormat"/>. </summary>
         public EmissionPoliciesPropertiesFormat()
         {
             EmissionDestinations = new ChangeTrackingList<EmissionPolicyDestination>();
         }
 
-        /// <summary> Initializes a new instance of EmissionPoliciesPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmissionPoliciesPropertiesFormat"/>. </summary>
         /// <param name="emissionType"> Emission format type. </param>
         /// <param name="emissionDestinations"> Emission policy destinations. </param>
         internal EmissionPoliciesPropertiesFormat(EmissionType? emissionType, IList<EmissionPolicyDestination> emissionDestinations)

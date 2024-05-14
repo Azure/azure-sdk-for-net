@@ -13,13 +13,26 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a switch billing Operation. </summary>
     public partial class NewRelicSwitchBillingContent
     {
-        /// <summary> Initializes a new instance of NewRelicSwitchBillingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicSwitchBillingContent(string userEmail)
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
+            UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicSwitchBillingContent"/>. </summary>
+        /// <param name="azureResourceId"> Azure resource Id. </param>
+        /// <param name="organizationId"> Organization id. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="userEmail"> User Email. </param>
+        internal NewRelicSwitchBillingContent(ResourceIdentifier azureResourceId, string organizationId, NewRelicPlanDetails planData, string userEmail)
+        {
+            AzureResourceId = azureResourceId;
+            OrganizationId = organizationId;
+            PlanData = planData;
             UserEmail = userEmail;
         }
 

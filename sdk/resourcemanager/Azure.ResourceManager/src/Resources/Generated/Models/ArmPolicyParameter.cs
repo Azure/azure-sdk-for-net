@@ -14,23 +14,57 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The definition of a parameter that can be provided to the policy. </summary>
     public partial class ArmPolicyParameter
     {
-        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameter"/>. </summary>
         public ArmPolicyParameter()
         {
             AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameter"/>. </summary>
         /// <param name="parameterType"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
         /// <param name="metadata"> General metadata for the parameter. </param>
-        internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ParameterType = parameterType;
             AllowedValues = allowedValues;
             DefaultValue = defaultValue;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The data type of the parameter. </summary>
@@ -41,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -72,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

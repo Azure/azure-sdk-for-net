@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Object that includes an array of the resource usages and a possible link for next set. </summary>
     internal partial class SignalRServiceUsageList
     {
-        /// <summary> Initializes a new instance of SignalRServiceUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageList"/>. </summary>
         internal SignalRServiceUsageList()
         {
             Value = new ChangeTrackingList<SignalRServiceUsage>();
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageList"/>. </summary>
         /// <param name="value"> List of the resource usages. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

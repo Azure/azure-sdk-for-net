@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class SingleServerCustomResourceNames
     {
-        /// <summary> Initializes a new instance of SingleServerCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerCustomResourceNames"/>. </summary>
         protected SingleServerCustomResourceNames()
         {
         }
 
-        /// <summary> Initializes a new instance of SingleServerCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
         internal SingleServerCustomResourceNames(SapNamingPatternType namingPatternType)
         {

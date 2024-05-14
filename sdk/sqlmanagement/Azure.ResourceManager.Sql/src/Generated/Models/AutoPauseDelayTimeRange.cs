@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Supported auto pause delay time range. </summary>
     public partial class AutoPauseDelayTimeRange
     {
-        /// <summary> Initializes a new instance of AutoPauseDelayTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoPauseDelayTimeRange"/>. </summary>
         internal AutoPauseDelayTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoPauseDelayTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoPauseDelayTimeRange"/>. </summary>
         /// <param name="minValue"> Minimum value. </param>
         /// <param name="maxValue"> Maximum value. </param>
         /// <param name="stepSize"> Step value for discrete values between the minimum value and the maximum value. </param>

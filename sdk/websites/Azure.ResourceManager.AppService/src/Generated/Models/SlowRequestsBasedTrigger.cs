@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Trigger based on request execution time. </summary>
     public partial class SlowRequestsBasedTrigger
     {
-        /// <summary> Initializes a new instance of SlowRequestsBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlowRequestsBasedTrigger"/>. </summary>
         public SlowRequestsBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of SlowRequestsBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlowRequestsBasedTrigger"/>. </summary>
         /// <param name="timeTaken"> Time taken. </param>
         /// <param name="path"> Request Path. </param>
         /// <param name="count"> Request Count. </param>

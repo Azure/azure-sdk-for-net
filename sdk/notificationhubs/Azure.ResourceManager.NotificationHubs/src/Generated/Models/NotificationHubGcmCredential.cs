@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub GcmCredential. </summary>
     public partial class NotificationHubGcmCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
         public NotificationHubGcmCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
         /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </param>
         /// <param name="gcmApiKey"> The Google API key. </param>
         internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey)

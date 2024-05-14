@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsApplicationGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupData"/>. </summary>
         public EventHubsApplicationGroupData()
         {
             Policies = new ChangeTrackingList<EventHubsApplicationGroupPolicy>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

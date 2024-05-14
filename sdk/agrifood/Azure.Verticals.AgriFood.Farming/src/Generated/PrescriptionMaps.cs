@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -390,7 +391,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionMapsByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionMapsByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMapsByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMapsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -437,7 +438,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionMapsByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionMapsByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMapsByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMapsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -479,7 +480,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionMapsRequest(types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionMapsNextPageRequest(nextLink, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMaps", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMaps", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -521,7 +522,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionMapsRequest(types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionMapsNextPageRequest(nextLink, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMaps", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PrescriptionMaps.GetPrescriptionMaps", "value", "nextLink", context);
         }
 
         /// <summary>

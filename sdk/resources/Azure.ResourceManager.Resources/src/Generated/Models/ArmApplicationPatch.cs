@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information about managed application. </summary>
     public partial class ArmApplicationPatch : ArmApplicationResourceData
     {
-        /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ArmApplicationPatch(AzureLocation location) : base(location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             Artifacts = new ChangeTrackingList<ArmApplicationArtifact>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

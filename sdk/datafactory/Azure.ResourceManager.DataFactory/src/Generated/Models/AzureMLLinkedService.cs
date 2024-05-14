@@ -13,9 +13,9 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure ML Studio Web Service linked service. </summary>
-    public partial class AzureMLLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureMLLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureMLLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
             Argument.AssertNotNull(apiKey, nameof(apiKey));
 
-            MlEndpoint = mlEndpoint;
+            MLEndpoint = mlEndpoint;
             ApiKey = apiKey;
             LinkedServiceType = "AzureML";
         }
 
-        /// <summary> Initializes a new instance of AzureMLLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
-        internal AzureMLLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> mlEndpoint, DataFactorySecretBaseDefinition apiKey, DataFactoryElement<string> updateResourceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactoryElement<string> tenant, BinaryData encryptedCredential, DataFactoryElement<string> authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureMLLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> mlEndpoint, DataFactorySecretBaseDefinition apiKey, DataFactoryElement<string> updateResourceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
-            MlEndpoint = mlEndpoint;
+            MLEndpoint = mlEndpoint;
             ApiKey = apiKey;
             UpdateResourceEndpoint = updateResourceEndpoint;
             ServicePrincipalId = servicePrincipalId;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MlEndpoint { get; set; }
+        public DataFactoryElement<string> MLEndpoint { get; set; }
         /// <summary> The API key for accessing the Azure ML model endpoint. </summary>
         public DataFactorySecretBaseDefinition ApiKey { get; set; }
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
@@ -69,37 +69,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Authentication { get; set; }
     }

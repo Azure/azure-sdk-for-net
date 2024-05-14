@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleEventHubDirectDestination. </summary>
     public partial class DataCollectionRuleEventHubDirectDestination
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDirectDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDirectDestination"/>. </summary>
         public DataCollectionRuleEventHubDirectDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDirectDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDirectDestination"/>. </summary>
         /// <param name="eventHubResourceId"> The resource ID of the event hub. </param>
         /// <param name="name">
         /// A friendly name for the destination.

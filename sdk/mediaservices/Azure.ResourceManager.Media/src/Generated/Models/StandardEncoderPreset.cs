@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes all the settings to be used when encoding the input video with the Standard Encoder. </summary>
     public partial class StandardEncoderPreset : MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of StandardEncoderPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandardEncoderPreset"/>. </summary>
         /// <param name="codecs">
         /// The list of codecs to be used when encoding the input video.
         /// Please note <see cref="MediaCodecBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.StandardEncoderPreset";
         }
 
-        /// <summary> Initializes a new instance of StandardEncoderPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandardEncoderPreset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="experimentalOptions"> Dictionary containing key value pairs for parameters not exposed in the preset itself. </param>
         /// <param name="filters"> One or more filtering operations that are applied to the input media before encoding. </param>

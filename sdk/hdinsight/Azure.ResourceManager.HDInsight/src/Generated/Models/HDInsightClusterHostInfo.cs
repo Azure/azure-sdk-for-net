@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The cluster host information. </summary>
     public partial class HDInsightClusterHostInfo
     {
-        /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterHostInfo"/>. </summary>
         internal HDInsightClusterHostInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterHostInfo"/>. </summary>
         /// <param name="name"> The host name. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
         /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>

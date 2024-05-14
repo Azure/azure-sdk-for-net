@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for unplanned failover. </summary>
     public partial class UnplannedFailoverContent
     {
-        /// <summary> Initializes a new instance of UnplannedFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverContent"/>. </summary>
         /// <param name="properties"> Unplanned failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public UnplannedFailoverContent(UnplannedFailoverProperties properties)

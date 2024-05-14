@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GroupContract : Resource
+    public partial class GroupContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the GroupContract class.

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// A Class representing a DeviceProvisioningServicesCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceProvisioningServicesCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceProvisioningServicesCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource" /> using the GetDeviceProvisioningServicesCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServicesCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceProvisioningServicesCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource"/> using the GetDeviceProvisioningServicesCertificate method.
     /// </summary>
     public partial class DeviceProvisioningServicesCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceProvisioningServicesCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="provisioningServiceName"> The provisioningServiceName. </param>
+        /// <param name="certificateName"> The certificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly DpsCertificateRestOperations _deviceProvisioningServicesCertificateDpsCertificateRestClient;
         private readonly DeviceProvisioningServicesCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateResource"/> class for mocking. </summary>
         protected DeviceProvisioningServicesCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceProvisioningServicesCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceProvisioningServicesCertificateResource(ArmClient client, DeviceProvisioningServicesCertificateData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +143,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the certificate. </param>
@@ -163,6 +183,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +230,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -239,6 +275,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,6 +323,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -318,6 +370,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_GenerateVerificationCode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -351,6 +411,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_GenerateVerificationCode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -386,6 +454,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_VerifyCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -419,6 +495,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DpsCertificate_VerifyCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

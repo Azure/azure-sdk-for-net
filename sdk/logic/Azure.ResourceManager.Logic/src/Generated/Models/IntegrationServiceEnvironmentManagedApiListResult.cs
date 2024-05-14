@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration service environment managed APIs. </summary>
     internal partial class IntegrationServiceEnvironmentManagedApiListResult
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiListResult"/>. </summary>
         internal IntegrationServiceEnvironmentManagedApiListResult()
         {
             Value = new ChangeTrackingList<IntegrationServiceEnvironmentManagedApiData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiListResult"/>. </summary>
         /// <param name="value"> The integration service environment managed APIs. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationServiceEnvironmentManagedApiListResult(IReadOnlyList<IntegrationServiceEnvironmentManagedApiData> value, string nextLink)

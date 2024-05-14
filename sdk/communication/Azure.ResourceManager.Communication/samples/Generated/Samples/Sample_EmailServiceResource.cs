@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetEmailServiceResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/emailServices/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/emailServices/get.json
             // this example is just showing the usage of "EmailServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteEmailServiceResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/emailServices/delete.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/emailServices/delete.json
             // this example is just showing the usage of "EmailServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateEmailServiceResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/emailServices/update.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/emailServices/update.json
             // this example is just showing the usage of "EmailServices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetEmailServiceResources_ListEmailServiceResourcesBySubscription()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/emailServices/listBySubscription.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/emailServices/listBySubscription.json
             // this example is just showing the usage of "EmailServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVerifiedExchangeOnlineDomainsEmailServices_GetVerifiedExchangeOnlineDomains()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/emailServices/getVerifiedExchangeOnlineDomains.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/emailServices/getVerifiedExchangeOnlineDomains.json
             // this example is just showing the usage of "EmailServices_ListVerifiedExchangeOnlineDomains" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

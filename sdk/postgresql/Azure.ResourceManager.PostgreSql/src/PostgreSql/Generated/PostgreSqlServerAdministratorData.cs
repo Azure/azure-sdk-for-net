@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlServerAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerAdministratorData"/>. </summary>
         public PostgreSqlServerAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

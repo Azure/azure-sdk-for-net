@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a FileShare along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FileShareResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFileShareResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FileServiceResource" /> using the GetFileShare method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FileShareResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFileShareResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FileServiceResource"/> using the GetFileShare method.
     /// </summary>
     public partial class FileShareResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FileShareResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareName"> The shareName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Storage
         private readonly FileSharesRestOperations _fileShareRestClient;
         private readonly FileShareData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices/shares";
+
         /// <summary> Initializes a new instance of the <see cref="FileShareResource"/> class for mocking. </summary>
         protected FileShareResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FileShareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FileShareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FileShareResource(ArmClient client, FileShareData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices/shares";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileShares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +144,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
@@ -165,6 +185,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileShares_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +230,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -238,6 +274,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Properties to update for the file share. </param>
@@ -271,6 +315,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileShares_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,9 +358,17 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Restore</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual async Task<Response> RestoreAsync(DeletedShare deletedShare, CancellationToken cancellationToken = default)
@@ -340,9 +400,17 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Restore</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual Response Restore(DeletedShare deletedShare, CancellationToken cancellationToken = default)
@@ -373,6 +441,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileShares_Lease</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,6 +481,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileShares_Lease</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FileShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

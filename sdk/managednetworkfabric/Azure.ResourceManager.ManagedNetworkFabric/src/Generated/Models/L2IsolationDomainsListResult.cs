@@ -11,26 +11,26 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of L2IsolationDomains. </summary>
+    /// <summary> List of L2 Isolation Domains. </summary>
     internal partial class L2IsolationDomainsListResult
     {
-        /// <summary> Initializes a new instance of L2IsolationDomainsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="L2IsolationDomainsListResult"/>. </summary>
         internal L2IsolationDomainsListResult()
         {
-            Value = new ChangeTrackingList<L2IsolationDomainData>();
+            Value = new ChangeTrackingList<NetworkFabricL2IsolationDomainData>();
         }
 
-        /// <summary> Initializes a new instance of L2IsolationDomainsListResult. </summary>
-        /// <param name="value"> Displays list of L2IsolationDomain resources. </param>
+        /// <summary> Initializes a new instance of <see cref="L2IsolationDomainsListResult"/>. </summary>
+        /// <param name="value"> Displays list of L2 Isolation Domain resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal L2IsolationDomainsListResult(IReadOnlyList<L2IsolationDomainData> value, string nextLink)
+        internal L2IsolationDomainsListResult(IReadOnlyList<NetworkFabricL2IsolationDomainData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Displays list of L2IsolationDomain resources. </summary>
-        public IReadOnlyList<L2IsolationDomainData> Value { get; }
+        /// <summary> Displays list of L2 Isolation Domain resources. </summary>
+        public IReadOnlyList<NetworkFabricL2IsolationDomainData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CommitmentPlanAccountAssociation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommitmentPlanAccountAssociationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommitmentPlanAccountAssociationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesCommitmentPlanResource" /> using the GetCommitmentPlanAccountAssociation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommitmentPlanAccountAssociationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommitmentPlanAccountAssociationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesCommitmentPlanResource"/> using the GetCommitmentPlanAccountAssociation method.
     /// </summary>
     public partial class CommitmentPlanAccountAssociationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommitmentPlanAccountAssociationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="commitmentPlanName"> The commitmentPlanName. </param>
+        /// <param name="commitmentPlanAssociationName"> The commitmentPlanAssociationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly CommitmentPlansRestOperations _commitmentPlanAccountAssociationCommitmentPlansRestClient;
         private readonly CommitmentPlanAccountAssociationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/commitmentPlans/accountAssociations";
+
         /// <summary> Initializes a new instance of the <see cref="CommitmentPlanAccountAssociationResource"/> class for mocking. </summary>
         protected CommitmentPlanAccountAssociationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommitmentPlanAccountAssociationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommitmentPlanAccountAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommitmentPlanAccountAssociationResource(ArmClient client, CommitmentPlanAccountAssociationData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/commitmentPlans/accountAssociations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetAssociation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetAssociation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_DeleteAssociation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_DeleteAssociation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_CreateOrUpdateAssociation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_CreateOrUpdateAssociation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

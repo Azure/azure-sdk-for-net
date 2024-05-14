@@ -5,11 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.DigitalTwins.Core
 {
     public partial class DigitalTwinsModelData

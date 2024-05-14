@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ExtendedErrorInfo. </summary>
     public partial class ExtendedErrorInfo
     {
-        /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedErrorInfo"/>. </summary>
         public ExtendedErrorInfo()
         {
             Details = new ChangeTrackingList<ExtendedErrorInfo>();
             AdditionalInfo = new ChangeTrackingList<TypedErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedErrorInfo"/>. </summary>
         /// <param name="code"></param>
         /// <param name="target"></param>
         /// <param name="message"></param>

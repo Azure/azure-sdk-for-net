@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a domain. </summary>
     public partial class AppServiceDomainPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
         public AppServiceDomainPatch()
         {
             NameServers = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

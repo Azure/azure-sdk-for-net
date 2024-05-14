@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.IotHub
         public virtual Azure.Pageable<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.IotHub
         public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource> GetIfExists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource>> GetIfExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -85,13 +89,15 @@ namespace Azure.ResourceManager.IotHub
         public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotHub.IotHubDescriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotHub.IotHubDescriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotHub.IotHubDescriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubDescriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IotHubDescriptionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IotHubDescriptionData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotHub.Models.IotHubSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public IotHubDescriptionData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotHub.Models.IotHubSkuInfo sku) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotHub.Models.IotHubProperties Properties { get { throw null; } set { } }
@@ -183,6 +189,8 @@ namespace Azure.ResourceManager.IotHub
         public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -215,6 +223,8 @@ namespace Azure.ResourceManager.IotHub
         public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource>> GetAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource> GetIfExists(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource>> GetIfExistsAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -233,6 +243,35 @@ namespace Azure.ResourceManager.IotHub
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string groupId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.IotHub.Mocking
+{
+    public partial class MockableIotHubArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotHubArmClient() { }
+        public virtual Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource GetEventHubConsumerGroupInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource GetIotHubCertificateDescriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotHub.IotHubDescriptionResource GetIotHubDescriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource GetIotHubPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableIotHubResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotHubResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescription(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> GetIotHubDescriptionAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.IotHub.IotHubDescriptionCollection GetIotHubDescriptions() { throw null; }
+    }
+    public partial class MockableIotHubSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotHubSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescriptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescriptionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotHub.Models.IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotHub.Models.IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.IotHub.Models
@@ -267,6 +306,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.RouteCompilationError RouteCompilationError(string message = null, Azure.ResourceManager.IotHub.Models.RouteErrorSeverity? severity = default(Azure.ResourceManager.IotHub.Models.RouteErrorSeverity?), Azure.ResourceManager.IotHub.Models.RouteErrorRange location = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RouteErrorPosition RouteErrorPosition(int? line = default(int?), int? column = default(int?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RouteErrorRange RouteErrorRange(Azure.ResourceManager.IotHub.Models.RouteErrorPosition start = null, Azure.ResourceManager.IotHub.Models.RouteErrorPosition end = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, System.Uri endpointUri = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null) { throw null; }
     }
     public partial class CloudToDeviceFeedbackQueueProperties
     {
@@ -924,9 +964,27 @@ namespace Azure.ResourceManager.IotHub.Models
         public static bool operator !=(Azure.ResourceManager.IotHub.Models.RouteErrorSeverity left, Azure.ResourceManager.IotHub.Models.RouteErrorSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RoutingCosmosDBSqlApiProperties
+    {
+        public RoutingCosmosDBSqlApiProperties(string name, System.Uri endpointUri, string databaseName, string containerName) { }
+        public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public string DatabaseName { get { throw null; } set { } }
+        public System.Uri EndpointUri { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public string PartitionKeyName { get { throw null; } set { } }
+        public string PartitionKeyTemplate { get { throw null; } set { } }
+        public string PrimaryKey { get { throw null; } set { } }
+        public string ResourceGroup { get { throw null; } set { } }
+        public string SecondaryKey { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
+    }
     public partial class RoutingEndpoints
     {
         public RoutingEndpoints() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties> CosmosDBSqlContainers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingEventHubProperties> EventHubs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingServiceBusQueueEndpointProperties> ServiceBusQueues { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.RoutingServiceBusTopicEndpointProperties> ServiceBusTopics { get { throw null; } }

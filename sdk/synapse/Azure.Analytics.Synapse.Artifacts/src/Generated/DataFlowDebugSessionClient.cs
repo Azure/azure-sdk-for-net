@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionClient. </summary>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public DataFlowDebugSessionClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
@@ -52,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes a new instance of DataFlowDebugSessionClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         internal DataFlowDebugSessionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
@@ -139,7 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Query all active data flow debug sessions. </summary>
@@ -148,7 +149,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates a data flow debug session. </summary>

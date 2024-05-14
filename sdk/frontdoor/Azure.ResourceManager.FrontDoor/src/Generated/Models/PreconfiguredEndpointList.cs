@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a list of preconfigured endpoints. </summary>
     internal partial class PreconfiguredEndpointList
     {
-        /// <summary> Initializes a new instance of PreconfiguredEndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpointList"/>. </summary>
         internal PreconfiguredEndpointList()
         {
             Value = new ChangeTrackingList<PreconfiguredEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of PreconfiguredEndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpointList"/>. </summary>
         /// <param name="value"> List of PreconfiguredEndpoints supported by NetworkExperiment. </param>
         /// <param name="nextLink"> URL to get the next set of PreconfiguredEndpoints if there are any. </param>
         internal PreconfiguredEndpointList(IReadOnlyList<PreconfiguredEndpoint> value, string nextLink)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamingJobInputResource" /> and their operations.
-    /// Each <see cref="StreamingJobInputResource" /> in the collection will belong to the same instance of <see cref="StreamingJobResource" />.
-    /// To get a <see cref="StreamingJobInputCollection" /> instance call the GetStreamingJobInputs method from an instance of <see cref="StreamingJobResource" />.
+    /// A class representing a collection of <see cref="StreamingJobInputResource"/> and their operations.
+    /// Each <see cref="StreamingJobInputResource"/> in the collection will belong to the same instance of <see cref="StreamingJobResource"/>.
+    /// To get a <see cref="StreamingJobInputCollection"/> instance call the GetStreamingJobInputs method from an instance of <see cref="StreamingJobResource"/>.
     /// </summary>
     public partial class StreamingJobInputCollection : ArmCollection, IEnumerable<StreamingJobInputResource>, IAsyncEnumerable<StreamingJobInputResource>
     {
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Inputs_CreateOrReplace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +115,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Inputs_CreateOrReplace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -149,6 +166,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Inputs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inputName"> The name of the input. </param>
@@ -185,6 +210,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Inputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,16 +256,24 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Inputs_ListByStreamingJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingJobInputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingJobInputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobInputResource> GetAllAsync(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobInputInputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobInputInputsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,16 +287,24 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Inputs_ListByStreamingJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingJobInputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingJobInputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobInputResource> GetAll(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobInputInputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobInputInputsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,6 +317,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Inputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +361,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Inputs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inputName"> The name of the input. </param>
@@ -320,6 +385,96 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 var response = _streamingJobInputInputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inputName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Inputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inputName"> The name of the input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingJobInputResource>> GetIfExistsAsync(string inputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+
+            using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingJobInputInputsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inputName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobInputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobInputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/inputs/{inputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Inputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobInputResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="inputName"> The name of the input. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        public virtual NullableResponse<StreamingJobInputResource> GetIfExists(string inputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+
+            using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingJobInputInputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inputName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobInputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobInputResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

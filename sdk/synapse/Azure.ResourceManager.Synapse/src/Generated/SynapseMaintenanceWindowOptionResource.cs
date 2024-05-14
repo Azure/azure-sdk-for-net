@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseMaintenanceWindowOption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseMaintenanceWindowOptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseMaintenanceWindowOptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseMaintenanceWindowOption method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseMaintenanceWindowOptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseMaintenanceWindowOptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseMaintenanceWindowOption method.
     /// </summary>
     public partial class SynapseMaintenanceWindowOptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseMaintenanceWindowOptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/maintenanceWindowOptions/current";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolMaintenanceWindowOptionsRestOperations _synapseMaintenanceWindowOptionSqlPoolMaintenanceWindowOptionsRestClient;
         private readonly SynapseMaintenanceWindowOptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/maintenanceWindowOptions";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseMaintenanceWindowOptionResource"/> class for mocking. </summary>
         protected SynapseMaintenanceWindowOptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseMaintenanceWindowOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseMaintenanceWindowOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseMaintenanceWindowOptionResource(ArmClient client, SynapseMaintenanceWindowOptionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/maintenanceWindowOptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +144,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

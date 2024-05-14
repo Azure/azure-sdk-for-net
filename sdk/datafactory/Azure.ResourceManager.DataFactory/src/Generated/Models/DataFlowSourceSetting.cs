@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Definition of data flow source setting for debug. </summary>
     public partial class DataFlowSourceSetting
     {
-        /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowSourceSetting"/>. </summary>
         public DataFlowSourceSetting()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowSourceSetting"/>. </summary>
+        /// <param name="sourceName"> The data flow source name. </param>
+        /// <param name="rowLimit"> Defines the row limit of data flow source in debug. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal DataFlowSourceSetting(string sourceName, int? rowLimit, IDictionary<string, BinaryData> additionalProperties)
+        {
+            SourceName = sourceName;
+            RowLimit = rowLimit;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The data flow source name. </summary>
@@ -30,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

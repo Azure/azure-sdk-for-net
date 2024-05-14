@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The compliance state rollup. </summary>
     public partial class ComplianceDetail
     {
-        /// <summary> Initializes a new instance of ComplianceDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceDetail"/>. </summary>
         internal ComplianceDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ComplianceDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceDetail"/>. </summary>
         /// <param name="complianceState"> The compliance state. </param>
         /// <param name="count"> Summarized count value for this compliance state. </param>
         internal ComplianceDetail(string complianceState, int? count)

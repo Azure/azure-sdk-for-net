@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Parameters used to create an account Shared Access Signature (SAS) token. The REST API access control is provided by Azure Maps Role Based Access (RBAC) identity and access. </summary>
     public partial class MapsAccountSasContent
     {
-        /// <summary> Initializes a new instance of MapsAccountSasContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountSasContent"/>. </summary>
         /// <param name="signingKey"> The Map account key to use for signing. </param>
         /// <param name="principalId"> The principal Id also known as the object Id of a User Assigned Managed Identity currently assigned to the Map Account. To assign a Managed Identity of the account, use operation Create or Update an assign a User Assigned Identity resource Id. </param>
         /// <param name="maxRatePerSecond"> Required parameter which represents the desired maximum request per second to allowed for the given SAS token. This does not guarantee perfect accuracy in measurements but provides application safe guards of abuse with eventual enforcement. </param>
@@ -30,6 +30,23 @@ namespace Azure.ResourceManager.Maps.Models
             SigningKey = signingKey;
             PrincipalId = principalId;
             Regions = new ChangeTrackingList<string>();
+            MaxRatePerSecond = maxRatePerSecond;
+            Start = start;
+            Expiry = expiry;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountSasContent"/>. </summary>
+        /// <param name="signingKey"> The Map account key to use for signing. </param>
+        /// <param name="principalId"> The principal Id also known as the object Id of a User Assigned Managed Identity currently assigned to the Map Account. To assign a Managed Identity of the account, use operation Create or Update an assign a User Assigned Identity resource Id. </param>
+        /// <param name="regions"> Optional, allows control of which region locations are permitted access to Azure Maps REST APIs with the SAS token. Example: "eastus", "westus2". Omitting this parameter will allow all region locations to be accessible. </param>
+        /// <param name="maxRatePerSecond"> Required parameter which represents the desired maximum request per second to allowed for the given SAS token. This does not guarantee perfect accuracy in measurements but provides application safe guards of abuse with eventual enforcement. </param>
+        /// <param name="start"> The date time offset of when the token validity begins. For example "2017-05-24T10:42:03.1567373Z". </param>
+        /// <param name="expiry"> The date time offset of when the token validity expires. For example "2017-05-24T10:42:03.1567373Z". </param>
+        internal MapsAccountSasContent(MapsSigningKey signingKey, string principalId, IList<string> regions, int maxRatePerSecond, string start, string expiry)
+        {
+            SigningKey = signingKey;
+            PrincipalId = principalId;
+            Regions = regions;
             MaxRatePerSecond = maxRatePerSecond;
             Start = start;
             Expiry = expiry;

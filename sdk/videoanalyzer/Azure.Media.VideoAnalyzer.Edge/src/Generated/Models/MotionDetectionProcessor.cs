@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Motion detection processor allows for motion detection on the video stream. It generates motion events whenever motion is present on the video. </summary>
     public partial class MotionDetectionProcessor : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of MotionDetectionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="MotionDetectionProcessor"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.MotionDetectionProcessor";
         }
 
-        /// <summary> Initializes a new instance of MotionDetectionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="MotionDetectionProcessor"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

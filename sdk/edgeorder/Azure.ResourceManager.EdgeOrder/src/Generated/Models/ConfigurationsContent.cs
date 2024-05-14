@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Configuration request object. </summary>
     public partial class ConfigurationsContent
     {
-        /// <summary> Initializes a new instance of ConfigurationsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
         /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationFilters"/> is null. </exception>
         public ConfigurationsContent(IEnumerable<ConfigurationFilters> configurationFilters)
@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(configurationFilters, nameof(configurationFilters));
 
             ConfigurationFilters = configurationFilters.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
+        /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
+        /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
+        internal ConfigurationsContent(IList<ConfigurationFilters> configurationFilters, CustomerSubscriptionDetails customerSubscriptionDetails)
+        {
+            ConfigurationFilters = configurationFilters;
+            CustomerSubscriptionDetails = customerSubscriptionDetails;
         }
 
         /// <summary> Holds details about product hierarchy information and filterable property. </summary>

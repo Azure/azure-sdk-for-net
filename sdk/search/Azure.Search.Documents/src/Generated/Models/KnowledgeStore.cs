@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Definition of additional projections to azure blob, table, or files, of enriched data. </summary>
     public partial class KnowledgeStore
     {
-        /// <summary> Initializes a new instance of KnowledgeStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageConnectionString"/> or <paramref name="projections"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Projections = projections.ToList();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
         /// <param name="identity">
@@ -36,11 +36,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal KnowledgeStore(string storageConnectionString, IList<KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity)
+        /// <param name="parameters"> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
+        internal KnowledgeStore(string storageConnectionString, IList<KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity, SearchIndexerKnowledgeStoreParameters parameters)
         {
             StorageConnectionString = storageConnectionString;
             Projections = projections;
             Identity = identity;
+            Parameters = parameters;
         }
 
         /// <summary> The connection string to the storage account projections will be stored in. </summary>
@@ -53,5 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
+        /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
+        public SearchIndexerKnowledgeStoreParameters Parameters { get; set; }
     }
 }

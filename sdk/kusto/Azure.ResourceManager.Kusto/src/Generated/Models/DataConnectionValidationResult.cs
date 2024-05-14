@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a data connection validation request. </summary>
     public partial class DataConnectionValidationResult
     {
-        /// <summary> Initializes a new instance of DataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResult"/>. </summary>
         internal DataConnectionValidationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResult"/>. </summary>
         /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
         internal DataConnectionValidationResult(string errorMessage)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The details of a Dynatrace single sign-on. </summary>
     public partial class DynatraceSingleSignOnProperties
     {
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnProperties"/>. </summary>
         public DynatraceSingleSignOnProperties()
         {
             AadDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnProperties"/>. </summary>
         /// <param name="singleSignOnState"> State of Single Sign On. </param>
         /// <param name="enterpriseAppId"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>

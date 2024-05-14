@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Queue info for event subscription. </summary>
     public partial class QueueInfo
     {
-        /// <summary> Initializes a new instance of QueueInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueInfo"/>. </summary>
         public QueueInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of QueueInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueInfo"/>. </summary>
         /// <param name="receiveLockDurationInSeconds">
         /// Maximum period in seconds in which once the message is in received (by the client) state and waiting to be accepted, released or rejected.
         /// If this time elapsed after a message has been received by the client and not transitioned into accepted (not processed), released or rejected,

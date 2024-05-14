@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Response of get metrics status Operation. </summary>
     public partial class NewRelicMetricsStatusResult
     {
-        /// <summary> Initializes a new instance of NewRelicMetricsStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusResult"/>. </summary>
         internal NewRelicMetricsStatusResult()
         {
             AzureResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NewRelicMetricsStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusResult"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         internal NewRelicMetricsStatusResult(IReadOnlyList<string> azureResourceIds)
         {

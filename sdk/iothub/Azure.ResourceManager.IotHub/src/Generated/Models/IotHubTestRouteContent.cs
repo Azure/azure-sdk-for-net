@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Input for testing route. </summary>
     public partial class IotHubTestRouteContent
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/>. </summary>
         /// <param name="route"> Route properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public IotHubTestRouteContent(RoutingRuleProperties route)
@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.IotHub.Models
             Argument.AssertNotNull(route, nameof(route));
 
             Route = route;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/>. </summary>
+        /// <param name="message"> Routing message. </param>
+        /// <param name="route"> Route properties. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        internal IotHubTestRouteContent(RoutingMessage message, RoutingRuleProperties route, RoutingTwin twin)
+        {
+            Message = message;
+            Route = route;
+            Twin = twin;
         }
 
         /// <summary> Routing message. </summary>

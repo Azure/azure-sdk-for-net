@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a create database restore point operation. </summary>
     public partial class CreateDatabaseRestorePointDefinition
     {
-        /// <summary> Initializes a new instance of CreateDatabaseRestorePointDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDatabaseRestorePointDefinition"/>. </summary>
         /// <param name="restorePointLabel"> The restore point label to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public CreateDatabaseRestorePointDefinition(string restorePointLabel)

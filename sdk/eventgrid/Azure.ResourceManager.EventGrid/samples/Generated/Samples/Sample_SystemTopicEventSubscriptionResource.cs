@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetDeliveryAttributes_SystemTopicEventSubscriptionsGetDeliveryAttributes()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/SystemTopicEventSubscriptions_GetDeliveryAttributes.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/SystemTopicEventSubscriptions_GetDeliveryAttributes.json
             // this example is just showing the usage of "SystemTopicEventSubscriptions_GetDeliveryAttributes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SystemTopicEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/SystemTopicEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/SystemTopicEventSubscriptions_Get.json
             // this example is just showing the usage of "SystemTopicEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_SystemTopicEventSubscriptionsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/SystemTopicEventSubscriptions_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/SystemTopicEventSubscriptions_Delete.json
             // this example is just showing the usage of "SystemTopicEventSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SystemTopicEventSubscriptionsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/SystemTopicEventSubscriptions_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/SystemTopicEventSubscriptions_Update.json
             // this example is just showing the usage of "SystemTopicEventSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFullUri_SystemTopicEventSubscriptionsGetFullUrl()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/SystemTopicEventSubscriptions_GetFullUrl.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/SystemTopicEventSubscriptions_GetFullUrl.json
             // this example is just showing the usage of "SystemTopicEventSubscriptions_GetFullUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> The response to a Zone List or ListAll operation. </summary>
     internal partial class DnsZoneListResult
     {
-        /// <summary> Initializes a new instance of DnsZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZoneListResult"/>. </summary>
         internal DnsZoneListResult()
         {
             Value = new ChangeTrackingList<DnsZoneData>();
         }
 
-        /// <summary> Initializes a new instance of DnsZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZoneListResult"/>. </summary>
         /// <param name="value"> Information about the DNS zones. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal DnsZoneListResult(IReadOnlyList<DnsZoneData> value, string nextLink)

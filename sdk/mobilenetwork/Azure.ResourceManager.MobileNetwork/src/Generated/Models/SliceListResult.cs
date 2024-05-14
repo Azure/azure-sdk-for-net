@@ -14,23 +14,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for network slice API service call. </summary>
     internal partial class SliceListResult
     {
-        /// <summary> Initializes a new instance of SliceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliceListResult"/>. </summary>
         internal SliceListResult()
         {
-            Value = new ChangeTrackingList<SliceData>();
+            Value = new ChangeTrackingList<MobileNetworkSliceData>();
         }
 
-        /// <summary> Initializes a new instance of SliceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SliceListResult"/>. </summary>
         /// <param name="value"> A list of network slices in a mobile network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SliceListResult(IReadOnlyList<SliceData> value, string nextLink)
+        internal SliceListResult(IReadOnlyList<MobileNetworkSliceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of network slices in a mobile network. </summary>
-        public IReadOnlyList<SliceData> Value { get; }
+        public IReadOnlyList<MobileNetworkSliceData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

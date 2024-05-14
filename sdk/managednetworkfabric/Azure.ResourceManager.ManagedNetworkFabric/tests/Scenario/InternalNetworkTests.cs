@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
@@ -25,109 +21,88 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task InternalNetworks()
         {
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.ResourceGroupName;
-            ResourceIdentifier validL3IsolationDomainId = TestEnvironment.ValidL3IsolationDomainId;
-            string l3IsolationDomainName = TestEnvironment.ValidL3IsolationDomainName;
-            string internalNetworkName = TestEnvironment.InternalNetworkName;
-
+            ResourceIdentifier l3IsolationDomainId = new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID);
+            NetworkFabricL3IsolationDomainResource l3IsolationDomain = Client.GetNetworkFabricL3IsolationDomainResource(l3IsolationDomainId);
             TestContext.Out.WriteLine($"Entered into the InternalNetwork tests....");
-            TestContext.Out.WriteLine($"Provided InternalNetworks name : {internalNetworkName}");
+            TestContext.Out.WriteLine($"Provided InternalNetworks name : {TestEnvironment.InternalNetworkName}");
 
-            L3IsolationDomainResource l3IsolationDomain = Client.GetL3IsolationDomainResource(validL3IsolationDomainId);
             l3IsolationDomain = await l3IsolationDomain.GetAsync();
 
-            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomain.Data.Name, internalNetworkName);
+            ResourceIdentifier internalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, l3IsolationDomain.Data.Name, TestEnvironment.InternalNetworkName);
             TestContext.Out.WriteLine($"internalNetworkResourceId: {internalNetworkResourceId}");
-            InternalNetworkResource internalNetwork = Client.GetInternalNetworkResource(internalNetworkResourceId);
+            NetworkFabricInternalNetworkResource internalNetwork = Client.GetNetworkFabricInternalNetworkResource(internalNetworkResourceId);
 
             TestContext.Out.WriteLine($"InternalNetwork Test started.....");
 
-            InternalNetworkCollection collection = l3IsolationDomain.GetInternalNetworks();
+            NetworkFabricInternalNetworkCollection collection = l3IsolationDomain.GetNetworkFabricInternalNetworks();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            InternalNetworkData data = new InternalNetworkData(501)
+            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(755)
             {
+                Annotation = "annotation",
                 Mtu = 1500,
                 ConnectedIPv4Subnets =
                 {
-                    new ConnectedSubnet()
+                    new ConnectedSubnet("100.0.0.0/24")
                     {
-                        Prefix = "10.1.1.1/24",
+                        Annotation = "annotation",
                     }
                 },
-                ConnectedIPv6Subnets =
+                IsMonitoringEnabled = IsMonitoringEnabled.True,
+                Extension = StaticRouteConfigurationExtension.NoExtension,
+                BgpConfiguration = new InternalNetworkBgpConfiguration()
                 {
-                    new ConnectedSubnet()
+                    BfdConfiguration = new BfdConfiguration()
                     {
-                        Prefix = "2fff::/59",
-                    }
-                },
-                StaticRouteConfiguration = new StaticRouteConfiguration()
-                {
-                    BfdConfiguration = new BfdConfiguration(),
-                    IPv4Routes =
-                    {
-                        new StaticRouteProperties("10.0.0.1/28",new string[]
-                        {
-                            "10.1.0.1"
-                        })
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 5,
                     },
-                    IPv6Routes =
-                    {
-                        new StaticRouteProperties("2fff::/59",new string[]
-                        {
-                            "3ffe::"
-                        })
-                    },
-                },
-                BgpConfiguration = new BgpConfiguration(6)
-                {
-                    BfdConfiguration = new BfdConfiguration(),
-                    DefaultRouteOriginate = BooleanEnumProperty.True,
-                    AllowAS = 1,
+                    DefaultRouteOriginate = NetworkFabricBooleanValue.True,
+                    AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
+                    PeerAsn = 61234,
                     IPv4ListenRangePrefixes =
                     {
-                        "10.1.1.0/28"
-                    },
-                    IPv6ListenRangePrefixes =
-                    {
-                        "2fff::/59"
+                        "100.0.0.0/25"
                     },
                     IPv4NeighborAddress =
                     {
                         new NeighborAddress()
                         {
-                            Address = "10.1.1.0",
+                            Address = "100.0.0.10",
                         }
                     },
-                    IPv6NeighborAddress =
+                    Annotation = "annotation",
+                },
+                StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
+                {
+                    Extension = StaticRouteConfigurationExtension.NoExtension,
+                    BfdConfiguration = new BfdConfiguration()
                     {
-                        new NeighborAddress()
-                        {
-                            Address = "2fff::",
-                        }
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 15,
+                    },
+                    IPv4Routes =
+                    {
+                        new StaticRouteProperties("100.0.0.0/24",new string[] { "20.0.0.1" })
                     },
                 },
-                ImportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName1",
-                ExportRoutePolicyId = "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName2",
             };
-            ArmOperation<InternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, internalNetworkName, data);
-            InternalNetworkResource createResult = lro.Value;
-            Assert.AreEqual(createResult.Data.Name, internalNetworkName);
+            ArmOperation<NetworkFabricInternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternalNetworkName, data);
+            NetworkFabricInternalNetworkResource createResult = lro.Value;
+            Assert.AreEqual(createResult.Data.Name, TestEnvironment.InternalNetworkName);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            InternalNetworkResource getResult = await internalNetwork.GetAsync();
+            NetworkFabricInternalNetworkResource getResult = await internalNetwork.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, internalNetworkName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.InternalNetworkName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<InternalNetworkResource>();
-            await foreach (InternalNetworkResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricInternalNetworkResource>();
+            await foreach (NetworkFabricInternalNetworkResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

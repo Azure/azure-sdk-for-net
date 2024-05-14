@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of StreamingJobFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionBinding"/>. </summary>
         protected StreamingJobFunctionBinding()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
         internal StreamingJobFunctionBinding(string functionBindingType)
         {

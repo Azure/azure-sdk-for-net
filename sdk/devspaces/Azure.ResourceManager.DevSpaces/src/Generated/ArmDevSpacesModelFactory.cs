@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDevSpacesModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerHostMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerHostMapping"/>. </summary>
         /// <param name="containerHostResourceId"> ARM ID of the Container Host resource. </param>
         /// <param name="mappedControllerResourceId"> ARM ID of the mapped Controller resource. </param>
         /// <returns> A new <see cref="Models.ContainerHostMapping"/> instance for mocking. </returns>
         public static ContainerHostMapping ContainerHostMapping(string containerHostResourceId = null, string mappedControllerResourceId = null)
         {
-            return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId);
+            return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevSpaces.ControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.DevSpaces.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64);
+            return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetailsList"/>. </summary>
         /// <param name="connectionDetailsList"> List of Azure Dev Spaces Controller connection details. </param>
         /// <returns> A new <see cref="Models.ControllerConnectionDetailsList"/> instance for mocking. </returns>
         public static ControllerConnectionDetailsList ControllerConnectionDetailsList(IEnumerable<ControllerConnectionDetails> connectionDetailsList = null)
         {
             connectionDetailsList ??= new List<ControllerConnectionDetails>();
 
-            return new ControllerConnectionDetailsList(connectionDetailsList?.ToList());
+            return new ControllerConnectionDetailsList(connectionDetailsList?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ControllerConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetails"/>. </summary>
         /// <param name="orchestratorSpecificConnectionDetails">
         /// Base class for types that supply values used to connect to container orchestrators
         /// Please note <see cref="OrchestratorSpecificConnectionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KubernetesConnectionDetails"/>.
+        /// The available derived classes include <see cref="Models.KubernetesConnectionDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ControllerConnectionDetails"/> instance for mocking. </returns>
         public static ControllerConnectionDetails ControllerConnectionDetails(OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null)
         {
-            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails);
+            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KubernetesConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesConnectionDetails"/>. </summary>
         /// <param name="kubeConfig"> Gets the kubeconfig for the cluster. </param>
         /// <returns> A new <see cref="Models.KubernetesConnectionDetails"/> instance for mocking. </returns>
         public static KubernetesConnectionDetails KubernetesConnectionDetails(string kubeConfig = null)
         {
-            return new KubernetesConnectionDetails("Kubernetes", kubeConfig);
+            return new KubernetesConnectionDetails("Kubernetes", serializedAdditionalRawData: null, kubeConfig);
         }
     }
 }

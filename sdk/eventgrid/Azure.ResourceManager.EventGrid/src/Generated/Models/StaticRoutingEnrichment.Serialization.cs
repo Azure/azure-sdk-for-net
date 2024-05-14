@@ -20,11 +20,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(ValueType))
-            {
-                writer.WritePropertyName("valueType"u8);
-                writer.WriteStringValue(ValueType.Value.ToString());
-            }
+            writer.WritePropertyName("valueType"u8);
+            writer.WriteStringValue(ValueType.ToString());
             writer.WriteEndObject();
         }
 
@@ -34,26 +31,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<StaticRoutingEnrichmentType> valueType = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("valueType", out JsonElement discriminator))
             {
-                if (property.NameEquals("key"u8))
+                switch (discriminator.GetString())
                 {
-                    key = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    valueType = new StaticRoutingEnrichmentType(property.Value.GetString());
-                    continue;
+                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element);
                 }
             }
-            return new StaticRoutingEnrichment(key.Value, Optional.ToNullable(valueType));
+            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element);
         }
     }
 }

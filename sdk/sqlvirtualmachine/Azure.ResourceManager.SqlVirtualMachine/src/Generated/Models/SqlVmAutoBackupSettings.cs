@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Configure backups for databases in your SQL virtual machine. </summary>
     public partial class SqlVmAutoBackupSettings
     {
-        /// <summary> Initializes a new instance of SqlVmAutoBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupSettings"/>. </summary>
         public SqlVmAutoBackupSettings()
         {
             DaysOfWeek = new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of SqlVmAutoBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable autobackup on SQL virtual machine. </param>
         /// <param name="isEncryptionEnabled"> Enable or disable encryption for backup on SQL virtual machine. </param>
         /// <param name="retentionPeriodInDays"> Retention period of backup: 1-90 days. </param>

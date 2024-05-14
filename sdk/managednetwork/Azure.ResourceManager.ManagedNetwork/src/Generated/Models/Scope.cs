@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Scope of a Managed Network. </summary>
     public partial class Scope
     {
-        /// <summary> Initializes a new instance of Scope. </summary>
+        /// <summary> Initializes a new instance of <see cref="Scope"/>. </summary>
         public Scope()
         {
             ManagementGroups = new ChangeTrackingList<WritableSubResource>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of Scope. </summary>
+        /// <summary> Initializes a new instance of <see cref="Scope"/>. </summary>
         /// <param name="managementGroups"> The collection of management groups covered by the Managed Network. </param>
         /// <param name="subscriptions"> The collection of subscriptions covered by the Managed Network. </param>
         /// <param name="virtualNetworks"> The collection of virtual nets covered by the Managed Network. </param>

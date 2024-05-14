@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Information on the client (user or application) that made some action. </summary>
     public partial class SecurityInsightsClientInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsClientInfo"/>. </summary>
         internal SecurityInsightsClientInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsClientInfo"/>. </summary>
         /// <param name="email"> The email of the client. </param>
         /// <param name="name"> The name of the client. </param>
         /// <param name="objectId"> The object id of the client. </param>

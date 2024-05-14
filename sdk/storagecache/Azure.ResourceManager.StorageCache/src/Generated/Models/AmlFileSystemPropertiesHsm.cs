@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Hydration and archive settings and status. </summary>
     public partial class AmlFileSystemPropertiesHsm
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
         public AmlFileSystemPropertiesHsm()
         {
             ArchiveStatus = new ChangeTrackingList<AmlFileSystemArchive>();
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
         /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
         /// <param name="archiveStatus"> Archive status. </param>
         internal AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings, IReadOnlyList<AmlFileSystemArchive> archiveStatus)

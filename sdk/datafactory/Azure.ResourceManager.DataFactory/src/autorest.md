@@ -9,14 +9,19 @@ generate-model-factory: false
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/cd06d327e115cdb55f8e7c9fd1b23fa551b5b750/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ChangeDataCapture_CreateOrUpdate  # Missing required property
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -30,10 +35,9 @@ format-by-name-rules:
   'activityRunId': 'uuid'
   'pipelineRunId': 'uuid'
   'sessionId': 'uuid'
-  'encryptedCredential': 'any'
   'dataFactoryLocation': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -63,178 +67,224 @@ rename-rules:
   PUT: Put
   GZip: Gzip
   Pwd: Password
+  Ml: ML
+  VNet: Vnet
+  Bw: BW
+
+keep-plural-enums:
+  - ActivityOnInactiveMarkAs
 
 rename-mapping:
-  # Property
+  AccessPolicyResponse: DataFactoryDataPlaneAccessPolicyResult
+  Activity: PipelineActivity
+  ActivityDependency: PipelineActivityDependency
+  ActivityPolicy: PipelineActivityPolicy
+  ActivityPolicy.secureInput: IsSecureInputEnabled
+  ActivityPolicy.secureOutput: IsSecureOutputEnabled
+  ActivityRun: PipelineActivityRunInformation
+  ActivityRun.activityRunStart: StartOn
   ActivityRun.activityRunEnd: EndOn
+  ActivityRunsQueryResponse: PipelineActivityRunsResult
+  ActivityState: PipelineActivityState
+  AddDataFlowToDebugSessionResponse: DataFactoryDataFlowStartDebugSessionResult
+  AvroDataset.typeProperties.location: DataLocation
+  AvroFormat: DatasetAvroFormat
+  BinaryDataset.typeProperties.location: DataLocation
   CassandraSourceReadConsistencyLevels.ALL: All
   CassandraSourceReadConsistencyLevels.ONE: One
   CassandraSourceReadConsistencyLevels.TWO: Two
   CassandraSourceReadConsistencyLevels.LOCAL_ONE: LocalOne
+  ChangeDataCaptureResource: DataFactoryChangeDataCapture
+  ChangeDataCaptureListResponse: ChangeDataCaptureListResult
+  CMKIdentityDefinition: DataFactoryCmkIdentity
+  ConfigurationType: DataFactorySparkConfigurationType
+  ConnectionType: MapperConnectionType
+  CopySource: CopyActivitySource
+  CreateDataFlowDebugSessionRequest: DataFactoryDataFlowDebugSessionContent
   CreateDataFlowDebugSessionRequest.timeToLive: TimeToLiveInMinutes
-  DataFlowDebugSessionInfo.startTime: StartOn
+  CreateDataFlowDebugSessionResponse: DataFactoryDataFlowCreateDebugSessionResult
+  CreateRunResponse: PipelineCreateRunResult
+  CredentialListResponse: DataFactoryCredentialListResult
+  DataFlow: DataFactoryDataFlowProperties
+  DataFlowListResponse: DataFactoryDataFlowListResult
+  DataFlowDebugCommandResponse: DataFactoryDataFlowDebugCommandResult
+  DataFlowDebugPackage: DataFactoryDataFlowDebugPackageContent
+  DataFlowDebugResource: DataFactoryDataFlowDebugInfo
+  DataFlowDebugSessionInfo.startTime: StartOn|date-time
   DataFlowDebugSessionInfo.timeToLiveInMinutes: TimeToLiveInMinutes
-  DataFlowDebugSessionInfo.lastActivityTime: LastActivityOn
+  DataFlowDebugSessionInfo.lastActivityTime: LastActivityOn|date-time
+  DataFlowResource: DataFactoryDataFlow
+  Dataset: DataFactoryDatasetProperties
+  DatasetListResponse: DataFactoryDatasetListResult
   DatasetDataElement.name: ColumnName
-  DatasetDataElement.type: columnType
-  DatasetSchemaDataElement.name: schemaColumnName
-  DatasetSchemaDataElement.type: schemaColumnType
-  DatasetCompression.type: datasetCompressionType
+  DatasetDataElement.type: ColumnType
+  DatasetDebugResource: DataFactoryDatasetDebugInfo
+  DatasetResource: DataFactoryDataset
+  DatasetSchemaDataElement.name: SchemaColumnName
+  DatasetSchemaDataElement.type: SchemaColumnType
+  DatasetCompression.type: DatasetCompressionType
+  DayOfWeek: DataFactoryDayOfWeek
+  DaysOfWeek: DataFactoryDayOfWeek
+  DelimitedTextDataset.typeProperties.location: DataLocation
+  ExcelDataset.typeProperties.location: DataLocation
+  ExecuteDataFlowActivityTypePropertiesCompute: ExecuteDataFlowActivityComputeType
+  ExecutePipelineActivityPolicy.secureInput: IsSecureInputEnabled
+  ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlBatchResponse.exposureControlResponses: ExposureControlResults
+  ExposureControlRequest: ExposureControlContent
+  ExposureControlResponse: ExposureControlResult
+  Factory: DataFactory
+  FactoryListResponse: DataFactoryListResult
+  FactoryRepoUpdate: FactoryRepoContent
   FactoryRepoUpdate.factoryResourceId: -|arm-id
+  FrequencyType: MapperPolicyRecurrenceFrequencyType
+  GetMetadataActivity: GetDatasetMetadataActivity
+  GitHubClientSecret: FactoryGitHubClientSecret
+  GitHubAccessTokenResponse: GitHubAccessTokenResult
+  GlobalParameterListResponse: DataFactoryGlobalParameterListResult
+  GlobalParameterResource: DataFactoryGlobalParameter
+  GlobalParameterSpecification: DataFactoryGlobalParameterProperties
+  GlobalParameterSpecification.type: GlobalParameterType
+  HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
+  HttpSource: DataFactoryHttpFileSource
+  IntegrationRuntime: DataFactoryIntegrationRuntimeProperties
+  IntegrationRuntimeAutoUpdate: IntegrationRuntimeAutoUpdateState
   IntegrationRuntimeCustomerVirtualNetwork.subnetId: SubnetId|arm-id
+  IntegrationRuntimeDataFlowProperties.cleanup: ShouldCleanupAfterTtl
   IntegrationRuntimeDataFlowProperties.timeToLive: TimeToLiveInMinutes
+  IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem: IntegrationRuntimeDataFlowCustomItem
+  IntegrationRuntimeDebugResource: DataFactoryIntegrationRuntimeDebugInfo
+  IntegrationRuntimeListResponse: DataFactoryIntegrationRuntimeListResult
   IntegrationRuntimeNodeIpAddress.ipAddress: IPAddress|ip-address
+  IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult
+  IntegrationRuntimeResource: DataFactoryIntegrationRuntime
+  IntegrationRuntimeStatusResponse: DataFactoryIntegrationRuntimeStatusResult
   IntegrationRuntimeVNetProperties.vNetId: VnetId|uuid
   IntegrationRuntimeVNetProperties.subnetId: SubnetId|arm-id
   Factory.properties.createTime: CreatedOn
+  Flowlet: DataFactoryFlowletProperties
+  JsonDataset.typeProperties.location: DataLocation
+  JsonFormat: DatasetJsonFormat
   LinkedIntegrationRuntime.createTime: CreatedOn
+  LinkedIntegrationRuntimeRbacAuthorization.resourceId: -|arm-id
+  LinkedService: DataFactoryLinkedServiceProperties
+  LinkedServiceDebugResource: DataFactoryLinkedServiceDebugInfo
+  LinkedServiceListResponse: DataFactoryLinkedServiceListResult
+  LinkedServiceResource: DataFactoryLinkedService
+  ManagedIdentityCredential: DataFactoryManagedIdentityCredentialProperties
+  ManagedIdentityCredential.typeProperties.resourceId: -|arm-id
+  ManagedIdentityCredentialResource: DataFactoryManagedIdentityCredential
   ManagedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
-  ManagedVirtualNetwork.vNetId: VnetId|uuid
+  ManagedPrivateEndpoint: DataFactoryPrivateEndpointProperties
   ManagedPrivateEndpoint.privateLinkResourceId: -|arm-id
+  ManagedPrivateEndpointListResponse: DataFactoryPrivateEndpointListResult
+  ManagedVirtualNetworkListResponse: DataFactoryManagedVirtualNetworkListResult
+  ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
+  ManagedVirtualNetwork: DataFactoryManagedVirtualNetworkProperties
+  ManagedVirtualNetwork.vNetId: VnetId|uuid
+  ManagedVirtualNetworkResource: DataFactoryManagedVirtualNetwork
+  MappingDataFlow: DataFactoryMappingDataFlowProperties
+  MetadataItem: DataFactoryMetadataItemInfo
   Office365Source.endTime: EndOn
   Office365Source.startTime: StartOn
-  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  OrcDataset.typeProperties.location: DataLocation
+  OrcFormat: DatasetOrcFormat
+  OutputColumn: Office365TableOutputColumn
+  ParameterSpecification: EntityParameterSpecification
+  ParameterType: EntityParameterType
+  ParquetDataset.typeProperties.location: DataLocation
+  ParquetFormat: DatasetParquetFormat
+  PipelineListResponse: DataFactoryPipelineListResult
+  PipelineResource: DataFactoryPipeline
+  PipelineRun: DataFactoryPipelineRunInfo
+  PipelineRun.lastUpdated: LastUpdatedOn
+  PipelineRun.runStart: RunStartOn
+  PipelineRun.runEnd: RunEndOn
+  PipelineRunInvokedBy: DataFactoryPipelineRunEntityInfo
+  PipelineRunsQueryResponse: DataFactoryPipelineRunsQueryResult
+  PrivateEndpointConnectionListResponse: DataFactoryPrivateEndpointConnectionListResult
+  RemotePrivateEndpointConnection: DataFactoryPrivateEndpointConnectionProperties
+  RunFilterParameters: RunFilterContent
+  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
+  QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
+  ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
+  ScriptActivityScriptBlock.type: ScriptType
+  SecretBase: DataFactorySecret
+  SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
+  SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled
+  SelfHostedIntegrationRuntime.typeProperties.selfContainedInteractiveAuthoringEnabled: IsSelfContainedInteractiveAuthoringEnabled
   SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.selfContainedInteractiveAuthoringEnabled: IsSelfContainedInteractiveAuthoringEnabled
   SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
-  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: serviceUris
-  ActivityPolicy.secureInput: EnableSecureInput
-  ActivityPolicy.secureOutput: EnableSecureOutput
-  ExecutePipelineActivityPolicy.secureInput: EnableSecureInput
+  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: ServiceUriStringList
+  SubResourceDebugResource: DataFactoryDebugInfo
+  SsisObjectMetadataListResponse: SsisObjectMetadataListResult
+  SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
+  SsisPackageLocationType.SSISDB: SsisDB
+  SsisParameter: SsisParameterInfo
   SsisParameter.required: IsRequired
   SsisParameter.sensitive: IsSensitive
   SsisParameter.valueSet: HasValueSet
   SsisVariable.sensitive: IsSensitive
-  AvroDataset.typeProperties.location: DataLocation
-  BinaryDataset.typeProperties.location: DataLocation
-  DelimitedTextDataset.typeProperties.location: DataLocation
-  ExcelDataset.typeProperties.location: DataLocation
-  JsonDataset.typeProperties.location: DataLocation
-  OrcDataset.typeProperties.location: DataLocation
-  ParquetDataset.typeProperties.location: DataLocation
-  XmlDataset.typeProperties.location: DataLocation
-  IntegrationRuntimeDataFlowProperties.cleanup: ShouldCleanupAfterTtl
-  SsisPackageLocationType.SSISDB: SsisDB
-  # Factory
-  Factory: DataFactory
-  FactoryListResponse: DataFactoryListResult
-  # Dataset
-  Dataset: DataFactoryDatasetDefinition
-  DatasetResource: DataFactoryDataset
-  HttpDataset: DataFactoryHttpDataset
-  AvroFormat: DatasetAvroFormat
-  JsonFormat: DatasetJsonFormat
-  OrcFormat: DatasetOrcFormat
-  ParquetFormat: DatasetParquetFormat
-  TextFormat: DatasetTextFormat
-  # DataFlow
-  DataFlow: DataFactoryDataFlowDefinition
-  DataFlowResource: DataFactoryDataFlow
-  Flowlet: DataFactoryFlowletDefinition
-  MappingDataFlow: DataFactoryMappingDataFlowDefinition
-  WranglingDataFlow: DataFactoryWranglingDataFlowDefinition
-  Transformation: DataFlowTransformation
-  # Data source
-  BlobSink: DataFactoryBlobSink
-  BlobSource: DataFactoryBlobSource
-  # Debug resource
-  AddDataFlowToDebugSessionResponse: DataFactoryDataFlowStartDebugSessionResult
-  CreateDataFlowDebugSessionRequest: DataFactoryDataFlowDebugSessionContent
-  CreateDataFlowDebugSessionResponse: DataFactoryDataFlowCreateDebugSessionResult
-  DataFlowDebugResource: DataFactoryDataFlowDebugInfo
-  DataFlowDebugCommandResponse: DataFactoryDataFlowDebugCommandResult
-  DataFlowDebugPackage: DataFactoryDataFlowDebugPackageContent
-  DatasetDebugResource: DataFactoryDatasetDebugInfo
-  IntegrationRuntimeDebugResource: DataFactoryIntegrationRuntimeDebugInfo
-  LinkedServiceDebugResource: DataFactoryLinkedServiceDebugInfo
-  SubResourceDebugResource: DataFactoryDebugInfo
-  # GlobalParameter
-  GlobalParameterResource: DataFactoryGlobalParameter
-  GlobalParameterSpecification: DataFactoryGlobalParameterSpecification
-  GlobalParameterType: DataFactoryGlobalParameterType
-  ParameterSpecification: EntityParameterSpecification
-  ParameterDefinitionSpecification: EntityParameterDefinitionSpecification
-  ParameterType: EntityParameterType
-  # IntegrationRuntime
-  IntegrationRuntime: DataFactoryIntegrationRuntimeDefinition
-  IntegrationRuntimeResource: DataFactoryIntegrationRuntime
-  IntegrationRuntimeStatusResponse: DataFactoryIntegrationRuntimeStatusResult
-  PackageStore: DataFactoryPackageStore
-  # LinkedService
-  LinkedService: DataFactoryLinkedServiceDefinition
-  LinkedServiceResource: DataFactoryLinkedService
-  LinkedServiceReference: DataFactoryLinkedServiceReference
-  LinkedServiceReferenceType: DataFactoryLinkedServiceReferenceType
-  # Network
-  ManagedVirtualNetworkResource: DataFactoryManagedVirtualNetwork
-  PublicNetworkAccess: DataFactoryPublicNetworkAccess
-  # Pipeline
-  PipelineResource: DataFactoryPipeline
-  PipelineListResponse: DataFactoryPipelineListResult
-  PipelinePolicy: DataFactoryPipelinePolicy
-  PipelineReference: DataFactoryPipelineReference
-  PipelineReferenceType: DataFactoryPipelineReferenceType
-  PipelineRun: DataFactoryPipelineRunInfo
-  PipelineRunInvokedBy: DataFactoryPipelineRunEntityInfo
-  PipelineRunsQueryResponse: DataFactoryPipelineRunsQueryResult
-  Activity: DataFactoryActivity
-  ActivityRun: DataFactoryActivityRunInfo
-  ActivityRunsQueryResponse: DataFactoryActivityRunsResult
-  CopySource: CopyActivitySource
-  CreateRunResponse: PipelineCreateRunResult
-  Expression: DataFactoryExpressionDefinition
-  ExpressionType: DataFactoryExpressionType
-  GetMetadataActivity: GetDatasetMetadataActivity
   SwitchCase: SwitchCaseActivity
-  UserProperty: ActivityUserProperty
-  VariableSpecification: PipelineVariableSpecification
-  VariableType: PipelineVariableType
-  # Private link
-  ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
-  RemotePrivateEndpointConnection: DataFactoryPrivateEndpointProperties
-  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
-  PrivateLinkResource: DataFactoryPrivateLinkResource
-  PrivateLinkResourceProperties: DataFactoryPrivateLinkResourceProperties
-  # Trigger
-  BlobEventsTrigger: DataFactoryBlobEventsTrigger
-  BlobEventTypes: DataFactoryBlobEventType
-  BlobTrigger: DataFactoryBlobTrigger
-  TriggerResource: DataFactoryTrigger
-  Trigger: DataFactoryTriggerDefinition
+  TextFormat: DatasetTextFormat
+  Transformation: DataFlowTransformation
+  Trigger: DataFactoryTriggerProperties
   TriggerListResponse: DataFactoryTriggerListResult
   TriggerQueryResponse: DataFactoryTriggerQueryResult
-  TriggerReference: DataFactoryTriggerReference
-  TriggerReferenceType: DataFactoryTriggerReferenceType
-  TriggerRun: DataFactoryTriggerRun
+  TriggerResource: DataFactoryTrigger
   TriggerRunsQueryResponse: DataFactoryTriggerRunsQueryResult
-  TriggerRunStatus: DataFactoryTriggerRunStatus
-  TriggerRuntimeState: DataFactoryTriggerRuntimeState
   TriggerSubscriptionOperationStatus: DataFactoryTriggerSubscriptionOperationResult
-  # Others
   UserAccessPolicy: DataFactoryDataPlaneUserAccessPolicy
-  AccessPolicyResponse: DataFactoryDataPlaneAccessPolicyResult
-  CredentialReference: DataFactoryCredentialReference
-  CredentialReferenceType: DataFactoryCredentialReferenceType
-  DaysOfWeek: DataFactoryDayOfWeek
-  EncryptionConfiguration: DataFactoryEncryptionConfiguration
-  ExposureControlBatchResponse: ExposureControlBatchResult
-  ExposureControlResponse: ExposureControlResult
-  ExposureControlRequest: ExposureControlContent
-  HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
-  GitHubAccessTokenResponse: GitHubAccessTokenResult
-  HttpSource: DataFactoryHttpFileSource
-  MetadataItem: DataFactoryMetadataItemInfo
-  PurviewConfiguration: DataFactoryPurviewConfiguration
-  RunFilterParameters: RunFilterContent
-  SecretBase: DataFactorySecretBaseDefinition
-  SecureString: DataFactorySecretString
-  SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
-  SsisParameter: SsisParameterInfo
-  IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult
-  ManagedIdentityCredential: DataFactoryManagedIdentityCredentialDefinition
-  ManagedIdentityCredentialResource: DataFactoryManagedIdentityCredential
+  UserAccessPolicy.startTime: StartOn|date-time
+  UserAccessPolicy.expireTime: ExpireOn|date-time
+  UserProperty: PipelineActivityUserProperty
+  VariableSpecification: PipelineVariableSpecification
+  VariableType: PipelineVariableType
+  WranglingDataFlow: DataFactoryWranglingDataFlowProperties
+  XmlDataset.typeProperties.location: DataLocation
+
+prepend-rp-prefix:
+  - BlobEventsTrigger
+  - BlobEventTypes
+  - BlobSink
+  - BlobSource
+  - BlobTrigger
+  - Credential
+  - CredentialReference
+  - CredentialReferenceType
+  - EncryptionConfiguration
+  - Expression
+  - ExpressionType
+  - GlobalParameterType
+  - HttpDataset
+  - LinkedServiceReference
+  - LinkedServiceReferenceType
+  - PackageStore
+  - PipelinePolicy
+  - PipelineReference
+  - PipelineReferenceType
+  - PublicNetworkAccess
+  - PurviewConfiguration
+  - PrivateLinkResource
+  - PrivateLinkResourceProperties
+  - SecureString
+  - TriggerReference
+  - TriggerReferenceType
+  - TriggerRun
+  - TriggerRunStatus
+  - TriggerRuntimeState
+  - LogSettings
+  - RecurrenceFrequency
+  - RecurrenceSchedule
+  - RecurrenceScheduleOccurrence
+  - ScheduleTrigger
+  - ScriptAction
+  - ScriptActivity
+  - ScriptType
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun
@@ -257,7 +307,6 @@ directive:
   - from: datafactory.json
     where: $.definitions
     transform: >
-      $.DataFlowDebugSessionInfo.properties.lastActivityTime['format'] = 'date-time';
       $.UpdateIntegrationRuntimeRequest.properties.updateDelayOffset['format'] = 'duration';
       $.LinkedServiceReference.properties.type['x-ms-enum']['name'] = 'LinkedServiceReferenceType';
 #  - from: Pipeline.json

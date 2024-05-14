@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> The Fluid Relay endpoints for this server. </summary>
     public partial class FluidRelayEndpoints
     {
-        /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayEndpoints"/>. </summary>
         internal FluidRelayEndpoints()
         {
             OrdererEndpoints = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             ServiceEndpoints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayEndpoints"/>. </summary>
         /// <param name="ordererEndpoints"> The Fluid Relay Orderer endpoints. </param>
         /// <param name="storageEndpoints"> The Fluid Relay storage endpoints. </param>
         /// <param name="serviceEndpoints"> The Fluid Relay service endpoints. </param>

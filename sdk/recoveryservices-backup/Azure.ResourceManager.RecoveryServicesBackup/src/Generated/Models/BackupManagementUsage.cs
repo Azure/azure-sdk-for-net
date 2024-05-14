@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Backup management usages of a vault. </summary>
     public partial class BackupManagementUsage
     {
-        /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsage"/>. </summary>
         internal BackupManagementUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsage"/>. </summary>
         /// <param name="unit"> Unit of the usage. </param>
         /// <param name="quotaPeriod"> Quota period of usage. </param>
         /// <param name="nextResetOn"> Next reset time of usage. </param>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNotificationHubsModelFactory
     {
-        /// <summary> Initializes a new instance of NotificationHubAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubAvailabilityResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubAvailabilityResult(id, name, resourceType, systemData, tags, location, isAvailiable, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubNamespaceCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubNamespaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint, subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubNamespaceData(id, name, resourceType, systemData, tags, location, namespaceName, provisioningState, region, metricId, status, createdOn, updatedOn, serviceBusEndpoint, subscriptionId, scaleUnit, isEnabled, isCritical, dataCenter, namespaceType, sku);
         }
 
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SharedAccessAuthorizationRuleProperties"/>. </summary>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new SharedAccessAuthorizationRuleProperties(rights?.ToList(), primaryKey, secondaryKey, keyName, claimType, claimValue, modifiedOn, createdOn, revision);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubAuthorizationRuleData(id, name, resourceType, systemData, tags, location, rights?.ToList(), primaryKey, secondaryKey, keyName, claimType, claimValue, modifiedOn, createdOn, revision, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubResourceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubResourceKeys"/>. </summary>
         /// <param name="primaryConnectionString"> PrimaryConnectionString of the AuthorizationRule. </param>
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the created AuthorizationRule. </param>
         /// <param name="primaryKey"> PrimaryKey of the created AuthorizationRule. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubResourceKeys(primaryConnectionString, secondaryConnectionString, primaryKey, secondaryKey, keyName);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubs.NotificationHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubData(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubPatch(id, name, resourceType, systemData, tags, location, notificationHubName, registrationTtl, authorizationRules?.ToList(), apnsCredential, wnsCredential, gcmCredential, mpnsCredential, admCredential, baiduCredential, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubTestSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubTestSendResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubTestSendResult(id, name, resourceType, systemData, tags, location, success, failure, results, sku);
         }
 
-        /// <summary> Initializes a new instance of NotificationHubPnsCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationHubPnsCredentials"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

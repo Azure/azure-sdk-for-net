@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Represents the error used to indicate why the target compute size is not applicable. </summary>
     public partial class SiteRecoveryComputeSizeErrorDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryComputeSizeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryComputeSizeErrorDetails"/>. </summary>
         internal SiteRecoveryComputeSizeErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryComputeSizeErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryComputeSizeErrorDetails"/>. </summary>
         /// <param name="message"> The error message. </param>
         /// <param name="severity"> The severity of the error. </param>
         internal SiteRecoveryComputeSizeErrorDetails(string message, string severity)

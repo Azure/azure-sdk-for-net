@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Class which represent the stamps associated with the vault. </summary>
     internal partial class PrivateLinkResources
     {
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResources"/>. </summary>
         internal PrivateLinkResources()
         {
             Value = new ChangeTrackingList<RecoveryServicesPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResources"/>. </summary>
         /// <param name="value"> A collection of private link resources. </param>
         /// <param name="nextLink"> Link to the next chunk of the response. </param>
         internal PrivateLinkResources(IReadOnlyList<RecoveryServicesPrivateLinkResourceData> value, string nextLink)

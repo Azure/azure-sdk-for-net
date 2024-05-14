@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Public representation of one of the locations where a resource is provisioned. </summary>
     public partial class IotHubLocationDescription
     {
-        /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubLocationDescription"/>. </summary>
         internal IotHubLocationDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubLocationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubLocationDescription"/>. </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="role"> The role of the region, can be either primary or secondary. The primary region is where the IoT hub is currently provisioned. The secondary region is the Azure disaster recovery (DR) paired region and also the region where the IoT hub can failover to. </param>
         internal IotHubLocationDescription(AzureLocation? location, IotHubReplicaRoleType? role)

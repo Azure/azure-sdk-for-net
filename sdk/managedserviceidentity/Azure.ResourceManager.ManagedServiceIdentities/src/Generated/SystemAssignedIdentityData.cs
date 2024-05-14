@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// </summary>
     public partial class SystemAssignedIdentityData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SystemAssignedIdentityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SystemAssignedIdentityData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SystemAssignedIdentityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

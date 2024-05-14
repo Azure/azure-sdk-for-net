@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute SSIS package activity. </summary>
     public partial class ExecuteSsisPackageActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecuteSSISPackage";
         }
 
-        /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageConnectionManagers"> The package level connection managers to execute the SSIS package. </param>
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
-        internal ExecuteSsisPackageActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, SsisPackageLocation packageLocation, DataFactoryElement<string> runtime, DataFactoryElement<string> loggingLevel, DataFactoryElement<string> environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal ExecuteSsisPackageActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, SsisPackageLocation packageLocation, DataFactoryElement<string> runtime, DataFactoryElement<string> loggingLevel, DataFactoryElement<string> environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
             Runtime = runtime;

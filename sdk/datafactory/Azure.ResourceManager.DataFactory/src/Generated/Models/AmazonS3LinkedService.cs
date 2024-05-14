@@ -12,15 +12,15 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Amazon S3. </summary>
-    public partial class AmazonS3LinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AmazonS3LinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AmazonS3LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3LinkedService"/>. </summary>
         public AmazonS3LinkedService()
         {
             LinkedServiceType = "AmazonS3";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3LinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serviceUri"> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="sessionToken"> The session token for the S3 temporary security credential. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonS3LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> authenticationType, DataFactoryElement<string> accessKeyId, DataFactorySecretBaseDefinition secretAccessKey, DataFactoryElement<string> serviceUri, DataFactorySecretBaseDefinition sessionToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> authenticationType, DataFactoryElement<string> accessKeyId, DataFactorySecretBaseDefinition secretAccessKey, DataFactoryElement<string> serviceUri, DataFactorySecretBaseDefinition sessionToken, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AuthenticationType = authenticationType;
             AccessKeyId = accessKeyId;
@@ -54,36 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> ServiceUri { get; set; }
         /// <summary> The session token for the S3 temporary security credential. </summary>
         public DataFactorySecretBaseDefinition SessionToken { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

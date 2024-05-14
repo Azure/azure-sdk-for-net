@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The full resource names object for central server layer resources. </summary>
     public partial class CentralServerFullResourceNames
     {
-        /// <summary> Initializes a new instance of CentralServerFullResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="CentralServerFullResourceNames"/>. </summary>
         public CentralServerFullResourceNames()
         {
             VirtualMachines = new ChangeTrackingList<VirtualMachineResourceNames>();
         }
 
-        /// <summary> Initializes a new instance of CentralServerFullResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="CentralServerFullResourceNames"/>. </summary>
         /// <param name="virtualMachines"> The list of names for all ASCS virtual machines to be deployed. The number of entries in this list should be equal to the number VMs to be created for ASCS layer. At maximum, there can be two virtual machines at this layer: ASCS and ERS. </param>
         /// <param name="availabilitySetName"> The full name for availability set. In case name is not provided, it will be defaulted to {SID}-ASCS-AvSet. </param>
         /// <param name="loadBalancer"> The resource names object for load balancer and related resources. </param>

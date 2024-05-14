@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The locations and zones info for SKU. </summary>
     public partial class KustoSkuLocationInfoItem
     {
-        /// <summary> Initializes a new instance of KustoSkuLocationInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         internal KustoSkuLocationInfoItem(AzureLocation location)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             ZoneDetails = new ChangeTrackingList<KustoResourceSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of KustoSkuLocationInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         /// <param name="zones"> The available zone of the SKU. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>

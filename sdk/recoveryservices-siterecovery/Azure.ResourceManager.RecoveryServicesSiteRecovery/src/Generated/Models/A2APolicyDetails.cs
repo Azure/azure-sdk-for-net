@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A specific policy details. </summary>
     public partial class A2APolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2APolicyDetails"/>. </summary>
         internal A2APolicyDetails()
         {
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2APolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPointThresholdInMinutes"> The recovery point threshold in minutes. </param>
         /// <param name="recoveryPointHistory"> The duration in minutes until which the recovery points need to be stored. </param>

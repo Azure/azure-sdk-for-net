@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The result of a check policy restrictions evaluation on a resource. </summary>
     public partial class CheckPolicyRestrictionsResult
     {
-        /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckPolicyRestrictionsResult"/>. </summary>
         internal CheckPolicyRestrictionsResult()
         {
             FieldRestrictions = new ChangeTrackingList<FieldRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of CheckPolicyRestrictionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckPolicyRestrictionsResult"/>. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
         /// <param name="contentEvaluationResult"> Evaluation results for the provided partial resource content. </param>
         internal CheckPolicyRestrictionsResult(IReadOnlyList<FieldRestrictions> fieldRestrictions, CheckRestrictionsResultContentEvaluationResult contentEvaluationResult)

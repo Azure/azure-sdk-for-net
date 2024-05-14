@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The BlobPrefix. </summary>
     internal partial class BlobPrefix
     {
-        /// <summary> Initializes a new instance of BlobPrefix. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobPrefix"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal BlobPrefix(string name)

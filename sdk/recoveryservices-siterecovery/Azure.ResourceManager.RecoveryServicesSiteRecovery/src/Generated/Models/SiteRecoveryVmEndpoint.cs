@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The SiteRecoveryVmEndpoint. </summary>
     public partial class SiteRecoveryVmEndpoint
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmEndpoint"/>. </summary>
         internal SiteRecoveryVmEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVmEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmEndpoint"/>. </summary>
         /// <param name="endpointName"></param>
         /// <param name="privatePort"></param>
         /// <param name="publicPort"></param>

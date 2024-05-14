@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ProtectionContainerMappingProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProviderSpecificDetails"/>. </summary>
         protected ProtectionContainerMappingProviderSpecificDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal ProtectionContainerMappingProviderSpecificDetails(string instanceType)
         {

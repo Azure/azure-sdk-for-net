@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,15 +16,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The private link service ip configuration. </summary>
     public partial class PrivateLinkServiceIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfiguration"/>. </summary>
         public PrivateLinkServiceIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion) : base(id, name, resourceType)
+        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;

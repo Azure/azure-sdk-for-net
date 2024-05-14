@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A Global SKU Description. </summary>
     public partial class GlobalCsmSkuDescription
     {
-        /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalCsmSkuDescription"/>. </summary>
         internal GlobalCsmSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalCsmSkuDescription"/>. </summary>
         /// <param name="name"> Name of the resource SKU. </param>
         /// <param name="tier"> Service Tier of the resource SKU. </param>
         /// <param name="size"> Size specifier of the resource SKU. </param>

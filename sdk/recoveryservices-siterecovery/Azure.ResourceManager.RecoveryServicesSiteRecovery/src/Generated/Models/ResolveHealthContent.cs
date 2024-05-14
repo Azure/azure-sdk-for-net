@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resolve health input. </summary>
     public partial class ResolveHealthContent
     {
-        /// <summary> Initializes a new instance of ResolveHealthContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthContent"/>. </summary>
         public ResolveHealthContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthContent"/>. </summary>
+        /// <param name="properties"> Disable resolve health input properties. </param>
+        internal ResolveHealthContent(ResolveHealthContentProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Disable resolve health input properties. </summary>

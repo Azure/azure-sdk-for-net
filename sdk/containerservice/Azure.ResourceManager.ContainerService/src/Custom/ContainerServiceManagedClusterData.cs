@@ -58,5 +58,26 @@ namespace Azure.ResourceManager.ContainerService
                 AutoUpgradeProfile.UpgradeChannel = value;
             }
         }
+
+        /// <summary> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedServiceIdentity Identity
+        {
+            //get; set;
+            // Update get once Azure.ResourceManager provide model factory method for ManagedServiceIdentity
+            get => ClusterIdentity is null ? default : new ManagedServiceIdentity(ClusterIdentity.ResourceIdentityType);
+            set
+            {
+                if (value is null)
+                    ClusterIdentity = null;
+                else
+                {
+                    IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
+                    if (value.ManagedServiceIdentityType == ManagedServiceIdentityType.UserAssigned || value.ManagedServiceIdentityType == ManagedServiceIdentityType.SystemAssignedUserAssigned)
+                        userAssignedIdentities = value.UserAssignedIdentities;
+                    ClusterIdentity = new ManagedClusterIdentity(value.PrincipalId, value.TenantId, value.ManagedServiceIdentityType, new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>(), userAssignedIdentities, null);
+                }
+            }
+        }
     }
 }

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateLinkScopedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceData"/>. </summary>
         public MonitorPrivateLinkScopedResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

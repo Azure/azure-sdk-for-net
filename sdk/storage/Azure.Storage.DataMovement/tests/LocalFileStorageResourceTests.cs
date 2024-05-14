@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
             "C:\\Users\\user1\\Documents\file.txt",
             "C:\\Users\\user1\\Documents\file",
             "C:\\Users\\user1\\Documents\file\\",
-            "user1\\Documents\file\\",
+            "/user1/Documents/file/",
         };
 
         private void AllowReadData(string path, bool isDirectory, bool allowRead)
@@ -68,8 +68,8 @@ namespace Azure.Storage.DataMovement.Tests
                 LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
                 // Assert
-                Assert.AreEqual(path, storageResource.Path);
-                Assert.IsFalse(storageResource.CanProduceUri);
+                Assert.AreEqual(path, storageResource.Uri.LocalPath);
+                Assert.AreEqual(Uri.UriSchemeFile, storageResource.Uri.Scheme);
             }
         }
 
@@ -83,7 +83,10 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource("   "));
 
             Assert.Catch<ArgumentException>(() =>
-                new LocalFileStorageResource(default));
+                new LocalFileStorageResource(path: default));
+
+            Assert.Catch<ArgumentException>(() =>
+                new LocalFileStorageResource(uri: default));
         }
 
         [Test]
@@ -98,7 +101,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync();
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync();
             using Stream content = result.Content;
 
             // Assert
@@ -120,7 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             var readPosition = 5;
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync(position: readPosition);
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync(position: readPosition);
             using Stream content = result.Content;
 
             // Assert
@@ -163,7 +166,7 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream,
                     streamLength: length,
                     false,
@@ -192,12 +195,12 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream,
                     streamLength: length,
                     overwrite: false,
-                    position: writePosition,
-                    completeLength: length);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = writePosition });
             }
 
             // Assert
@@ -220,7 +223,11 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.WriteFromStreamAsync(stream, length, false);
+                    await storageResource.CopyFromStreamAsync(
+                        stream: stream,
+                        streamLength: length,
+                        overwrite: false,
+                        completeLength: length);
                 }
             }
             catch (IOException ex)
@@ -239,12 +246,12 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesAsync();
+            StorageResourceItemProperties result = await storageResource.GetPropertiesAsync();
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, size);
-            Assert.NotNull(result.ETag);
+            Assert.AreEqual(result.ResourceLength, size);
+            Assert.NotNull(result.RawProperties);
         }
 
         [Test]

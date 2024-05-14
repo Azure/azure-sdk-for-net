@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisObjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
         protected SsisObjectMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisObjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadata"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

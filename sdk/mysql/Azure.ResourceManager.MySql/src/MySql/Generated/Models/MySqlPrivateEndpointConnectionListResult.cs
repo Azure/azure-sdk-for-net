@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class MySqlPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionListResult"/>. </summary>
         internal MySqlPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<MySqlPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal MySqlPrivateEndpointConnectionListResult(IReadOnlyList<MySqlPrivateEndpointConnectionData> value, string nextLink)

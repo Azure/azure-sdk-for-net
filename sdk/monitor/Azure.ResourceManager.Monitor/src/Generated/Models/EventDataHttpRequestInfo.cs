@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Http request info. </summary>
     public partial class EventDataHttpRequestInfo
     {
-        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventDataHttpRequestInfo"/>. </summary>
         internal EventDataHttpRequestInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventDataHttpRequestInfo"/>. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
         /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>

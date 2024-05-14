@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The quota assigned to a resource. </summary>
     public partial class MachineLearningResourceQuota
     {
-        /// <summary> Initializes a new instance of MachineLearningResourceQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceQuota"/>. </summary>
         internal MachineLearningResourceQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningResourceQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceQuota"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="resourceQuotaType"> Specifies the resource type. </param>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +16,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmCloudData : IUtf8JsonSerializable
+    public partial class ScVmmCloudData : IUtf8JsonSerializable, IJsonModel<ScVmmCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmCloudData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScVmmCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,6 +44,26 @@ namespace Azure.ResourceManager.ArcScVmm
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(InventoryItemId))
@@ -50,12 +81,66 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
+            if (options.Format != "W" && Optional.IsDefined(CloudName))
+            {
+                writer.WritePropertyName("cloudName"u8);
+                writer.WriteStringValue(CloudName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
+            {
+                writer.WritePropertyName("cloudCapacity"u8);
+                writer.WriteObjectValue(CloudCapacity);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
+            {
+                writer.WritePropertyName("storageQoSPolicies"u8);
+                writer.WriteStartArray();
+                foreach (var item in StorageQoSPolicies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScVmmCloudData DeserializeScVmmCloudData(JsonElement element)
+        ScVmmCloudData IJsonModel<ScVmmCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScVmmCloudData(document.RootElement, options);
+        }
+
+        internal static ScVmmCloudData DeserializeScVmmCloudData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +159,8 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<CloudCapacity> cloudCapacity = default;
             Optional<IReadOnlyList<StorageQoSPolicy>> storageQoSPolicies = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -184,8 +271,44 @@ namespace Azure.ResourceManager.ArcScVmm
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), provisioningState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScVmmCloudData IPersistableModel<ScVmmCloudData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScVmmCloudData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScVmmCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

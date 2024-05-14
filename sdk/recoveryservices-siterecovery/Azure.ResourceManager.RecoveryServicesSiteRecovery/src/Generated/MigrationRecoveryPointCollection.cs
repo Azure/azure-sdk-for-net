@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MigrationRecoveryPointResource" /> and their operations.
-    /// Each <see cref="MigrationRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryMigrationItemResource" />.
-    /// To get a <see cref="MigrationRecoveryPointCollection" /> instance call the GetMigrationRecoveryPoints method from an instance of <see cref="SiteRecoveryMigrationItemResource" />.
+    /// A class representing a collection of <see cref="MigrationRecoveryPointResource"/> and their operations.
+    /// Each <see cref="MigrationRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryMigrationItemResource"/>.
+    /// To get a <see cref="MigrationRecoveryPointCollection"/> instance call the GetMigrationRecoveryPoints method from an instance of <see cref="SiteRecoveryMigrationItemResource"/>.
     /// </summary>
     public partial class MigrationRecoveryPointCollection : ArmCollection, IEnumerable<MigrationRecoveryPointResource>, IAsyncEnumerable<MigrationRecoveryPointResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>MigrationRecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
@@ -99,6 +108,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MigrationRecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,15 +154,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>MigrationRecoveryPoints_ListByReplicationMigrationItems</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MigrationRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MigrationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MigrationRecoveryPointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,15 +184,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>MigrationRecoveryPoints_ListByReplicationMigrationItems</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MigrationRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MigrationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MigrationRecoveryPointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationRecoveryPointRestClient.CreateListByReplicationMigrationItemsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationRecoveryPointResource(Client, MigrationRecoveryPointData.DeserializeMigrationRecoveryPointData(e)), _migrationRecoveryPointClientDiagnostics, Pipeline, "MigrationRecoveryPointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,6 +213,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MigrationRecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +257,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>MigrationRecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
@@ -232,6 +281,96 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _migrationRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationRecoveryPointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrationRecoveryPoints/{migrationRecoveryPointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MigrationRecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MigrationRecoveryPointResource>> GetIfExistsAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+
+            using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _migrationRecoveryPointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationRecoveryPointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MigrationRecoveryPointResource>(response.GetRawResponse());
+                return Response.FromValue(new MigrationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrationRecoveryPoints/{migrationRecoveryPointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MigrationRecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationRecoveryPointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
+        public virtual NullableResponse<MigrationRecoveryPointResource> GetIfExists(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+
+            using var scope = _migrationRecoveryPointClientDiagnostics.CreateScope("MigrationRecoveryPointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _migrationRecoveryPointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationRecoveryPointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MigrationRecoveryPointResource>(response.GetRawResponse());
+                return Response.FromValue(new MigrationRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

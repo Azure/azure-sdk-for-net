@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger schema. </summary>
     public partial class SwaggerSchema
     {
-        /// <summary> Initializes a new instance of SwaggerSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSchema"/>. </summary>
         public SwaggerSchema()
         {
             Properties = new ChangeTrackingDictionary<string, SwaggerSchema>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             AllOf = new ChangeTrackingList<SwaggerSchema>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSchema"/>. </summary>
         /// <param name="reference"> The reference. </param>
         /// <param name="schemaType"> The type. </param>
         /// <param name="title"> The title. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

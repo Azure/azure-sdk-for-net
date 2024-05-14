@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a ScriptCmdlet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptCmdletResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScriptCmdletResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScriptPackageResource" /> using the GetScriptCmdlet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptCmdletResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptCmdletResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScriptPackageResource"/> using the GetScriptCmdlet method.
     /// </summary>
     public partial class ScriptCmdletResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScriptCmdletResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptPackageName"> The scriptPackageName. </param>
+        /// <param name="scriptCmdletName"> The scriptCmdletName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Avs
         private readonly ScriptCmdletsRestOperations _scriptCmdletRestClient;
         private readonly ScriptCmdletData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class for mocking. </summary>
         protected ScriptCmdletResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScriptCmdletResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptCmdletResource(ArmClient client, ScriptCmdletData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,9 +12,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to authenticate using Service Principal. </summary>
     public partial class KubernetesServicePrincipalUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesServicePrincipalUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipalUpdateContent"/>. </summary>
         public KubernetesServicePrincipalUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipalUpdateContent"/>. </summary>
+        /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
+        /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
+        /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
+        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
+        /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
+        /// <param name="clientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        internal KubernetesServicePrincipalUpdateContent(Guid? clientId, Guid? tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? clientCertificateSendChain)
+        {
+            ClientId = clientId;
+            TenantId = tenantId;
+            ClientSecret = clientSecret;
+            ClientCertificate = clientCertificate;
+            ClientCertificatePassword = clientCertificatePassword;
+            ClientCertificateSendChain = clientCertificateSendChain;
         }
 
         /// <summary> The client Id for authenticating a Service Principal. </summary>

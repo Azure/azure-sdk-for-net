@@ -14,10 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of the Failover Process Server request. </summary>
     public partial class FailoverProcessServerProperties
     {
-        /// <summary> Initializes a new instance of FailoverProcessServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerProperties"/>. </summary>
         public FailoverProcessServerProperties()
         {
             VmsToMigrate = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerProperties"/>. </summary>
+        /// <param name="containerName"> The container identifier. </param>
+        /// <param name="sourceProcessServerId"> The source process server. </param>
+        /// <param name="targetProcessServerId"> The new process server. </param>
+        /// <param name="vmsToMigrate"> The VMS to migrate. </param>
+        /// <param name="updateType"> A value for failover type. It can be systemlevel/serverlevel. </param>
+        internal FailoverProcessServerProperties(string containerName, Guid? sourceProcessServerId, Guid? targetProcessServerId, IList<string> vmsToMigrate, string updateType)
+        {
+            ContainerName = containerName;
+            SourceProcessServerId = sourceProcessServerId;
+            TargetProcessServerId = targetProcessServerId;
+            VmsToMigrate = vmsToMigrate;
+            UpdateType = updateType;
         }
 
         /// <summary> The container identifier. </summary>

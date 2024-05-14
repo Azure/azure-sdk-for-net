@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string expressRouteCircuitId = default;
+            ResourceIdentifier expressRouteCircuitId = default;
             Optional<string> expressRouteAuthorizationKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expressRouteCircuitId"u8))
                 {
-                    expressRouteCircuitId = property.Value.GetString();
+                    expressRouteCircuitId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expressRouteAuthorizationKey"u8))

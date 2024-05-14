@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The correlation property. </summary>
     internal partial class Correlation
     {
-        /// <summary> Initializes a new instance of Correlation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
         internal Correlation()
         {
         }
 
-        /// <summary> Initializes a new instance of Correlation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
         /// <param name="clientTrackingId"> The client tracking id. </param>
         internal Correlation(string clientTrackingId)
         {

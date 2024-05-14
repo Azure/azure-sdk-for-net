@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of private endpoint connections associated with a managed HSM Pools. </summary>
     internal partial class ManagedHsmPrivateEndpointConnectionsListResult
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionsListResult"/>. </summary>
         internal ManagedHsmPrivateEndpointConnectionsListResult()
         {
             Value = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionsListResult"/>. </summary>
         /// <param name="value"> The private endpoint connection associated with a managed HSM Pools. </param>
         /// <param name="nextLink"> The URL to get the next set of managed HSM Pools. </param>
         internal ManagedHsmPrivateEndpointConnectionsListResult(IReadOnlyList<ManagedHsmPrivateEndpointConnectionData> value, string nextLink)

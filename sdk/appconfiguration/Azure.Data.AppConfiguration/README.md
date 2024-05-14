@@ -160,26 +160,26 @@ client.DeleteConfigurationSetting("some_key");
 
 ### Create a Snapshot
 
-To create a snapshot, you need to instantiate the `ConfigurationSettingsSnapshot` class and specify filters to determine which configuration settings should be included. The creation process is a Long-Running Operation (LRO) and can be achieved by calling the `CreateSnapshot` method.
+To create a snapshot, you need to instantiate the `ConfigurationSnapshot` class and specify filters to determine which configuration settings should be included. The creation process is a Long-Running Operation (LRO) and can be achieved by calling the `CreateSnapshot` method.
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
-var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter("some_key") });
-var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
 var createdSnapshot = operation.Value;
-Console.WriteLine($"Created configuration setting snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
+Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
 ```
 
 ### Retrieve a Snapshot
 
-Once a configuration setting snapshot is created, you can retrieve it using the `GetSnapshot` method.
+Once a configuration snapshot is created, you can retrieve it using the `GetSnapshot` method.
 
 ```C# Snippet:AzConfigSample11_GetSnapshot
 var snapshotName = "some_snapshot";
-ConfigurationSettingsSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
-Console.WriteLine($"Retrieved configuration setting snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
+ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
 ```
 
 ### Archive a Snapshot
@@ -188,8 +188,8 @@ To archive a snapshot, you can utilize the `ArchiveSnapshot` method. This operat
 
 ```C# Snippet:AzConfigSample11_ArchiveSnapshot
 var snapshotName = "some_snapshot";
-ConfigurationSettingsSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
-Console.WriteLine($"Archived configuration setting snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
+ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
+Console.WriteLine($"Archived configuration snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
 ```
 
 ### Recover a snapshot
@@ -198,8 +198,8 @@ You can recover an archived snapshot by using the `RecoverSnapshot` method. This
 
 ```C# Snippet:AzConfigSample11_RecoverSnapshot
 var snapshotName = "some_snapshot";
-ConfigurationSettingsSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
-Console.WriteLine($"Recovered configuration setting snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
+ConfigurationSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
+Console.WriteLine($"Recovered configuration snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
 ```
 
 ### Retrieve all Snapshots
@@ -208,10 +208,10 @@ To retrieve all snapshots, you can use the `GetSnapshots` method.
 
 ```C# Snippet:AzConfigSample11_GetSnapshots
 var count = 0;
-foreach (var item in client.GetSnapshots())
+foreach (var item in client.GetSnapshots(new SnapshotSelector()))
 {
     count++;
-    Console.WriteLine($"Retrieved configuration setting snapshot: {item.Name}, status {item.Status}");
+    Console.WriteLine($"Retrieved configuration snapshot: {item.Name}, status {item.Status}");
 }
 Console.WriteLine($"Total number of snapshots retrieved: {count}");
 ```
@@ -233,7 +233,7 @@ Several App Configuration client library samples are available to you in this Gi
 * [Get a setting if changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
 * [Update a setting if it hasn't changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
 * [Configuration settings snapshot](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample11_SettingsSnapshot.md): Create, retrieve and update status of a configuration settings snapshot.
-* [Create a mock client](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample7_MockClient.md): Mock a client for testing using the [Moq library][moq].
+* [Create a mock client](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking): Mock a client for testing.
 
  For more details see the [samples README][samples_readme].
 
@@ -270,7 +270,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.Data.AppConfiguration/
 [samples_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
-[moq]: https://github.com/Moq/moq4/
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

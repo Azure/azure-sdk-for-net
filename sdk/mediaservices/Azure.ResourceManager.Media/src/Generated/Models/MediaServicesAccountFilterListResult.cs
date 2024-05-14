@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of AccountFilter items. </summary>
     internal partial class MediaServicesAccountFilterListResult
     {
-        /// <summary> Initializes a new instance of MediaServicesAccountFilterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountFilterListResult"/>. </summary>
         internal MediaServicesAccountFilterListResult()
         {
             Value = new ChangeTrackingList<MediaServicesAccountFilterData>();
         }
 
-        /// <summary> Initializes a new instance of MediaServicesAccountFilterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountFilterListResult"/>. </summary>
         /// <param name="value"> A collection of AccountFilter items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal MediaServicesAccountFilterListResult(IReadOnlyList<MediaServicesAccountFilterData> value, string odataNextLink)

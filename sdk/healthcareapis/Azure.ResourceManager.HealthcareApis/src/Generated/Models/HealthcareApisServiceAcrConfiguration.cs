@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Azure container registry configuration information. </summary>
     public partial class HealthcareApisServiceAcrConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceAcrConfiguration"/>. </summary>
         public HealthcareApisServiceAcrConfiguration()
         {
             LoginServers = new ChangeTrackingList<string>();
             OciArtifacts = new ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceAcrConfiguration"/>. </summary>
         /// <param name="loginServers"> The list of the ACR login servers. </param>
         /// <param name="ociArtifacts"> The list of Open Container Initiative (OCI) artifacts. </param>
         internal HealthcareApisServiceAcrConfiguration(IList<string> loginServers, IList<HealthcareApisServiceOciArtifactEntry> ociArtifacts)

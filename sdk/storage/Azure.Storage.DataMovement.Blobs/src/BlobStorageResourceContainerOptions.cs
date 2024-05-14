@@ -20,11 +20,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Optional. The directory prefix within the Blob Storage Container to use in the transfer.
         /// </summary>
-        public string DirectoryPrefix { get; set; }
+        public string BlobDirectoryPrefix { get; set; }
 
         /// <summary>
         /// Optional. Additional options applied to each resource in the container.
         /// </summary>
-        public BlobStorageResourceOptions ResourceOptions { get; set; }
+        public BlobStorageResourceOptions BlobOptions { get; set; }
     }
 }

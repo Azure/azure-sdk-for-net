@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> and their operations.
-    /// Each <see cref="ManagedBackupShortTermRetentionPolicyResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
-    /// To get a <see cref="ManagedBackupShortTermRetentionPolicyCollection" /> instance call the GetManagedBackupShortTermRetentionPolicies method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// A class representing a collection of <see cref="ManagedBackupShortTermRetentionPolicyResource"/> and their operations.
+    /// Each <see cref="ManagedBackupShortTermRetentionPolicyResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource"/>.
+    /// To get a <see cref="ManagedBackupShortTermRetentionPolicyCollection"/> instance call the GetManagedBackupShortTermRetentionPolicies method from an instance of <see cref="ManagedDatabaseResource"/>.
     /// </summary>
     public partial class ManagedBackupShortTermRetentionPolicyCollection : ArmCollection, IEnumerable<ManagedBackupShortTermRetentionPolicyResource>, IAsyncEnumerable<ManagedBackupShortTermRetentionPolicyResource>
     {
@@ -64,6 +65,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -102,6 +111,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +159,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
@@ -174,6 +199,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,15 +241,23 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedBackupShortTermRetentionPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedBackupShortTermRetentionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,15 +271,23 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedBackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedBackupShortTermRetentionPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedBackupShortTermRetentionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedBackupShortTermRetentionPolicyRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedBackupShortTermRetentionPolicyResource(Client, ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(e)), _managedBackupShortTermRetentionPolicyClientDiagnostics, Pipeline, "ManagedBackupShortTermRetentionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,6 +300,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,6 +340,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
@@ -295,6 +360,88 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedBackupShortTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedBackupShortTermRetentionPolicyResource>> GetIfExistsAsync(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedBackupShortTermRetentionPolicyClientDiagnostics.CreateScope("ManagedBackupShortTermRetentionPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedBackupShortTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedBackupShortTermRetentionPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedBackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedBackupShortTermRetentionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedBackupShortTermRetentionPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyName"> The policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedBackupShortTermRetentionPolicyResource> GetIfExists(ManagedShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedBackupShortTermRetentionPolicyClientDiagnostics.CreateScope("ManagedBackupShortTermRetentionPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedBackupShortTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedBackupShortTermRetentionPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedBackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The details about the usage of a particular limited resource. </summary>
     public partial class HDInsightUsage
     {
-        /// <summary> Initializes a new instance of HDInsightUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightUsage"/>. </summary>
         internal HDInsightUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightUsage"/>. </summary>
         /// <param name="unit"> The type of measurement for usage. </param>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The maximum allowed usage. </param>

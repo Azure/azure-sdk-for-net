@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List CA Certificate operation. </summary>
     internal partial class CaCertificatesListResult
     {
-        /// <summary> Initializes a new instance of CaCertificatesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaCertificatesListResult"/>. </summary>
         internal CaCertificatesListResult()
         {
             Value = new ChangeTrackingList<CaCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of CaCertificatesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaCertificatesListResult"/>. </summary>
         /// <param name="value"> A collection of CA Certificate. </param>
         /// <param name="nextLink"> A link for the next page of CA Certificate. </param>
         internal CaCertificatesListResult(IReadOnlyList<CaCertificateData> value, string nextLink)

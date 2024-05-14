@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A snapshot of a web app configuration. </summary>
     public partial class SiteConfigurationSnapshotInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfo"/>. </summary>
         public SiteConfigurationSnapshotInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

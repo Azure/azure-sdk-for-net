@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
+            if (Optional.IsDefined(RootSquashSettings))
+            {
+                writer.WritePropertyName("rootSquashSettings"u8);
+                writer.WriteObjectValue(RootSquashSettings);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

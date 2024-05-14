@@ -12,9 +12,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Configure pairing input properties. </summary>
     public partial class SiteRecoveryCreateProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerMappingProperties"/>. </summary>
         public SiteRecoveryCreateProtectionContainerMappingProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerMappingProperties"/>. </summary>
+        /// <param name="targetProtectionContainerId"> The target unique protection container name. </param>
+        /// <param name="policyId"> Applicable policy. </param>
+        /// <param name="providerSpecificContent">
+        /// Provider specific input for pairing.
+        /// Please note <see cref="ReplicationProviderSpecificContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AContainerMappingContent"/> and <see cref="VMwareCbtContainerMappingContent"/>.
+        /// </param>
+        internal SiteRecoveryCreateProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, ResourceIdentifier policyId, ReplicationProviderSpecificContainerMappingContent providerSpecificContent)
+        {
+            TargetProtectionContainerId = targetProtectionContainerId;
+            PolicyId = policyId;
+            ProviderSpecificContent = providerSpecificContent;
         }
 
         /// <summary> The target unique protection container name. </summary>

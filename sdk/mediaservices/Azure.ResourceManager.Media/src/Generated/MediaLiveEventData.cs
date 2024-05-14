@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaLiveEventData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MediaLiveEventData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media
             StreamOptions = new ChangeTrackingList<StreamOptionsFlag>();
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

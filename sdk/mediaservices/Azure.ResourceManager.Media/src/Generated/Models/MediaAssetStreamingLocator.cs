@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Properties of the Streaming Locator. </summary>
     public partial class MediaAssetStreamingLocator
     {
-        /// <summary> Initializes a new instance of MediaAssetStreamingLocator. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStreamingLocator"/>. </summary>
         internal MediaAssetStreamingLocator()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaAssetStreamingLocator. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStreamingLocator"/>. </summary>
         /// <param name="name"> Streaming Locator name. </param>
         /// <param name="assetName"> Asset Name. </param>
         /// <param name="createdOn"> The creation time of the Streaming Locator. </param>

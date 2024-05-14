@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The UpsertManagedServerOperationParameters. </summary>
     public partial class UpsertManagedServerOperationParameters
     {
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationParameters"/>. </summary>
         internal UpsertManagedServerOperationParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of UpsertManagedServerOperationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationParameters"/>. </summary>
         /// <param name="family"></param>
         /// <param name="tier"></param>
         /// <param name="vCores"></param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Error definition. </summary>
     public partial class SelfHelpError
     {
-        /// <summary> Initializes a new instance of SelfHelpError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpError"/>. </summary>
         internal SelfHelpError()
         {
             Details = new ChangeTrackingList<SelfHelpError>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpError"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>

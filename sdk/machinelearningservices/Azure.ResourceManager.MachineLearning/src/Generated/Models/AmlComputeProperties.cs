@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> AML Compute properties. </summary>
     public partial class AmlComputeProperties
     {
-        /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         public AmlComputeProperties()
         {
             Errors = new ChangeTrackingList<MachineLearningError>();
         }
 
-        /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         /// <param name="osType"> Compute OS Type. </param>
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="vmPriority"> Virtual Machine priority. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

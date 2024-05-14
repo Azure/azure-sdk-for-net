@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthcareApis.Mocking;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,233 +20,226 @@ namespace Azure.ResourceManager.HealthcareApis
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthcareApis. </summary>
     public static partial class HealthcareApisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableHealthcareApisArmClient GetMockableHealthcareApisArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableHealthcareApisArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableHealthcareApisResourceGroupResource GetMockableHealthcareApisResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableHealthcareApisResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableHealthcareApisSubscriptionResource GetMockableHealthcareApisSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableHealthcareApisSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region HealthcareApisServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisServiceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisServiceResource"/> object. </returns>
         public static HealthcareApisServiceResource GetHealthcareApisServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisServiceResource.ValidateResourceId(id);
-                return new HealthcareApisServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisServicePrivateEndpointConnectionResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisServiceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> object. </returns>
         public static HealthcareApisServicePrivateEndpointConnectionResource GetHealthcareApisServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisServicePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HealthcareApisServicePrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisWorkspacePrivateEndpointConnectionResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisServicePrivateEndpointConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisWorkspacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/> object. </returns>
         public static HealthcareApisWorkspacePrivateEndpointConnectionResource GetHealthcareApisWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisWorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HealthcareApisWorkspacePrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisServicePrivateLinkResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisWorkspacePrivateEndpointConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisServicePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisServicePrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisServicePrivateLinkResource"/> object. </returns>
         public static HealthcareApisServicePrivateLinkResource GetHealthcareApisServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisServicePrivateLinkResource.ValidateResourceId(id);
-                return new HealthcareApisServicePrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisWorkspacePrivateLinkResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisServicePrivateLinkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisWorkspacePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateLinkResource"/> object. </returns>
         public static HealthcareApisWorkspacePrivateLinkResource GetHealthcareApisWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisWorkspacePrivateLinkResource.ValidateResourceId(id);
-                return new HealthcareApisWorkspacePrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisWorkspaceResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisWorkspacePrivateLinkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource"/> object. </returns>
         public static HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisWorkspaceResource.ValidateResourceId(id);
-                return new HealthcareApisWorkspaceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DicomServiceResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisWorkspaceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DicomServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DicomServiceResource.CreateResourceIdentifier" /> to create a <see cref="DicomServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetDicomServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DicomServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DicomServiceResource"/> object. </returns>
         public static DicomServiceResource GetDicomServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DicomServiceResource.ValidateResourceId(id);
-                return new DicomServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisIotConnectorResource
+            return GetMockableHealthcareApisArmClient(client).GetDicomServiceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisIotConnectorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisIotConnectorResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisIotConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource"/> object. </returns>
         public static HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisIotConnectorResource.ValidateResourceId(id);
-                return new HealthcareApisIotConnectorResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthcareApisIotFhirDestinationResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisIotConnectorResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisIotFhirDestinationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisIotFhirDestinationResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotFhirDestinationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisIotFhirDestinationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisIotFhirDestinationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthcareApisIotFhirDestinationResource"/> object. </returns>
         public static HealthcareApisIotFhirDestinationResource GetHealthcareApisIotFhirDestinationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisIotFhirDestinationResource.ValidateResourceId(id);
-                return new HealthcareApisIotFhirDestinationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FhirServiceResource
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisIotFhirDestinationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FhirServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FhirServiceResource.CreateResourceIdentifier" /> to create a <see cref="FhirServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetFhirServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FhirServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FhirServiceResource"/> object. </returns>
         public static FhirServiceResource GetFhirServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FhirServiceResource.ValidateResourceId(id);
-                return new FhirServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of HealthcareApisServiceResources in the ResourceGroupResource. </summary>
+            return GetMockableHealthcareApisArmClient(client).GetFhirServiceResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of HealthcareApisServiceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
         public static HealthcareApisServiceCollection GetHealthcareApisServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthcareApisServices();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisServices();
         }
 
         /// <summary>
@@ -259,17 +253,31 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHealthcareApisServices().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisServiceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,25 +291,48 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<HealthcareApisServiceResource> GetHealthcareApisService(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHealthcareApisServices().Get(resourceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisService(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisWorkspaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
         public static HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthcareApisWorkspaces();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisWorkspaces();
         }
 
         /// <summary>
@@ -315,17 +346,31 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHealthcareApisWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -339,17 +384,31 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisWorkspace(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHealthcareApisWorkspaces().Get(workspaceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -363,14 +422,29 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="HealthcareApisServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisServiceResource> GetHealthcareApisServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -384,14 +458,29 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="HealthcareApisServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisServiceResource> GetHealthcareApisServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisServices(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisServices(cancellationToken);
         }
 
         /// <summary>
@@ -405,17 +494,29 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHealthcareApisSubscriptionResource(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -429,17 +530,29 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -453,14 +566,29 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -474,14 +602,29 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an Azure SQL database reference input data source. </summary>
     public partial class SqlReferenceInputDataSource : ReferenceInputDataSource
     {
-        /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlReferenceInputDataSource"/>. </summary>
         public SqlReferenceInputDataSource()
         {
             ReferenceInputDataSourceType = "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlReferenceInputDataSource"/>. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="server"> This element is associated with the datasource element. This is the name of the server that contains the database that will be written to. </param>
         /// <param name="database"> This element is associated with the datasource element. This is the name of the database that output will be written to. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Details of the encryption associated with the workspace. </summary>
     public partial class SynapseEncryptionDetails
     {
-        /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionDetails"/>. </summary>
         public SynapseEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionDetails"/>. </summary>
         /// <param name="isDoubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
         internal SynapseEncryptionDetails(bool? isDoubleEncryptionEnabled, WorkspaceCustomerManagedKeyDetails cmk)

@@ -5,17 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Rid))
+            {
+                writer.WritePropertyName("_rid"u8);
+                writer.WriteStringValue(Rid);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("_ts"u8);
+                writer.WriteNumberValue(Timestamp.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("_etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(FunctionName);
             if (Optional.IsDefined(Body))
@@ -23,11 +49,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo DeserializeExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(JsonElement element)
+        ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo IJsonModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(document.RootElement, options);
+        }
+
+        internal static ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo DeserializeExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +92,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ETag> etag = default;
             string id = default;
             Optional<string> body = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -72,8 +129,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     body = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(id, body.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(id, body.Value, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
+
+        BinaryData IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

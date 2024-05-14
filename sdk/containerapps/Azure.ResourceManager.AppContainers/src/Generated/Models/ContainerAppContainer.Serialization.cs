@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppContainer : IUtf8JsonSerializable
+    public partial class ContainerAppContainer : IUtf8JsonSerializable, IJsonModel<ContainerAppContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Probes))
             {
@@ -81,11 +91,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppContainer DeserializeContainerAppContainer(JsonElement element)
+        ContainerAppContainer IJsonModel<ContainerAppContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppContainer(document.RootElement, options);
+        }
+
+        internal static ContainerAppContainer DeserializeContainerAppContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +137,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppEnvironmentVariable>> env = default;
             Optional<AppContainerResources> resources = default;
             Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("probes"u8))
@@ -189,8 +230,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     volumeMounts = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts), Optional.ToList(probes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts), serializedAdditionalRawData, Optional.ToList(probes));
         }
+
+        BinaryData IPersistableModel<ContainerAppContainer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppContainer IPersistableModel<ContainerAppContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

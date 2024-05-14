@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScheduledQueryRuleResource" /> and their operations.
-    /// Each <see cref="ScheduledQueryRuleResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ScheduledQueryRuleCollection" /> instance call the GetScheduledQueryRules method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ScheduledQueryRuleResource"/> and their operations.
+    /// Each <see cref="ScheduledQueryRuleResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ScheduledQueryRuleCollection"/> instance call the GetScheduledQueryRules method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ScheduledQueryRuleCollection : ArmCollection, IEnumerable<ScheduledQueryRuleResource>, IAsyncEnumerable<ScheduledQueryRuleResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,15 +253,23 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledQueryRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledQueryRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledQueryRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), _scheduledQueryRuleClientDiagnostics, Pipeline, "ScheduledQueryRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), _scheduledQueryRuleClientDiagnostics, Pipeline, "ScheduledQueryRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +283,23 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledQueryRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledQueryRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledQueryRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), _scheduledQueryRuleClientDiagnostics, Pipeline, "ScheduledQueryRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), _scheduledQueryRuleClientDiagnostics, Pipeline, "ScheduledQueryRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +312,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +356,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -315,6 +380,96 @@ namespace Azure.ResourceManager.Monitor
             {
                 var response = _scheduledQueryRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScheduledQueryRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _scheduledQueryRuleClientDiagnostics.CreateScope("ScheduledQueryRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scheduledQueryRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScheduledQueryRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledQueryRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        public virtual NullableResponse<ScheduledQueryRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            using var scope = _scheduledQueryRuleClientDiagnostics.CreateScope("ScheduledQueryRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scheduledQueryRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ruleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScheduledQueryRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

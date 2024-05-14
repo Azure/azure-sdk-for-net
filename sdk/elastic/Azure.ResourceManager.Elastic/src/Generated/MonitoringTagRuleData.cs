@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Elastic
     /// </summary>
     public partial class MonitoringTagRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitoringTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRuleData"/>. </summary>
         public MonitoringTagRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

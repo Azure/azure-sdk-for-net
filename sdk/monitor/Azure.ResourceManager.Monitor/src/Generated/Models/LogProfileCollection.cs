@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of log profiles. </summary>
     internal partial class LogProfileCollection
     {
-        /// <summary> Initializes a new instance of LogProfileCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileCollection"/>. </summary>
         /// <param name="value"> the values of the log profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LogProfileCollection(IEnumerable<LogProfileData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LogProfileCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileCollection"/>. </summary>
         /// <param name="value"> the values of the log profiles. </param>
         internal LogProfileCollection(IReadOnlyList<LogProfileData> value)
         {

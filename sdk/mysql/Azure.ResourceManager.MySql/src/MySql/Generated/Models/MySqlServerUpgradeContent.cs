@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The MySqlServerUpgradeContent. </summary>
     public partial class MySqlServerUpgradeContent
     {
-        /// <summary> Initializes a new instance of MySqlServerUpgradeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerUpgradeContent"/>. </summary>
         public MySqlServerUpgradeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerUpgradeContent"/>. </summary>
+        /// <param name="targetServerVersion"> Represents an server storage profile. </param>
+        internal MySqlServerUpgradeContent(string targetServerVersion)
+        {
+            TargetServerVersion = targetServerVersion;
         }
 
         /// <summary> Represents an server storage profile. </summary>

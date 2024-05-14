@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string DefaultValue = "Default";
         private const string T1Value = "T1";
         private const string T2Value = "T2";
+        private const string AcrossT2Value = "AcrossT2";
 
         /// <summary> Basic storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity Default { get; } = new NetAppVolumeStorageToNetworkProximity(DefaultValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeStorageToNetworkProximity T1 { get; } = new NetAppVolumeStorageToNetworkProximity(T1Value);
         /// <summary> Standard T2 storage to network connectivity. </summary>
         public static NetAppVolumeStorageToNetworkProximity T2 { get; } = new NetAppVolumeStorageToNetworkProximity(T2Value);
+        /// <summary> Standard AcrossT2 storage to network connectivity. </summary>
+        public static NetAppVolumeStorageToNetworkProximity AcrossT2 { get; } = new NetAppVolumeStorageToNetworkProximity(AcrossT2Value);
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are the same. </summary>
         public static bool operator ==(NetAppVolumeStorageToNetworkProximity left, NetAppVolumeStorageToNetworkProximity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppVolumeStorageToNetworkProximity"/> values are not the same. </summary>

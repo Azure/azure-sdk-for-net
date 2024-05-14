@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> scale units definition. </summary>
     public partial class StreamingEntityScaleUnit
     {
-        /// <summary> Initializes a new instance of StreamingEntityScaleUnit. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEntityScaleUnit"/>. </summary>
         public StreamingEntityScaleUnit()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEntityScaleUnit"/>. </summary>
+        /// <param name="scaleUnit"> The scale unit number of the streaming endpoint. </param>
+        internal StreamingEntityScaleUnit(int? scaleUnit)
+        {
+            ScaleUnit = scaleUnit;
         }
 
         /// <summary> The scale unit number of the streaming endpoint. </summary>

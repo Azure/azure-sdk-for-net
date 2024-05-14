@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a CertificateOrderDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CertificateOrderDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCertificateOrderDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource" /> using the GetCertificateOrderDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CertificateOrderDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCertificateOrderDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceCertificateOrderResource"/> using the GetCertificateOrderDetector method.
     /// </summary>
     public partial class CertificateOrderDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CertificateOrderDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="certificateOrderName"> The certificateOrderName. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string certificateOrderName, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly CertificateOrdersDiagnosticsRestOperations _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient;
         private readonly AppServiceDetectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CertificateRegistration/certificateOrders/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorResource"/> class for mocking. </summary>
         protected CertificateOrderDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CertificateOrderDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateOrderDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CertificateOrderDetectorResource(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CertificateRegistration/certificateOrders/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CertificateOrderDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +143,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CertificateOrderDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

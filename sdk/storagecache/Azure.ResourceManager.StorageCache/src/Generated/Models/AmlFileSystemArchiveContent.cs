@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Information required to execute the archive operation. </summary>
     public partial class AmlFileSystemArchiveContent
     {
-        /// <summary> Initializes a new instance of AmlFileSystemArchiveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchiveContent"/>. </summary>
         public AmlFileSystemArchiveContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemArchiveContent"/>. </summary>
+        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
+        internal AmlFileSystemArchiveContent(string filesystemPath)
+        {
+            FilesystemPath = filesystemPath;
         }
 
         /// <summary> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </summary>

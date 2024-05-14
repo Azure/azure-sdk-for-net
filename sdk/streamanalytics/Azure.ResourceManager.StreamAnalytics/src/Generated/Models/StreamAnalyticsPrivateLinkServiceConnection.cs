@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A grouping of information about the connection to the remote resource. </summary>
     public partial class StreamAnalyticsPrivateLinkServiceConnection
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateLinkServiceConnection"/>. </summary>
         public StreamAnalyticsPrivateLinkServiceConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateLinkServiceConnection"/>. </summary>
         /// <param name="privateLinkServiceId"> The resource id of the private link service. Required on PUT (CreateOrUpdate) requests. </param>
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>

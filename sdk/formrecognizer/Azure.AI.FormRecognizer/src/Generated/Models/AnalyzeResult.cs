@@ -15,21 +15,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document analysis result. </summary>
     public partial class AnalyzeResult
     {
-        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
-        /// <param name="apiVersion"> API version used to produce this result. </param>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <param name="serviceVersion"> API version used to produce this result. </param>
         /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
         /// <param name="pages"> Analyzed pages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/>, <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceVersion"/>, <paramref name="modelId"/>, <paramref name="content"/> or <paramref name="pages"/> is null. </exception>
+        internal AnalyzeResult(string serviceVersion, string modelId, StringIndexType stringIndexType, string content, IEnumerable<DocumentPage> pages)
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(pages, nameof(pages));
 
-            ApiVersion = apiVersion;
+            ServiceVersion = serviceVersion;
             ModelId = modelId;
             StringIndexType = stringIndexType;
             Content = content;
@@ -42,8 +42,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Documents = new ChangeTrackingList<AnalyzedDocument>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeResult. </summary>
-        /// <param name="apiVersion"> API version used to produce this result. </param>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResult"/>. </summary>
+        /// <param name="serviceVersion"> API version used to produce this result. </param>
         /// <param name="modelId"> Document model ID used to produce this result. </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="content"> Concatenate string representation of all textual and visual elements in reading order. </param>
@@ -54,9 +54,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="styles"> Extracted font styles. </param>
         /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
+        internal AnalyzeResult(string serviceVersion, string modelId, StringIndexType stringIndexType, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents)
         {
-            ApiVersion = apiVersion;
+            ServiceVersion = serviceVersion;
             ModelId = modelId;
             StringIndexType = stringIndexType;
             Content = content;

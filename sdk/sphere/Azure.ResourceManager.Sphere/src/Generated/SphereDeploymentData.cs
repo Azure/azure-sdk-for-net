@@ -16,37 +16,24 @@ namespace Azure.ResourceManager.Sphere
     /// <summary>
     /// A class representing the SphereDeployment data model.
     /// An deployment resource belonging to a device group resource.
-    /// Serialized Name: Deployment
     /// </summary>
     public partial class SphereDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeploymentData"/>. </summary>
         public SphereDeploymentData()
         {
             DeployedImages = new ChangeTrackingList<SphereImageData>();
         }
 
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deploymentId">
-        /// Deployment ID
-        /// Serialized Name: Deployment.properties.deploymentId
-        /// </param>
-        /// <param name="deployedImages">
-        /// Images deployed
-        /// Serialized Name: Deployment.properties.deployedImages
-        /// </param>
-        /// <param name="deploymentDateUtc">
-        /// Deployment date UTC
-        /// Serialized Name: Deployment.properties.deploymentDateUtc
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: Deployment.properties.provisioningState
-        /// </param>
+        /// <param name="deploymentId"> Deployment ID. </param>
+        /// <param name="deployedImages"> Images deployed. </param>
+        /// <param name="deploymentDateUtc"> Deployment date UTC. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         internal SphereDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, IList<SphereImageData> deployedImages, DateTimeOffset? deploymentDateUtc, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             DeploymentId = deploymentId;
@@ -55,25 +42,13 @@ namespace Azure.ResourceManager.Sphere
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// Deployment ID
-        /// Serialized Name: Deployment.properties.deploymentId
-        /// </summary>
+        /// <summary> Deployment ID. </summary>
         public string DeploymentId { get; set; }
-        /// <summary>
-        /// Images deployed
-        /// Serialized Name: Deployment.properties.deployedImages
-        /// </summary>
+        /// <summary> Images deployed. </summary>
         public IList<SphereImageData> DeployedImages { get; }
-        /// <summary>
-        /// Deployment date UTC
-        /// Serialized Name: Deployment.properties.deploymentDateUtc
-        /// </summary>
+        /// <summary> Deployment date UTC. </summary>
         public DateTimeOffset? DeploymentDateUtc { get; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: Deployment.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public SphereProvisioningState? ProvisioningState { get; }
     }
 }

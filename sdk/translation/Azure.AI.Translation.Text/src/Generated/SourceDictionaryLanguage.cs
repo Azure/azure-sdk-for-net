@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Properties ot the source dictionary language. </summary>
     public partial class SourceDictionaryLanguage
     {
-        /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Text
             Translations = translations.ToList();
         }
 
-        /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>

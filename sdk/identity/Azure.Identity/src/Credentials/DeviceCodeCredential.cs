@@ -23,11 +23,10 @@ namespace Azure.Identity
         internal string ClientId { get; }
         internal bool DisableAutomaticAuthentication { get; }
         internal AuthenticationRecord Record { get; private set; }
-        private bool _isCaeEnabledRequestCached = false;
-        private bool _isCaeDisabledRequestCached = false;
         internal Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; }
         internal CredentialPipeline Pipeline { get; }
         internal string DefaultScope { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to initiate the device code authentication.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -96,6 +95,7 @@ namespace Azure.Identity
                 ClientId,
                 AzureAuthorityHosts.GetDeviceCodeRedirectUri(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault()).AbsoluteUri,
                 options);
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
@@ -211,16 +211,9 @@ namespace Azure.Identity
             try
             {
                 Exception inner = null;
-
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
-                var isCachePopulated = Record switch
-                {
-                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
-                    _ => false
-                };
 
-                if (isCachePopulated)
+                if (Record is not null)
                 {
                     try
                     {
@@ -255,15 +248,6 @@ namespace Azure.Identity
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
-            if (context.IsCaeEnabled)
-            {
-                _isCaeEnabledRequestCached = true;
-            }
-            else
-            {
-                _isCaeDisabledRequestCached = true;
-            }
-
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
 

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Result of the list devcenters operation. </summary>
     internal partial class DevCenterListResult
     {
-        /// <summary> Initializes a new instance of DevCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterListResult"/>. </summary>
         internal DevCenterListResult()
         {
             Value = new ChangeTrackingList<DevCenterData>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal DevCenterListResult(IReadOnlyList<DevCenterData> value, string nextLink)

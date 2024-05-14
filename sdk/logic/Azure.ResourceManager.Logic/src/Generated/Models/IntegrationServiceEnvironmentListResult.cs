@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration service environments. </summary>
     internal partial class IntegrationServiceEnvironmentListResult
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentListResult"/>. </summary>
         internal IntegrationServiceEnvironmentListResult()
         {
             Value = new ChangeTrackingList<IntegrationServiceEnvironmentData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationServiceEnvironmentListResult(IReadOnlyList<IntegrationServiceEnvironmentData> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The scopes checked by the available scope api. </summary>
     internal partial class SubscriptionScopeProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeProperties"/>. </summary>
         internal SubscriptionScopeProperties()
         {
             Scopes = new ChangeTrackingList<ScopeProperties>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeProperties"/>. </summary>
         /// <param name="scopes"></param>
         internal SubscriptionScopeProperties(IReadOnlyList<ScopeProperties> scopes)
         {

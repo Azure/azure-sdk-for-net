@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Iot Connector patch properties. </summary>
     public partial class HealthcareApisIotConnectorPatch : HealthcareApisResourceTags
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorPatch"/>. </summary>
         public HealthcareApisIotConnectorPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotConnectorPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         internal HealthcareApisIotConnectorPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(tags)

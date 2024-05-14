@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceTypeHealthPolicyMap = new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.

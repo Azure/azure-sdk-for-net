@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerJobVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobVersionData"/>. </summary>
         public SqlServerJobVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

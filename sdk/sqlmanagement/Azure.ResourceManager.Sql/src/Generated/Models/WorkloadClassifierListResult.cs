@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of workload classifiers for a workload group. </summary>
     internal partial class WorkloadClassifierListResult
     {
-        /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadClassifierListResult"/>. </summary>
         internal WorkloadClassifierListResult()
         {
             Value = new ChangeTrackingList<WorkloadClassifierData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadClassifierListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal WorkloadClassifierListResult(IReadOnlyList<WorkloadClassifierData> value, string nextLink)

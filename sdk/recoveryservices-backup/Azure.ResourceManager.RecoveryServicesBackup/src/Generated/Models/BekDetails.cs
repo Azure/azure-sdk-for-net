@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BEK is bitlocker encryption key. </summary>
     public partial class BekDetails
     {
-        /// <summary> Initializes a new instance of BekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BekDetails"/>. </summary>
         public BekDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of BekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BekDetails"/>. </summary>
         /// <param name="secretUri"> Secret is BEK. </param>
         /// <param name="secretVaultId"> ID of the Key Vault where this Secret is stored. </param>
         /// <param name="secretData"> BEK data. </param>

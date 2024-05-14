@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20230613.1
+      ref: refs/tags/azure-sdk-build-tools_20230829.1
 
 parameters:
 - name: Artifacts
@@ -30,6 +30,12 @@ parameters:
 - name: BuildSnippets
   type: boolean
   default: true
+- name: CheckAOTCompat
+  type: boolean
+  default: false
+- name: AOTTestInputs
+  type: object
+  default: []
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -81,6 +87,8 @@ stages:
         ArtifactName: packages
         LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
         BuildSnippets: ${{ parameters.BuildSnippets }}
+        CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+        AOTTestInputs: ${{ parameters.AOTTestInputs }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
         MatrixConfigs:

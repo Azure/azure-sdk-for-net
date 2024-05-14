@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Request to add a physical machine as a protectable item in a container. </summary>
     public partial class DiscoverProtectableItemContent
     {
-        /// <summary> Initializes a new instance of DiscoverProtectableItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoverProtectableItemContent"/>. </summary>
         public DiscoverProtectableItemContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiscoverProtectableItemContent"/>. </summary>
+        /// <param name="properties"> The properties of a discover protectable item request. </param>
+        internal DiscoverProtectableItemContent(DiscoverProtectableItemProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> The properties of a discover protectable item request. </summary>

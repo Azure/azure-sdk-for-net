@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// </summary>
     public partial class ScopeAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopeAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentData"/>. </summary>
         public ScopeAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

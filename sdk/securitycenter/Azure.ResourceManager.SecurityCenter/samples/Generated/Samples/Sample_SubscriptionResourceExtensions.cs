@@ -18,6 +18,35 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
+        // Get security recommendations tasks
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetTasks_GetSecurityRecommendationsTasks()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2015-06-01-preview/examples/Tasks/GetTasksSubscription_example.json
+            // this example is just showing the usage of "Tasks_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SecurityTaskData item in subscriptionResource.GetTasksAsync())
+            {
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {item.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // The configuration or data needed to onboard the machine to MDE
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -71,35 +100,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get security recommendations tasks
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetTasks_GetSecurityRecommendationsTasks()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2015-06-01-preview/examples/Tasks/GetTasksSubscription_example.json
-            // this example is just showing the usage of "Tasks_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SecurityTaskData item in subscriptionResource.GetTasksAsync())
-            {
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
         // Get allowed connections on a subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -128,34 +128,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get topology on a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetTopologies_GetTopologyOnASubscription()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/Topology/GetTopologySubscription_example.json
-            // this example is just showing the usage of "Topology_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "3eeab341-f466-499c-a8be-85427e154bad";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SecurityTopologyResource item in subscriptionResource.GetTopologiesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
         // Get discovered security solutions
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -177,34 +149,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // invoke the operation and iterate over the result
             await foreach (DiscoveredSecuritySolution item in subscriptionResource.GetDiscoveredSecuritySolutionsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get security solutions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAllSecuritySolutionsReferenceData_GetSecuritySolutions()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceData/GetSecuritySolutionsReferenceDataSubscription_example.json
-            // this example is just showing the usage of "securitySolutionsReferenceData_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SecuritySolutionsReferenceData item in subscriptionResource.GetAllSecuritySolutionsReferenceDataAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -317,6 +261,62 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // invoke the operation and iterate over the result
             await foreach (SecuritySolution item in subscriptionResource.GetSecuritySolutionsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get security solutions
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAllSecuritySolutionsReferenceData_GetSecuritySolutions()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceData/GetSecuritySolutionsReferenceDataSubscription_example.json
+            // this example is just showing the usage of "securitySolutionsReferenceData_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SecuritySolutionsReferenceData item in subscriptionResource.GetAllSecuritySolutionsReferenceDataAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get topology on a subscription
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetTopologies_GetTopologyOnASubscription()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/Topology/GetTopologySubscription_example.json
+            // this example is just showing the usage of "Topology_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "3eeab341-f466-499c-a8be-85427e154bad";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SecurityTopologyResource item in subscriptionResource.GetTopologiesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The UnknownDataAccountDetails. </summary>
     internal partial class UnknownDataAccountDetails : DataAccountDetails
     {
-        /// <summary> Initializes a new instance of UnknownDataAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataAccountDetails"/>. </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        internal UnknownDataAccountDetails(DataAccountType dataAccountType, string sharePassword) : base(dataAccountType, sharePassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataAccountDetails(DataAccountType dataAccountType, string sharePassword, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataAccountType, sharePassword, serializedAdditionalRawData)
         {
             DataAccountType = dataAccountType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataAccountDetails"/> for deserialization. </summary>
+        internal UnknownDataAccountDetails()
+        {
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownLexicalAnalyzer. </summary>
     internal partial class UnknownLexicalAnalyzer : LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of UnknownLexicalAnalyzer. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
+        /// <summary> Initializes a new instance of <see cref="UnknownLexicalAnalyzer"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal UnknownLexicalAnalyzer(string oDataType, string name) : base(oDataType, name)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> DPM workload-specific job task details. </summary>
     public partial class DpmBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of DpmBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobTaskDetails"/>. </summary>
         public DpmBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DpmBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>

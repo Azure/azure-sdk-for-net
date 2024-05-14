@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> MLTable data definition. </summary>
     public partial class MachineLearningTable : MachineLearningDataVersionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningTable. </summary>
-        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTable"/>. </summary>
+        /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningTable(Uri dataUri) : base(dataUri)
         {
@@ -25,16 +25,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MachineLearningDataType.Mltable;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTable"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
-        /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20221001.Assets.DataVersionBase.DataType. </param>
+        /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. Used if data is an Intellectual Property. </param>
+        /// <param name="stage"> Stage in the data lifecycle assigned to this data asset. </param>
         /// <param name="referencedUris"> Uris referenced in the MLTable definition (required for lineage). </param>
-        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IList<Uri> referencedUris) : base(description, properties, tags, isAnonymous, isArchived, dataType, dataUri)
+        internal MachineLearningTable(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri, IntellectualProperty intellectualProperty, string stage, IList<Uri> referencedUris) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived, dataType, dataUri, intellectualProperty, stage)
         {
             ReferencedUris = referencedUris;
             DataType = dataType;

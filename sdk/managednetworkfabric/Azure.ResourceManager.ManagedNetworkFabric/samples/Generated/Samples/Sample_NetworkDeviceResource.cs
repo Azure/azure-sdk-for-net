@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkDevicesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkDevices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NetworkDevicesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkDevices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,22 +65,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
             NetworkDevicePatch patch = new NetworkDevicePatch()
             {
+                Annotation = "annotation",
+                HostName = "NFA-Device",
+                SerialNumber = "Vendor;DCS-7280XXX-24;12.05;JPE2111XXXX",
                 Tags =
 {
-["keyID"] = "keyValue",
+["keyID"] = "KeyValue",
 },
-                Annotation = "null",
-                HostName = "networkDeviceName",
-                SerialNumber = "Arista;DCS-7280PR3-24;12.05;JPE21330382",
             };
             ArmOperation<NetworkDeviceResource> lro = await networkDevice.UpdateAsync(WaitUntil.Completed, patch);
             NetworkDeviceResource result = lro.Value;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NetworkDevicesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkDevices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkDevices_NetworkDevicesListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkDevices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // NetworkDevices_reboot_MaximumSet_Gen
+        // NetworkDevices_Reboot_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reboot_NetworkDevicesRebootMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_reboot_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_reboot" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_Reboot_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkDevices_Reboot" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -166,108 +166,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            await networkDevice.RebootAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // NetworkDevices_restoreConfig_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RestoreConfig_NetworkDevicesRestoreConfigMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_restoreConfig_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_restoreConfig" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkDeviceResource created on azure
-            // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
-
-            // invoke the operation
-            await networkDevice.RestoreConfigAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // NetworkDevices_updateVersion_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateVersion_NetworkDevicesUpdateVersionMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_updateVersion_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_updateVersion" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkDeviceResource created on azure
-            // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
-
-            // invoke the operation
-            UpdateVersionProperties body = new UpdateVersionProperties("DefaultSku");
-            await networkDevice.UpdateVersionAsync(WaitUntil.Completed, body);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // NetworkDevices_generateSupportPackage_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GenerateSupportPackage_NetworkDevicesGenerateSupportPackageMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_generateSupportPackage_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_generateSupportPackage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkDeviceResource created on azure
-            // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
-            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
-            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
-
-            // invoke the operation
-            ArmOperation<SupportPackageProperties> lro = await networkDevice.GenerateSupportPackageAsync(WaitUntil.Completed);
-            SupportPackageProperties result = lro.Value;
+            NetworkDeviceRebootContent content = new NetworkDeviceRebootContent()
+            {
+                RebootType = NetworkDeviceRebootType.GracefulRebootWithZtp,
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.RebootAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkDevices_updatePowerCycle_MaximumSet_Gen
+        // NetworkDevices_RefreshConfiguration_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdatePowerCycle_NetworkDevicesUpdatePowerCycleMaximumSetGen()
+        public async Task RefreshConfiguration_NetworkDevicesRefreshConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_updatePowerCycle_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_updatePowerCycle" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_RefreshConfiguration_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkDevices_RefreshConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -276,26 +198,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            UpdatePowerCycleProperties body = new UpdatePowerCycleProperties(PowerEnd.Primary, State.On);
-            await networkDevice.UpdatePowerCycleAsync(WaitUntil.Completed, body);
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.RefreshConfigurationAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkDevices_getStatus_MaximumSet_Gen
+        // NetworkDevices_UpdateAdministrativeState_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetStatus_NetworkDevicesGetStatusMaximumSetGen()
+        public async Task UpdateAdministrativeState_NetworkDevicesUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkDevices_getStatus_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkDevices_getStatus" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_UpdateAdministrativeState_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkDevices_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -304,15 +226,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkDeviceResource created on azure
             // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkDeviceName = "networkDeviceName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
             ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ArmOperation<GetDeviceStatusProperties> lro = await networkDevice.GetStatusAsync(WaitUntil.Completed);
-            GetDeviceStatusProperties result = lro.Value;
+            UpdateDeviceAdministrativeStateContent content = new UpdateDeviceAdministrativeStateContent()
+            {
+                State = NetworkDeviceAdministrativeState.Rma,
+                ResourceIds =
+{
+new ResourceIdentifier("")
+},
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // NetworkDevices_Upgrade_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Upgrade_NetworkDevicesUpgradeMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkDevices_Upgrade_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkDevices_Upgrade" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkDeviceResource created on azure
+            // for more information of creating NetworkDeviceResource, please refer to the document of NetworkDeviceResource
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkDeviceName = "example-device";
+            ResourceIdentifier networkDeviceResourceId = NetworkDeviceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkDeviceName);
+            NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
+
+            // invoke the operation
+            NetworkFabricUpdateVersionContent content = new NetworkFabricUpdateVersionContent()
+            {
+                Version = "1.0.0",
+            };
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.UpgradeAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data factory name for linked integration runtime request. </summary>
     public partial class LinkedIntegrationRuntimeContent
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeContent"/>. </summary>
         /// <param name="linkedFactoryName"> The data factory name for linked integration runtime. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedFactoryName"/> is null. </exception>
         public LinkedIntegrationRuntimeContent(string linkedFactoryName)

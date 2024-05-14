@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing a Private Link Resources. </summary>
     public partial class SynapseKustoPoolPrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPrivateLinkData"/>. </summary>
         public SynapseKustoPoolPrivateLinkData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseKustoPoolPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

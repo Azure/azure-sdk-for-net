@@ -13,10 +13,33 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> A partial update to the RedisEnterprise database. </summary>
     public partial class RedisEnterpriseDatabasePatch
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabasePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabasePatch"/>. </summary>
         public RedisEnterpriseDatabasePatch()
         {
             Modules = new ChangeTrackingList<RedisEnterpriseModule>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabasePatch"/>. </summary>
+        /// <param name="clientProtocol"> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </param>
+        /// <param name="port"> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </param>
+        /// <param name="provisioningState"> Current provisioning status of the database. </param>
+        /// <param name="resourceState"> Current resource status of the database. </param>
+        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. Specified at create time. </param>
+        /// <param name="evictionPolicy"> Redis eviction policy - default is VolatileLRU. </param>
+        /// <param name="persistence"> Persistence settings. </param>
+        /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
+        /// <param name="geoReplication"> Optional set of properties to configure geo replication for this database. </param>
+        internal RedisEnterpriseDatabasePatch(RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication)
+        {
+            ClientProtocol = clientProtocol;
+            Port = port;
+            ProvisioningState = provisioningState;
+            ResourceState = resourceState;
+            ClusteringPolicy = clusteringPolicy;
+            EvictionPolicy = evictionPolicy;
+            Persistence = persistence;
+            Modules = modules;
+            GeoReplication = geoReplication;
         }
 
         /// <summary> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </summary>

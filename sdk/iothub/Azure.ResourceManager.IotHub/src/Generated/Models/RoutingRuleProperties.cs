@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of a routing rule that your IoT hub uses to route messages to endpoints. </summary>
     public partial class RoutingRuleProperties
     {
-        /// <summary> Initializes a new instance of RoutingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleProperties"/>. </summary>
         /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
         /// <param name="source"> The source that the routing rule is to be applied to, such as DeviceMessages. </param>
         /// <param name="endpointNames"> The list of endpoints to which messages that satisfy the condition are routed. Currently only one endpoint is allowed. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of RoutingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleProperties"/>. </summary>
         /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
         /// <param name="source"> The source that the routing rule is to be applied to, such as DeviceMessages. </param>
         /// <param name="condition"> The condition that is evaluated to apply the routing rule. If no condition is provided, it evaluates to true by default. For grammar, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>

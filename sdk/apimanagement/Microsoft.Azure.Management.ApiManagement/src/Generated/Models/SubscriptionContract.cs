@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Subscription details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SubscriptionContract : Resource
+    public partial class SubscriptionContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SubscriptionContract class.

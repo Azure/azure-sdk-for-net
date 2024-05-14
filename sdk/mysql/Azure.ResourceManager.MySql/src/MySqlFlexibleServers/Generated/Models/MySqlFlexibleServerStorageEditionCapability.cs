@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> storage edition capability. </summary>
     public partial class MySqlFlexibleServerStorageEditionCapability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageEditionCapability"/>. </summary>
         internal MySqlFlexibleServerStorageEditionCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageEditionCapability"/>. </summary>
         /// <param name="name"> storage edition name. </param>
         /// <param name="minStorageSize"> The minimal supported storage size. </param>
         /// <param name="maxStorageSize"> The maximum supported storage size. </param>

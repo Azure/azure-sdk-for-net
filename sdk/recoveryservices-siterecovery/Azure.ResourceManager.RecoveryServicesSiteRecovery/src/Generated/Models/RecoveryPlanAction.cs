@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan action details. </summary>
     public partial class RecoveryPlanAction
     {
-        /// <summary> Initializes a new instance of RecoveryPlanAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/>. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="failoverTypes"> The list of failover types. </param>
         /// <param name="failoverDirections"> The list of failover directions. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/>. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="failoverTypes"> The list of failover types. </param>
         /// <param name="failoverDirections"> The list of failover directions. </param>

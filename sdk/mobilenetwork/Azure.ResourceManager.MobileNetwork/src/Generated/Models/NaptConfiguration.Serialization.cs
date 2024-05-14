@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<NaptEnabled> enabled = default;
-            Optional<PortRange> portRange = default;
-            Optional<PortReuseHoldTimes> portReuseHoldTime = default;
+            Optional<NaptState> enabled = default;
+            Optional<MobileNetworkPortRange> portRange = default;
+            Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
             Optional<int> pinholeLimits = default;
             Optional<PinholeTimeouts> pinholeTimeouts = default;
             foreach (var property in element.EnumerateObject())
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    enabled = new NaptEnabled(property.Value.GetString());
+                    enabled = new NaptState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("portRange"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    portRange = PortRange.DeserializePortRange(property.Value);
+                    portRange = MobileNetworkPortRange.DeserializeMobileNetworkPortRange(property.Value);
                     continue;
                 }
                 if (property.NameEquals("portReuseHoldTime"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    portReuseHoldTime = PortReuseHoldTimes.DeserializePortReuseHoldTimes(property.Value);
+                    portReuseHoldTime = MobileNetworkPortReuseHoldTimes.DeserializeMobileNetworkPortReuseHoldTimes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pinholeLimits"u8))

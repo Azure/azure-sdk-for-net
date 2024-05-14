@@ -10,12 +10,12 @@ namespace Azure.Data.Tables.Models
     /// <summary> Table Service error. </summary>
     internal partial class TableServiceError
     {
-        /// <summary> Initializes a new instance of TableServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceError"/>. </summary>
         internal TableServiceError()
         {
         }
 
-        /// <summary> Initializes a new instance of TableServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceError"/>. </summary>
         /// <param name="message"> The error message. </param>
         internal TableServiceError(string message)
         {

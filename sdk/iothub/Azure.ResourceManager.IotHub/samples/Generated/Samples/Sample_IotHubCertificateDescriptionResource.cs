@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CertificatesGet()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_getcertificate.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_getcertificate.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CertificatesCreateOrUpdate()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_certificatescreateorupdate.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_certificatescreateorupdate.json
             // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             {
                 Properties = new IotHubCertificateProperties()
                 {
-                    Certificate = BinaryData.FromString("############################################"),
+                    Certificate = BinaryData.FromString("\"############################################\""),
                 },
             };
             ArmOperation<IotHubCertificateDescriptionResource> lro = await iotHubCertificateDescription.UpdateAsync(WaitUntil.Completed, data);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CertificatesDelete()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_certificatesdelete.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_certificatesdelete.json
             // this example is just showing the usage of "Certificates_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GenerateVerificationCode_CertificatesGenerateVerificationCode()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_generateverificationcode.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_generateverificationcode.json
             // this example is just showing the usage of "Certificates_GenerateVerificationCode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Verify_CertificatesVerify()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_certverify.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_certverify.json
             // this example is just showing the usage of "Certificates_Verify" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             string ifMatch = "AAAAAAAADGk=";
             IotHubCertificateVerificationContent content = new IotHubCertificateVerificationContent()
             {
-                Certificate = BinaryData.FromString("#####################################"),
+                Certificate = BinaryData.FromString("\"#####################################\""),
             };
             IotHubCertificateDescriptionResource result = await iotHubCertificateDescription.VerifyAsync(ifMatch, content);
 

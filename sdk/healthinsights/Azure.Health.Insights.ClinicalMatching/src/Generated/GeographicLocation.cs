@@ -17,7 +17,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// </summary>
     public partial class GeographicLocation
     {
-        /// <summary> Initializes a new instance of GeographicLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeographicLocation"/>. </summary>
         /// <param name="countryOrRegion"> Country/region name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryOrRegion"/> is null. </exception>
         public GeographicLocation(string countryOrRegion)
@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             CountryOrRegion = countryOrRegion;
         }
 
-        /// <summary> Initializes a new instance of GeographicLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeographicLocation"/>. </summary>
         /// <param name="city"> City name. </param>
         /// <param name="state"> State name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>

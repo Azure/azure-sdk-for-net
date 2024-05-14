@@ -32,7 +32,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="endpoint"> The Schema Registry service endpoint, for example my-namespace.servicebus.windows.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SchemaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-10")
+        public SchemaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-07-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -52,7 +52,7 @@ namespace Azure.Data.SchemaRegistry
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=Json, application/octet-stream");
+            request.Headers.Add("Accept", "application/json; serialization=Avro, application/json; serialization=json, application/octet-stream");
             return message;
         }
 

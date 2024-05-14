@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapVirtualInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Workloads
             Configuration = configuration;
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

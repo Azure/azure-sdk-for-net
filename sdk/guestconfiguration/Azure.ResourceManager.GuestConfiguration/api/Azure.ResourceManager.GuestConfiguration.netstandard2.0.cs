@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>> GetAsync(string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> GetIfExists(string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>> GetIfExistsAsync(string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>> GetAsync(string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> GetIfExists(string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>> GetIfExistsAsync(string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -99,6 +103,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -118,6 +124,37 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport>> GetReportAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport> GetReports(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport> GetReportsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.GuestConfiguration.Mocking
+{
+    public partial class MockableGuestConfigurationArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableGuestConfigurationArmClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignment(Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource>> GetGuestConfigurationVmAssignmentAsync(Azure.Core.ResourceIdentifier scope, string guestConfigurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource>> GetGuestConfigurationVmssAssignmentAsync(Azure.Core.ResourceIdentifier scope, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+    public partial class MockableGuestConfigurationResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableGuestConfigurationResourceGroupResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableGuestConfigurationSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableGuestConfigurationSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.GuestConfiguration.Models

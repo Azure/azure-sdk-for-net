@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a direct connection. </summary>
     public partial class PeeringDirectConnection
     {
-        /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringDirectConnection"/>. </summary>
         public PeeringDirectConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringDirectConnection"/>. </summary>
         /// <param name="bandwidthInMbps"> The bandwidth of the connection. </param>
         /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
         /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>

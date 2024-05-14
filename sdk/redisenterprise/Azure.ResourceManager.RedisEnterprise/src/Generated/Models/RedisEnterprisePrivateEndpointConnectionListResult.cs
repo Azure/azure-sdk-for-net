@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class RedisEnterprisePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/>. </summary>
         internal RedisEnterprisePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal RedisEnterprisePrivateEndpointConnectionListResult(IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> value)
         {

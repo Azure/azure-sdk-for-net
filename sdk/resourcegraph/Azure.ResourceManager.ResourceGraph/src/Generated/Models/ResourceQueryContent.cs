@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Describes a query to be executed. </summary>
     public partial class ResourceQueryContent
     {
-        /// <summary> Initializes a new instance of ResourceQueryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryContent"/>. </summary>
         /// <param name="query"> The resources query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public ResourceQueryContent(string query)
@@ -25,6 +25,21 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             ManagementGroups = new ChangeTrackingList<string>();
             Query = query;
             Facets = new ChangeTrackingList<FacetRequest>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryContent"/>. </summary>
+        /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
+        /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
+        /// <param name="query"> The resources query. </param>
+        /// <param name="options"> The query evaluation options. </param>
+        /// <param name="facets"> An array of facet requests to be computed against the query result. </param>
+        internal ResourceQueryContent(IList<string> subscriptions, IList<string> managementGroups, string query, ResourceQueryRequestOptions options, IList<FacetRequest> facets)
+        {
+            Subscriptions = subscriptions;
+            ManagementGroups = managementGroups;
+            Query = query;
+            Options = options;
+            Facets = facets;
         }
 
         /// <summary> Azure subscriptions against which to execute the query. </summary>

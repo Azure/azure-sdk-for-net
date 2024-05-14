@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a PremierAddOn. </summary>
     public partial class PremierAddOnPatchResource : ResourceData
     {
-        /// <summary> Initializes a new instance of PremierAddOnPatchResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnPatchResource"/>. </summary>
         public PremierAddOnPatchResource()
         {
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnPatchResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnPatchResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

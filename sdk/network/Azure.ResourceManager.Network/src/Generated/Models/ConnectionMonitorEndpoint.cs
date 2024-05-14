@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor endpoint. </summary>
     public partial class ConnectionMonitorEndpoint
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ConnectionMonitorEndpoint(string name)
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
         /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="resourceId"> Resource ID of the connection monitor endpoint. </param>
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="filter"> Filter for sub-items within the endpoint. </param>
         /// <param name="scope"> Endpoint scope. </param>
         /// <param name="coverageLevel"> Test coverage for the endpoint. </param>
-        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EndpointType = endpointType;
@@ -40,6 +74,12 @@ namespace Azure.ResourceManager.Network.Models
             Filter = filter;
             Scope = scope;
             CoverageLevel = coverageLevel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/> for deserialization. </summary>
+        internal ConnectionMonitorEndpoint()
+        {
         }
 
         /// <summary> The name of the connection monitor endpoint. </summary>

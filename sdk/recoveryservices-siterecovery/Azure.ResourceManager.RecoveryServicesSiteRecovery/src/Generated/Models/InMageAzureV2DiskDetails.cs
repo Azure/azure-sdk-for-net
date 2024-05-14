@@ -12,9 +12,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk input details. </summary>
     public partial class InMageAzureV2DiskDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2DiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2DiskDetails"/>. </summary>
         public InMageAzureV2DiskDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2DiskDetails"/>. </summary>
+        /// <param name="diskId"> The DiskId. </param>
+        /// <param name="logStorageAccountId"> The LogStorageAccountId. </param>
+        /// <param name="diskType"> The DiskType. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
+        internal InMageAzureV2DiskDetails(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier diskEncryptionSetId)
+        {
+            DiskId = diskId;
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
         }
 
         /// <summary> The DiskId. </summary>

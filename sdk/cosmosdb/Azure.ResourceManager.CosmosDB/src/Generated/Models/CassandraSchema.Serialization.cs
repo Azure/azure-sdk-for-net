@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraSchema : IUtf8JsonSerializable
+    public partial class CassandraSchema : IUtf8JsonSerializable, IJsonModel<CassandraSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraSchema>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CassandraSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
@@ -46,11 +56,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CassandraSchema DeserializeCassandraSchema(JsonElement element)
+        CassandraSchema IJsonModel<CassandraSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraSchema(document.RootElement, options);
+        }
+
+        internal static CassandraSchema DeserializeCassandraSchema(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +97,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<CassandraColumn>> columns = default;
             Optional<IList<CassandraPartitionKey>> partitionKeys = default;
             Optional<IList<CassandraClusterKey>> clusterKeys = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"u8))
@@ -102,8 +143,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     clusterKeys = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CassandraSchema(Optional.ToList(columns), Optional.ToList(partitionKeys), Optional.ToList(clusterKeys));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CassandraSchema(Optional.ToList(columns), Optional.ToList(partitionKeys), Optional.ToList(clusterKeys), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CassandraSchema>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CassandraSchema IPersistableModel<CassandraSchema>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCassandraSchema(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CassandraSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

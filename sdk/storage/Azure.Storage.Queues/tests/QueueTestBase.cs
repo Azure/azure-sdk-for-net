@@ -51,6 +51,13 @@ namespace Azure.Storage.Queues.Tests
         public QueueClientOptions GetOptions()
             => QueuesClientBuilder.GetOptions();
 
+        public QueueClientOptions GetOptionsWithAudience(QueueAudience audience)
+        {
+            QueueClientOptions options = QueuesClientBuilder.GetOptions(false);
+            options.Audience = audience;
+            return options;
+        }
+
         public QueueServiceClient GetServiceClient_SharedKey(QueueClientOptions options = default)
             => InstrumentClient(GetServiceClient_SharedKey_UnInstrumented(options));
 

@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> GetAsync(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetIfExists(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> GetIfExistsAsync(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class AzureDevOpsConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties Properties { get { throw null; } set { } }
     }
     public partial class AzureDevOpsConnectorResource : Azure.ResourceManager.ArmResource
@@ -58,6 +60,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource>> GetAsync(string azureDevOpsOrgName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource> GetIfExists(string azureDevOpsOrgName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource>> GetIfExistsAsync(string azureDevOpsOrgName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -93,6 +97,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource>> GetAsync(string azureDevOpsProjectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> GetIfExists(string azureDevOpsProjectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource>> GetIfExistsAsync(string azureDevOpsProjectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -128,6 +134,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> GetAsync(string azureDevOpsRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> GetIfExists(string azureDevOpsRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> GetIfExistsAsync(string azureDevOpsRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -160,13 +168,15 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> GetAsync(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetIfExists(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> GetIfExistsAsync(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class GitHubConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GitHubConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GitHubConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties Properties { get { throw null; } set { } }
     }
     public partial class GitHubConnectorResource : Azure.ResourceManager.ArmResource
@@ -207,6 +217,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource>> GetAsync(string gitHubOwnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource> GetIfExists(string gitHubOwnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource>> GetIfExistsAsync(string gitHubOwnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -242,6 +254,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>> GetAsync(string gitHubRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> GetIfExists(string gitHubRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>> GetIfExistsAsync(string gitHubRepoName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityDevOps.GitHubRepoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -282,6 +296,38 @@ namespace Azure.ResourceManager.SecurityDevOps
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource GetGitHubOwnerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityDevOps.GitHubRepoResource GetGitHubRepoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.SecurityDevOps.Mocking
+{
+    public partial class MockableSecurityDevOpsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityDevOpsArmClient() { }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource GetAzureDevOpsConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource GetAzureDevOpsOrgResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource GetAzureDevOpsProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource GetAzureDevOpsRepoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource GetGitHubConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource GetGitHubOwnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubRepoResource GetGitHubRepoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSecurityDevOpsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityDevOpsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnector(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorCollection GetAzureDevOpsConnectors() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnector(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> GetGitHubConnectorAsync(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubConnectorCollection GetGitHubConnectors() { throw null; }
+    }
+    public partial class MockableSecurityDevOpsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityDevOpsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SecurityDevOps.Models

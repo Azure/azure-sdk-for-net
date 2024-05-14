@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The GitHubConnectorStats. </summary>
     public partial class GitHubConnectorStats : ResourceData
     {
-        /// <summary> Initializes a new instance of GitHubConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStats"/>. </summary>
         public GitHubConnectorStats()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStats"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

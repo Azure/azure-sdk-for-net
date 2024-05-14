@@ -5,9 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,15 +17,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                writer.WritePropertyName("connectionState"u8);
+                writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsCollectionDefined(Fqdns))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WritePropertyName("fqdns"u8);
+                writer.WriteStartArray();
+                foreach (var item in Fqdns)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (Optional.IsDefined(PrivateLinkResourceId))
+            {
+                writer.WritePropertyName("privateLinkResourceId"u8);
+                writer.WriteStringValue(PrivateLinkResourceId);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
         }
@@ -35,36 +63,71 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            Optional<ConnectionStateProperties> connectionState = default;
+            Optional<IList<string>> fqdns = default;
+            Optional<string> groupId = default;
+            Optional<bool> isReserved = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("connectionState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("fqdns"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    fqdns = array;
+                    continue;
+                }
+                if (property.NameEquals("groupId"u8))
+                {
+                    groupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isReserved"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isReserved = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("privateLinkResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateEndpoint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("privateLinkServiceConnectionState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property.Value);
-                    continue;
-                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            return new DataFactoryPrivateEndpointProperties(provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value);
+            additionalProperties = additionalPropertiesDictionary;
+            return new DataFactoryPrivateEndpointProperties(connectionState.Value, Optional.ToList(fqdns), groupId.Value, Optional.ToNullable(isReserved), privateLinkResourceId.Value, provisioningState.Value, additionalProperties);
         }
     }
 }

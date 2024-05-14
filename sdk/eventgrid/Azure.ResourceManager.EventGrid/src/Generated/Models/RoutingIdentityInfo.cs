@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Routing identity info for topic spaces configuration. </summary>
     public partial class RoutingIdentityInfo
     {
-        /// <summary> Initializes a new instance of RoutingIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
         public RoutingIdentityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
         /// <param name="identityType"></param>
         /// <param name="userAssignedIdentity"></param>
         internal RoutingIdentityInfo(RoutingIdentityType? identityType, string userAssignedIdentity)

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDataShareModelFactory
     {
-        /// <summary> Initializes a new instance of DataShareAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DataShare.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataShareAccountData(id, name, resourceType, systemData, tags, location, identity, createdOn, provisioningState, userEmail, userName);
+            return new DataShareAccountData(id, name, resourceType, systemData, tags, location, identity, createdOn, provisioningState, userEmail, userName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataShareOperationResult"/>. </summary>
         /// <param name="endOn"> start time. </param>
         /// <param name="error"> The error property when status is failed. </param>
         /// <param name="startOn"> start time. </param>
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.DataShareOperationResult"/> instance for mocking. </returns>
         public static DataShareOperationResult DataShareOperationResult(DateTimeOffset? endOn = null, ResponseError error = null, DateTimeOffset? startOn = null, DataShareOperationStatus status = default)
         {
-            return new DataShareOperationResult(endOn, error, startOn, status);
+            return new DataShareOperationResult(endOn, error, startOn, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareConsumerInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareConsumerInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareConsumerInvitationData"/> instance for mocking. </returns>
         public static DataShareConsumerInvitationData DataShareConsumerInvitationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? dataSetCount = null, string description = null, DateTimeOffset? expireOn = null, Guid invitationId = default, DataShareInvitationStatus? invitationStatus = null, AzureLocation? location = null, string providerEmail = null, string providerName = null, string providerTenantName = null, DateTimeOffset? respondedOn = null, DateTimeOffset? sentOn = null, string shareName = null, string termsOfUse = null, string userEmail = null, string userName = null)
         {
-            return new DataShareConsumerInvitationData(id, name, resourceType, systemData, dataSetCount, description, expireOn, invitationId, invitationStatus, location, providerEmail, providerName, providerTenantName, respondedOn, sentOn, shareName, termsOfUse, userEmail, userName);
+            return new DataShareConsumerInvitationData(id, name, resourceType, systemData, dataSetCount, description, expireOn, invitationId, invitationStatus, location, providerEmail, providerName, providerTenantName, respondedOn, sentOn, shareName, termsOfUse, userEmail, userName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ShareDataSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.ShareDataSetData"/> instance for mocking. </returns>
         public static ShareDataSetData ShareDataSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new ShareDataSetData(id, name, resourceType, systemData, kind);
+            return new ShareDataSetData(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ShareDataSetMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.ShareDataSetMappingData"/> instance for mocking. </returns>
         public static ShareDataSetMappingData ShareDataSetMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new ShareDataSetMappingData(id, name, resourceType, systemData, kind);
+            return new ShareDataSetMappingData(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataShareEmailRegistration"/>. </summary>
         /// <param name="activationCode"> Activation code for the registration. </param>
         /// <param name="activationExpireOn"> Date of the activation expiration. </param>
         /// <param name="email"> The email to register. </param>
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.DataShareEmailRegistration"/> instance for mocking. </returns>
         public static DataShareEmailRegistration DataShareEmailRegistration(string activationCode = null, DateTimeOffset? activationExpireOn = null, string email = null, DataShareEmailRegistrationStatus? registrationStatus = null, Guid? tenantId = null)
         {
-            return new DataShareEmailRegistration(activationCode, activationExpireOn, email, registrationStatus, tenantId);
+            return new DataShareEmailRegistration(activationCode, activationExpireOn, email, registrationStatus, tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareInvitationData"/> instance for mocking. </returns>
         public static DataShareInvitationData DataShareInvitationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? expireOn = null, Guid? invitationId = null, DataShareInvitationStatus? invitationStatus = null, DateTimeOffset? respondedOn = null, DateTimeOffset? sentOn = null, string targetActiveDirectoryId = null, string targetEmail = null, string targetObjectId = null, string userEmail = null, string userName = null)
         {
-            return new DataShareInvitationData(id, name, resourceType, systemData, expireOn, invitationId, invitationStatus, respondedOn, sentOn, targetActiveDirectoryId, targetEmail, targetObjectId, userEmail, userName);
+            return new DataShareInvitationData(id, name, resourceType, systemData, expireOn, invitationId, invitationStatus, respondedOn, sentOn, targetActiveDirectoryId, targetEmail, targetObjectId, userEmail, userName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ShareSynchronization"/>. </summary>
         /// <param name="consumerEmail"> Email of the user who created the synchronization. </param>
         /// <param name="consumerName"> Name of the user who created the synchronization. </param>
         /// <param name="consumerTenantName"> Tenant name of the consumer who created the synchronization. </param>
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ShareSynchronization"/> instance for mocking. </returns>
         public static ShareSynchronization ShareSynchronization(string consumerEmail = null, string consumerName = null, string consumerTenantName = null, int? durationInMilliSeconds = null, DateTimeOffset? endOn = null, string message = null, DateTimeOffset? startOn = null, string status = null, Guid? synchronizationId = null, SynchronizationMode? synchronizationMode = null)
         {
-            return new ShareSynchronization(consumerEmail, consumerName, consumerTenantName, durationInMilliSeconds, endOn, message, startOn, status, synchronizationId, synchronizationMode);
+            return new ShareSynchronization(consumerEmail, consumerName, consumerTenantName, durationInMilliSeconds, endOn, message, startOn, status, synchronizationId, synchronizationMode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynchronizationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynchronizationDetails"/>. </summary>
         /// <param name="dataSetId"> Id of data set. </param>
         /// <param name="dataSetType"> Type of the data set. </param>
         /// <param name="durationInMilliSeconds"> Duration of data set level copy. </param>
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SynchronizationDetails"/> instance for mocking. </returns>
         public static SynchronizationDetails SynchronizationDetails(Guid? dataSetId = null, ShareDataSetType? dataSetType = null, int? durationInMilliSeconds = null, DateTimeOffset? endOn = null, long? filesRead = null, long? filesWritten = null, string message = null, string name = null, long? rowsCopied = null, long? rowsRead = null, long? sizeRead = null, long? sizeWritten = null, DateTimeOffset? startOn = null, string status = null, long? vCore = null)
         {
-            return new SynchronizationDetails(dataSetId, dataSetType, durationInMilliSeconds, endOn, filesRead, filesWritten, message, name, rowsCopied, rowsRead, sizeRead, sizeWritten, startOn, status, vCore);
+            return new SynchronizationDetails(dataSetId, dataSetType, durationInMilliSeconds, endOn, filesRead, filesWritten, message, name, rowsCopied, rowsRead, sizeRead, sizeWritten, startOn, status, vCore, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ProviderShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.ProviderShareSubscriptionData"/> instance for mocking. </returns>
         public static ProviderShareSubscriptionData ProviderShareSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string consumerEmail = null, string consumerName = null, string consumerTenantName = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, string providerEmail = null, string providerName = null, DateTimeOffset? sharedOn = null, string shareSubscriptionObjectId = null, ShareSubscriptionStatus? shareSubscriptionStatus = null)
         {
-            return new ProviderShareSubscriptionData(id, name, resourceType, systemData, consumerEmail, consumerName, consumerTenantName, createdOn, expireOn, providerEmail, providerName, sharedOn, shareSubscriptionObjectId, shareSubscriptionStatus);
+            return new ProviderShareSubscriptionData(id, name, resourceType, systemData, consumerEmail, consumerName, consumerTenantName, createdOn, expireOn, providerEmail, providerName, sharedOn, shareSubscriptionObjectId, shareSubscriptionStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareData"/> instance for mocking. </returns>
         public static DataShareData DataShareData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, string description = null, DataShareProvisioningState? provisioningState = null, DataShareKind? shareKind = null, string terms = null, string userEmail = null, string userName = null)
         {
-            return new DataShareData(id, name, resourceType, systemData, createdOn, description, provisioningState, shareKind, terms, userEmail, userName);
+            return new DataShareData(id, name, resourceType, systemData, createdOn, description, provisioningState, shareKind, terms, userEmail, userName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ShareSubscriptionSynchronization"/>. </summary>
         /// <param name="durationInMilliSeconds"> Synchronization duration. </param>
         /// <param name="endOn"> End time of synchronization. </param>
         /// <param name="message"> message of Synchronization. </param>
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ShareSubscriptionSynchronization"/> instance for mocking. </returns>
         public static ShareSubscriptionSynchronization ShareSubscriptionSynchronization(int? durationInMilliSeconds = null, DateTimeOffset? endOn = null, string message = null, DateTimeOffset? startOn = null, string status = null, Guid synchronizationId = default, SynchronizationMode? synchronizationMode = null)
         {
-            return new ShareSubscriptionSynchronization(durationInMilliSeconds, endOn, message, startOn, status, synchronizationId, synchronizationMode);
+            return new ShareSubscriptionSynchronization(durationInMilliSeconds, endOn, message, startOn, status, synchronizationId, synchronizationMode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConsumerSourceDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumerSourceDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ConsumerSourceDataSet"/> instance for mocking. </returns>
         public static ConsumerSourceDataSet ConsumerSourceDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, AzureLocation? dataSetLocation = null, string dataSetName = null, string dataSetPath = null, ShareDataSetType? dataSetType = null)
         {
-            return new ConsumerSourceDataSet(id, name, resourceType, systemData, dataSetId, dataSetLocation, dataSetName, dataSetPath, dataSetType);
+            return new ConsumerSourceDataSet(id, name, resourceType, systemData, dataSetId, dataSetLocation, dataSetName, dataSetPath, dataSetType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.ShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.ShareSubscriptionData"/> instance for mocking. </returns>
         public static ShareSubscriptionData ShareSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null, Guid invitationId = default, string providerEmail = null, string providerName = null, string providerTenantName = null, DataShareProvisioningState? provisioningState = null, string shareDescription = null, DataShareKind? shareKind = null, string shareName = null, ShareSubscriptionStatus? shareSubscriptionStatus = null, string shareTerms = null, AzureLocation sourceShareLocation = default, string userEmail = null, string userName = null)
         {
-            return new ShareSubscriptionData(id, name, resourceType, systemData, createdOn, expireOn, invitationId, providerEmail, providerName, providerTenantName, provisioningState, shareDescription, shareKind, shareName, shareSubscriptionStatus, shareTerms, sourceShareLocation, userEmail, userName);
+            return new ShareSubscriptionData(id, name, resourceType, systemData, createdOn, expireOn, invitationId, providerEmail, providerName, providerTenantName, provisioningState, shareDescription, shareKind, shareName, shareSubscriptionStatus, shareTerms, sourceShareLocation, userEmail, userName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareSynchronizationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareSynchronizationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -278,10 +278,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareSynchronizationSettingData"/> instance for mocking. </returns>
         public static DataShareSynchronizationSettingData DataShareSynchronizationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new DataShareSynchronizationSettingData(id, name, resourceType, systemData, kind);
+            return new DataShareSynchronizationSettingData(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShare.DataShareTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -290,10 +290,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareTriggerData"/> instance for mocking. </returns>
         public static DataShareTriggerData DataShareTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new DataShareTriggerData(id, name, resourceType, systemData, kind);
+            return new DataShareTriggerData(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen1FileDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen1FileDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -307,10 +307,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen1FileDataSet"/> instance for mocking. </returns>
         public static AdlsGen1FileDataSet AdlsGen1FileDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accountName = null, Guid? dataSetId = null, string fileName = null, string folderPath = null, string resourceGroup = null, string subscriptionId = null)
         {
-            return new AdlsGen1FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1File, accountName, dataSetId, fileName, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1File, serializedAdditionalRawData: null, accountName, dataSetId, fileName, folderPath, resourceGroup, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen1FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen1FolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen1FolderDataSet"/> instance for mocking. </returns>
         public static AdlsGen1FolderDataSet AdlsGen1FolderDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accountName = null, Guid? dataSetId = null, string folderPath = null, string resourceGroup = null, string subscriptionId = null)
         {
-            return new AdlsGen1FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1Folder, accountName, dataSetId, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1Folder, serializedAdditionalRawData: null, accountName, dataSetId, folderPath, resourceGroup, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -340,10 +340,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileDataSet"/> instance for mocking. </returns>
         public static AdlsGen2FileDataSet AdlsGen2FileDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string filePath = null, string fileSystem = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2File, dataSetId, filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2File, serializedAdditionalRawData: null, dataSetId, filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileDataSetMapping"/> instance for mocking. </returns>
         public static AdlsGen2FileDataSetMapping AdlsGen2FileDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string filePath = null, string fileSystem = null, DataShareOutputType? outputType = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2File, dataSetId, dataSetMappingStatus, filePath, fileSystem, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2File, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, filePath, fileSystem, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileSystemDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -376,10 +376,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileSystemDataSet"/> instance for mocking. </returns>
         public static AdlsGen2FileSystemDataSet AdlsGen2FileSystemDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string fileSystem = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileSystemDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2FileSystem, dataSetId, fileSystem, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2FileSystem, serializedAdditionalRawData: null, dataSetId, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FileSystemDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileSystemDataSetMapping"/> instance for mocking. </returns>
         public static AdlsGen2FileSystemDataSetMapping AdlsGen2FileSystemDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string fileSystem = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileSystemDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2FileSystem, dataSetId, dataSetMappingStatus, fileSystem, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2FileSystem, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, fileSystem, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -411,10 +411,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FolderDataSet"/> instance for mocking. </returns>
         public static AdlsGen2FolderDataSet AdlsGen2FolderDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string fileSystem = null, string folderPath = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2Folder, dataSetId, fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2Folder, serializedAdditionalRawData: null, dataSetId, fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdlsGen2FolderDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -430,10 +430,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FolderDataSetMapping"/> instance for mocking. </returns>
         public static AdlsGen2FolderDataSetMapping AdlsGen2FolderDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string fileSystem = null, string folderPath = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2Folder, dataSetId, dataSetMappingStatus, fileSystem, folderPath, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2Folder, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, fileSystem, folderPath, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobContainerDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobContainerDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -446,10 +446,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobContainerDataSet"/> instance for mocking. </returns>
         public static BlobContainerDataSet BlobContainerDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid? dataSetId = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobContainerDataSet(id, name, resourceType, systemData, DataSetKind.Container, containerName, dataSetId, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSet(id, name, resourceType, systemData, DataSetKind.Container, serializedAdditionalRawData: null, containerName, dataSetId, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobContainerDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobContainerDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -464,10 +464,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobContainerDataSetMapping"/> instance for mocking. </returns>
         public static BlobContainerDataSetMapping BlobContainerDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobContainerDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Container, containerName, dataSetId, dataSetMappingStatus, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Container, serializedAdditionalRawData: null, containerName, dataSetId, dataSetMappingStatus, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -481,10 +481,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobDataSet"/> instance for mocking. </returns>
         public static BlobDataSet BlobDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid? dataSetId = null, string filePath = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobDataSet(id, name, resourceType, systemData, DataSetKind.Blob, containerName, dataSetId, filePath, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSet(id, name, resourceType, systemData, DataSetKind.Blob, serializedAdditionalRawData: null, containerName, dataSetId, filePath, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -501,10 +501,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobDataSetMapping"/> instance for mocking. </returns>
         public static BlobDataSetMapping BlobDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string filePath = null, DataShareOutputType? outputType = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Blob, containerName, dataSetId, dataSetMappingStatus, filePath, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Blob, serializedAdditionalRawData: null, containerName, dataSetId, dataSetMappingStatus, filePath, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobFolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobFolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -518,10 +518,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobFolderDataSet"/> instance for mocking. </returns>
         public static BlobFolderDataSet BlobFolderDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid? dataSetId = null, string prefix = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobFolderDataSet(id, name, resourceType, systemData, DataSetKind.BlobFolder, containerName, dataSetId, prefix, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSet(id, name, resourceType, systemData, DataSetKind.BlobFolder, serializedAdditionalRawData: null, containerName, dataSetId, prefix, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of BlobFolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BlobFolderDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -537,10 +537,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobFolderDataSetMapping"/> instance for mocking. </returns>
         public static BlobFolderDataSetMapping BlobFolderDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string prefix = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobFolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.BlobFolder, containerName, dataSetId, dataSetMappingStatus, prefix, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.BlobFolder, serializedAdditionalRawData: null, containerName, dataSetId, dataSetMappingStatus, prefix, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of KustoClusterDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -552,10 +552,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoClusterDataSet"/> instance for mocking. </returns>
         public static KustoClusterDataSet KustoClusterDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoClusterDataSet(id, name, resourceType, systemData, DataSetKind.KustoCluster, dataSetId, kustoClusterResourceId, location, provisioningState);
+            return new KustoClusterDataSet(id, name, resourceType, systemData, DataSetKind.KustoCluster, serializedAdditionalRawData: null, dataSetId, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoClusterDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -568,10 +568,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoClusterDataSetMapping"/> instance for mocking. </returns>
         public static KustoClusterDataSetMapping KustoClusterDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoClusterDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoCluster, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
+            return new KustoClusterDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoCluster, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoDatabaseDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -583,10 +583,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoDatabaseDataSet"/> instance for mocking. </returns>
         public static KustoDatabaseDataSet KustoDatabaseDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoDatabaseResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoDatabaseDataSet(id, name, resourceType, systemData, DataSetKind.KustoDatabase, dataSetId, kustoDatabaseResourceId, location, provisioningState);
+            return new KustoDatabaseDataSet(id, name, resourceType, systemData, DataSetKind.KustoDatabase, serializedAdditionalRawData: null, dataSetId, kustoDatabaseResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoDatabaseDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -599,10 +599,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoDatabaseDataSetMapping"/> instance for mocking. </returns>
         public static KustoDatabaseDataSetMapping KustoDatabaseDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoDatabaseDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoDatabase, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
+            return new KustoDatabaseDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoDatabase, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of KustoTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -615,10 +615,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoTableDataSet"/> instance for mocking. </returns>
         public static KustoTableDataSet KustoTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoDatabaseResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null, TableLevelSharingProperties tableLevelSharingProperties = null)
         {
-            return new KustoTableDataSet(id, name, resourceType, systemData, DataSetKind.KustoTable, dataSetId, kustoDatabaseResourceId, location, provisioningState, tableLevelSharingProperties);
+            return new KustoTableDataSet(id, name, resourceType, systemData, DataSetKind.KustoTable, serializedAdditionalRawData: null, dataSetId, kustoDatabaseResourceId, location, provisioningState, tableLevelSharingProperties);
         }
 
-        /// <summary> Initializes a new instance of KustoTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -631,19 +631,19 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoTableDataSetMapping"/> instance for mocking. </returns>
         public static KustoTableDataSetMapping KustoTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoTable, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
+            return new KustoTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoTable, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ScheduledSourceSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledSourceSynchronizationSetting"/>. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
         /// <returns> A new <see cref="Models.ScheduledSourceSynchronizationSetting"/> instance for mocking. </returns>
         public static ScheduledSourceSynchronizationSetting ScheduledSourceSynchronizationSetting(DataShareSynchronizationRecurrenceInterval? recurrenceInterval = null, DateTimeOffset? synchronizeOn = null)
         {
-            return new ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind.ScheduleBased, recurrenceInterval, synchronizeOn);
+            return new ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind.ScheduleBased, serializedAdditionalRawData: null, recurrenceInterval, synchronizeOn);
         }
 
-        /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledSynchronizationSetting"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -656,10 +656,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ScheduledSynchronizationSetting"/> instance for mocking. </returns>
         public static ScheduledSynchronizationSetting ScheduledSynchronizationSetting(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DataShareProvisioningState? provisioningState = null, DataShareSynchronizationRecurrenceInterval recurrenceInterval = default, DateTimeOffset synchronizeOn = default, string userName = null)
         {
-            return new ScheduledSynchronizationSetting(id, name, resourceType, systemData, SynchronizationSettingKind.ScheduleBased, createdOn, provisioningState, recurrenceInterval, synchronizeOn, userName);
+            return new ScheduledSynchronizationSetting(id, name, resourceType, systemData, SynchronizationSettingKind.ScheduleBased, serializedAdditionalRawData: null, createdOn, provisioningState, recurrenceInterval, synchronizeOn, userName);
         }
 
-        /// <summary> Initializes a new instance of ScheduledTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledTrigger"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -674,10 +674,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ScheduledTrigger"/> instance for mocking. </returns>
         public static ScheduledTrigger ScheduledTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DataShareProvisioningState? provisioningState = null, DataShareSynchronizationRecurrenceInterval recurrenceInterval = default, SynchronizationMode? synchronizationMode = null, DateTimeOffset synchronizeOn = default, DataShareTriggerStatus? triggerStatus = null, string userName = null)
         {
-            return new ScheduledTrigger(id, name, resourceType, systemData, TriggerKind.ScheduleBased, createdOn, provisioningState, recurrenceInterval, synchronizationMode, synchronizeOn, triggerStatus, userName);
+            return new ScheduledTrigger(id, name, resourceType, systemData, TriggerKind.ScheduleBased, serializedAdditionalRawData: null, createdOn, provisioningState, recurrenceInterval, synchronizationMode, synchronizeOn, triggerStatus, userName);
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDBTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -690,10 +690,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDBTableDataSet"/> instance for mocking. </returns>
         public static SqlDBTableDataSet SqlDBTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, Guid? dataSetId = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDBTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDBTable, databaseName, dataSetId, schemaName, sqlServerResourceId, tableName);
+            return new SqlDBTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDBTable, serializedAdditionalRawData: null, databaseName, dataSetId, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDBTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -708,10 +708,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDBTableDataSetMapping"/> instance for mocking. </returns>
         public static SqlDBTableDataSetMapping SqlDBTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, DataShareProvisioningState? provisioningState = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDBTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDBTable, databaseName, dataSetId, dataSetMappingStatus, provisioningState, schemaName, sqlServerResourceId, tableName);
+            return new SqlDBTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDBTable, serializedAdditionalRawData: null, databaseName, dataSetId, dataSetMappingStatus, provisioningState, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SqlDWTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDWTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -724,10 +724,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDWTableDataSet"/> instance for mocking. </returns>
         public static SqlDWTableDataSet SqlDWTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string dataWarehouseName = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDWTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDWTable, dataSetId, dataWarehouseName, schemaName, sqlServerResourceId, tableName);
+            return new SqlDWTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDWTable, serializedAdditionalRawData: null, dataSetId, dataWarehouseName, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDWTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -742,10 +742,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDWTableDataSetMapping"/> instance for mocking. </returns>
         public static SqlDWTableDataSetMapping SqlDWTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string dataWarehouseName = null, DataShareProvisioningState? provisioningState = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDWTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDWTable, dataSetId, dataSetMappingStatus, dataWarehouseName, provisioningState, schemaName, sqlServerResourceId, tableName);
+            return new SqlDWTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDWTable, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, dataWarehouseName, provisioningState, schemaName, sqlServerResourceId, tableName);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseWorkspaceSqlPoolTableDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -755,10 +755,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SynapseWorkspaceSqlPoolTableDataSet"/> instance for mocking. </returns>
         public static SynapseWorkspaceSqlPoolTableDataSet SynapseWorkspaceSqlPoolTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = null)
         {
-            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, resourceType, systemData, DataSetKind.SynapseWorkspaceSqlPoolTable, dataSetId, synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, resourceType, systemData, DataSetKind.SynapseWorkspaceSqlPoolTable, serializedAdditionalRawData: null, dataSetId, synapseWorkspaceSqlPoolTableResourceId);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseWorkspaceSqlPoolTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SynapseWorkspaceSqlPoolTableDataSetMapping"/> instance for mocking. </returns>
         public static SynapseWorkspaceSqlPoolTableDataSetMapping SynapseWorkspaceSqlPoolTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, DataShareProvisioningState? provisioningState = null, ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = null)
         {
-            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SynapseWorkspaceSqlPoolTable, dataSetId, dataSetMappingStatus, provisioningState, synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SynapseWorkspaceSqlPoolTable, serializedAdditionalRawData: null, dataSetId, dataSetMappingStatus, provisioningState, synapseWorkspaceSqlPoolTableResourceId);
         }
     }
 }

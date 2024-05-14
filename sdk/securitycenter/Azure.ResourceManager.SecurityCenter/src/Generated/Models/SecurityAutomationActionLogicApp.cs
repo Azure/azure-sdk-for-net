@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -13,17 +14,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The logic app action that should be triggered. To learn more about Microsoft Defender for Cloud's Workflow Automation capabilities, visit https://aka.ms/ASCWorkflowAutomationLearnMore. </summary>
     public partial class SecurityAutomationActionLogicApp : SecurityAutomationAction
     {
-        /// <summary> Initializes a new instance of SecurityAutomationActionLogicApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionLogicApp"/>. </summary>
         public SecurityAutomationActionLogicApp()
         {
             ActionType = ActionType.LogicApp;
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationActionLogicApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionLogicApp"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="logicAppResourceId"> The triggered Logic App Azure Resource ID. This can also reside on other subscriptions, given that you have permissions to trigger the Logic App. </param>
         /// <param name="uri"> The Logic App trigger URI endpoint (it will not be included in any response). </param>
-        internal SecurityAutomationActionLogicApp(ActionType actionType, ResourceIdentifier logicAppResourceId, Uri uri) : base(actionType)
+        internal SecurityAutomationActionLogicApp(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier logicAppResourceId, Uri uri) : base(actionType, serializedAdditionalRawData)
         {
             LogicAppResourceId = logicAppResourceId;
             Uri = uri;

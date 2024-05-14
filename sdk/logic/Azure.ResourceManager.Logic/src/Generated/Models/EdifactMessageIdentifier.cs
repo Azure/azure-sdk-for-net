@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact message identifier. </summary>
     public partial class EdifactMessageIdentifier
     {
-        /// <summary> Initializes a new instance of EdifactMessageIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageIdentifier"/>. </summary>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public EdifactMessageIdentifier(string messageId)

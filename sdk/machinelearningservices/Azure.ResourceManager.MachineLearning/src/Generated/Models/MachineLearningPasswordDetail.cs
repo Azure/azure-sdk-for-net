@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningPasswordDetail. </summary>
     public partial class MachineLearningPasswordDetail
     {
-        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPasswordDetail"/>. </summary>
         internal MachineLearningPasswordDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPasswordDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
         internal MachineLearningPasswordDetail(string name, string value)

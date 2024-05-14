@@ -214,6 +214,32 @@ namespace Azure.Storage.Files.Shares.Models
             };
         }
 
+        ///// <summary>
+        ///// Creates a new ShareFileHandle instance for mocking.
+        ///// </summary>
+        //public static ShareFileHandle ShareFileHandle(
+        //    string handleId,
+        //    string path,
+        //    string fileId,
+        //    string sessionId,
+        //    string clientIp,
+        //    string clientName,
+        //    string parentId = default,
+        //    DateTimeOffset? openedOn = default,
+        //    DateTimeOffset? lastReconnectedOn = default,
+        //    ShareFileHandleAccessRights? accessRights = default)
+        //    => new ShareFileHandle(
+        //        handleId,
+        //        path,
+        //        fileId,
+        //        parentId,
+        //        sessionId,
+        //        clientIp,
+        //        clientName,
+        //        openedOn,
+        //        lastReconnectedOn,
+        //        accessRights);
+
         /// <summary>
         /// Creates a new ShareFileHandle instance for mocking.
         /// </summary>
@@ -234,6 +260,7 @@ namespace Azure.Storage.Files.Shares.Models
                 parentId,
                 sessionId,
                 clientIp,
+                null,
                 openedOn,
                 lastReconnectedOn,
                 accessRights);
@@ -258,6 +285,7 @@ namespace Azure.Storage.Files.Shares.Models
                 parentId,
                 sessionId,
                 clientIp,
+                null,
                 openedOn,
                 lastReconnectedOn,
                 null);

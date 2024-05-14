@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class StorageSyncPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of StorageSyncPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateLinkResourceListResult"/>. </summary>
         internal StorageSyncPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<StorageSyncPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal StorageSyncPrivateLinkResourceListResult(IReadOnlyList<StorageSyncPrivateLinkResource> value)
         {

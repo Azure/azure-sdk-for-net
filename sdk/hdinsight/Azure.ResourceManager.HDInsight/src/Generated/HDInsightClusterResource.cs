@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,13 +22,16 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHDInsightCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHDInsightCluster method.
     /// </summary>
     public partial class HDInsightClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}";
@@ -48,12 +52,15 @@ namespace Azure.ResourceManager.HDInsight
         private readonly VirtualMachinesRestOperations _virtualMachinesRestClient;
         private readonly HDInsightClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="HDInsightClusterResource"/> class for mocking. </summary>
         protected HDInsightClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightClusterResource(ArmClient client, HDInsightClusterData data) : this(client, data.Id)
@@ -85,9 +92,6 @@ namespace Azure.ResourceManager.HDInsight
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightApplicationResources and their operations over a HDInsightApplicationResource. </returns>
         public virtual HDInsightApplicationCollection GetHDInsightApplications()
         {
-            return GetCachedClient(Client => new HDInsightApplicationCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -127,12 +131,20 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightApplicationResource>> GetHDInsightApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -150,12 +162,20 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightApplicationResource> GetHDInsightApplication(string applicationName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightPrivateEndpointConnectionResources and their operations over a HDInsightPrivateEndpointConnectionResource. </returns>
         public virtual HDInsightPrivateEndpointConnectionCollection GetHDInsightPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HDInsightPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -180,12 +200,20 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightPrivateEndpointConnectionResource>> GetHDInsightPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -203,12 +231,20 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightPrivateEndpointConnectionResource> GetHDInsightPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -219,7 +255,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An object representing collection of HDInsightPrivateLinkResources and their operations over a HDInsightPrivateLinkResource. </returns>
         public virtual HDInsightPrivateLinkResourceCollection GetHDInsightPrivateLinkResources()
         {
-            return GetCachedClient(Client => new HDInsightPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new HDInsightPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -233,12 +269,20 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HDInsightPrivateLinkResource>> GetHDInsightPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -256,12 +300,20 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HDInsightPrivateLinkResource> GetHDInsightPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -278,6 +330,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,6 +371,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -342,6 +410,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +453,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -410,6 +494,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,6 +537,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The cluster patch request. </param>
@@ -478,6 +578,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Resize</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,6 +626,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Resize</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -556,6 +672,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateAutoScaleConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -596,6 +720,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateAutoScaleConfiguration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -635,6 +767,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_RotateDiskEncryptionKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -672,6 +812,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_RotateDiskEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -711,6 +859,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_GetGatewaySettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -741,6 +897,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_GetGatewaySettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -770,6 +934,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateGatewaySettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -809,6 +981,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateGatewaySettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -847,6 +1027,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_GetAzureAsyncOperationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The long running operation id. </param>
@@ -882,6 +1070,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_GetAzureAsyncOperationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The long running operation id. </param>
@@ -916,6 +1112,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateIdentityCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -955,6 +1159,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateIdentityCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -992,6 +1204,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ExecuteScriptActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1031,6 +1251,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_ExecuteScriptActions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1069,6 +1297,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Configurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1099,6 +1331,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Configurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1128,6 +1364,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1170,6 +1410,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Configurations_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1211,6 +1455,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
@@ -1246,6 +1494,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
@@ -1280,6 +1532,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_EnableMonitoring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1319,6 +1575,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_EnableMonitoring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1357,6 +1617,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_GetMonitoringStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1387,6 +1651,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_GetMonitoringStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1416,6 +1684,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_DisableMonitoring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1451,6 +1723,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_DisableMonitoring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1484,6 +1760,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_EnableAzureMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1523,6 +1803,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_EnableAzureMonitor</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1561,6 +1845,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_GetAzureMonitorStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1591,6 +1879,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_GetAzureMonitorStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1620,6 +1912,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_DisableAzureMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1655,6 +1951,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_DisableAzureMonitor</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1688,6 +1988,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1730,6 +2034,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1771,6 +2079,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionName"> The name of the cluster extension. </param>
@@ -1806,6 +2118,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionName"> The name of the cluster extension. </param>
@@ -1840,6 +2156,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1880,6 +2200,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1919,6 +2243,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Extensions_GetAzureAsyncOperationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionName"> The name of the cluster extension. </param>
@@ -1955,6 +2283,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_GetAzureAsyncOperationStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1993,6 +2325,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptActions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> The name of the script. </param>
@@ -2027,6 +2363,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptActions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2063,15 +2403,19 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptActions_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptActionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2085,15 +2429,19 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptActions_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptActions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2106,6 +2454,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptActions_GetExecutionDetail</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2142,6 +2494,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptActions_GetExecutionDetail</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptExecutionId"> The script execution Id. </param>
@@ -2176,6 +2532,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptActions_GetExecutionAsyncOperationStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2212,6 +2572,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptActions_GetExecutionAsyncOperationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The long running operation id. </param>
@@ -2247,15 +2611,19 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptExecutionHistory_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptExecutionHistoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2269,15 +2637,19 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptExecutionHistory_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptExecutionHistories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2290,6 +2662,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptExecutionHistory_Promote</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2326,6 +2702,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>ScriptExecutionHistory_Promote</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptExecutionId"> The script execution Id. </param>
@@ -2361,14 +2741,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterHostInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterHostInfo> GetVirtualMachineHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2382,14 +2766,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterHostInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterHostInfo> GetVirtualMachineHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2402,6 +2790,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_RestartHosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2441,6 +2833,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_RestartHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -2479,6 +2875,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_GetAsyncOperationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The long running operation id. </param>
@@ -2514,6 +2914,10 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_GetAsyncOperationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The long running operation id. </param>
@@ -2548,6 +2952,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2603,6 +3015,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -2657,6 +3077,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2706,6 +3134,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2754,6 +3190,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2806,6 +3250,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

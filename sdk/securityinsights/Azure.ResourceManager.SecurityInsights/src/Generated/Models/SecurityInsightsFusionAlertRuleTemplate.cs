@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Fusion alert rule template. </summary>
     public partial class SecurityInsightsFusionAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRuleTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRuleTemplate"/>. </summary>
         public SecurityInsightsFusionAlertRuleTemplate()
         {
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.Fusion;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRuleTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRuleTemplate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

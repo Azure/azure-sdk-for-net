@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualWorkspaceData : IUtf8JsonSerializable
+    public partial class VirtualWorkspaceData : IUtf8JsonSerializable, IJsonModel<VirtualWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualWorkspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualWorkspaceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
@@ -28,6 +38,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -57,8 +72,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -79,12 +119,61 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
+            {
+                writer.WritePropertyName("cloudPcResource"u8);
+                writer.WriteBooleanValue(IsCloudPCResource.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualWorkspaceData DeserializeVirtualWorkspaceData(JsonElement element)
+        VirtualWorkspaceData IJsonModel<VirtualWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualWorkspaceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualWorkspaceData(document.RootElement, options);
+        }
+
+        internal static VirtualWorkspaceData DeserializeVirtualWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +195,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> friendlyName = default;
             Optional<IList<string>> applicationGroupReferences = default;
             Optional<bool> cloudPCResource = default;
+            Optional<DesktopVirtualizationPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection>> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -248,11 +341,70 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new DesktopVirtualizationPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DesktopVirtualizationPrivateEndpointConnection> array = new List<DesktopVirtualizationPrivateEndpointConnection>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPCResource), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualWorkspaceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualWorkspaceData IPersistableModel<VirtualWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualWorkspaceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualWorkspaceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,11 +19,13 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatMessage> message = default;
+            Optional<ChatResponseMessage> message = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatMessage> delta = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
+            Optional<ChatFinishDetails> finishDetails = default;
+            Optional<ChatResponseMessage> delta = default;
+            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
+            Optional<AzureChatEnhancements> enhancements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -32,7 +34,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    message = ChatMessage.DeserializeChatMessage(property.Value);
+                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -50,13 +52,22 @@ namespace Azure.AI.OpenAI
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("finish_details"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("delta"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    delta = ChatMessage.DeserializeChatMessage(property.Value);
+                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("content_filter_results"u8))
@@ -65,11 +76,20 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("enhancements"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value);
                     continue;
                 }
             }
-            return new ChatChoice(message.Value, index, finishReason, delta.Value, contentFilterResults.Value);
+            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

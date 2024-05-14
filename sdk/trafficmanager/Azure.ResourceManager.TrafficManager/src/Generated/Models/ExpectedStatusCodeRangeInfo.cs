@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Min and max value of a status code range. </summary>
     public partial class ExpectedStatusCodeRangeInfo
     {
-        /// <summary> Initializes a new instance of ExpectedStatusCodeRangeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpectedStatusCodeRangeInfo"/>. </summary>
         public ExpectedStatusCodeRangeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpectedStatusCodeRangeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpectedStatusCodeRangeInfo"/>. </summary>
         /// <param name="min"> Min status code. </param>
         /// <param name="max"> Max status code. </param>
         internal ExpectedStatusCodeRangeInfo(int? min, int? max)

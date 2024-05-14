@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A snapshot of an app. </summary>
     public partial class AppSnapshot : ResourceData
     {
-        /// <summary> Initializes a new instance of AppSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSnapshot"/>. </summary>
         public AppSnapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of AppSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSnapshot"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

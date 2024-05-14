@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties to configure keyVault Properties. </summary>
     public partial class EventHubsKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of EventHubsKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsKeyVaultProperties"/>. </summary>
         public EventHubsKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="keyVersion"> Key Version. </param>

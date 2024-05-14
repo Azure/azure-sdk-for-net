@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of the table in the database full schema. </summary>
     public partial class SyncFullSchemaTable
     {
-        /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTable"/>. </summary>
         internal SyncFullSchemaTable()
         {
             Columns = new ChangeTrackingList<SyncFullSchemaTableColumn>();
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTable"/>. </summary>
         /// <param name="columns"> List of columns in the table of database full schema. </param>
         /// <param name="errorId"> Error id of the table. </param>
         /// <param name="hasError"> If there is error in the table. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Response for a migration of app content request. </summary>
     public partial class StorageMigrationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageMigrationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMigrationResult"/>. </summary>
         public StorageMigrationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMigrationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMigrationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

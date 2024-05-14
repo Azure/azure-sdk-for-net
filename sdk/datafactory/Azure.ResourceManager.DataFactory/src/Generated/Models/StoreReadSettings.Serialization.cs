@@ -33,7 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -60,6 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element);
                     case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element);
                     case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element);
+                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element);
                     case "OracleCloudStorageReadSettings": return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element);
                     case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element);
                 }

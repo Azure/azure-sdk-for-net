@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             writer.WritePropertyName("sasUrl"u8);
-            writer.WriteStringValue(SasUri.AbsoluteUri);
+            writer.WriteStringValue(SasUriString);
             writer.WriteEndObject();
         }
 
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<WebAppLogLevel> level = default;
-            Uri sasUrl = default;
+            string sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"u8))
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("sasUrl"u8))
                 {
-                    sasUrl = new Uri(property.Value.GetString());
+                    sasUrl = property.Value.GetString();
                     continue;
                 }
             }

@@ -14,11 +14,26 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The CreateCluster request parameters. </summary>
     public partial class HDInsightClusterCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
         public HDInsightClusterCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The location of the cluster. </param>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="properties"> The cluster create parameters. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        internal HDInsightClusterCreateOrUpdateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity)
+        {
+            Location = location;
+            Tags = tags;
+            Zones = zones;
+            Properties = properties;
+            Identity = identity;
         }
 
         /// <summary> The location of the cluster. </summary>

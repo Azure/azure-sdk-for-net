@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The blob service properties for change feed events. </summary>
     public partial class BlobServiceChangeFeed
     {
-        /// <summary> Initializes a new instance of BlobServiceChangeFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceChangeFeed"/>. </summary>
         public BlobServiceChangeFeed()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobServiceChangeFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceChangeFeed"/>. </summary>
         /// <param name="isEnabled"> Indicates whether change feed event logging is enabled for the Blob service. </param>
         /// <param name="retentionInDays"> Indicates the duration of changeFeed retention in days. Minimum value is 1 day and maximum value is 146000 days (400 years). A null value indicates an infinite retention of the change feed. </param>
         internal BlobServiceChangeFeed(bool? isEnabled, int? retentionInDays)

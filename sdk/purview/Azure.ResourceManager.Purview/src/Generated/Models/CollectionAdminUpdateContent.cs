@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Collection administrator update. </summary>
     public partial class CollectionAdminUpdateContent
     {
-        /// <summary> Initializes a new instance of CollectionAdminUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionAdminUpdateContent"/>. </summary>
         public CollectionAdminUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectionAdminUpdateContent"/>. </summary>
+        /// <param name="adminObjectId"> Gets or sets the object identifier of the admin. </param>
+        internal CollectionAdminUpdateContent(string adminObjectId)
+        {
+            AdminObjectId = adminObjectId;
         }
 
         /// <summary> Gets or sets the object identifier of the admin. </summary>

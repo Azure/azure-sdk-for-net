@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Initializes a new instance of SparkConfigurationClient. </summary>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public SparkConfigurationClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
@@ -52,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes a new instance of SparkConfigurationClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         internal SparkConfigurationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
@@ -105,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkConfigurationsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkConfigurationsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists sparkconfigurations. </summary>
@@ -114,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkConfigurationsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkConfigurationsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a sparkconfiguration. </summary>

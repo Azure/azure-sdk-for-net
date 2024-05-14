@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ArmApplicationHealthPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationHealthPolicy"/>. </summary>
         public ArmApplicationHealthPolicy()
         {
             ServiceTypeHealthPolicyMap = new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationHealthPolicy"/>. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.

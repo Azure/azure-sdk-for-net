@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes an inbound endpoint for a DNS resolver for PATCH operation. </summary>
     public partial class DnsResolverInboundEndpointPatch
     {
-        /// <summary> Initializes a new instance of DnsResolverInboundEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointPatch"/>. </summary>
         public DnsResolverInboundEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointPatch"/>. </summary>
+        /// <param name="tags"> Tags for inbound endpoint. </param>
+        internal DnsResolverInboundEndpointPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Tags for inbound endpoint. </summary>

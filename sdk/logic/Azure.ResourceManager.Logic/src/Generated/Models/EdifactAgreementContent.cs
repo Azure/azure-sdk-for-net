@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement content. </summary>
     public partial class EdifactAgreementContent
     {
-        /// <summary> Initializes a new instance of EdifactAgreementContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactAgreementContent"/>. </summary>
         /// <param name="receiveAgreement"> The EDIFACT one-way receive agreement. </param>
         /// <param name="sendAgreement"> The EDIFACT one-way send agreement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>

@@ -9,6 +9,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public virtual Azure.Pageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> GetAll(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> GetAllAsync(string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>> GetAsync(string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> GetIfExists(string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>> GetIfExistsAsync(string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -50,6 +52,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public virtual Azure.Pageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetAll(string filter = null, string expand = null, System.DateTimeOffset? startTimestampUtc = default(System.DateTimeOffset?), System.DateTimeOffset? endTimestampUtc = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetAllAsync(string filter = null, string expand = null, System.DateTimeOffset? startTimestampUtc = default(System.DateTimeOffset?), System.DateTimeOffset? endTimestampUtc = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>> GetAsync(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetIfExists(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>> GetIfExistsAsync(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -84,6 +88,22 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource GetHealthMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorCollection GetHealthMonitors(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName) { throw null; }
         public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.WorkloadMonitor.Mocking
+{
+    public partial class MockableWorkloadMonitorArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableWorkloadMonitorArmClient() { }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource GetHealthMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableWorkloadMonitorResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableWorkloadMonitorResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> GetHealthMonitor(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>> GetHealthMonitorAsync(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorCollection GetHealthMonitors(string providerName, string resourceCollectionName, string resourceName) { throw null; }
     }
 }
 namespace Azure.ResourceManager.WorkloadMonitor.Models

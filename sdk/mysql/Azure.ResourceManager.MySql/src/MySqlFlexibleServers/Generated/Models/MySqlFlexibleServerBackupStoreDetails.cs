@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// </summary>
     public abstract partial class MySqlFlexibleServerBackupStoreDetails
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupStoreDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
         protected MySqlFlexibleServerBackupStoreDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        internal MySqlFlexibleServerBackupStoreDetails(string objectType)
+        {
+            ObjectType = objectType;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

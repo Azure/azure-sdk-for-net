@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Result of check name availability. </summary>
     public partial class CheckNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
         internal CheckNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>

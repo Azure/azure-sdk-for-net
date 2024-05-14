@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The network configuration. </summary>
     public partial class IntegrationServiceNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of IntegrationServiceNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceNetworkConfiguration"/>. </summary>
         public IntegrationServiceNetworkConfiguration()
         {
             Subnets = new ChangeTrackingList<LogicResourceReference>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceNetworkConfiguration"/>. </summary>
         /// <param name="virtualNetworkAddressSpace"> Gets the virtual network address space. </param>
         /// <param name="accessEndpoint"> The access endpoint. </param>
         /// <param name="subnets"> The subnets. </param>

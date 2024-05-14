@@ -10,9 +10,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A Vm managed disk update details. </summary>
     public partial class A2AVmManagedDiskUpdateDetails
     {
-        /// <summary> Initializes a new instance of A2AVmManagedDiskUpdateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskUpdateDetails"/>. </summary>
         public A2AVmManagedDiskUpdateDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskUpdateDetails"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="recoveryTargetDiskAccountType"> The target disk type before failover. </param>
+        /// <param name="recoveryReplicaDiskAccountType"> The replica disk type before failover. </param>
+        /// <param name="diskEncryptionInfo"> The recovery os disk encryption information. </param>
+        /// <param name="failoverDiskName"> The target disk name for unplanned failover operation. </param>
+        /// <param name="tfoDiskName"> The target disk name for test failover operation. </param>
+        internal A2AVmManagedDiskUpdateDetails(string diskId, string recoveryTargetDiskAccountType, string recoveryReplicaDiskAccountType, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string failoverDiskName, string tfoDiskName)
+        {
+            DiskId = diskId;
+            RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
+            RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
+            DiskEncryptionInfo = diskEncryptionInfo;
+            FailoverDiskName = failoverDiskName;
+            TfoDiskName = tfoDiskName;
         }
 
         /// <summary> The disk Id. </summary>

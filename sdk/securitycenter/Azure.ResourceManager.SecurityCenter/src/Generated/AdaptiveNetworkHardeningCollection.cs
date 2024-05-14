@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AdaptiveNetworkHardeningResource" /> and their operations.
-    /// Each <see cref="AdaptiveNetworkHardeningResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AdaptiveNetworkHardeningCollection" /> instance call the GetAdaptiveNetworkHardenings method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AdaptiveNetworkHardeningResource"/> and their operations.
+    /// Each <see cref="AdaptiveNetworkHardeningResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AdaptiveNetworkHardeningCollection"/> instance call the GetAdaptiveNetworkHardenings method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AdaptiveNetworkHardeningCollection : ArmCollection, IEnumerable<AdaptiveNetworkHardeningResource>, IAsyncEnumerable<AdaptiveNetworkHardeningResource>
     {
@@ -75,6 +76,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
@@ -111,6 +120,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,15 +166,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_ListByExtendedResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdaptiveNetworkHardeningResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AdaptiveNetworkHardeningResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AdaptiveNetworkHardeningResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,15 +196,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_ListByExtendedResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdaptiveNetworkHardeningResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AdaptiveNetworkHardeningResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AdaptiveNetworkHardeningResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _adaptiveNetworkHardeningRestClient.CreateListByExtendedResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AdaptiveNetworkHardeningResource(Client, AdaptiveNetworkHardeningData.DeserializeAdaptiveNetworkHardeningData(e)), _adaptiveNetworkHardeningClientDiagnostics, Pipeline, "AdaptiveNetworkHardeningCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -192,6 +225,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +269,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
@@ -244,6 +293,96 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _adaptiveNetworkHardeningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, adaptiveNetworkHardeningResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AdaptiveNetworkHardeningResource>> GetIfExistsAsync(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
+
+            using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _adaptiveNetworkHardeningRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, adaptiveNetworkHardeningResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AdaptiveNetworkHardeningResource>(response.GetRawResponse());
+                return Response.FromValue(new AdaptiveNetworkHardeningResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdaptiveNetworkHardeningResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="adaptiveNetworkHardeningResourceName"> The name of the Adaptive Network Hardening resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
+        public virtual NullableResponse<AdaptiveNetworkHardeningResource> GetIfExists(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
+
+            using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _adaptiveNetworkHardeningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceNamespace, _resourceType, _resourceName, adaptiveNetworkHardeningResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AdaptiveNetworkHardeningResource>(response.GetRawResponse());
+                return Response.FromValue(new AdaptiveNetworkHardeningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

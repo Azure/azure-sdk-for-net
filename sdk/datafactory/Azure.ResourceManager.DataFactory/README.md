@@ -51,7 +51,7 @@ Code samples for using the management library for .NET can be found in the follo
 #### Assign `DataFactoryElement` with different literal types
 - int
  ```C# Snippet:Readme_DataFactoryElementInt
-var policy = new ActivityPolicy
+var policy = new PipelineActivityPolicy
 {
     Retry = DataFactoryElement<int>.FromLiteral(1),
 };
@@ -82,7 +82,7 @@ Dictionary<string, string> DictionaryValue = new()
 };
 var activity = new AzureMLExecutePipelineActivity("name")
 {
-    MlPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
+    MLPipelineParameters = DataFactoryElement<IDictionary<string, string>?>.FromLiteral(DictionaryValue),
 };
 ```
 

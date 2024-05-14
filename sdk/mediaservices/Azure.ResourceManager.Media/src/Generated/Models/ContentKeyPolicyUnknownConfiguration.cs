@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents a ContentKeyPolicyConfiguration that is unavailable in the current API version. </summary>
     public partial class ContentKeyPolicyUnknownConfiguration : ContentKeyPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyUnknownConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyUnknownConfiguration"/>. </summary>
         public ContentKeyPolicyUnknownConfiguration()
         {
             OdataType = "#Microsoft.Media.ContentKeyPolicyUnknownConfiguration";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyUnknownConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyUnknownConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal ContentKeyPolicyUnknownConfiguration(string odataType) : base(odataType)
         {

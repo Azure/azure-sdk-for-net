@@ -5,36 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.Core;
+
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> The analysis response of the image. </summary>
+    /// <summary> The image analysis response. </summary>
     public partial class AnalyzeImageResult
     {
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
-        internal AnalyzeImageResult()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
+        /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="categoriesAnalysis"/> is null. </exception>
+        internal AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis)
         {
+            Argument.AssertNotNull(categoriesAnalysis, nameof(categoriesAnalysis));
+
+            CategoriesAnalysis = categoriesAnalysis.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
-        /// <param name="hateResult"> Analysis result for Hate category. </param>
-        /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
-        /// <param name="sexualResult"> Analysis result for Sexual category. </param>
-        /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        internal AnalyzeImageResult(ImageAnalyzeSeverityResult hateResult, ImageAnalyzeSeverityResult selfHarmResult, ImageAnalyzeSeverityResult sexualResult, ImageAnalyzeSeverityResult violenceResult)
+        /// <summary> Initializes a new instance of <see cref="AnalyzeImageResult"/>. </summary>
+        /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
+        internal AnalyzeImageResult(IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis)
         {
-            HateResult = hateResult;
-            SelfHarmResult = selfHarmResult;
-            SexualResult = sexualResult;
-            ViolenceResult = violenceResult;
+            CategoriesAnalysis = categoriesAnalysis;
         }
 
-        /// <summary> Analysis result for Hate category. </summary>
-        public ImageAnalyzeSeverityResult HateResult { get; }
-        /// <summary> Analysis result for SelfHarm category. </summary>
-        public ImageAnalyzeSeverityResult SelfHarmResult { get; }
-        /// <summary> Analysis result for Sexual category. </summary>
-        public ImageAnalyzeSeverityResult SexualResult { get; }
-        /// <summary> Analysis result for Violence category. </summary>
-        public ImageAnalyzeSeverityResult ViolenceResult { get; }
+        /// <summary> Analysis result for categories. </summary>
+        public IReadOnlyList<ImageCategoriesAnalysis> CategoriesAnalysis { get; }
     }
 }

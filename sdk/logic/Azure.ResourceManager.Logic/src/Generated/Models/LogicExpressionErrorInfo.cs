@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The azure resource error info. </summary>
     public partial class LogicExpressionErrorInfo : LogicErrorInfo
     {
-        /// <summary> Initializes a new instance of LogicExpressionErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             Details = new ChangeTrackingList<LogicExpressionErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of LogicExpressionErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of database schemas. </summary>
     internal partial class DatabaseSchemaListResult
     {
-        /// <summary> Initializes a new instance of DatabaseSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSchemaListResult"/>. </summary>
         internal DatabaseSchemaListResult()
         {
             Value = new ChangeTrackingList<DatabaseSchemaData>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSchemaListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal DatabaseSchemaListResult(IReadOnlyList<DatabaseSchemaData> value, string nextLink)

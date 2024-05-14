@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The callback url. </summary>
     public partial class ListOperationCallbackUri
     {
-        /// <summary> Initializes a new instance of ListOperationCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUri"/>. </summary>
         internal ListOperationCallbackUri()
         {
         }
 
-        /// <summary> Initializes a new instance of ListOperationCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListOperationCallbackUri"/>. </summary>
         /// <param name="uri"> The URL value. </param>
         internal ListOperationCallbackUri(Uri uri)
         {

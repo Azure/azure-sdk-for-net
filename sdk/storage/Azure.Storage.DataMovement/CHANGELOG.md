@@ -1,30 +1,97 @@
 # Release History
 
-## 12.0.0-beta.4 (Unreleased)
+## 12.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- [BREAKING CHANGE] Made the following members `public` to `protected internal` members (including all derived classes):
-    - `StorageResource.CanProduceUri`
-    - `StorageResource.IsContainer`
-    - `StorageResourceContainer.GetStorageResourcesAsync`
-    - `StorageResourceSingle.Length`
-    - `StorageResourceSingle.MaxChunkSize`
-    - `StorageResourceSingle.ResourceId`
-    - `StorageResourceSingle.TransferType`
-    - `StorageResourceSingle.CompleteTransferAsync`
-    - `StorageResourceSingle.CopyBlockFromUriAsync`
-    - `StorageResourceSingle.CopyFromUriAsync`
-    - `StorageResourceSingle.DeleteIfExistsAsync`
-    - `StorageResourceSingle.GetCopyAuthorizationHeaderAsync`
-    - `StorageResourceSingle.GetPropertiesAsync`
-    - `StorageResourceSingle.ReadStreamAsync`
-    - `StorageResourceSingle.WriteFromStreamAsync`
+- Renamed `StorageResourceProperties` to `StorageResourceItemProperties`
+- Renamed `StorageResourceReadStreamResult.ContentRange` to `Range`
+- Removed the following members from `StorageResourceReadStreamResult`:
+    - `AcceptRanges`
+    - `RangeContentHash`
 
 ### Bugs Fixed
+- Fixed a bug where `ChannelClosedException` could occur and be sent as an event to `ItemTransferFailed` when there was a failure during a transfer.
 
 ### Other Changes
+
+## 12.0.0-beta.4 (2023-12-05)
+
+### Features Added
+- Added support for `TransferManager.ResumeAllTransfersAsync` to resume all transfers that can be resumed.
+
+### Breaking Changes
+- [BREAKING CHANGE] Renamed `StorageResourceSingle` to `StorageResourceItem`
+- [BREAKING CHANGE] Renamed `StorageResource.MaxChunkSize` to `MaxSupportedChunkSize`.
+- [BREAKING CHANGE] Made the following members `public` to `protected internal` members (including all derived classes):
+    - `StorageResource.IsContainer`
+    - `StorageResourceContainer.GetStorageResourcesAsync`
+    - `StorageResourceItem.Length`
+    - `StorageResourceItem.MaxSupportedChunkSize`
+    - `StorageResourceItem.ResourceId`
+    - `StorageResourceItem.TransferType`
+    - `StorageResourceItem.CompleteTransferAsync`
+    - `StorageResourceItem.CopyBlockFromUriAsync`
+    - `StorageResourceItem.CopyFromUriAsync`
+    - `StorageResourceItem.DeleteIfExistsAsync`
+    - `StorageResourceItem.GetCopyAuthorizationHeaderAsync`
+    - `StorageResourceItem.GetPropertiesAsync`
+    - `StorageResourceItem.ReadStreamAsync`
+    - `StorageResourceItem.WriteFromStreamAsync`
+- [BREAKING CHANGE] Renamed `DataTransfer.AwaitCompletion` to `DataTransfer.WaitForCompletionAsync`
+- [BREAKING CHANGE] Renamed `DataTransfer.EnsureCompleted` to `DataTransfer.WaitForCompletion`
+- [BREAKING CHANGE] Renamed `DataTransfer.PauseIfRunningAsync` to `DataTransfer.PauseAsync`
+- [BREAKING CHANGE] Removed `Azure.Storage.DataMovement.Models` and moved all classes to the `Azure.Storage.DataMovement` namespace
+- [BREAKING CHANGE] Removed `Azure.Storage.DataMovement.Models.JobPlan` and replaced with `Azure.Storage.DataMovement.JobPlan` (has no public effect since it's internal)
+- [BREAKING CHANGE] Removed `DataTransfer.PauseTransferIfRunningAsync(DataTransfer)`
+- [BREAKING CHANGE] Renamed `DataTransferProperties.SourceScheme`.
+- [BREAKING CHANGE] Removed `DataTransferProperties.DestinationScheme`.
+- [BREAKING CHANGE] Removed `StorageResourceType` including removing `StorageResourceProperties.ResourceType`
+- [BREAKING CHANGE] Removed `ServiceCopyStatus` including removing `StorageResourceProperties.CopyStatus`
+- [BREAKING CHANGE] Renamed `TransferOptions` to `DataTransferOptions`
+- [BREAKING CHANGE] Renamed `TransferCheckpointerOptions` to `TransferCheckpointStoreOptions`
+- [BREAKING CHANGE] Renamed `TransferOptions.TransferFailed` to `DataTransferOptions.ItemTransferFailed`
+- [BREAKING CHANGE] Renamed `TransferOptions.SingleTransferCompleted` to `DataTransferOptions.ItemTransferCompleted`
+- [BREAKING CHANGE] Renamed `TransferOptions.TransferSkipped` to `DataTransferOptions.ItemTransferSkipped`
+- [BREAKING CHANGE] Renamed `TransferOptions.TransferStatus` to `TransferOptions.TransferStatusChanged`
+- [BREAKING CHANGE] Renamed `SingleTransferCompletedEventArgs` to `TransferItemCompletedEventArgs`
+- [BREAKING CHANGE] Renamed `TransferItemFailedEventArgs` to `TransferItemFailedEventArgs`
+- [BREAKING CHANGE] Renamed `TransferItemSkippedEventArgs` to `TransferItemSkippedEventArgs`
+- [BREAKING CHANGE] Renamed `TransferStatusEventArgs.StorageTransferStatus` to `TransferStatus`
+- [BREAKING CHANGE] Renamed `StorageResourceItem.WriteFromStreamAsync` to `CopyFromStreamAsync`
+- [BREAKING CHANGE] Renamed `StorageResourceContainer.GetChildStorageResource` to `StorageResourceContainer.GetStorageResourceReference`
+- [BREAKING CHANGE] Renamed `ReadStreamStorageResourceResult` to `StorageResourceReadStreamResult`
+- [BREAKING CHANGE] Changed constructor `StorageResourceReadStreamResult(Stream)` from public to internal
+- [BREAKING CHANGE] Removed `LocalStorageResourceProvider.MakeResource`. Instead use `LocalFilesStorageResourceProvider.FromFile()` and `.FromDirectory()` to obtain a Local `StorageResource`.
+- [BREAKING CHANGE] Renamed `ErrorHandlingBehavior` to `DataTransferErrorMode`
+- [BREAKING CHANGE] Renamed `DataTransferErrorMode.StopOnAllFailures` to `StopOnAnyFailure`
+- [BREAKING CHANGE] Renamed `TransferType` to `DataTransferOrder`
+- [BREAKING CHANGE] Renamed `DataTransferOrder.Concurrent` to `Unordered`
+- [BREAKING CHANGE] Renamed `StorageTransferStatus` to `DataTransferStatus`
+- [BREAKING CHANGE] Changed `DataTransferStatus` from `enum` to a `class`.
+- [BREAKING CHANGE] Renamed `StorageResourceCreateMode` to `StorageResourceCreationPreference`.
+- [BREAKING CHANGE] Renamed `StorageResourceCreationPreference` values from `Fail` to `FailIfExists`, `Overwrite` to `OverwriteIfExists`, `Skip` to `SkipIfExists` and `None` to `Default` which will default to `FailIfExists`.
+- [BREAKING CHANGE] Renamed `DataTransferOptions.CreateMode` to `CreationPreference`.
+- [BREAKING CHANGE] Changed `StorageTransferProgress` constructor from `public` to `protected internal`. 
+- [BREAKING CHANGE] Renamed `StorageTransferProgress` to `DataTransferProgress`.
+- [BREAKING CHANGE] Renamed `StorageTransferEventArgs` to `DataTransferEventArgs`.
+- [BREAKING CHANGE] Removed `position` parameter from `StorageResourceSingle.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `StorageResourceSingle.CopyBlockFromUriAsync` mandatory.
+- [BREAKING CHANGE] Moved `DataTransferOptions.ProgressHandler` to `DataTransferOptions.ProgressHandlerOptions`.
+- [BREAKING CHANGE] Removed default constructor for `ProgressHandlerOptions`. Use `ProgressHandlerOptions(IProgress<DataTransferProgress>, bool)` instead.
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
+- [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
+- [BREAKING CHANGE] Moved `DataTransferProperties` to the parent namespace, `Azure.Storage.DataMovement`.
+- [BREAKING CHANGE] Removed `DataTransferProperties.SourcePath`. Instead use `DataTransferProperties.SourceUri`.
+- [BREAKING CHANGE] Removed `DataTransferProperties.DestinationPath`. Instead use `DataTransferProperties.DestinationUri`.
+- [BREAKING CHANGE] Changed `StorageResourceCheckpointData.Serialize()` from `public` to `protected internal`
+- [BREAKING CHANGE] Made the following from `public` to `internal` (Use `LocalStorageResourceProvider` instead to create `StorageResource`s) :
+    - `LocalDirectoryStorageResourceContainer`
+    - `LocalFileStorageResource`
+
+### Bugs Fixed
+- Fixed bug where if a transfer was in a failed state, and during clean up an exception was thrown the transfer would throw or hang.
 
 ## 12.0.0-beta.3 (2023-07-11)
 

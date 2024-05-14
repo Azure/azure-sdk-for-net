@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The LinkedEntity. </summary>
     internal partial class LinkedEntity
     {
-        /// <summary> Initializes a new instance of LinkedEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             DataSource = dataSource;
         }
 
-        /// <summary> Initializes a new instance of LinkedEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedEntity"/>. </summary>
         /// <param name="name"> Entity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
         /// <param name="language"> Language used in the data source. </param>

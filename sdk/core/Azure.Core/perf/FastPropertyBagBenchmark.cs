@@ -73,7 +73,6 @@ using BenchmarkDotNet.Jobs;
 
 namespace Azure.Core.Perf
 {
-    [MemoryDiagnoser]
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     [CategoriesColumn]
     [SimpleJob(RuntimeMoniker.Net60)]

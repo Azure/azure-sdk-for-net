@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Property of a sku. </summary>
     public partial class SkuProperty
     {
-        /// <summary> Initializes a new instance of SkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuProperty"/>. </summary>
         internal SkuProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuProperty"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         internal SkuProperty(string name, string value)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The mapping content. </summary>
     public partial class HealthcareApisIotMappingProperties
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotMappingProperties"/>. </summary>
         public HealthcareApisIotMappingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotMappingProperties"/>. </summary>
         /// <param name="content"> The mapping. </param>
         internal HealthcareApisIotMappingProperties(BinaryData content)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

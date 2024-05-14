@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site User ARM resource. </summary>
     public partial class StaticSiteUser : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUser"/>. </summary>
         public StaticSiteUser()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUser"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

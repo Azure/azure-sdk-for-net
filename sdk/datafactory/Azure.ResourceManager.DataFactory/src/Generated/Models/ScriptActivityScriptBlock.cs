@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Script block of scripts. </summary>
     public partial class ScriptActivityScriptBlock
     {
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(DataFactoryElement<string> text, ScriptType scriptType)
+        public ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryScriptType scriptType)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingList<ScriptActivityParameter>();
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
+        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryScriptType scriptType, IList<ScriptActivityParameter> parameters)
         {
             Text = text;
             ScriptType = scriptType;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Text { get; set; }
         /// <summary> The type of the query. Type: string. </summary>
-        public ScriptType ScriptType { get; set; }
+        public DataFactoryScriptType ScriptType { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>
         public IList<ScriptActivityParameter> Parameters { get; }
     }

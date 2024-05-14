@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Streaming endpoint access control definition. </summary>
     public partial class StreamingEndpointAccessControl
     {
-        /// <summary> Initializes a new instance of StreamingEndpointAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointAccessControl"/>. </summary>
         public StreamingEndpointAccessControl()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointAccessControl"/>. </summary>
         /// <param name="akamai"> The access control of Akamai. </param>
         /// <param name="iPs"> The IP access control of the streaming endpoint. </param>
         internal StreamingEndpointAccessControl(AkamaiAccessControl akamai, IPAccessControl iPs)

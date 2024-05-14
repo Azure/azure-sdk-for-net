@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ParameterExampleContract : IUtf8JsonSerializable
+    public partial class ParameterExampleContract : IUtf8JsonSerializable, IJsonModel<ParameterExampleContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterExampleContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ParameterExampleContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParameterExampleContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Summary))
             {
@@ -32,7 +42,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ExternalValue))
@@ -40,11 +53,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("externalValue"u8);
                 writer.WriteStringValue(ExternalValue);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ParameterExampleContract DeserializeParameterExampleContract(JsonElement element)
+        ParameterExampleContract IJsonModel<ParameterExampleContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParameterExampleContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParameterExampleContract(document.RootElement, options);
+        }
+
+        internal static ParameterExampleContract DeserializeParameterExampleContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +95,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> description = default;
             Optional<BinaryData> value = default;
             Optional<string> externalValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -79,8 +123,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     externalValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ParameterExampleContract(summary.Value, description.Value, value.Value, externalValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ParameterExampleContract(summary.Value, description.Value, value.Value, externalValue.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ParameterExampleContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParameterExampleContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ParameterExampleContract IPersistableModel<ParameterExampleContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParameterExampleContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeParameterExampleContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ParameterExampleContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ParameterExampleContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

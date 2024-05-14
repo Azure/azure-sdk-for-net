@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> List of resources page result. </summary>
     internal partial class LoadTestResourcePageList
     {
-        /// <summary> Initializes a new instance of LoadTestResourcePageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestResourcePageList"/>. </summary>
         internal LoadTestResourcePageList()
         {
             Value = new ChangeTrackingList<LoadTestingResourceData>();
         }
 
-        /// <summary> Initializes a new instance of LoadTestResourcePageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestResourcePageList"/>. </summary>
         /// <param name="value"> List of resources in current page. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal LoadTestResourcePageList(IReadOnlyList<LoadTestingResourceData> value, string nextLink)

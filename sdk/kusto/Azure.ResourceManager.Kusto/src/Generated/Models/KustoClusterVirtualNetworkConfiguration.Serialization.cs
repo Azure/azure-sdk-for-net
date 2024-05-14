@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(EnginePublicIPId);
             writer.WritePropertyName("dataManagementPublicIpId"u8);
             writer.WriteStringValue(DataManagementPublicIPId);
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string subnetId = default;
             string enginePublicIPId = default;
             string dataManagementPublicIPId = default;
+            Optional<KustoClusterVnetState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -50,8 +56,17 @@ namespace Azure.ResourceManager.Kusto.Models
                     dataManagementPublicIPId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new KustoClusterVnetState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId);
+            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId, Optional.ToNullable(state));
         }
     }
 }

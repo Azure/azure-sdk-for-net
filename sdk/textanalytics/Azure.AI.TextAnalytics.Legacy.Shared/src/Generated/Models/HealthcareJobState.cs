@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareJobState. </summary>
     internal partial class HealthcareJobState : JobMetadata
     {
-        /// <summary> Initializes a new instance of HealthcareJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareJobState"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>

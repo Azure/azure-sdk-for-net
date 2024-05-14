@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a peering bandwidth offer. </summary>
     public partial class PeeringBandwidthOffer
     {
-        /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringBandwidthOffer"/>. </summary>
         public PeeringBandwidthOffer()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringBandwidthOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringBandwidthOffer"/>. </summary>
         /// <param name="offerName"> The name of the bandwidth offer. </param>
         /// <param name="valueInMbps"> The value of the bandwidth offer in Mbps. </param>
         internal PeeringBandwidthOffer(string offerName, int? valueInMbps)

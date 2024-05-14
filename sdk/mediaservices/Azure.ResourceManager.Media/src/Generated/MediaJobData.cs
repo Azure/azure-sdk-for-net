@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobData"/>. </summary>
         public MediaJobData()
         {
             Outputs = new ChangeTrackingList<MediaJobOutput>();
             CorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

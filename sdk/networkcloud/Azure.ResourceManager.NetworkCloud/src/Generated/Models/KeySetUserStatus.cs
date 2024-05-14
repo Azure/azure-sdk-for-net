@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KeySetUserStatus represents the status of the key set user. </summary>
     public partial class KeySetUserStatus
     {
-        /// <summary> Initializes a new instance of KeySetUserStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeySetUserStatus"/>. </summary>
         internal KeySetUserStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KeySetUserStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeySetUserStatus"/>. </summary>
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="status"> The indicator of whether the user is currently deployed for access. </param>
         /// <param name="statusMessage"> The additional information describing the current status of this user, if any available. </param>

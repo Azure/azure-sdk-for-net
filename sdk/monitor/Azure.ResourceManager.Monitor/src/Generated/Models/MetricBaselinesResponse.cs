@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of metric baselines. </summary>
     internal partial class MetricBaselinesResponse
     {
-        /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricBaselinesResponse"/>. </summary>
         internal MetricBaselinesResponse()
         {
             Value = new ChangeTrackingList<MonitorSingleMetricBaseline>();
         }
 
-        /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricBaselinesResponse"/>. </summary>
         /// <param name="value"> The list of metric baselines. </param>
         internal MetricBaselinesResponse(IReadOnlyList<MonitorSingleMetricBaseline> value)
         {

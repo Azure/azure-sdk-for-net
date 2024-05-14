@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDevOpsAuditingSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerDevOpsAuditingSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDevOpsAuditingSettingData"/>. </summary>
         public SqlServerDevOpsAuditingSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerDevOpsAuditingSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDevOpsAuditingSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

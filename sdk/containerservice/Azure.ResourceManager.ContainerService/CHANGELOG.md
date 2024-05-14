@@ -1,14 +1,33 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-01-12)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-09' to 'package-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6fa7593a0ba4371e45991/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+## 1.2.0-beta.3 (2023-11-27)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.2.0-beta.2 (2023-05-29)
 

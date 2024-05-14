@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
     public partial class WebPubSubRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of WebPubSubRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubRegenerateKeyContent"/>. </summary>
         public WebPubSubRegenerateKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubRegenerateKeyContent"/>. </summary>
+        /// <param name="keyType"> The type of access key. </param>
+        internal WebPubSubRegenerateKeyContent(WebPubSubKeyType? keyType)
+        {
+            KeyType = keyType;
         }
 
         /// <summary> The type of access key. </summary>

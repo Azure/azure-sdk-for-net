@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Workspaces resource specific properties. </summary>
     public partial class HealthcareApisWorkspaceProperties
     {
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspaceProperties"/>. </summary>
         public HealthcareApisWorkspaceProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspaceProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>

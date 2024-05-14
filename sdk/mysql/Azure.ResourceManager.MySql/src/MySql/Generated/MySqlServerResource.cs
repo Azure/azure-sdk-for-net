@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,13 +22,16 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMySqlServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMySqlServer method.
     /// </summary>
     public partial class MySqlServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}";
@@ -50,12 +54,15 @@ namespace Azure.ResourceManager.MySql
         private readonly MySqlServersRestOperations _mySqlServersRestClient;
         private readonly MySqlServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlServerResource"/> class for mocking. </summary>
         protected MySqlServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlServerResource(ArmClient client, MySqlServerData data) : this(client, data.Id)
@@ -89,9 +96,6 @@ namespace Azure.ResourceManager.MySql
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlFirewallRuleResources and their operations over a MySqlFirewallRuleResource. </returns>
         public virtual MySqlFirewallRuleCollection GetMySqlFirewallRules()
         {
-            return GetCachedClient(Client => new MySqlFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -131,12 +135,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFirewallRuleResource>> GetMySqlFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -154,12 +166,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlFirewallRuleResource> GetMySqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -170,7 +190,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlVirtualNetworkRuleResources and their operations over a MySqlVirtualNetworkRuleResource. </returns>
         public virtual MySqlVirtualNetworkRuleCollection GetMySqlVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new MySqlVirtualNetworkRuleCollection(Client, Id));
+            return GetCachedClient(client => new MySqlVirtualNetworkRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -184,12 +204,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlVirtualNetworkRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlVirtualNetworkRuleResource>> GetMySqlVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -207,12 +235,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlVirtualNetworkRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlVirtualNetworkRuleResource> GetMySqlVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -223,7 +259,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlDatabaseResources and their operations over a MySqlDatabaseResource. </returns>
         public virtual MySqlDatabaseCollection GetMySqlDatabases()
         {
-            return GetCachedClient(Client => new MySqlDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new MySqlDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -237,12 +273,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlDatabaseResource>> GetMySqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -260,12 +304,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlDatabaseResource> GetMySqlDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -276,7 +328,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlConfigurationResources and their operations over a MySqlConfigurationResource. </returns>
         public virtual MySqlConfigurationCollection GetMySqlConfigurations()
         {
-            return GetCachedClient(Client => new MySqlConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new MySqlConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -290,12 +342,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlConfigurationResource>> GetMySqlConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -313,12 +373,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlConfigurationResource> GetMySqlConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -326,7 +394,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Gets an object representing a MySqlServerAdministratorResource along with the instance operations that can be performed on it in the MySqlServer. </summary>
-        /// <returns> Returns a <see cref="MySqlServerAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MySqlServerAdministratorResource"/> object. </returns>
         public virtual MySqlServerAdministratorResource GetMySqlServerAdministrator()
         {
             return new MySqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
@@ -336,7 +404,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlServerSecurityAlertPolicyResources and their operations over a MySqlServerSecurityAlertPolicyResource. </returns>
         public virtual MySqlServerSecurityAlertPolicyCollection GetMySqlServerSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new MySqlServerSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new MySqlServerSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -349,6 +417,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,6 +447,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -385,7 +469,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlQueryTextResources and their operations over a MySqlQueryTextResource. </returns>
         public virtual MySqlQueryTextCollection GetMySqlQueryTexts()
         {
-            return GetCachedClient(Client => new MySqlQueryTextCollection(Client, Id));
+            return GetCachedClient(client => new MySqlQueryTextCollection(client, Id));
         }
 
         /// <summary>
@@ -399,12 +483,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>QueryTexts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlQueryTextResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlQueryTextResource>> GetMySqlQueryTextAsync(string queryId, CancellationToken cancellationToken = default)
         {
@@ -422,12 +514,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>QueryTexts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlQueryTextResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlQueryTextResource> GetMySqlQueryText(string queryId, CancellationToken cancellationToken = default)
         {
@@ -438,7 +538,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlQueryStatisticResources and their operations over a MySqlQueryStatisticResource. </returns>
         public virtual MySqlQueryStatisticCollection GetMySqlQueryStatistics()
         {
-            return GetCachedClient(Client => new MySqlQueryStatisticCollection(Client, Id));
+            return GetCachedClient(client => new MySqlQueryStatisticCollection(client, Id));
         }
 
         /// <summary>
@@ -452,12 +552,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>TopQueryStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlQueryStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlQueryStatisticResource>> GetMySqlQueryStatisticAsync(string queryStatisticId, CancellationToken cancellationToken = default)
         {
@@ -475,12 +583,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>TopQueryStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlQueryStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlQueryStatisticResource> GetMySqlQueryStatistic(string queryStatisticId, CancellationToken cancellationToken = default)
         {
@@ -491,7 +607,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlWaitStatisticResources and their operations over a MySqlWaitStatisticResource. </returns>
         public virtual MySqlWaitStatisticCollection GetMySqlWaitStatistics()
         {
-            return GetCachedClient(Client => new MySqlWaitStatisticCollection(Client, Id));
+            return GetCachedClient(client => new MySqlWaitStatisticCollection(client, Id));
         }
 
         /// <summary>
@@ -505,12 +621,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlWaitStatisticResource>> GetMySqlWaitStatisticAsync(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
@@ -528,12 +652,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlWaitStatisticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlWaitStatisticResource> GetMySqlWaitStatistic(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
@@ -544,7 +676,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlAdvisorResources and their operations over a MySqlAdvisorResource. </returns>
         public virtual MySqlAdvisorCollection GetMySqlAdvisors()
         {
-            return GetCachedClient(Client => new MySqlAdvisorCollection(Client, Id));
+            return GetCachedClient(client => new MySqlAdvisorCollection(client, Id));
         }
 
         /// <summary>
@@ -558,12 +690,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Advisors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlAdvisorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="advisorName"> The advisor name for recommendation action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlAdvisorResource>> GetMySqlAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
         {
@@ -581,12 +721,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Advisors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlAdvisorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="advisorName"> The advisor name for recommendation action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlAdvisorResource> GetMySqlAdvisor(string advisorName, CancellationToken cancellationToken = default)
         {
@@ -597,7 +745,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlPrivateEndpointConnectionResources and their operations over a MySqlPrivateEndpointConnectionResource. </returns>
         public virtual MySqlPrivateEndpointConnectionCollection GetMySqlPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new MySqlPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new MySqlPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -611,12 +759,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlPrivateEndpointConnectionResource>> GetMySqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -634,12 +790,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlPrivateEndpointConnectionResource> GetMySqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -650,7 +814,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlPrivateLinkResources and their operations over a MySqlPrivateLinkResource. </returns>
         public virtual MySqlPrivateLinkResourceCollection GetMySqlPrivateLinkResources()
         {
-            return GetCachedClient(Client => new MySqlPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new MySqlPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -664,12 +828,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlPrivateLinkResource>> GetMySqlPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -687,12 +859,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlPrivateLinkResource> GetMySqlPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -703,7 +883,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlServerKeyResources and their operations over a MySqlServerKeyResource. </returns>
         public virtual MySqlServerKeyCollection GetMySqlServerKeys()
         {
-            return GetCachedClient(Client => new MySqlServerKeyCollection(Client, Id));
+            return GetCachedClient(client => new MySqlServerKeyCollection(client, Id));
         }
 
         /// <summary>
@@ -717,12 +897,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerKeyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the MySQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlServerKeyResource>> GetMySqlServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
@@ -740,12 +928,20 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerKeyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the MySQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlServerKeyResource> GetMySqlServerKey(string keyName, CancellationToken cancellationToken = default)
         {
@@ -762,6 +958,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -795,6 +999,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -826,6 +1038,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -861,6 +1081,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -894,6 +1122,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -933,6 +1169,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -971,6 +1215,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1005,6 +1257,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1038,6 +1298,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerParameters_ListUpdateConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1077,6 +1341,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerParameters_ListUpdateConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1115,14 +1383,18 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>LogFiles_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1136,14 +1408,18 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>LogFiles_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1156,6 +1432,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoverableServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1187,6 +1467,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecoverableServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1217,14 +1501,18 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerBasedPerformanceTier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlPerformanceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlPerformanceTier> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1238,14 +1526,18 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerBasedPerformanceTier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlPerformanceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlPerformanceTier> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1258,6 +1550,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResetQueryPerformanceInsightData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1289,6 +1585,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ResetQueryPerformanceInsightData</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1318,6 +1618,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MySqlServers_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1353,6 +1657,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>MySqlServers_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1386,6 +1694,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MySqlServers_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1421,6 +1733,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>MySqlServers_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1454,6 +1770,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MySqlServers_Upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1493,6 +1813,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>MySqlServers_Upgrade</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1530,6 +1854,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1585,6 +1917,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1639,6 +1979,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1688,6 +2036,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1736,6 +2092,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1788,6 +2152,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

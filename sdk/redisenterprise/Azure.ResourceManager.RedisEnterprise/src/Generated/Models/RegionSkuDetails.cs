@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> List of details about all the available SKUs. </summary>
     internal partial class RegionSkuDetails
     {
-        /// <summary> Initializes a new instance of RegionSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionSkuDetails"/>. </summary>
         internal RegionSkuDetails()
         {
             Value = new ChangeTrackingList<RedisEnterpriseRegionSkuDetail>();
         }
 
-        /// <summary> Initializes a new instance of RegionSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionSkuDetails"/>. </summary>
         /// <param name="value"> List of Sku Detail. </param>
         internal RegionSkuDetails(IReadOnlyList<RedisEnterpriseRegionSkuDetail> value)
         {

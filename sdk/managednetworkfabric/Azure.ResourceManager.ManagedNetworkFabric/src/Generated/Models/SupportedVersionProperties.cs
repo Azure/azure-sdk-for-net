@@ -7,27 +7,25 @@
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network device supported version properties. </summary>
+    /// <summary> Supported version details of the network device. </summary>
     public partial class SupportedVersionProperties
     {
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         public SupportedVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         /// <param name="version"> Operating system and firmware combined versions. </param>
         /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
-        /// <param name="isCurrent"> If the current version is in use. </param>
-        /// <param name="isTest"> If the current version is a test version. </param>
-        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, IsCurrentVersion? isCurrent, IsTestVersion? isTest)
+        /// <param name="isDefault"> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </param>
+        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault)
         {
             Version = version;
             VendorOSVersion = vendorOSVersion;
             VendorFirmwareVersion = vendorFirmwareVersion;
-            IsCurrent = isCurrent;
-            IsTest = isTest;
+            IsDefault = isDefault;
         }
 
         /// <summary> Operating system and firmware combined versions. </summary>
@@ -36,9 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string VendorOSVersion { get; set; }
         /// <summary> Firmware version. </summary>
         public string VendorFirmwareVersion { get; set; }
-        /// <summary> If the current version is in use. </summary>
-        public IsCurrentVersion? IsCurrent { get; set; }
-        /// <summary> If the current version is a test version. </summary>
-        public IsTestVersion? IsTest { get; set; }
+        /// <summary> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </summary>
+        public NetworkFabricBooleanValue? IsDefault { get; set; }
     }
 }

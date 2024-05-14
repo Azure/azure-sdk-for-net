@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="dsRecords"> The list of DS records in the record set. </param>
         /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
         /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
-        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource)
+        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile,  IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, trafficManagementProfile)
         {
             DnsARecords = aRecords;
             DnsAaaaRecords = aaaaRecords;

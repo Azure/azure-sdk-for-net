@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The response to a list Sql pool usages request. </summary>
     internal partial class SqlPoolUsageListResult
     {
-        /// <summary> Initializes a new instance of SqlPoolUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolUsageListResult"/>. </summary>
         /// <param name="value"> The list of usages for the Sql pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SqlPoolUsageListResult(IEnumerable<SqlPoolUsage> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SqlPoolUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolUsageListResult"/>. </summary>
         /// <param name="value"> The list of usages for the Sql pool. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SqlPoolUsageListResult(IReadOnlyList<SqlPoolUsage> value, string nextLink)

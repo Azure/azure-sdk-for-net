@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Retrieve the specified database migration for a given SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Retrieve the specified database migration for a given SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Create a new database migration to a given SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Create a new database migration to a given SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Stop in-progress database migration to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="input"> Required migration operation ID for which cancel will be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Stop in-progress database migration to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="input"> Required migration operation ID for which cancel will be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Initiate cutover for in-progress online database migration to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="input"> Required migration operation ID for which cutover will be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Initiate cutover for in-progress online database migration to SQL Managed Instance. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="managedInstanceName"> The String to use. </param>
+        /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
         /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="input"> Required migration operation ID for which cutover will be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

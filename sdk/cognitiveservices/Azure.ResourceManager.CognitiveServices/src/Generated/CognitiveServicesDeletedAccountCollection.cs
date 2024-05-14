@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CognitiveServicesDeletedAccountResource" /> and their operations.
-    /// Each <see cref="CognitiveServicesDeletedAccountResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="CognitiveServicesDeletedAccountCollection" /> instance call the GetCognitiveServicesDeletedAccounts method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="CognitiveServicesDeletedAccountResource"/> and their operations.
+    /// Each <see cref="CognitiveServicesDeletedAccountResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="CognitiveServicesDeletedAccountCollection"/> instance call the GetCognitiveServicesDeletedAccounts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class CognitiveServicesDeletedAccountCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +158,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -180,6 +204,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -199,6 +231,102 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 var response = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, location, resourceGroupName, accountName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of Cognitive Services account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CognitiveServicesDeletedAccountResource>> GetIfExistsAsync(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.GetAsync(Id.SubscriptionId, location, resourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CognitiveServicesDeletedAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesDeletedAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="accountName"> The name of Cognitive Services account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        public virtual NullableResponse<CognitiveServicesDeletedAccountResource> GetIfExists(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, location, resourceGroupName, accountName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CognitiveServicesDeletedAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto.Mocking;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,233 +20,245 @@ namespace Azure.ResourceManager.Kusto
     /// <summary> A class to add extension methods to Azure.ResourceManager.Kusto. </summary>
     public static partial class KustoExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableKustoArmClient GetMockableKustoArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableKustoArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableKustoResourceGroupResource GetMockableKustoResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableKustoResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableKustoSubscriptionResource GetMockableKustoSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableKustoSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region KustoClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="KustoClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoClusterResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoClusterResource"/> object. </returns>
         public static KustoClusterResource GetKustoClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoClusterResource.ValidateResourceId(id);
-                return new KustoClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoClusterPrincipalAssignmentResource
+            return GetMockableKustoArmClient(client).GetKustoClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoClusterPrincipalAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource"/> object. </returns>
         public static KustoClusterPrincipalAssignmentResource GetKustoClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoClusterPrincipalAssignmentResource.ValidateResourceId(id);
-                return new KustoClusterPrincipalAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoDatabaseResource
+            return GetMockableKustoArmClient(client).GetKustoClusterPrincipalAssignmentResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoDatabaseResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoDatabaseResource"/> object. </returns>
         public static KustoDatabaseResource GetKustoDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoDatabaseResource.ValidateResourceId(id);
-                return new KustoDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoAttachedDatabaseConfigurationResource
+            return GetMockableKustoArmClient(client).GetKustoDatabaseResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoAttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KustoAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoAttachedDatabaseConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource"/> object. </returns>
         public static KustoAttachedDatabaseConfigurationResource GetKustoAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoAttachedDatabaseConfigurationResource.ValidateResourceId(id);
-                return new KustoAttachedDatabaseConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoManagedPrivateEndpointResource
+            return GetMockableKustoArmClient(client).GetKustoAttachedDatabaseConfigurationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoManagedPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoManagedPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="KustoManagedPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoManagedPrivateEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource"/> object. </returns>
         public static KustoManagedPrivateEndpointResource GetKustoManagedPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoManagedPrivateEndpointResource.ValidateResourceId(id);
-                return new KustoManagedPrivateEndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoDatabasePrincipalAssignmentResource
+            return GetMockableKustoArmClient(client).GetKustoManagedPrivateEndpointResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoDatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoDatabasePrincipalAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource"/> object. </returns>
         public static KustoDatabasePrincipalAssignmentResource GetKustoDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoDatabasePrincipalAssignmentResource.ValidateResourceId(id);
-                return new KustoDatabasePrincipalAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoScriptResource
+            return GetMockableKustoArmClient(client).GetKustoDatabasePrincipalAssignmentResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoScriptResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoScriptResource.CreateResourceIdentifier" /> to create a <see cref="KustoScriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoScriptResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoScriptResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoScriptResource"/> object. </returns>
         public static KustoScriptResource GetKustoScriptResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoScriptResource.ValidateResourceId(id);
-                return new KustoScriptResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoPrivateEndpointConnectionResource
+            return GetMockableKustoArmClient(client).GetKustoScriptResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SandboxCustomImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SandboxCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="SandboxCustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetSandboxCustomImageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SandboxCustomImageResource"/> object. </returns>
+        public static SandboxCustomImageResource GetSandboxCustomImageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableKustoArmClient(client).GetSandboxCustomImageResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoPrivateEndpointConnectionResource"/> object. </returns>
         public static KustoPrivateEndpointConnectionResource GetKustoPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new KustoPrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoPrivateLinkResource
+            return GetMockableKustoArmClient(client).GetKustoPrivateEndpointConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoPrivateLinkResource"/> object. </returns>
         public static KustoPrivateLinkResource GetKustoPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoPrivateLinkResource.ValidateResourceId(id);
-                return new KustoPrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KustoDataConnectionResource
+            return GetMockableKustoArmClient(client).GetKustoPrivateLinkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KustoDataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoArmClient.GetKustoDataConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoDataConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KustoDataConnectionResource"/> object. </returns>
         public static KustoDataConnectionResource GetKustoDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KustoDataConnectionResource.ValidateResourceId(id);
-                return new KustoDataConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of KustoClusterResources in the ResourceGroupResource. </summary>
+            return GetMockableKustoArmClient(client).GetKustoDataConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of KustoClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoResourceGroupResource.GetKustoClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of KustoClusterResources and their operations over a KustoClusterResource. </returns>
         public static KustoClusterCollection GetKustoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKustoClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableKustoResourceGroupResource(resourceGroupResource).GetKustoClusters();
         }
 
         /// <summary>
@@ -259,17 +272,31 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoResourceGroupResource.GetKustoClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<KustoClusterResource>> GetKustoClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetKustoClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableKustoResourceGroupResource(resourceGroupResource).GetKustoClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,17 +310,31 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoResourceGroupResource.GetKustoCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<KustoClusterResource> GetKustoCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetKustoClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableKustoResourceGroupResource(resourceGroupResource).GetKustoCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -307,14 +348,29 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.GetKustoClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoClusterResource> GetKustoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -328,14 +384,29 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.GetKustoClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoClusterResource> GetKustoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoClusters(cancellationToken);
         }
 
         /// <summary>
@@ -349,14 +420,29 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.GetKustoEligibleSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoEligibleSkusAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoEligibleSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -370,14 +456,29 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.GetKustoEligibleSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoSkuDescription> GetKustoEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKustoEligibleSkus(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoEligibleSkus(cancellationToken);
         }
 
         /// <summary>
@@ -391,18 +492,30 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability(AzureLocation,KustoClusterNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoClusterNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKustoSubscriptionResource(subscriptionResource).CheckKustoClusterNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -416,18 +529,30 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability(AzureLocation,KustoClusterNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
+            return GetMockableKustoSubscriptionResource(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -441,15 +566,26 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.GetSkus(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoSkuDescription> GetSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKustoSubscriptionResource(subscriptionResource).GetSkusAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -463,15 +599,26 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKustoSubscriptionResource.GetSkus(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoSkuDescription> GetSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableKustoSubscriptionResource(subscriptionResource).GetSkus(location, cancellationToken);
         }
     }
 }

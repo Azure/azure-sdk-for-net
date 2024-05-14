@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerTrustGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTrustGroupData"/>. </summary>
         public SqlServerTrustGroupData()
         {
             GroupMembers = new ChangeTrackingList<ServerTrustGroupServerInfo>();
             TrustScopes = new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTrustGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

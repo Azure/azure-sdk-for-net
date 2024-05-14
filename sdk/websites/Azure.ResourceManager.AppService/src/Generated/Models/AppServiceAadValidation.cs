@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
     public partial class AppServiceAadValidation
     {
-        /// <summary> Initializes a new instance of AppServiceAadValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadValidation"/>. </summary>
         public AppServiceAadValidation()
         {
             AllowedAudiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceAadValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadValidation"/>. </summary>
         /// <param name="jwtClaimChecks"> The configuration settings of the checks that should be made while validating the JWT Claims. </param>
         /// <param name="allowedAudiences"> The list of audiences that can make successful authentication/authorization requests. </param>
         /// <param name="defaultAuthorizationPolicy"> The configuration settings of the default authorization policy. </param>

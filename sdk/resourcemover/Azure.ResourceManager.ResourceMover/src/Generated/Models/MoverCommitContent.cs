@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for commit operation. </summary>
     public partial class MoverCommitContent
     {
-        /// <summary> Initializes a new instance of MoverCommitContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverCommitContent"/>. </summary>
         /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverCommitContent(IEnumerable<ResourceIdentifier> moverResources)
@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Argument.AssertNotNull(moverResources, nameof(moverResources));
 
             MoverResources = moverResources.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverCommitContent"/>. </summary>
+        /// <param name="validateOnly"> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </param>
+        /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
+        /// <param name="moverResourceInputType"> Defines the move resource input type. </param>
+        internal MoverCommitContent(bool? validateOnly, IList<ResourceIdentifier> moverResources, MoverResourceInputType? moverResourceInputType)
+        {
+            ValidateOnly = validateOnly;
+            MoverResources = moverResources;
+            MoverResourceInputType = moverResourceInputType;
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>

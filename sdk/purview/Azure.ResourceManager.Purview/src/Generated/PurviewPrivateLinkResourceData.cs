@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Purview
     /// </summary>
     public partial class PurviewPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PurviewPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceData"/>. </summary>
         internal PurviewPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

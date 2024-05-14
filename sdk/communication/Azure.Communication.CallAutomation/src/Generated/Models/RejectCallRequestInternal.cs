@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for rejecting the call. </summary>
     internal partial class RejectCallRequestInternal
     {
-        /// <summary> Initializes a new instance of RejectCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RejectCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
         public RejectCallRequestInternal(string incomingCallContext)
@@ -21,6 +21,15 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
 
             IncomingCallContext = incomingCallContext;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RejectCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="callRejectReason"> The rejection reason. </param>
+        internal RejectCallRequestInternal(string incomingCallContext, CallRejectReason? callRejectReason)
+        {
+            IncomingCallContext = incomingCallContext;
+            CallRejectReason = callRejectReason;
         }
 
         /// <summary> The context associated with the call. </summary>

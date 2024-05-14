@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> A piece of evidence supporting the compliance state set in the attestation. </summary>
     public partial class AttestationEvidence
     {
-        /// <summary> Initializes a new instance of AttestationEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationEvidence"/>. </summary>
         public AttestationEvidence()
         {
         }
 
-        /// <summary> Initializes a new instance of AttestationEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationEvidence"/>. </summary>
         /// <param name="description"> The description for this piece of evidence. </param>
         /// <param name="sourceUri"> The URI location of the evidence. </param>
         internal AttestationEvidence(string description, Uri sourceUri)

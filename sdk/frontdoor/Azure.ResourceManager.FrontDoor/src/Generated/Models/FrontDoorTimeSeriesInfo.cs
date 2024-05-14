@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the Timeseries. </summary>
     public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
             TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

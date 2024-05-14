@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRulePropertyValuesChangedCondition. </summary>
     public partial class AutomationRulePropertyValuesChangedCondition
     {
-        /// <summary> Initializes a new instance of AutomationRulePropertyValuesChangedCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyValuesChangedCondition"/>. </summary>
         public AutomationRulePropertyValuesChangedCondition()
         {
             PropertyValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRulePropertyValuesChangedCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyValuesChangedCondition"/>. </summary>
         /// <param name="propertyName"></param>
         /// <param name="changeType"></param>
         /// <param name="operator"></param>

@@ -12,163 +12,157 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover.Mocking;
 
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageMover. </summary>
     public static partial class StorageMoverExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableStorageMoverArmClient GetMockableStorageMoverArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableStorageMoverArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableStorageMoverResourceGroupResource GetMockableStorageMoverResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableStorageMoverResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableStorageMoverSubscriptionResource GetMockableStorageMoverSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableStorageMoverSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region StorageMoverResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageMoverResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageMoverResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageMoverResource"/> object. </returns>
         public static StorageMoverResource GetStorageMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverResource.ValidateResourceId(id);
-                return new StorageMoverResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageMoverAgentResource
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StorageMoverAgentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageMoverAgentResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverAgentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverAgentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageMoverAgentResource"/> object. </returns>
         public static StorageMoverAgentResource GetStorageMoverAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverAgentResource.ValidateResourceId(id);
-                return new StorageMoverAgentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageMoverEndpointResource
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverAgentResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StorageMoverEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageMoverEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageMoverEndpointResource"/> object. </returns>
         public static StorageMoverEndpointResource GetStorageMoverEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverEndpointResource.ValidateResourceId(id);
-                return new StorageMoverEndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageMoverProjectResource
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverEndpointResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StorageMoverProjectResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageMoverProjectResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageMoverProjectResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageMoverProjectResource"/> object. </returns>
         public static StorageMoverProjectResource GetStorageMoverProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageMoverProjectResource.ValidateResourceId(id);
-                return new StorageMoverProjectResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region JobDefinitionResource
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverProjectResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="JobDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="JobDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="JobDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetJobDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobDefinitionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="JobDefinitionResource"/> object. </returns>
         public static JobDefinitionResource GetJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                JobDefinitionResource.ValidateResourceId(id);
-                return new JobDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region JobRunResource
+            return GetMockableStorageMoverArmClient(client).GetJobDefinitionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="JobRunResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="JobRunResource.CreateResourceIdentifier" /> to create a <see cref="JobRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetJobRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobRunResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="JobRunResource"/> object. </returns>
         public static JobRunResource GetJobRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                JobRunResource.ValidateResourceId(id);
-                return new JobRunResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of StorageMoverResources in the ResourceGroupResource. </summary>
+            return GetMockableStorageMoverArmClient(client).GetJobRunResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of StorageMoverResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverResourceGroupResource.GetStorageMovers()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
         public static StorageMoverCollection GetStorageMovers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageMovers();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMovers();
         }
 
         /// <summary>
@@ -182,17 +176,31 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverResourceGroupResource.GetStorageMoverAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageMoverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageMoverName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageMoverResource>> GetStorageMoverAsync(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageMovers().GetAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMoverAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,17 +214,31 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverResourceGroupResource.GetStorageMover(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageMoverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageMoverName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageMoverName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StorageMoverResource> GetStorageMover(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageMovers().Get(storageMoverName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMover(storageMoverName, cancellationToken);
         }
 
         /// <summary>
@@ -230,14 +252,29 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverSubscriptionResource.GetStorageMovers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageMoverResource> GetStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageMoversAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageMoverSubscriptionResource(subscriptionResource).GetStorageMoversAsync(cancellationToken);
         }
 
         /// <summary>
@@ -251,14 +288,29 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverSubscriptionResource.GetStorageMovers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageMoverResource> GetStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageMovers(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageMoverSubscriptionResource(subscriptionResource).GetStorageMovers(cancellationToken);
         }
     }
 }

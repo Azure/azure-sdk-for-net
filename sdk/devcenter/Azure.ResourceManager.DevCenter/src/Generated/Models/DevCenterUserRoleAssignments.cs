@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Mapping of user object ID to role assignments. </summary>
     public partial class DevCenterUserRoleAssignments
     {
-        /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUserRoleAssignments"/>. </summary>
         public DevCenterUserRoleAssignments()
         {
             Roles = new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUserRoleAssignments"/>. </summary>
         /// <param name="roles"> A map of roles to assign to the parent user. </param>
         internal DevCenterUserRoleAssignments(IDictionary<string, DevCenterEnvironmentRole> roles)
         {

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseAadOnlyAuthentication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseAadOnlyAuthenticationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseAadOnlyAuthenticationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseAadOnlyAuthentication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseAadOnlyAuthenticationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseAadOnlyAuthenticationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseAadOnlyAuthentication method.
     /// </summary>
     public partial class SynapseAadOnlyAuthenticationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseAadOnlyAuthenticationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="azureADOnlyAuthenticationName"> The azureADOnlyAuthenticationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly AzureADOnlyAuthenticationsRestOperations _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient;
         private readonly SynapseAadOnlyAuthenticationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/azureADOnlyAuthentications";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseAadOnlyAuthenticationResource"/> class for mocking. </summary>
         protected SynapseAadOnlyAuthenticationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseAadOnlyAuthenticationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseAadOnlyAuthenticationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseAadOnlyAuthenticationResource(ArmClient client, SynapseAadOnlyAuthenticationData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/azureADOnlyAuthentications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>AzureADOnlyAuthentications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseAadOnlyAuthenticationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>AzureADOnlyAuthentications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseAadOnlyAuthenticationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +181,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADOnlyAuthentications_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseAadOnlyAuthenticationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +227,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADOnlyAuthentications_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseAadOnlyAuthenticationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

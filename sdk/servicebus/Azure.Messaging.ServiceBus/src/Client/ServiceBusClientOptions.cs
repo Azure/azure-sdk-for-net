@@ -86,10 +86,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// The set of options to use for determining whether a failed operation should be retried and,
+        /// The set of options to use for determining whether a failed service operation should be retried and,
         /// if so, the amount of time to wait between retry attempts.  These options also control the
-        /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
+        /// amount of time allowed for the individual network operations used for interactions with the Service Bus service.
         /// </summary>
+        /// <remarks>
+        /// The retry options are only considered for interactions with the Service Bus service. They do not apply to failures in the
+        /// <see cref="ServiceBusProcessor.ProcessMessageAsync" /> handler. Developers are responsible for error handling and retries
+        /// as part of their event handler.
+        ///</remarks>
         public ServiceBusRetryOptions RetryOptions
         {
             get => _retryOptions;

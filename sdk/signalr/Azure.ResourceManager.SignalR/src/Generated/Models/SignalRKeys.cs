@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> A class represents the access keys of the resource. </summary>
     public partial class SignalRKeys
     {
-        /// <summary> Initializes a new instance of SignalRKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRKeys"/>. </summary>
         internal SignalRKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>

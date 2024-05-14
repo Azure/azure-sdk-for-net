@@ -43,7 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -103,6 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "InformixSource": return InformixSource.DeserializeInformixSource(element);
                     case "JiraSource": return JiraSource.DeserializeJiraSource(element);
                     case "JsonSource": return JsonSource.DeserializeJsonSource(element);
+                    case "LakeHouseTableSource": return LakeHouseTableSource.DeserializeLakeHouseTableSource(element);
                     case "MagentoSource": return MagentoSource.DeserializeMagentoSource(element);
                     case "MariaDBSource": return MariaDBSource.DeserializeMariaDBSource(element);
                     case "MarketoSource": return MarketoSource.DeserializeMarketoSource(element);
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SalesforceMarketingCloudSource": return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element);
                     case "SalesforceServiceCloudSource": return SalesforceServiceCloudSource.DeserializeSalesforceServiceCloudSource(element);
                     case "SalesforceSource": return SalesforceSource.DeserializeSalesforceSource(element);
-                    case "SapBwSource": return SapBwSource.DeserializeSapBwSource(element);
+                    case "SapBwSource": return SapBWSource.DeserializeSapBWSource(element);
                     case "SapCloudForCustomerSource": return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element);
                     case "SapEccSource": return SapEccSource.DeserializeSapEccSource(element);
                     case "SapHanaSource": return SapHanaSource.DeserializeSapHanaSource(element);

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an Aml Instance container. </summary>
     public partial class MachineLearningComputeInstanceContainer
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceContainer"/>. </summary>
         internal MachineLearningComputeInstanceContainer()
         {
             Services = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceContainer"/>. </summary>
         /// <param name="name"> Name of the ComputeInstance container. </param>
         /// <param name="autosave"> Auto save settings. </param>
         /// <param name="gpu"> Information of GPU. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

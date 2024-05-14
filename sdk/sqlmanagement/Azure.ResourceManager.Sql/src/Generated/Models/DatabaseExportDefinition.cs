@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform export database operation. </summary>
     public partial class DatabaseExportDefinition
     {
-        /// <summary> Initializes a new instance of DatabaseExportDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
@@ -32,6 +32,25 @@ namespace Azure.ResourceManager.Sql.Models
             StorageUri = storageUri;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseExportDefinition"/>. </summary>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageUri"> Storage Uri. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        internal DatabaseExportDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, NetworkIsolationSettings networkIsolation)
+        {
+            StorageKeyType = storageKeyType;
+            StorageKey = storageKey;
+            StorageUri = storageUri;
+            AdministratorLogin = administratorLogin;
+            AdministratorLoginPassword = administratorLoginPassword;
+            AuthenticationType = authenticationType;
+            NetworkIsolation = networkIsolation;
         }
 
         /// <summary> Storage key type. </summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendCredentialsContract : IUtf8JsonSerializable
+    public partial class BackendCredentialsContract : IUtf8JsonSerializable, IJsonModel<BackendCredentialsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendCredentialsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackendCredentialsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendCredentialsContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CertificateIds))
             {
@@ -83,11 +93,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackendCredentialsContract DeserializeBackendCredentialsContract(JsonElement element)
+        BackendCredentialsContract IJsonModel<BackendCredentialsContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendCredentialsContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackendCredentialsContract(document.RootElement, options);
+        }
+
+        internal static BackendCredentialsContract DeserializeBackendCredentialsContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +136,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IDictionary<string, IList<string>>> query = default;
             Optional<IDictionary<string, IList<string>>> header = default;
             Optional<BackendAuthorizationHeaderCredentials> authorization = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateIds"u8))
@@ -188,8 +229,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     authorization = BackendAuthorizationHeaderCredentials.DeserializeBackendAuthorizationHeaderCredentials(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackendCredentialsContract(Optional.ToList(certificateIds), Optional.ToList(certificate), Optional.ToDictionary(query), Optional.ToDictionary(header), authorization.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackendCredentialsContract(Optional.ToList(certificateIds), Optional.ToList(certificate), Optional.ToDictionary(query), Optional.ToDictionary(header), authorization.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackendCredentialsContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendCredentialsContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BackendCredentialsContract IPersistableModel<BackendCredentialsContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendCredentialsContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackendCredentialsContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackendCredentialsContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackendCredentialsContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

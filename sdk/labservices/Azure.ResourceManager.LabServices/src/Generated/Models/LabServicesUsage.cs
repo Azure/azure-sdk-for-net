@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The core usage details. </summary>
     public partial class LabServicesUsage
     {
-        /// <summary> Initializes a new instance of LabServicesUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsage"/>. </summary>
         internal LabServicesUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of LabServicesUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsage"/>. </summary>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>

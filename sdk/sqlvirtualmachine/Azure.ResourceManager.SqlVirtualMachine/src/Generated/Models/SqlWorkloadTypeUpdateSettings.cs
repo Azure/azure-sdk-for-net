@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set workload type to optimize storage for SQL Server. </summary>
     internal partial class SqlWorkloadTypeUpdateSettings
     {
-        /// <summary> Initializes a new instance of SqlWorkloadTypeUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlWorkloadTypeUpdateSettings"/>. </summary>
         public SqlWorkloadTypeUpdateSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlWorkloadTypeUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlWorkloadTypeUpdateSettings"/>. </summary>
         /// <param name="sqlWorkloadType"> SQL Server workload type. </param>
         internal SqlWorkloadTypeUpdateSettings(SqlWorkloadType? sqlWorkloadType)
         {

@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of FunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionRetrieveDefaultDefinitionContent"/>. </summary>
         protected FunctionRetrieveDefaultDefinitionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        internal FunctionRetrieveDefaultDefinitionContent(string bindingType)
+        {
+            BindingType = bindingType;
         }
 
         /// <summary> Indicates the function binding type. </summary>

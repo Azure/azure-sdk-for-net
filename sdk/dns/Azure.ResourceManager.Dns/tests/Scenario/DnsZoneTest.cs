@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -43,9 +39,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             }
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task CreateOrUpdate()
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
@@ -54,9 +48,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(dnsZoneName, dnsZone.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task Delete()
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
@@ -69,9 +61,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsFalse(flag);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task Exist()
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
@@ -80,9 +70,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsTrue(flag);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task Get()
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
@@ -92,9 +80,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(dnsZoneName, dnsZone.Value.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task GetAll()
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
@@ -108,7 +94,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
+        [RecordedTest]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
@@ -138,16 +124,14 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(0, dnsZone.Data.Tags.Count);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task GetAllRecords()
         {
             string dnsZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var dnszone = await CreateDnsZone(dnsZoneName, _resourceGroup);
 
             // Add some aaaaRecord
-            var aaaaRecord1 =await dnszone.GetDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa100", new DnsAaaaRecordData()
+            var aaaaRecord1 = await dnszone.GetDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa100", new DnsAaaaRecordData()
             {
                 TtlInSeconds = 3600,
                 DnsAaaaRecords =

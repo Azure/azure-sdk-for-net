@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Rule counter reset. </summary>
     public partial class FirewallRuleResetConter
     {
-        /// <summary> Initializes a new instance of FirewallRuleResetConter. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleResetConter"/>. </summary>
         internal FirewallRuleResetConter()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleResetConter. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleResetConter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>

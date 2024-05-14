@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -348,15 +348,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Notifies the APIM proxy to create a new connection to the backend after the
-            /// specified timeout. If no timeout was specified, timeout of 2 minutes is
-            /// used.
+            /// Notifies the API Management gateway to create a new connection to the
+            /// backend after the specified timeout. If no timeout was specified, timeout
+            /// of 2 minutes is used.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -374,15 +374,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Notifies the APIM proxy to create a new connection to the backend after the
-            /// specified timeout. If no timeout was specified, timeout of 2 minutes is
-            /// used.
+            /// Notifies the API Management gateway to create a new connection to the
+            /// backend after the specified timeout. If no timeout was specified, timeout
+            /// of 2 minutes is used.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -12,13 +13,19 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownCommandProperties. </summary>
     internal partial class UnknownCommandProperties : CommandProperties
     {
-        /// <summary> Initializes a new instance of UnknownCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
-        internal UnknownCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state) : base(commandType, errors, state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             CommandType = commandType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCommandProperties"/> for deserialization. </summary>
+        internal UnknownCommandProperties()
+        {
         }
     }
 }

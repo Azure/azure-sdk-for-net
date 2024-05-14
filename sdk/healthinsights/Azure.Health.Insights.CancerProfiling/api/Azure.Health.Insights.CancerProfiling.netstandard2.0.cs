@@ -7,9 +7,9 @@ namespace Azure.Health.Insights.CancerProfiling
         public CancerProfilingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResult> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResult>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CancerProfilingClientOptions : Azure.Core.ClientOptions
     {
@@ -109,7 +109,6 @@ namespace Azure.Health.Insights.CancerProfiling
         public static Azure.Health.Insights.CancerProfiling.InferenceEvidence InferenceEvidence(Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence patientDataEvidence = null, Azure.Health.Insights.CancerProfiling.ClinicalCodedElement patientInfoEvidence = null, float? importance = default(float?)) { throw null; }
         public static Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference OncoPhenotypeInference(Azure.Health.Insights.CancerProfiling.OncoPhenotypeInferenceType type = default(Azure.Health.Insights.CancerProfiling.OncoPhenotypeInferenceType), string value = null, string description = null, float? confidenceScore = default(float?), System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.InferenceEvidence> evidence = null, string caseId = null) { throw null; }
         public static Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult OncoPhenotypePatientResult(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference> inferences = null) { throw null; }
-        public static Azure.Health.Insights.CancerProfiling.OncoPhenotypeResult OncoPhenotypeResult(System.Guid jobId = default(System.Guid), System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset expirationDateTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.Health.Insights.CancerProfiling.JobStatus status = default(Azure.Health.Insights.CancerProfiling.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults results = null) { throw null; }
         public static Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults OncoPhenotypeResults(System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult> patients = null, string modelVersion = null) { throw null; }
     }
     public partial class InferenceEvidence
@@ -118,27 +117,6 @@ namespace Azure.Health.Insights.CancerProfiling
         public float? Importance { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence PatientDataEvidence { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.ClinicalCodedElement PatientInfoEvidence { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobStatus : System.IEquatable<Azure.Health.Insights.CancerProfiling.JobStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobStatus(string value) { throw null; }
-        public static Azure.Health.Insights.CancerProfiling.JobStatus Failed { get { throw null; } }
-        public static Azure.Health.Insights.CancerProfiling.JobStatus NotStarted { get { throw null; } }
-        public static Azure.Health.Insights.CancerProfiling.JobStatus PartiallyCompleted { get { throw null; } }
-        public static Azure.Health.Insights.CancerProfiling.JobStatus Running { get { throw null; } }
-        public static Azure.Health.Insights.CancerProfiling.JobStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.Health.Insights.CancerProfiling.JobStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Health.Insights.CancerProfiling.JobStatus left, Azure.Health.Insights.CancerProfiling.JobStatus right) { throw null; }
-        public static implicit operator Azure.Health.Insights.CancerProfiling.JobStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Health.Insights.CancerProfiling.JobStatus left, Azure.Health.Insights.CancerProfiling.JobStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OncoPhenotypeData
     {
@@ -193,17 +171,6 @@ namespace Azure.Health.Insights.CancerProfiling
         internal OncoPhenotypePatientResult() { }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference> Inferences { get { throw null; } }
-    }
-    public partial class OncoPhenotypeResult
-    {
-        internal OncoPhenotypeResult() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset ExpirationDateTime { get { throw null; } }
-        public System.Guid JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
-        public Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults Results { get { throw null; } }
-        public Azure.Health.Insights.CancerProfiling.JobStatus Status { get { throw null; } }
     }
     public partial class OncoPhenotypeResults
     {

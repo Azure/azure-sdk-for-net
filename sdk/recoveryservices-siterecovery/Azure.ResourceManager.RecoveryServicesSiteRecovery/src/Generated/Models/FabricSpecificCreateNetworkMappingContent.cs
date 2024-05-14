@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class FabricSpecificCreateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of FabricSpecificCreateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificCreateNetworkMappingContent"/>. </summary>
         protected FabricSpecificCreateNetworkMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificCreateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        internal FabricSpecificCreateNetworkMappingContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The instance type. </summary>

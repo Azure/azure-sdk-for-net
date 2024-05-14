@@ -34,6 +34,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
+                    [typeof(Single)] = SearchFieldDataType.Single
                 });
 
         private static readonly ISet<Type> s_unsupportedTypes =
@@ -180,6 +181,10 @@ namespace Azure.Search.Documents.Indexes
 
                             case SimpleFieldAttribute simpleFieldAttribute:
                                 ((ISearchFieldAttribute)simpleFieldAttribute).SetField(field);
+                                break;
+
+                            case VectorSearchFieldAttribute vectorSearchFieldAttribute:
+                                ((ISearchFieldAttribute)vectorSearchFieldAttribute).SetField(field);
                                 break;
 
                             default:

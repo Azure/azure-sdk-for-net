@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper V VM network details. </summary>
     public partial class VmNicDetails
     {
-        /// <summary> Initializes a new instance of VmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmNicDetails"/>. </summary>
         internal VmNicDetails()
         {
             IPConfigs = new ChangeTrackingList<HyperVIPConfigDetails>();
         }
 
-        /// <summary> Initializes a new instance of VmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmNicDetails"/>. </summary>
         /// <param name="nicId"> The nic Id. </param>
         /// <param name="replicaNicId"> The replica nic Id. </param>
         /// <param name="sourceNicArmId"> The source nic ARM Id. </param>

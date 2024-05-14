@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -330,12 +329,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : this(
-                  blobUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                blobUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
         }
@@ -1514,6 +1515,12 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
+
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
 
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
@@ -6548,6 +6555,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
             {
@@ -6581,6 +6589,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             if (builder == null)

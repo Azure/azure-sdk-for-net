@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Pre-backup validation for Azure VM Workload provider. </summary>
     public partial class PreBackupValidation
     {
-        /// <summary> Initializes a new instance of PreBackupValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBackupValidation"/>. </summary>
         public PreBackupValidation()
         {
         }
 
-        /// <summary> Initializes a new instance of PreBackupValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBackupValidation"/>. </summary>
         /// <param name="status"> Status of protectable item, i.e. InProgress,Succeeded,Failed. </param>
         /// <param name="code"> Error code of protectable item. </param>
         /// <param name="message"> Message corresponding to the error code for the protectable item. </param>

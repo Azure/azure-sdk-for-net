@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoDatabaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseData"/>. </summary>
         public KustoDatabaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

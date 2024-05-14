@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<KubernetesClusterData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudKubernetesClusterData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<KubernetesClusterData> array = new List<KubernetesClusterData>();
+                    List<NetworkCloudKubernetesClusterData> array = new List<NetworkCloudKubernetesClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesClusterData.DeserializeKubernetesClusterData(item));
+                        array.Add(NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(item));
                     }
                     value = array;
                     continue;

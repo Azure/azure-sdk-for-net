@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayData"/>. </summary>
         public VirtualNetworkGatewayData()
         {
             IPConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.Network
             NatRules = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="autoScaleConfiguration"> Autoscale configuration for virutal network gateway. </param>
         /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
         /// <param name="gatewayType"> The type of this virtual network gateway. </param>
         /// <param name="vpnType"> The type of this virtual network gateway. </param>
@@ -60,10 +62,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
         /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
         /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
+            AutoScaleConfiguration = autoScaleConfiguration;
             IPConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
@@ -94,6 +97,20 @@ namespace Azure.ResourceManager.Network
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
+        /// <summary> Autoscale configuration for virutal network gateway. </summary>
+        internal VirtualNetworkGatewayAutoScaleConfiguration AutoScaleConfiguration { get; set; }
+        /// <summary> The bounds of the autoscale configuration. </summary>
+        public VirtualNetworkGatewayAutoScaleBounds AutoScaleBounds
+        {
+            get => AutoScaleConfiguration is null ? default : AutoScaleConfiguration.Bounds;
+            set
+            {
+                if (AutoScaleConfiguration is null)
+                    AutoScaleConfiguration = new VirtualNetworkGatewayAutoScaleConfiguration();
+                AutoScaleConfiguration.Bounds = value;
+            }
+        }
+
         /// <summary> IP configurations for virtual network gateway. </summary>
         public IList<VirtualNetworkGatewayIPConfiguration> IPConfigurations { get; }
         /// <summary> The type of this virtual network gateway. </summary>

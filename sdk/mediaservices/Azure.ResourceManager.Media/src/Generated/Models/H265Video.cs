@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes all the properties for encoding a video with the H.265 codec. </summary>
     public partial class H265Video : MediaVideoBase
     {
-        /// <summary> Initializes a new instance of H265Video. </summary>
+        /// <summary> Initializes a new instance of <see cref="H265Video"/>. </summary>
         public H265Video()
         {
             Layers = new ChangeTrackingList<H265Layer>();
             OdataType = "#Microsoft.Media.H265Video";
         }
 
-        /// <summary> Initializes a new instance of H265Video. </summary>
+        /// <summary> Initializes a new instance of <see cref="H265Video"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         /// <param name="keyFrameInterval"> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlMigrationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PostgreSqlMigrationData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             DbsToCancelMigrationOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

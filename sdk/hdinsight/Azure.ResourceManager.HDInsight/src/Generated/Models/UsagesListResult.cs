@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response for the operation to get regional usages for a subscription. </summary>
     internal partial class UsagesListResult
     {
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         internal UsagesListResult()
         {
             Value = new ChangeTrackingList<HDInsightUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
         /// <param name="value"> The list of usages. </param>
         internal UsagesListResult(IReadOnlyList<HDInsightUsage> value)
         {

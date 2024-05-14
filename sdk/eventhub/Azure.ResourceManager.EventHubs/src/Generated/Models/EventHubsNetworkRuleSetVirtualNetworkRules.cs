@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response from the List namespace operation. </summary>
     public partial class EventHubsNetworkRuleSetVirtualNetworkRules
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetVirtualNetworkRules"/>. </summary>
         public EventHubsNetworkRuleSetVirtualNetworkRules()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetVirtualNetworkRules"/>. </summary>
         /// <param name="subnet"> Subnet properties. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
         internal EventHubsNetworkRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint)

@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
-    public partial class ManagedIntegrationRuntime : DataFactoryIntegrationRuntimeDefinition
+    public partial class ManagedIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
         public ManagedIntegrationRuntime()
         {
             IntegrationRuntimeType = IntegrationRuntimeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntime"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

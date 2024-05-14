@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextJobsInput. </summary>
     internal partial class AnalyzeTextJobsInput
     {
-        /// <summary> Initializes a new instance of AnalyzeTextJobsInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
         /// <param name="analysisInput"></param>
         /// <param name="tasks">
         /// The set of tasks to execute on the input documents.
@@ -30,6 +30,21 @@ namespace Azure.AI.TextAnalytics.Models
 
             AnalysisInput = analysisInput;
             Tasks = tasks.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobsInput"/>. </summary>
+        /// <param name="displayName"> Optional display name for the analysis job. </param>
+        /// <param name="analysisInput"></param>
+        /// <param name="tasks">
+        /// The set of tasks to execute on the input documents.
+        /// Please note <see cref="AnalyzeTextLROTask"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AbstractiveSummarizationLROTask"/>, <see cref="CustomEntitiesLROTask"/>, <see cref="CustomMultiLabelClassificationLROTask"/>, <see cref="CustomSingleLabelClassificationLROTask"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="ExtractiveSummarizationLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/> and <see cref="SentimentAnalysisLROTask"/>.
+        /// </param>
+        internal AnalyzeTextJobsInput(string displayName, MultiLanguageAnalysisInput analysisInput, IList<AnalyzeTextLROTask> tasks)
+        {
+            DisplayName = displayName;
+            AnalysisInput = analysisInput;
+            Tasks = tasks;
         }
 
         /// <summary> Optional display name for the analysis job. </summary>

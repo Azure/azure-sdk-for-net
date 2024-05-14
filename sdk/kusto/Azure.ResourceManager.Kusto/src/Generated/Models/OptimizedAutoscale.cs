@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class that contains the optimized auto scale definition. </summary>
     public partial class OptimizedAutoscale
     {
-        /// <summary> Initializes a new instance of OptimizedAutoscale. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptimizedAutoscale"/>. </summary>
         /// <param name="version"> The version of the template defined, for instance 1. </param>
         /// <param name="isEnabled"> A boolean value that indicate if the optimized autoscale feature is enabled or not. </param>
         /// <param name="minimum"> Minimum allowed instances count. </param>

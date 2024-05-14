@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuLocationInfo. </summary>
     public partial class ResourceTypeSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuLocationInfo"/>. </summary>
         /// <param name="location"></param>
         public ResourceTypeSkuLocationInfo(AzureLocation location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuLocationInfo"/>. </summary>
         /// <param name="location"></param>
         /// <param name="zones"></param>
         /// <param name="zoneDetails"></param>

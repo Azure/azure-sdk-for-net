@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> VirtualMachineList represents a list of virtual machines. </summary>
     internal partial class VirtualMachineList
     {
-        /// <summary> Initializes a new instance of VirtualMachineList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineList"/>. </summary>
         internal VirtualMachineList()
         {
-            Value = new ChangeTrackingList<VirtualMachineData>();
+            Value = new ChangeTrackingList<NetworkCloudVirtualMachineData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of virtual machines. </param>
-        internal VirtualMachineList(string nextLink, IReadOnlyList<VirtualMachineData> value)
+        internal VirtualMachineList(string nextLink, IReadOnlyList<NetworkCloudVirtualMachineData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of virtual machines. </summary>
-        public IReadOnlyList<VirtualMachineData> Value { get; }
+        public IReadOnlyList<NetworkCloudVirtualMachineData> Value { get; }
     }
 }

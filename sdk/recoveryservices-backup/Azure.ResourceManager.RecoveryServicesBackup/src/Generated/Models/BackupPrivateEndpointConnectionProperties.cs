@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,19 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Private Endpoint Connection Response Properties. </summary>
     public partial class BackupPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPrivateEndpointConnectionProperties"/>. </summary>
         public BackupPrivateEndpointConnectionProperties()
         {
+            GroupIds = new ChangeTrackingList<VaultSubResourceType>();
         }
 
-        /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> Gets or sets private endpoint associated with the private endpoint connection. </param>
+        /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
-        internal BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState, WritableSubResource privateEndpoint, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState, WritableSubResource privateEndpoint, IList<VaultSubResourceType> groupIds, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
+            GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
@@ -45,6 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
+        /// <summary> Group Ids for the Private Endpoint. </summary>
+        public IList<VaultSubResourceType> GroupIds { get; }
         /// <summary> Gets or sets private link service connection state. </summary>
         public RecoveryServicesBackupPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
     }

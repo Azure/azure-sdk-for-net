@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMixedRealityModelFactory
     {
-        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MixedRealityNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> if name Available. </param>
         /// <param name="reason"> Resource Name To Verify. </param>
         /// <param name="message"> detail message. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             return new MixedRealityNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedReality.SpatialAnchorsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             return new SpatialAnchorsAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain);
         }
 
-        /// <summary> Initializes a new instance of MixedRealityAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MixedRealityAccountKeys"/>. </summary>
         /// <param name="primaryKey"> value of primary key. </param>
         /// <param name="secondaryKey"> value of secondary key. </param>
         /// <returns> A new <see cref="Models.MixedRealityAccountKeys"/> instance for mocking. </returns>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             return new MixedRealityAccountKeys(primaryKey, secondaryKey);
         }
 
-        /// <summary> Initializes a new instance of RemoteRenderingAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedReality.RemoteRenderingAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

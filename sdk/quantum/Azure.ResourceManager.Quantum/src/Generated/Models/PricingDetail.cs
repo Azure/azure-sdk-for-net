@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Detailed pricing information for an sku. </summary>
     public partial class PricingDetail
     {
-        /// <summary> Initializes a new instance of PricingDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PricingDetail"/>. </summary>
         internal PricingDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of PricingDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PricingDetail"/>. </summary>
         /// <param name="id"> Unique id for this pricing information. </param>
         /// <param name="value"> The unit cost of this sku. </param>
         internal PricingDetail(string id, string value)

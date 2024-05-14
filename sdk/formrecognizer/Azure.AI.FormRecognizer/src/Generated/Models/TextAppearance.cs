@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> An object representing the appearance of the text line. </summary>
     public partial class TextAppearance
     {
-        /// <summary> Initializes a new instance of TextAppearance. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAppearance"/>. </summary>
         /// <param name="style"> An object representing the style of the text line. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="style"/> is null. </exception>
         internal TextAppearance(Style style)

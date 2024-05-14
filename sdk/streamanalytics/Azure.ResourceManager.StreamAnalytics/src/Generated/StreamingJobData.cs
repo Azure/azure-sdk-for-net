@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StreamingJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StreamingJobData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Functions = new ChangeTrackingList<StreamingJobFunctionData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

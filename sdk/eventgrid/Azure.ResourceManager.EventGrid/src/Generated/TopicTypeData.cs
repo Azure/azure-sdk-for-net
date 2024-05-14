@@ -18,14 +18,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class TopicTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of TopicTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
         public TopicTypeData()
         {
             SupportedLocations = new ChangeTrackingList<string>();
             SupportedScopesForSource = new ChangeTrackingList<TopicTypeSourceScope>();
+            AdditionalEnforcedPermissions = new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>();
         }
 
-        /// <summary> Initializes a new instance of TopicTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="sourceResourceFormat"> Source resource format. </param>
         /// <param name="supportedScopesForSource"> Supported source scopes. </param>
         /// <param name="areRegionalAndGlobalSourcesSupported"> Flag to indicate that a topic type can support both regional or global system topics. </param>
-        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource, bool? areRegionalAndGlobalSourcesSupported) : base(id, name, resourceType, systemData)
+        /// <param name="additionalEnforcedPermissions"> Permissions which are enforced for creating and updating system topics of this this topic type. </param>
+        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource, bool? areRegionalAndGlobalSourcesSupported, IList<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions) : base(id, name, resourceType, systemData)
         {
             Provider = provider;
             DisplayName = displayName;
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.EventGrid
             SourceResourceFormat = sourceResourceFormat;
             SupportedScopesForSource = supportedScopesForSource;
             AreRegionalAndGlobalSourcesSupported = areRegionalAndGlobalSourcesSupported;
+            AdditionalEnforcedPermissions = additionalEnforcedPermissions;
         }
 
         /// <summary> Namespace of the provider of the topic type. </summary>
@@ -70,5 +73,7 @@ namespace Azure.ResourceManager.EventGrid
         public IList<TopicTypeSourceScope> SupportedScopesForSource { get; }
         /// <summary> Flag to indicate that a topic type can support both regional or global system topics. </summary>
         public bool? AreRegionalAndGlobalSourcesSupported { get; set; }
+        /// <summary> Permissions which are enforced for creating and updating system topics of this this topic type. </summary>
+        public IList<TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions { get; }
     }
 }

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebSiteAnalysisDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebSiteAnalysisDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteAnalysisDefinitionData"/>. </summary>
         public WebSiteAnalysisDefinitionData()
         {
         }
 
-        /// <summary> Initializes a new instance of WebSiteAnalysisDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteAnalysisDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

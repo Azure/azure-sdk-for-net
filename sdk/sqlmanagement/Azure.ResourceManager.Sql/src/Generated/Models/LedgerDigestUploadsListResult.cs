@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of ledger digest upload settings. </summary>
     internal partial class LedgerDigestUploadsListResult
     {
-        /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadsListResult"/>. </summary>
         internal LedgerDigestUploadsListResult()
         {
             Value = new ChangeTrackingList<LedgerDigestUploadData>();
         }
 
-        /// <summary> Initializes a new instance of LedgerDigestUploadsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadsListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal LedgerDigestUploadsListResult(IReadOnlyList<LedgerDigestUploadData> value, string nextLink)

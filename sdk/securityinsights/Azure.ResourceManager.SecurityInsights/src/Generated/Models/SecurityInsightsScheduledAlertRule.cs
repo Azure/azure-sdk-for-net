@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents scheduled alert rule. </summary>
     public partial class SecurityInsightsScheduledAlertRule : SecurityInsightsAlertRuleData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsScheduledAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
         public SecurityInsightsScheduledAlertRule()
         {
             CustomDetails = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.Scheduled;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsScheduledAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

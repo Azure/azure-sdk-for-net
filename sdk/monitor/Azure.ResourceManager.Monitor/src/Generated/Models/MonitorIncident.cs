@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An alert incident indicates the activation status of an alert rule. </summary>
     public partial class MonitorIncident
     {
-        /// <summary> Initializes a new instance of MonitorIncident. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorIncident"/>. </summary>
         internal MonitorIncident()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorIncident. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorIncident"/>. </summary>
         /// <param name="name"> Incident name. </param>
         /// <param name="ruleName"> Rule name that is associated with the incident. </param>
         /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>

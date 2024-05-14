@@ -13,9 +13,9 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for an HTTP source. </summary>
-    public partial class HttpLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class HttpLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of HttpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HttpLinkedService(DataFactoryElement<string> uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "HttpServer";
         }
 
-        /// <summary> Initializes a new instance of HttpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="certThumbprint"> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, BinaryData encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, string encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
@@ -70,37 +70,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> EmbeddedCertData { get; set; }
         /// <summary> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CertThumbprint { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
         /// <summary> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
     }

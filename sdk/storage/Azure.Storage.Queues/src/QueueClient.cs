@@ -324,7 +324,9 @@ namespace Azure.Storage.Queues
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
             : this(
                   queueUri,
-                  credential.AsPolicy(options),
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
                   options,
                   sharedKeyCredential: null,
                   sasCredential: null,
@@ -3128,6 +3130,7 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
             => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
 
@@ -3149,6 +3152,7 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(
             QueueSasBuilder builder)
         {

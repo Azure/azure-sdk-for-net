@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The azure blob storage linked service. </summary>
     public partial class AzureBlobStorageLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedService"/>. </summary>
         public AzureBlobStorageLinkedService()
         {
             Type = "AzureBlobStorage";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -40,7 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="accountKind"> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, string accountKind, string encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
+        /// <param name="containerUri"> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </param>
+        internal AzureBlobStorageLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference accountKey, object sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, string accountKind, string encryptedCredential, CredentialReference credential, AzureStorageAuthenticationType? authenticationType, object containerUri) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountKey = accountKey;
@@ -53,6 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AzureCloudType = azureCloudType;
             AccountKind = accountKind;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
+            AuthenticationType = authenticationType;
+            ContainerUri = containerUri;
             Type = type ?? "AzureBlobStorage";
         }
 
@@ -82,5 +88,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string AccountKind { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public string EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
+        /// <summary> The type used for authentication. Type: string. </summary>
+        public AzureStorageAuthenticationType? AuthenticationType { get; set; }
+        /// <summary> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </summary>
+        public object ContainerUri { get; set; }
     }
 }

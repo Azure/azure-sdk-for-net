@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto pools operation response. </summary>
     internal partial class KustoPoolListResult
     {
-        /// <summary> Initializes a new instance of KustoPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolListResult"/>. </summary>
         internal KustoPoolListResult()
         {
             Value = new ChangeTrackingList<SynapseKustoPoolData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolListResult"/>. </summary>
         /// <param name="value"> The list of Kusto pools. </param>
         internal KustoPoolListResult(IReadOnlyList<SynapseKustoPoolData> value)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints for one category. </summary>
     public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/>. </summary>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint()
         {
             Endpoints = new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/>. </summary>
         /// <param name="category"> The category of outbound network dependency. </param>
         /// <param name="endpoints"> The endpoints for outbound network dependency. </param>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(string category, IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints)

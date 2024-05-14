@@ -13,7 +13,7 @@ namespace Azure.Communication.Sms
     /// <summary> Response for a single recipient. </summary>
     public partial class SmsSendResult
     {
-        /// <summary> Initializes a new instance of SmsSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResult"/>. </summary>
         /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
@@ -27,7 +27,7 @@ namespace Azure.Communication.Sms
             Successful = successful;
         }
 
-        /// <summary> Initializes a new instance of SmsSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResult"/>. </summary>
         /// <param name="to"> The recipient's phone number in E.164 format. </param>
         /// <param name="messageId"> The identifier of the outgoing Sms message. Only present if message processed. </param>
         /// <param name="httpStatusCode"> HTTP Status code. </param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// </summary>
     public partial class MoverDisplayInfo
     {
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverDisplayInfo"/>. </summary>
         internal MoverDisplayInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverDisplayInfo"/>. </summary>
         /// <param name="provider">
         /// Gets or sets the provider.
         /// The localized friendly form of the resource provider name – it is expected to also

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Creates a particular correlation between services. </summary>
     public partial class ServiceCorrelationDescription
     {
-        /// <summary> Initializes a new instance of ServiceCorrelationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceCorrelationDescription"/>. </summary>
         /// <param name="scheme"> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </param>
         /// <param name="serviceName"> The name of the service that the correlation relationship is established with. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> BackupRequestBase is the base for all backup request. </summary>
     public partial class PostgreSqlBackupContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings)

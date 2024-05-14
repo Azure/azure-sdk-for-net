@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Api reference. </summary>
     public partial class LogicApiReference : LogicResourceReference
     {
-        /// <summary> Initializes a new instance of LogicApiReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiReference"/>. </summary>
         public LogicApiReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

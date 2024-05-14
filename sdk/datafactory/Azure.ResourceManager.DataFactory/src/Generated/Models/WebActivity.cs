@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Web activity. </summary>
     public partial class WebActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of WebActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="uri"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "WebActivity";
         }
 
-        /// <summary> Initializes a new instance of WebActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        internal WebActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, DataFactoryElement<string> uri, DataFactoryElement<string> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, WebActivityMethod method, DataFactoryElement<string> uri, DataFactoryElement<string> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;

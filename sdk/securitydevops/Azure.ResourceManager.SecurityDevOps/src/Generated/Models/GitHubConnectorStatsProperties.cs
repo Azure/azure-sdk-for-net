@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The GitHubConnectorStatsProperties. </summary>
     public partial class GitHubConnectorStatsProperties
     {
-        /// <summary> Initializes a new instance of GitHubConnectorStatsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsProperties"/>. </summary>
         public GitHubConnectorStatsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStatsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="ownersCount"> Gets or sets owners count. </param>
         /// <param name="reposCount"> Gets or sets repos count. </param>

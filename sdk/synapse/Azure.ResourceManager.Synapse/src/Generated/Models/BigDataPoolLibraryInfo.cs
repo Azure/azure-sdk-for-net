@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Library/package information of a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolLibraryInfo
     {
-        /// <summary> Initializes a new instance of BigDataPoolLibraryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryInfo"/>. </summary>
         public BigDataPoolLibraryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolLibraryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryInfo"/>. </summary>
         /// <param name="name"> Name of the library. </param>
         /// <param name="path"> Storage blob path of library. </param>
         /// <param name="containerName"> Storage blob container name. </param>

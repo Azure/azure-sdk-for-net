@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.IotCentral
     /// </summary>
     public partial class IotCentralPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateLinkResourceData"/>. </summary>
         public IotCentralPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

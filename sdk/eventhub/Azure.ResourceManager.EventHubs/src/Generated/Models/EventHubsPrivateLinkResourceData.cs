@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information of the private link resource. </summary>
     public partial class EventHubsPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateLinkResourceData"/>. </summary>
         internal EventHubsPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

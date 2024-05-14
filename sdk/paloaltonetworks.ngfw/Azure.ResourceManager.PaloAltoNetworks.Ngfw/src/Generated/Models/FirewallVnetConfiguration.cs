@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> VnetInfo for Firewall Networking. </summary>
     public partial class FirewallVnetConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallVnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallVnetConfiguration"/>. </summary>
         /// <param name="vnet"> Azure Virtual Network. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
         /// <param name="unTrustSubnet"> Untrust Subnet. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             UnTrustSubnet = unTrustSubnet;
         }
 
-        /// <summary> Initializes a new instance of FirewallVnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallVnetConfiguration"/>. </summary>
         /// <param name="vnet"> Azure Virtual Network. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
         /// <param name="unTrustSubnet"> Untrust Subnet. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> A tag of a saved search. </summary>
     public partial class OperationalInsightsTag
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/>. </summary>
         /// <param name="name"> The tag name. </param>
         /// <param name="value"> The tag value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

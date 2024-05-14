@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryGlobalParameterResource dataFactoryGlobalParameter = client.GetDataFactoryGlobalParameterResource(dataFactoryGlobalParameterResourceId);
 
             // invoke the operation
-            DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(new Dictionary<string, DataFactoryGlobalParameterSpecification>()
+            DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(new Dictionary<string, DataFactoryGlobalParameterProperties>()
             {
-                ["waitTime"] = new DataFactoryGlobalParameterSpecification(DataFactoryGlobalParameterType.Int, BinaryData.FromString("5")),
+                ["waitTime"] = new DataFactoryGlobalParameterProperties(DataFactoryGlobalParameterType.Int, BinaryData.FromString("\"5\"")),
             });
             ArmOperation<DataFactoryGlobalParameterResource> lro = await dataFactoryGlobalParameter.UpdateAsync(WaitUntil.Completed, data);
             DataFactoryGlobalParameterResource result = lro.Value;
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryGlobalParameterResource dataFactoryGlobalParameter = client.GetDataFactoryGlobalParameterResource(dataFactoryGlobalParameterResourceId);
 
             // invoke the operation
-            DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(new Dictionary<string, DataFactoryGlobalParameterSpecification>()
+            DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(new Dictionary<string, DataFactoryGlobalParameterProperties>()
             {
-                ["waitTime"] = new DataFactoryGlobalParameterSpecification(DataFactoryGlobalParameterType.Int, BinaryData.FromString("5")),
+                ["waitTime"] = new DataFactoryGlobalParameterProperties(DataFactoryGlobalParameterType.Int, BinaryData.FromString("\"5\"")),
             });
             ArmOperation<DataFactoryGlobalParameterResource> lro = await dataFactoryGlobalParameter.UpdateAsync(WaitUntil.Completed, data);
             DataFactoryGlobalParameterResource result = lro.Value;

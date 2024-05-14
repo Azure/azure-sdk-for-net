@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement mdn settings. </summary>
     public partial class AS2MdnSettings
     {
-        /// <summary> Initializes a new instance of AS2MdnSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2MdnSettings"/>. </summary>
         /// <param name="needMdn"> The value indicating whether to send or request a MDN. </param>
         /// <param name="signMdn"> The value indicating whether the MDN needs to be signed or not. </param>
         /// <param name="sendMdnAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             MicHashingAlgorithm = micHashingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of AS2MdnSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2MdnSettings"/>. </summary>
         /// <param name="needMdn"> The value indicating whether to send or request a MDN. </param>
         /// <param name="signMdn"> The value indicating whether the MDN needs to be signed or not. </param>
         /// <param name="sendMdnAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>

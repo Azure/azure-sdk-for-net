@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an open restriction. License or key will be delivered on every request. </summary>
     public partial class ContentKeyPolicyOpenRestriction : ContentKeyPolicyRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyOpenRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyOpenRestriction"/>. </summary>
         public ContentKeyPolicyOpenRestriction()
         {
             OdataType = "#Microsoft.Media.ContentKeyPolicyOpenRestriction";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyOpenRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyOpenRestriction"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal ContentKeyPolicyOpenRestriction(string odataType) : base(odataType)
         {

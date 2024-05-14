@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform import operation for new database. </summary>
     public partial class DatabaseImportDefinition
     {
-        /// <summary> Initializes a new instance of DatabaseImportDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseImportDefinition"/>. </summary>
         /// <param name="storageKeyType"> Storage key type. </param>
         /// <param name="storageKey"> Storage key. </param>
         /// <param name="storageUri"> Storage Uri. </param>
@@ -32,6 +32,33 @@ namespace Azure.ResourceManager.Sql.Models
             StorageUri = storageUri;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseImportDefinition"/>. </summary>
+        /// <param name="databaseName"> Name of the import database. </param>
+        /// <param name="edition"> Edition of the import database. </param>
+        /// <param name="serviceObjectiveName"> Service level objective name of the import database. </param>
+        /// <param name="maxSizeBytes"> Max size in bytes for the import database. </param>
+        /// <param name="storageKeyType"> Storage key type. </param>
+        /// <param name="storageKey"> Storage key. </param>
+        /// <param name="storageUri"> Storage Uri. </param>
+        /// <param name="administratorLogin"> Administrator login name. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. </param>
+        /// <param name="authenticationType"> Authentication type. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        internal DatabaseImportDefinition(string databaseName, string edition, string serviceObjectiveName, string maxSizeBytes, StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, NetworkIsolationSettings networkIsolation)
+        {
+            DatabaseName = databaseName;
+            Edition = edition;
+            ServiceObjectiveName = serviceObjectiveName;
+            MaxSizeBytes = maxSizeBytes;
+            StorageKeyType = storageKeyType;
+            StorageKey = storageKey;
+            StorageUri = storageUri;
+            AdministratorLogin = administratorLogin;
+            AdministratorLoginPassword = administratorLoginPassword;
+            AuthenticationType = authenticationType;
+            NetworkIsolation = networkIsolation;
         }
 
         /// <summary> Name of the import database. </summary>

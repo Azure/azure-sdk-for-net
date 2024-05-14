@@ -77,6 +77,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -103,6 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object poolName = default;
             LinkedServiceReference linkedServiceName = default;
             Optional<object> encryptedCredential = default;
+            Optional<CredentialReference> credential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -208,13 +214,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBatchLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accountName, accessKey.Value, batchUri, poolName, linkedServiceName, encryptedCredential.Value);
+            return new AzureBatchLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accountName, accessKey.Value, batchUri, poolName, linkedServiceName, encryptedCredential.Value, credential.Value);
         }
 
         internal partial class AzureBatchLinkedServiceConverter : JsonConverter<AzureBatchLinkedService>

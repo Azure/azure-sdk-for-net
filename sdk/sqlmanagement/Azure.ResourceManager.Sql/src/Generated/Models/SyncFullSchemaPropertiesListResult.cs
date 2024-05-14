@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of sync schema properties. </summary>
     internal partial class SyncFullSchemaPropertiesListResult
     {
-        /// <summary> Initializes a new instance of SyncFullSchemaPropertiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaPropertiesListResult"/>. </summary>
         internal SyncFullSchemaPropertiesListResult()
         {
             Value = new ChangeTrackingList<SyncFullSchemaProperties>();
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaPropertiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaPropertiesListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SyncFullSchemaPropertiesListResult(IReadOnlyList<SyncFullSchemaProperties> value, string nextLink)

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Cursor methods for Mongodb query. </summary>
     public partial class MongoDBCursorMethodsProperties
     {
-        /// <summary> Initializes a new instance of MongoDBCursorMethodsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCursorMethodsProperties"/>. </summary>
         public MongoDBCursorMethodsProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBCursorMethodsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCursorMethodsProperties"/>. </summary>
         /// <param name="project"> Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="sort"> Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
         /// <param name="skip"> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

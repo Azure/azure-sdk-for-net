@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A request to approve or reject a private endpoint connection. </summary>
     public partial class PrivateLinkConnectionApprovalRequest
     {
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequest"/>. </summary>
         public PrivateLinkConnectionApprovalRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequest"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         internal PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState, WritableSubResource privateEndpoint)

@@ -17,9 +17,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityAssessmentResource" /> and their operations.
-    /// Each <see cref="SecurityAssessmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="SecurityAssessmentCollection" /> instance call the GetSecurityAssessments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="SecurityAssessmentResource"/> and their operations.
+    /// Each <see cref="SecurityAssessmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityAssessmentCollection"/> instance call the GetSecurityAssessments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityAssessmentCollection : ArmCollection
     {
@@ -51,6 +51,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,6 +101,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Assessments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -134,6 +150,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
@@ -171,6 +195,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,6 +242,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
@@ -246,6 +286,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
@@ -263,6 +311,98 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityAssessmentAssessmentsRestClient.Get(Id, assessmentName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityAssessmentResource>> GetIfExistsAsync(string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+
+            using var scope = _securityAssessmentAssessmentsClientDiagnostics.CreateScope("SecurityAssessmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityAssessmentAssessmentsRestClient.GetAsync(Id, assessmentName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
+        /// <param name="expand"> OData expand. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
+        public virtual NullableResponse<SecurityAssessmentResource> GetIfExists(string assessmentName, SecurityAssessmentODataExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+
+            using var scope = _securityAssessmentAssessmentsClientDiagnostics.CreateScope("SecurityAssessmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityAssessmentAssessmentsRestClient.Get(Id, assessmentName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAssessmentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

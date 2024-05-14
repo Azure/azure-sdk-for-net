@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Quota metrics properties. </summary>
     public partial class IotHubQuotaMetricInfo
     {
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubQuotaMetricInfo"/>. </summary>
         internal IotHubQuotaMetricInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubQuotaMetricInfo"/>. </summary>
         /// <param name="name"> The name of the quota metric. </param>
         /// <param name="currentValue"> The current value for the quota metric. </param>
         /// <param name="maxValue"> The maximum value of the quota metric. </param>

@@ -20,14 +20,46 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityConnectorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SecurityConnectorData(AzureLocation location) : base(location)
         {
             Offerings = new ChangeTrackingList<SecurityCenterCloudOffering>();
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,16 +72,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
         /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
+        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGitLabOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
         /// </param>
         /// <param name="environmentData">
         /// The security connector environment data.
         /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/> and <see cref="GithubScopeEnvironment"/>.
+        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, string kind, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
@@ -58,6 +91,12 @@ namespace Azure.ResourceManager.SecurityCenter
             EnvironmentData = environmentData;
             Kind = kind;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/> for deserialization. </summary>
+        internal SecurityConnectorData()
+        {
         }
 
         /// <summary> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </summary>
@@ -69,13 +108,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// A collection of offerings for the security connector.
         /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
+        /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGitLabOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
         /// </summary>
         public IList<SecurityCenterCloudOffering> Offerings { get; }
         /// <summary>
         /// The security connector environment data.
         /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/> and <see cref="GithubScopeEnvironment"/>.
+        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </summary>
         public SecurityConnectorEnvironment EnvironmentData { get; set; }
         /// <summary> Kind of the resource. </summary>

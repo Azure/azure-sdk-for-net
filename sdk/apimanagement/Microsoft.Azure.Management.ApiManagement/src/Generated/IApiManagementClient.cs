@@ -45,16 +45,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every
-        /// service call.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -106,6 +104,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         ITagOperations Tag { get; }
 
         /// <summary>
+        /// Gets the IGraphQLApiResolverOperations.
+        /// </summary>
+        IGraphQLApiResolverOperations GraphQLApiResolver { get; }
+
+        /// <summary>
+        /// Gets the IGraphQLApiResolverPolicyOperations.
+        /// </summary>
+        IGraphQLApiResolverPolicyOperations GraphQLApiResolverPolicy { get; }
+
+        /// <summary>
         /// Gets the IApiProductOperations.
         /// </summary>
         IApiProductOperations ApiProduct { get; }
@@ -151,6 +159,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         IOperationOperations Operation { get; }
 
         /// <summary>
+        /// Gets the IApiWikiOperations.
+        /// </summary>
+        IApiWikiOperations ApiWiki { get; }
+
+        /// <summary>
+        /// Gets the IApiWikisOperations.
+        /// </summary>
+        IApiWikisOperations ApiWikis { get; }
+
+        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         IApiVersionSetOperations ApiVersionSet { get; }
@@ -159,6 +177,26 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IAuthorizationServerOperations.
         /// </summary>
         IAuthorizationServerOperations AuthorizationServer { get; }
+
+        /// <summary>
+        /// Gets the IAuthorizationProviderOperations.
+        /// </summary>
+        IAuthorizationProviderOperations AuthorizationProvider { get; }
+
+        /// <summary>
+        /// Gets the IAuthorizationOperations.
+        /// </summary>
+        IAuthorizationOperations Authorization { get; }
+
+        /// <summary>
+        /// Gets the IAuthorizationLoginLinksOperations.
+        /// </summary>
+        IAuthorizationLoginLinksOperations AuthorizationLoginLinks { get; }
+
+        /// <summary>
+        /// Gets the IAuthorizationAccessPolicyOperations.
+        /// </summary>
+        IAuthorizationAccessPolicyOperations AuthorizationAccessPolicy { get; }
 
         /// <summary>
         /// Gets the IBackendOperations.
@@ -306,6 +344,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         IPolicyDescriptionOperations PolicyDescription { get; }
 
         /// <summary>
+        /// Gets the IPolicyFragmentOperations.
+        /// </summary>
+        IPolicyFragmentOperations PolicyFragment { get; }
+
+        /// <summary>
+        /// Gets the IPortalConfigOperations.
+        /// </summary>
+        IPortalConfigOperations PortalConfig { get; }
+
+        /// <summary>
         /// Gets the IPortalRevisionOperations.
         /// </summary>
         IPortalRevisionOperations PortalRevision { get; }
@@ -359,6 +407,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IProductPolicyOperations.
         /// </summary>
         IProductPolicyOperations ProductPolicy { get; }
+
+        /// <summary>
+        /// Gets the IProductWikiOperations.
+        /// </summary>
+        IProductWikiOperations ProductWiki { get; }
+
+        /// <summary>
+        /// Gets the IProductWikisOperations.
+        /// </summary>
+        IProductWikisOperations ProductWikis { get; }
 
         /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
@@ -446,6 +504,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         IUserConfirmationPasswordOperations UserConfirmationPassword { get; }
 
         /// <summary>
+        /// Gets the IDocumentationOperations.
+        /// </summary>
+        IDocumentationOperations Documentation { get; }
+
+        /// <summary>
         /// Gets the IApiExportOperations.
         /// </summary>
         IApiExportOperations ApiExport { get; }
@@ -456,7 +519,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// well as errors encountered while trying to establish it.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -478,7 +541,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// well as errors encountered while trying to establish it.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

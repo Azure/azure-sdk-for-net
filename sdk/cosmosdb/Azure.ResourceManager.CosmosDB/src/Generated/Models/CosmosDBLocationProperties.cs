@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,32 +14,74 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB location metadata. </summary>
     public partial class CosmosDBLocationProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         public CosmosDBLocationProperties()
         {
             BackupStorageRedundancies = new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
-        /// <param name="status"> The current status of location in Azure. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
-        internal CosmosDBLocationProperties(string status, bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies)
+        /// <param name="isSubscriptionRegionAccessAllowedForRegular"> Flag indicating whether the subscription have access in region for Non-Availability Zones. </param>
+        /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
+        /// <param name="status"> Enum to indicate current buildout status of the region. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, CosmosDBStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Status = status;
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
             BackupStorageRedundancies = backupStorageRedundancies;
+            IsSubscriptionRegionAccessAllowedForRegular = isSubscriptionRegionAccessAllowedForRegular;
+            IsSubscriptionRegionAccessAllowedForAz = isSubscriptionRegionAccessAllowedForAz;
+            Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The current status of location in Azure. </summary>
-        public string Status { get; }
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>
         public bool? DoesSupportAvailabilityZone { get; }
         /// <summary> Flag indicating whether the location is residency sensitive. </summary>
         public bool? IsResidencyRestricted { get; }
         /// <summary> The properties of available backup storage redundancies. </summary>
         public IReadOnlyList<CosmosDBBackupStorageRedundancy> BackupStorageRedundancies { get; }
+        /// <summary> Flag indicating whether the subscription have access in region for Non-Availability Zones. </summary>
+        public bool? IsSubscriptionRegionAccessAllowedForRegular { get; }
+        /// <summary> Flag indicating whether the subscription have access in region for Availability Zones(Az). </summary>
+        public bool? IsSubscriptionRegionAccessAllowedForAz { get; }
+        /// <summary> Enum to indicate current buildout status of the region. </summary>
+        public CosmosDBStatus? Status { get; }
     }
 }

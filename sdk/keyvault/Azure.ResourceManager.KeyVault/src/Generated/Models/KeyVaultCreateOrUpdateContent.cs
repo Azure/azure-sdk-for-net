@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for creating or updating a vault. </summary>
     public partial class KeyVaultCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of KeyVaultCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The supported Azure location where the key vault should be created. </param>
+        /// <param name="tags"> The tags that will be assigned to the key vault. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        internal KeyVaultCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, KeyVaultProperties properties)
+        {
+            Location = location;
+            Tags = tags;
             Properties = properties;
         }
 

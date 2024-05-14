@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AFabricSpecificLocationDetails
     {
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         internal A2AFabricSpecificLocationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         /// <param name="initialPrimaryZone"> The initial source zone info. </param>
         /// <param name="initialRecoveryZone"> The initial target zone info. </param>
         /// <param name="initialPrimaryExtendedLocation"> The initial primary ExtendedLocation. </param>

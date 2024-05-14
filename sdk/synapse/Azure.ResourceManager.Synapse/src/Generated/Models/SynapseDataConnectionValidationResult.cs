@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The result returned from a data connection validation request. </summary>
     public partial class SynapseDataConnectionValidationResult
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidationResult"/>. </summary>
         internal SynapseDataConnectionValidationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidationResult"/>. </summary>
         /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
         internal SynapseDataConnectionValidationResult(string errorMessage)
         {

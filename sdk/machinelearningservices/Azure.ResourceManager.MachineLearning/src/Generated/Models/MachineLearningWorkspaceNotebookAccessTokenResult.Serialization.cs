@@ -18,39 +18,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> notebookResourceId = default;
-            Optional<string> hostName = default;
-            Optional<string> publicDns = default;
             Optional<string> accessToken = default;
-            Optional<string> tokenType = default;
             Optional<int> expiresIn = default;
+            Optional<string> hostName = default;
+            Optional<string> notebookResourceId = default;
+            Optional<string> publicDns = default;
             Optional<string> refreshToken = default;
             Optional<string> scope = default;
+            Optional<string> tokenType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notebookResourceId"u8))
-                {
-                    notebookResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("hostName"u8))
-                {
-                    hostName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("publicDns"u8))
-                {
-                    publicDns = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tokenType"u8))
-                {
-                    tokenType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("expiresIn"u8))
@@ -60,6 +40,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     expiresIn = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("hostName"u8))
+                {
+                    hostName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("notebookResourceId"u8))
+                {
+                    notebookResourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("publicDns"u8))
+                {
+                    publicDns = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("refreshToken"u8))
@@ -72,8 +67,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scope = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("tokenType"u8))
+                {
+                    tokenType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(notebookResourceId.Value, hostName.Value, publicDns.Value, accessToken.Value, tokenType.Value, Optional.ToNullable(expiresIn), refreshToken.Value, scope.Value);
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value);
         }
     }
 }

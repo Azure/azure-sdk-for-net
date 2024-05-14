@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
         /// </summary>
         /// <remarks>
-        /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
+        /// <see href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string"/>.
         /// </remarks>
         public string ConnectionString { get; set; }
 
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// and Instrumentation Key from the Connection String will be used.
         /// </summary>
         /// <remarks>
-        /// https://learn.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#is-the-connection-string-a-secret
+        /// <see href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net#is-the-connection-string-a-secret"/>.
         /// </remarks>
         public TokenCredential Credential { get; set; }
 

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list of language extension objects. </summary>
     public partial class KustoLanguageExtensionList
     {
-        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionList"/>. </summary>
         public KustoLanguageExtensionList()
         {
             Value = new ChangeTrackingList<KustoLanguageExtension>();
         }
 
-        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionList"/>. </summary>
         /// <param name="value"> The list of language extensions. </param>
         internal KustoLanguageExtensionList(IList<KustoLanguageExtension> value)
         {

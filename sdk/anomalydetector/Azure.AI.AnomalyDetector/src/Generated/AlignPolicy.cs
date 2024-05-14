@@ -10,12 +10,12 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Manner of aligning multiple variables. </summary>
     public partial class AlignPolicy
     {
-        /// <summary> Initializes a new instance of AlignPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
         public AlignPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of AlignPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
         /// <param name="alignMode">
         /// Field that indicates how to align different variables to the same
         /// time range.

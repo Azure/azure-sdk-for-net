@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> The UnknownFacet. </summary>
     internal partial class UnknownFacet : Facet
     {
-        /// <summary> Initializes a new instance of UnknownFacet. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFacet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         internal UnknownFacet(string expression, string resultType) : base(expression, resultType)

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// </summary>
     public partial class ServiceFabricManagedServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricManagedServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

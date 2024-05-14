@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string GcpProjectValue = "GcpProject";
         private const string GithubScopeValue = "GithubScope";
         private const string AzureDevOpsScopeValue = "AzureDevOpsScope";
+        private const string GitlabScopeValue = "GitlabScope";
 
         /// <summary> AwsAccount. </summary>
         public static EnvironmentType AwsAccount { get; } = new EnvironmentType(AwsAccountValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static EnvironmentType GithubScope { get; } = new EnvironmentType(GithubScopeValue);
         /// <summary> AzureDevOpsScope. </summary>
         public static EnvironmentType AzureDevOpsScope { get; } = new EnvironmentType(AzureDevOpsScopeValue);
+        /// <summary> GitlabScope. </summary>
+        public static EnvironmentType GitlabScope { get; } = new EnvironmentType(GitlabScopeValue);
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are the same. </summary>
         public static bool operator ==(EnvironmentType left, EnvironmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnvironmentType"/> values are not the same. </summary>

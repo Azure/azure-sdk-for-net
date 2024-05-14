@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The properties of the marketplace registration definition. </summary>
     public partial class ManagedServicesMarketplaceRegistrationProperties
     {
-        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesMarketplaceRegistrationProperties"/>. </summary>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             EligibleAuthorizations = new ChangeTrackingList<ManagedServicesEligibleAuthorization>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesMarketplaceRegistrationProperties"/>. </summary>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>

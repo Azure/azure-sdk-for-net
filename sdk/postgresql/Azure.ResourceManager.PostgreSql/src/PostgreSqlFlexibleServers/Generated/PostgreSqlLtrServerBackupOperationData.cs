@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
         public PostgreSqlLtrServerBackupOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

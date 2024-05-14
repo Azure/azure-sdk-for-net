@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// </summary>
     public partial class NewRelicMonitorResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NewRelicMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NewRelicMonitorResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

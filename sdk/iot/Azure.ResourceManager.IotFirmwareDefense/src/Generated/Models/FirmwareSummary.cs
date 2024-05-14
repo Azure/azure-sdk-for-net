@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Summary result after scanning the firmware. </summary>
     public partial class FirmwareSummary
     {
-        /// <summary> Initializes a new instance of FirmwareSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
         internal FirmwareSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
         /// <param name="extractedFileCount"> Extracted file count. </param>

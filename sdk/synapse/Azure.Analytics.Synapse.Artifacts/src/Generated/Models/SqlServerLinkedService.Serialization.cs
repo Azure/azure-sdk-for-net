@@ -76,6 +76,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(AlwaysEncryptedSettings))
+            {
+                writer.WritePropertyName("alwaysEncryptedSettings"u8);
+                writer.WriteObjectValue(AlwaysEncryptedSettings);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -100,6 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> userName = default;
             Optional<SecretBase> password = default;
             Optional<object> encryptedCredential = default;
+            Optional<SqlAlwaysEncryptedProperties> alwaysEncryptedSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -199,13 +205,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("alwaysEncryptedSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            alwaysEncryptedSettings = SqlAlwaysEncryptedProperties.DeserializeSqlAlwaysEncryptedProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, userName.Value, password.Value, encryptedCredential.Value);
+            return new SqlServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, userName.Value, password.Value, encryptedCredential.Value, alwaysEncryptedSettings.Value);
         }
 
         internal partial class SqlServerLinkedServiceConverter : JsonConverter<SqlServerLinkedService>

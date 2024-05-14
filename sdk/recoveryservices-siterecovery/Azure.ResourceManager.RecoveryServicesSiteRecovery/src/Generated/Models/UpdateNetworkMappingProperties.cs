@@ -12,9 +12,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Common input details for network mapping operation. </summary>
     public partial class UpdateNetworkMappingProperties
     {
-        /// <summary> Initializes a new instance of UpdateNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateNetworkMappingProperties"/>. </summary>
         public UpdateNetworkMappingProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateNetworkMappingProperties"/>. </summary>
+        /// <param name="recoveryFabricName"> Recovery fabric name. </param>
+        /// <param name="recoveryNetworkId"> Recovery network Id. </param>
+        /// <param name="fabricSpecificDetails">
+        /// Fabrics specific input network Id.
+        /// Please note <see cref="FabricSpecificUpdateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUpdateNetworkMappingContent"/>, <see cref="VmmToAzureUpdateNetworkMappingContent"/> and <see cref="VmmToVmmUpdateNetworkMappingContent"/>.
+        /// </param>
+        internal UpdateNetworkMappingProperties(string recoveryFabricName, ResourceIdentifier recoveryNetworkId, FabricSpecificUpdateNetworkMappingContent fabricSpecificDetails)
+        {
+            RecoveryFabricName = recoveryFabricName;
+            RecoveryNetworkId = recoveryNetworkId;
+            FabricSpecificDetails = fabricSpecificDetails;
         }
 
         /// <summary> Recovery fabric name. </summary>

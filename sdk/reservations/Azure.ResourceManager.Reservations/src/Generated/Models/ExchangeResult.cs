@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange operation result. </summary>
     public partial class ExchangeResult
     {
-        /// <summary> Initializes a new instance of ExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeResult"/>. </summary>
         internal ExchangeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeResult"/>. </summary>
         /// <param name="id"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The storage account type capability. </summary>
     public partial class StorageCapability
     {
-        /// <summary> Initializes a new instance of StorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCapability"/>. </summary>
         internal StorageCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCapability"/>. </summary>
         /// <param name="storageAccountType"> The storage account type for the database's backups. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>

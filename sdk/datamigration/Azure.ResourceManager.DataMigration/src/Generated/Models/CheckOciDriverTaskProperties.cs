@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that checks for OCI drivers. </summary>
     public partial class CheckOciDriverTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of CheckOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskProperties"/>. </summary>
         public CheckOciDriverTaskProperties()
         {
             Output = new ChangeTrackingList<CheckOciDriverTaskOutput>();
             TaskType = TaskType.ServiceCheckOci;
         }
 
-        /// <summary> Initializes a new instance of CheckOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -30,9 +31,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Input for the service task to check for OCI drivers. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
-        internal CheckOciDriverTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, CheckOciDriverTaskInput input, IReadOnlyList<CheckOciDriverTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        internal CheckOciDriverTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, CheckOciDriverTaskInput input, IReadOnlyList<CheckOciDriverTaskOutput> output) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

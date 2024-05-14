@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInaccessibleManagedDatabases_ListInaccessibleManagedDatabasesByManagedInstances()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/InaccessibleManagedDatabaseListByManagedInstance.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/InaccessibleManagedDatabaseListByManagedInstance.json
             // this example is just showing the usage of "ManagedDatabases_ListInaccessibleByInstance" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

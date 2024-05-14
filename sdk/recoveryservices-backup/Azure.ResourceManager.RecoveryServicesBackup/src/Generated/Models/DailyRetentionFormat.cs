@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Daily retention format. </summary>
     internal partial class DailyRetentionFormat
     {
-        /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRetentionFormat"/>. </summary>
         public DailyRetentionFormat()
         {
             DaysOfTheMonth = new ChangeTrackingList<BackupDay>();
         }
 
-        /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRetentionFormat"/>. </summary>
         /// <param name="daysOfTheMonth"> List of days of the month. </param>
         internal DailyRetentionFormat(IList<BackupDay> daysOfTheMonth)
         {

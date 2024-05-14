@@ -7,14 +7,29 @@
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>
-    internal partial class EndpointBaseUpdateProperties
+    /// <summary>
+    /// The Endpoint resource, which contains information about file sources and targets.
+    /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+    /// </summary>
+    public abstract partial class EndpointBaseUpdateProperties
     {
-        /// <summary> Initializes a new instance of EndpointBaseUpdateProperties. </summary>
-        public EndpointBaseUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
+        protected EndpointBaseUpdateProperties()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="EndpointBaseUpdateProperties"/>. </summary>
+        /// <param name="endpointType"> The Endpoint resource type. </param>
+        /// <param name="description"> A description for the Endpoint. </param>
+        internal EndpointBaseUpdateProperties(EndpointType endpointType, string description)
+        {
+            EndpointType = endpointType;
+            Description = description;
+        }
+
+        /// <summary> The Endpoint resource type. </summary>
+        internal EndpointType EndpointType { get; set; }
         /// <summary> A description for the Endpoint. </summary>
         public string Description { get; set; }
     }

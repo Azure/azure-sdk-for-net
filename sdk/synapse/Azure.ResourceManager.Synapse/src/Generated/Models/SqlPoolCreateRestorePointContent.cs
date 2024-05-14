@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Contains the information necessary to perform a create Sql pool restore point operation. </summary>
     public partial class SqlPoolCreateRestorePointContent
     {
-        /// <summary> Initializes a new instance of SqlPoolCreateRestorePointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolCreateRestorePointContent"/>. </summary>
         /// <param name="restorePointLabel"> The restore point label to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public SqlPoolCreateRestorePointContent(string restorePointLabel)

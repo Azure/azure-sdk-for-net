@@ -10,13 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The virtualNetworks resource patch definition. </summary>
+    /// <summary> The Virtual Network resource patch definition. </summary>
     public partial class HybridContainerServiceVirtualNetworkPatch
     {
-        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkPatch"/>. </summary>
         public HybridContainerServiceVirtualNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal HybridContainerServiceVirtualNetworkPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

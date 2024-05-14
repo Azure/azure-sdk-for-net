@@ -1,14 +1,56 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fix `ContainerAppJobExecutionData` deserialization issue
+
 ### Other Changes
+
+## 1.1.1 (2023-11-27)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0 (2023-08-11)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-10' to 'package-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.30.0 to 1.34.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.7.0
+- Obsoleted property 'ContainerAppManagedEnvironmentOutboundSettings OutboundSettings' in type Azure.ResourceManager.AppContainers.Models.ContainerAppVnetConfiguration
+- Obsoleted property 'String RuntimeSubnetId' in type Azure.ResourceManager.AppContainers.Models.ContainerAppVnetConfiguration
+
+## 1.1.0-beta.3 (2023-08-08)
+
+### Features Added
+
+- Upgrade to 2023-04-01-preview api version
+- Add `runningState` and `runningStateDetails` for `ContainerAppReplica`
+- Add `TerminationGracePeriodSeconds` and `ServicBinds`for `ContainerAppTemplate`
+- Add `MountOptions` for `ContainerAppVolume`
+- Add `SubPath` for `ContainerAppVolumeMount`
+- Add Mtls Enabled for ContainerAppManagedEnvironment
+- Add `Kind` for  ContainerAppCredentials
+- Add `GitHubPersonalAccessToken` for `ContainerAppGitHubActionConfiguration`
+- Add `EventTriggerConfig` for JobConfiguration
+- Rename `ContainerAppJobTriggerType` value from `Scheduled` to `Schedule`
 
 ## 1.1.0-beta.2 (2023-05-29)
 
@@ -24,6 +66,7 @@
 ## 1.1.0-beta.1 (2023-05-15)
 
 ### Features Added
+
 - Upgrade to 2022-11-01-preview api version
 - Add API to start, stop and executions for ContainerAppJobs
 - Support keyvault for container app secret
@@ -35,6 +78,7 @@
 - Add Friendly workload profile name support
 
 ### Bugs Fixed
+
 - Fix certifaicte password format for environment custom domain
 
 ### Other Changes
@@ -100,4 +144,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

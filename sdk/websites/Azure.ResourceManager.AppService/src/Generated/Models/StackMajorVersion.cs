@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application stack major version. </summary>
     public partial class StackMajorVersion
     {
-        /// <summary> Initializes a new instance of StackMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackMajorVersion"/>. </summary>
         public StackMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<StackMinorVersion>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             SiteConfigPropertiesDictionary = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of StackMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackMajorVersion"/>. </summary>
         /// <param name="displayVersion"> Application stack major version (display only). </param>
         /// <param name="runtimeVersion"> Application stack major version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

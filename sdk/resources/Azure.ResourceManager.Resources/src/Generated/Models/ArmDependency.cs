@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment dependency information. </summary>
     public partial class ArmDependency
     {
-        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDependency"/>. </summary>
         internal ArmDependency()
         {
             DependsOn = new ChangeTrackingList<BasicArmDependency>();
         }
 
-        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDependency"/>. </summary>
         /// <param name="dependsOn"> The list of dependencies. </param>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>

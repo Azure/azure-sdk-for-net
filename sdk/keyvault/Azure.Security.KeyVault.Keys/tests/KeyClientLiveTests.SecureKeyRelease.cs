@@ -18,6 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/38375")]
         public async Task ReleaseCreatedKey()
         {
             string keyName = Recording.GenerateId();
@@ -74,6 +75,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/38375")]
         public async Task UpdateReleasePolicy([Values] bool immutable)
         {
             string keyName = Recording.GenerateId();

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSparkConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSparkConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkConfigurationData"/>. </summary>
         /// <param name="configs"> SparkConfiguration configs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
         public SynapseSparkConfigurationData(IDictionary<string, string> configs)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse
             ConfigMergeRule = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseSparkConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

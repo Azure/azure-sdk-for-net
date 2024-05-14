@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public partial class ServiceTypeHealthPolicy
     {
-        /// <summary> Initializes a new instance of ServiceTypeHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
         ///

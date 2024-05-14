@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> VolumeList represents a list of volumes. </summary>
     internal partial class VolumeList
     {
-        /// <summary> Initializes a new instance of VolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
         internal VolumeList()
         {
-            Value = new ChangeTrackingList<VolumeData>();
+            Value = new ChangeTrackingList<NetworkCloudVolumeData>();
         }
 
-        /// <summary> Initializes a new instance of VolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of volumes. </param>
-        internal VolumeList(string nextLink, IReadOnlyList<VolumeData> value)
+        internal VolumeList(string nextLink, IReadOnlyList<NetworkCloudVolumeData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of volumes. </summary>
-        public IReadOnlyList<VolumeData> Value { get; }
+        public IReadOnlyList<NetworkCloudVolumeData> Value { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> The UnknownOperationDetails. </summary>
     internal partial class UnknownOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of UnknownOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -23,10 +23,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="serviceVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="jsonError"> Encountered error. </param>
-        internal UnknownOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, jsonError)
+        internal UnknownOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags, jsonError)
         {
             Kind = kind;
         }

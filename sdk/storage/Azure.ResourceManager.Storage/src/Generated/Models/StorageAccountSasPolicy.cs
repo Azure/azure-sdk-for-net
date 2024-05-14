@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> SasPolicy assigned to the storage account. </summary>
     public partial class StorageAccountSasPolicy
     {
-        /// <summary> Initializes a new instance of StorageAccountSasPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSasPolicy"/>. </summary>
         /// <param name="sasExpirationPeriod"> The SAS expiration period, DD.HH:MM:SS. </param>
         /// <param name="expirationAction"> The SAS expiration action. Can only be Log. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasExpirationPeriod"/> is null. </exception>

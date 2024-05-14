@@ -13,17 +13,11 @@ using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The response of a Image list operation.
-    /// Serialized Name: ImageListResult
-    /// </summary>
+    /// <summary> The response of a Image list operation. </summary>
     internal partial class ImageListResult
     {
-        /// <summary> Initializes a new instance of ImageListResult. </summary>
-        /// <param name="value">
-        /// The Image items on this page
-        /// Serialized Name: ImageListResult.value
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
+        /// <param name="value"> The Image items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ImageListResult(IEnumerable<SphereImageData> value)
         {
@@ -32,30 +26,18 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ImageListResult. </summary>
-        /// <param name="value">
-        /// The Image items on this page
-        /// Serialized Name: ImageListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ImageListResult.nextLink
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="ImageListResult"/>. </summary>
+        /// <param name="value"> The Image items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         internal ImageListResult(IReadOnlyList<SphereImageData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The Image items on this page
-        /// Serialized Name: ImageListResult.value
-        /// </summary>
+        /// <summary> The Image items on this page. </summary>
         public IReadOnlyList<SphereImageData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ImageListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

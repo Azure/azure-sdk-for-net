@@ -14,23 +14,57 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Information describing the type of billing plan for this savings plan. </summary>
     public partial class BillingPlanInformation
     {
-        /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
         public BillingPlanInformation()
         {
             Transactions = new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
         }
 
-        /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPlanInformation"/>. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
-        internal BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<SavingsPlanOrderPaymentDetail> transactions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<SavingsPlanOrderPaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
             NextPaymentDueOn = nextPaymentDueOn;
             Transactions = transactions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>

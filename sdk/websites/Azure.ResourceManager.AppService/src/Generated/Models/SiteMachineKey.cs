@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MachineKey of an app. </summary>
     public partial class SiteMachineKey
     {
-        /// <summary> Initializes a new instance of SiteMachineKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteMachineKey"/>. </summary>
         internal SiteMachineKey()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteMachineKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteMachineKey"/>. </summary>
         /// <param name="validation"> MachineKey validation. </param>
         /// <param name="validationKey"> Validation key. </param>
         /// <param name="decryption"> Algorithm used for decryption. </param>

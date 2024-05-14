@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A list of clusters populated by a 'list' operation. </summary>
     internal partial class StreamAnalyticsClusterListResult
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterListResult"/>. </summary>
         internal StreamAnalyticsClusterListResult()
         {
             Value = new ChangeTrackingList<StreamAnalyticsClusterData>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterListResult"/>. </summary>
         /// <param name="value"> A list of clusters. </param>
         /// <param name="nextLink"> The URL to fetch the next set of clusters. </param>
         internal StreamAnalyticsClusterListResult(IReadOnlyList<StreamAnalyticsClusterData> value, string nextLink)

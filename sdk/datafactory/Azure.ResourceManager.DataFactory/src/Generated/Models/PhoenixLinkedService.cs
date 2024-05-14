@@ -13,9 +13,9 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Phoenix server linked service. </summary>
-    public partial class PhoenixLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class PhoenixLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of PhoenixLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoenixLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Phoenix server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Phoenix server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Phoenix";
         }
 
-        /// <summary> Initializes a new instance of PhoenixLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoenixLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal PhoenixLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> httpPath, PhoenixAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<bool> enableSsl, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal PhoenixLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> httpPath, PhoenixAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<bool> enableSsl, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -86,36 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
     }
 }

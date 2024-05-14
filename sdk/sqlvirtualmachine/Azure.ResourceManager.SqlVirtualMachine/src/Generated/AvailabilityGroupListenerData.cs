@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// </summary>
     public partial class AvailabilityGroupListenerData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerData"/>. </summary>
         public AvailabilityGroupListenerData()
         {
             LoadBalancerConfigurations = new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>();
             MultiSubnetIPConfigurations = new ChangeTrackingList<MultiSubnetIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

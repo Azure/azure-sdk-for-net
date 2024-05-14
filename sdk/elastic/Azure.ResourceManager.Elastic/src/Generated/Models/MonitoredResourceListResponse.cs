@@ -13,23 +13,23 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class MonitoredResourceListResponse
     {
-        /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
         internal MonitoredResourceListResponse()
         {
-            Value = new ChangeTrackingList<MonitoredResource>();
+            Value = new ChangeTrackingList<MonitoredResourceContent>();
         }
 
-        /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResourceListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal MonitoredResourceListResponse(IReadOnlyList<MonitoredResource> value, string nextLink)
+        internal MonitoredResourceListResponse(IReadOnlyList<MonitoredResourceContent> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of a list operation. </summary>
-        public IReadOnlyList<MonitoredResource> Value { get; }
+        public IReadOnlyList<MonitoredResourceContent> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

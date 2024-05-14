@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> A DS record. For more information about the DS record format, see RFC 4034: https://www.rfc-editor.org/rfc/rfc4034. </summary>
     public partial class DnsDSRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsDSRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsDSRecordInfo"/>. </summary>
         public DnsDSRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsDSRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsDSRecordInfo"/>. </summary>
         /// <param name="keyTag"> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </param>
         /// <param name="algorithm"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
         /// <param name="digest"> The digest entity. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class MediaPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of MediaPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaPrivateLinkResourceListResult"/>. </summary>
         internal MediaPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<MediaServicesPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of MediaPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal MediaPrivateLinkResourceListResult(IReadOnlyList<MediaServicesPrivateLinkResourceData> value)
         {

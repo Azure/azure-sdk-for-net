@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownContentKeyPolicyConfiguration. </summary>
     internal partial class UnknownContentKeyPolicyConfiguration : ContentKeyPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownContentKeyPolicyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal UnknownContentKeyPolicyConfiguration(string odataType) : base(odataType)
         {

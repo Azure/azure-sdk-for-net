@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> IP Address. </summary>
     public partial class IPAddressInfo
     {
-        /// <summary> Initializes a new instance of IPAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressInfo"/>. </summary>
         public IPAddressInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IPAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressInfo"/>. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="address"> Address value. </param>
         internal IPAddressInfo(ResourceIdentifier resourceId, string address)

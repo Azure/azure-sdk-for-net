@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
     public partial class AppServiceIdentityProviders
     {
-        /// <summary> Initializes a new instance of AppServiceIdentityProviders. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentityProviders"/>. </summary>
         public AppServiceIdentityProviders()
         {
             CustomOpenIdConnectProviders = new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceIdentityProviders. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentityProviders"/>. </summary>
         /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
         /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
         /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>

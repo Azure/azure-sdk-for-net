@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class NetworkMappingFabricSpecificSettings
     {
-        /// <summary> Initializes a new instance of NetworkMappingFabricSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkMappingFabricSpecificSettings"/>. </summary>
         protected NetworkMappingFabricSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkMappingFabricSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkMappingFabricSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         internal NetworkMappingFabricSpecificSettings(string instanceType)
         {

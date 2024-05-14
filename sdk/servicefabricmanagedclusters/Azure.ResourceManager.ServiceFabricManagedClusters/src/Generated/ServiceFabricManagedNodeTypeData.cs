@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// </summary>
     public partial class ServiceFabricManagedNodeTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeData"/>. </summary>
         public ServiceFabricManagedNodeTypeData()
         {
             PlacementProperties = new ChangeTrackingDictionary<string, string>();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Array of SyncGroup. </summary>
     internal partial class SyncGroupArray
     {
-        /// <summary> Initializes a new instance of SyncGroupArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupArray"/>. </summary>
         internal SyncGroupArray()
         {
             Value = new ChangeTrackingList<StorageSyncGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SyncGroupArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupArray"/>. </summary>
         /// <param name="value"> Collection of SyncGroup. </param>
         internal SyncGroupArray(IReadOnlyList<StorageSyncGroupData> value)
         {

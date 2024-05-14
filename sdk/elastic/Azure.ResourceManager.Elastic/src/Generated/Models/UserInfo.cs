@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> User Information to be passed to partners. </summary>
     public partial class UserInfo
     {
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         public UserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="companyName"> Company name of the user. </param>

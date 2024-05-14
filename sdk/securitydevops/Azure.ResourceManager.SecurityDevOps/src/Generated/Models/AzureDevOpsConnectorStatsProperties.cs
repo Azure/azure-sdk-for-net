@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsConnectorStatsProperties. </summary>
     public partial class AzureDevOpsConnectorStatsProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorStatsProperties"/>. </summary>
         public AzureDevOpsConnectorStatsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorStatsProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="orgsCount"> Gets or sets orgs count. </param>
         /// <param name="projectsCount"> Gets or sets projects count. </param>

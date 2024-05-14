@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Storage Configurations for SQL Data, Log and TempDb. </summary>
     public partial class SqlVmStorageConfigurationSettings
     {
-        /// <summary> Initializes a new instance of SqlVmStorageConfigurationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageConfigurationSettings"/>. </summary>
         public SqlVmStorageConfigurationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmStorageConfigurationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmStorageConfigurationSettings"/>. </summary>
         /// <param name="sqlDataSettings"> SQL Server Data Storage Settings. </param>
         /// <param name="sqlLogSettings"> SQL Server Log Storage Settings. </param>
         /// <param name="sqlTempDBSettings"> SQL Server TempDb Storage Settings. </param>

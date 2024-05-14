@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Configuration filters. </summary>
     public partial class ConfigurationFilters
     {
-        /// <summary> Initializes a new instance of ConfigurationFilters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ConfigurationFilters(HierarchyInformation hierarchyInformation)
@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = new ChangeTrackingList<FilterableProperty>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
+        /// <param name="hierarchyInformation"> Product hierarchy information. </param>
+        /// <param name="filterableProperty"> Filters specific to product. </param>
+        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty)
+        {
+            HierarchyInformation = hierarchyInformation;
+            FilterableProperty = filterableProperty;
         }
 
         /// <summary> Product hierarchy information. </summary>

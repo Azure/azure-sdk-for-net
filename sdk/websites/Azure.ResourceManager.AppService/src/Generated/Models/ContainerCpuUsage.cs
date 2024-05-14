@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ContainerCpuUsage. </summary>
     public partial class ContainerCpuUsage
     {
-        /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCpuUsage"/>. </summary>
         public ContainerCpuUsage()
         {
             PerCpuUsage = new ChangeTrackingList<long>();
         }
 
-        /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCpuUsage"/>. </summary>
         /// <param name="totalUsage"></param>
         /// <param name="perCpuUsage"></param>
         /// <param name="kernelModeUsage"></param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The list of emerging issues. </summary>
     internal partial class EmergingIssueListResult
     {
-        /// <summary> Initializes a new instance of EmergingIssueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueListResult"/>. </summary>
         internal EmergingIssueListResult()
         {
             Value = new ChangeTrackingList<ServiceEmergingIssueData>();
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueListResult"/>. </summary>
         /// <param name="value"> The list of emerging issues. </param>
         /// <param name="nextLink"> The link used to get the next page of emerging issues. </param>
         internal EmergingIssueListResult(IReadOnlyList<ServiceEmergingIssueData> value, string nextLink)

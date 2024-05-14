@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A principal assignment check name availability request. </summary>
     public partial class KustoDatabasePrincipalAssignmentNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoDatabasePrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Principal Assignment resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = KustoDatabasePrincipalAssignmentType.MicrosoftKustoClustersDatabasesPrincipalAssignments;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/principalAssignments. </param>
+        internal KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name, KustoDatabasePrincipalAssignmentType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Principal Assignment resource name. </summary>

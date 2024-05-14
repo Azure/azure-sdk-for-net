@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Customer Managed Key details of the resource. </summary>
     public partial class VaultPropertiesEncryption
     {
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesEncryption"/>. </summary>
         public VaultPropertiesEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesEncryption"/>. </summary>
         /// <param name="keyVaultProperties"> The properties of the Key Vault which hosts CMK. </param>
         /// <param name="kekIdentity"> The details of the identity used for CMK. </param>
         /// <param name="infrastructureEncryption"> Enabling/Disabling the Double Encryption state. </param>

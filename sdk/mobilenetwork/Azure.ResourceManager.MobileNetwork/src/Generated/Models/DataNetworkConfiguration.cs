@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Settings controlling data network use. </summary>
     public partial class DataNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/>. </summary>
         /// <param name="dataNetwork"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
         /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
         /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
-            AdditionalAllowedSessionTypes = new ChangeTrackingList<PduSessionType>();
+            AdditionalAllowedSessionTypes = new ChangeTrackingList<MobileNetworkPduSessionType>();
             AllowedServices = allowedServices.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataNetworkConfiguration"/>. </summary>
         /// <param name="dataNetwork"> A reference to the data network that these settings apply to. The data network must be in the same location as the SIM policy. </param>
         /// <param name="sessionAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </param>
-        /// <param name="fiveQi"> Default QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </param>
+        /// <param name="fiveQi"> Default 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values. </param>
         /// <param name="allocationAndRetentionPriorityLevel"> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
         /// <param name="preemptionCapability"> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
         /// <param name="preemptionVulnerability"> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="additionalAllowedSessionTypes"> Allowed session types in addition to the default session type. Must not duplicate the default session type. </param>
         /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
         /// <param name="maximumNumberOfBufferedPackets"> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </param>
-        internal DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, int? fiveQi, int? allocationAndRetentionPriorityLevel, PreemptionCapability? preemptionCapability, PreemptionVulnerability? preemptionVulnerability, PduSessionType? defaultSessionType, IList<PduSessionType> additionalAllowedSessionTypes, IList<WritableSubResource> allowedServices, int? maximumNumberOfBufferedPackets)
+        internal DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, int? fiveQi, int? allocationAndRetentionPriorityLevel, MobileNetworkPreemptionCapability? preemptionCapability, MobileNetworkPreemptionVulnerability? preemptionVulnerability, MobileNetworkPduSessionType? defaultSessionType, IList<MobileNetworkPduSessionType> additionalAllowedSessionTypes, IList<WritableSubResource> allowedServices, int? maximumNumberOfBufferedPackets)
         {
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
@@ -74,18 +74,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <summary> Aggregate maximum bit rate across all non-GBR QoS flows of a given PDU session. See 3GPP TS23.501 section 5.7.2.6 for a full description of the Session-AMBR. </summary>
         public Ambr SessionAmbr { get; set; }
-        /// <summary> Default QoS Flow 5G QoS Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. This must not be a standardized 5QI value corresponding to a GBR (guaranteed bit rate) QoS Flow. The illegal GBR 5QI values are: 1, 2, 3, 4, 65, 66, 67, 71, 72, 73, 74, 75, 76, 82, 83, 84, and 85. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition of which are the GBR 5QI values. </summary>
+        /// <summary> Default 5G QoS Flow Indicator value. The 5QI identifies a specific QoS forwarding treatment to be provided to a flow. See 3GPP TS23.501 section 5.7.2.1 for a full description of the 5QI parameter, and table 5.7.4-1 for the definition the 5QI values. </summary>
         public int? FiveQi { get; set; }
         /// <summary> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
         public int? AllocationAndRetentionPriorityLevel { get; set; }
         /// <summary> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
-        public PreemptionCapability? PreemptionCapability { get; set; }
+        public MobileNetworkPreemptionCapability? PreemptionCapability { get; set; }
         /// <summary> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
-        public PreemptionVulnerability? PreemptionVulnerability { get; set; }
+        public MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get; set; }
         /// <summary> The default PDU session type, which is used if the UE does not request a specific session type. </summary>
-        public PduSessionType? DefaultSessionType { get; set; }
+        public MobileNetworkPduSessionType? DefaultSessionType { get; set; }
         /// <summary> Allowed session types in addition to the default session type. Must not duplicate the default session type. </summary>
-        public IList<PduSessionType> AdditionalAllowedSessionTypes { get; }
+        public IList<MobileNetworkPduSessionType> AdditionalAllowedSessionTypes { get; }
         /// <summary> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </summary>
         public IList<WritableSubResource> AllowedServices { get; }
         /// <summary> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt security profile input. </summary>
     public partial class VMwareCbtSecurityProfileProperties
     {
-        /// <summary> Initializes a new instance of VMwareCbtSecurityProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtSecurityProfileProperties"/>. </summary>
         public VMwareCbtSecurityProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtSecurityProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtSecurityProfileProperties"/>. </summary>
         /// <param name="targetVmSecurityType"> The target VM security type. </param>
         /// <param name="isTargetVmSecureBootEnabled"> A value indicating whether secure boot to be enabled. </param>
         /// <param name="isTargetVmTpmEnabled"> A value indicating whether trusted platform module to be enabled. </param>

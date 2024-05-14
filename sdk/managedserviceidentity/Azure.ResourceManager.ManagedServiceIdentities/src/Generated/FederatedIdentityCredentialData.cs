@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// </summary>
     public partial class FederatedIdentityCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialData"/>. </summary>
         public FederatedIdentityCredentialData()
         {
             Audiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

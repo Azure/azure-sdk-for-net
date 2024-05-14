@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateEndpointConnectionData"/>. </summary>
         public KustoPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

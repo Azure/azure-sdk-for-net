@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuListResult. </summary>
     internal partial class ResourceTypeSkuListResult
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuListResult"/>. </summary>
         internal ResourceTypeSkuListResult()
         {
             Value = new ChangeTrackingList<ResourceTypeSkuData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         internal ResourceTypeSkuListResult(IReadOnlyList<ResourceTypeSkuData> value, string nextLink)

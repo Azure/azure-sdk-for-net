@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     /// <summary> this is the management partner operations list. </summary>
     internal partial class OperationList
     {
-        /// <summary> Initializes a new instance of OperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationList"/>. </summary>
         internal OperationList()
         {
             Value = new ChangeTrackingList<OperationResponse>();
         }
 
-        /// <summary> Initializes a new instance of OperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationList"/>. </summary>
         /// <param name="value"> this is the operation response list. </param>
         /// <param name="nextLink"> Url to get the next page of items. </param>
         internal OperationList(IReadOnlyList<OperationResponse> value, string nextLink)

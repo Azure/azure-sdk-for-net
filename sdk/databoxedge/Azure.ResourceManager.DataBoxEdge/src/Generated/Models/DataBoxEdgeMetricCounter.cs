@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The metric counter. </summary>
     public partial class DataBoxEdgeMetricCounter
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/>. </summary>
         /// <param name="name"> The counter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataBoxEdgeMetricCounter(string name)
@@ -26,17 +58,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             AdditionalDimensions = new ChangeTrackingList<DataBoxEdgeMetricDimension>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/>. </summary>
         /// <param name="name"> The counter name. </param>
         /// <param name="instance"> The instance from which counter should be collected. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
         /// <param name="additionalDimensions"> The additional dimensions to be added to metric. </param>
-        internal DataBoxEdgeMetricCounter(string name, string instance, IList<DataBoxEdgeMetricDimension> dimensionFilter, IList<DataBoxEdgeMetricDimension> additionalDimensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeMetricCounter(string name, string instance, IList<DataBoxEdgeMetricDimension> dimensionFilter, IList<DataBoxEdgeMetricDimension> additionalDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Instance = instance;
             DimensionFilter = dimensionFilter;
             AdditionalDimensions = additionalDimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/> for deserialization. </summary>
+        internal DataBoxEdgeMetricCounter()
+        {
         }
 
         /// <summary> The counter name. </summary>

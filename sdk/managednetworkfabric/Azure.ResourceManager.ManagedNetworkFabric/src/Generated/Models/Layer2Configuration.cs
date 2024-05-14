@@ -10,33 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> layer2Configuration. </summary>
+    /// <summary> Common properties for Layer2 Configuration. </summary>
     public partial class Layer2Configuration
     {
-        /// <summary> Initializes a new instance of Layer2Configuration. </summary>
-        /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
-        public Layer2Configuration(int mtu)
+        /// <summary> Initializes a new instance of <see cref="Layer2Configuration"/>. </summary>
+        public Layer2Configuration()
         {
-            Mtu = mtu;
-            Interfaces = new ChangeTrackingList<string>();
+            Interfaces = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of Layer2Configuration. </summary>
-        /// <param name="portCount"> Number of ports connected between PE/CE. Maximum value depends on FabricSKU. </param>
+        /// <summary> Initializes a new instance of <see cref="Layer2Configuration"/>. </summary>
         /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
         /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
-        internal Layer2Configuration(int? portCount, int mtu, IReadOnlyList<string> interfaces)
+        internal Layer2Configuration(int? mtu, IList<ResourceIdentifier> interfaces)
         {
-            PortCount = portCount;
             Mtu = mtu;
             Interfaces = interfaces;
         }
 
-        /// <summary> Number of ports connected between PE/CE. Maximum value depends on FabricSKU. </summary>
-        public int? PortCount { get; set; }
         /// <summary> MTU of the packets between PE &amp; CE. </summary>
-        public int Mtu { get; set; }
+        public int? Mtu { get; set; }
         /// <summary> List of network device interfaces resource IDs. </summary>
-        public IReadOnlyList<string> Interfaces { get; }
+        public IList<ResourceIdentifier> Interfaces { get; }
     }
 }

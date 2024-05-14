@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<DataFactoryPrivateEndpointProperties> properties = default;
+            Optional<DataFactoryPrivateEndpointConnectionProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    properties = DataFactoryPrivateEndpointProperties.DeserializeDataFactoryPrivateEndpointProperties(property.Value);
+                    properties = DataFactoryPrivateEndpointConnectionProperties.DeserializeDataFactoryPrivateEndpointConnectionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

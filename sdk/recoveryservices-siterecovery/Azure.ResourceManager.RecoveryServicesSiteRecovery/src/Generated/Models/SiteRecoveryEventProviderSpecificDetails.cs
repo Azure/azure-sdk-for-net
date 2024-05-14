@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEventProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProviderSpecificDetails"/>. </summary>
         protected SiteRecoveryEventProviderSpecificDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEventProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal SiteRecoveryEventProviderSpecificDetails(string instanceType)
         {

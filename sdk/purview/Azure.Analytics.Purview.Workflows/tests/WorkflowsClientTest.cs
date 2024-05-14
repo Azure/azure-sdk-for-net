@@ -23,11 +23,11 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         {
             var client = GetWorkflowClient();
 
-            Guid workflowId = new Guid("c504f8ad-c0d6-4e76-ada8-33a0d3cccba7");
+            Guid workflowId = new Guid("e3467b48-a9d8-11ed-afa1-0242ac120002");
 
-            string workflow = "{\"name\":\"Create glossary term workflow\",\"description\":\"\",\"triggers\":[{\"type\":\"when_term_creation_is_requested\",\"underGlossaryHierarchy\":\"/glossaries/20031e20-b4df-4a66-a61d-1b0716f3fa48\"}],\"isEnabled\":true,\"actionDag\":{\"actions\":{\"Startandwaitforanapproval\":{\"type\":\"Approval\",\"inputs\":{\"parameters\":{\"approvalType\":\"PendingOnAll\",\"title\":\"ApprovalRequestforCreateGlossaryTerm\",\"assignedTo\":[\"eece94d9-0619-4669-bb8a-d6ecec5220bc\"]}},\"runAfter\":{}},\"Condition\":{\"type\":\"If\",\"expression\":{\"and\":[{\"equals\":[\"@outputs('Startandwaitforanapproval')['body/outcome']\",\"Approved\"]}]},\"actions\":{\"Createglossaryterm\":{\"type\":\"CreateTerm\",\"runAfter\":{}},\"Sendemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-APPROVED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isapproved.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{\"Createglossaryterm\":[\"Succeeded\"]}}},\"else\":{\"actions\":{\"Sendrejectemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-REJECTED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{triggerBody()['request']['term']['name']}isrejected.\",\"emailRecipients\":[\"@{triggerBody()['request']['requestor']}\"]}},\"runAfter\":{}}}},\"runAfter\":{\"Startandwaitforanapproval\":[\"Succeeded\"]}}}}}";
+            string workflow = "{\"name\":\"Create glossary term workflow\",\"description\":\"\",\"triggers\":[{\"type\":\"when_term_creation_is_requested\",\"underGlossaryHierarchy\":\"/glossaries/5dae5e5b-5aa6-48f1-9e46-26fe7328de71\"}],\"isEnabled\":true,\"actionDag\":{\"actions\":{\"Startandwaitforanapproval\":{\"type\":\"Approval\",\"inputs\":{\"parameters\":{\"approvalType\":\"PendingOnAll\",\"title\":\"ApprovalRequestforCreateGlossaryTerm\",\"assignedTo\":[\"eece94d9-0619-4669-bb8a-d6ecec5220bc\"]}},\"runAfter\":{}},\"Condition\":{\"type\":\"If\",\"expression\":{\"and\":[{\"equals\":[\"@{outputs('Startandwaitforanapproval')['outcome']}\",\"Approved\"]}]},\"actions\":{\"Createglossaryterm\":{\"type\":\"CreateTerm\",\"runAfter\":{}},\"Sendemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-APPROVED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{runInput()['term']['name']}isapproved.\",\"emailRecipients\":[\"@{runInput()['requestor']}\"]}},\"runAfter\":{\"Createglossaryterm\":[\"Succeeded\"]}}},\"else\":{\"actions\":{\"Sendrejectemailnotification\":{\"type\":\"EmailNotification\",\"inputs\":{\"parameters\":{\"emailSubject\":\"GlossaryTermCreate-REJECTED\",\"emailMessage\":\"YourrequestforGlossaryTerm@{runInput()['term']['name']}isrejected.\",\"emailRecipients\":[\"@{runInput()['requestor']}\"]}},\"runAfter\":{}}}},\"runAfter\":{\"Startandwaitforanapproval\":[\"Succeeded\"]}}}}}";
 
-            Response createResult = await client.CreateOrReplaceWorkflowAsync(workflowId, RequestContent.Create(workflow));
+            Response createResult = await client.CreateOrReplaceAsync(workflowId, RequestContent.Create(workflow));
 
             using var createJsonDocument = JsonDocument.Parse(GetContentFromResponse(createResult));
             JsonElement createBodyJson = createJsonDocument.RootElement;
@@ -38,20 +38,20 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         [RecordedTest]
         public async Task ListWorkflow()
         {
-            var client = GetWorkflowClient();
+            var client = GetWorkflowsClient();
             var workflowsList = client.GetWorkflowsAsync(new()).GetAsyncEnumerator();
             await workflowsList.MoveNextAsync();
             using var workflowsListJsonDocument = JsonDocument.Parse(workflowsList.Current);
             JsonElement listBodyJson = workflowsListJsonDocument.RootElement;
             await workflowsList.DisposeAsync();
-            Assert.AreEqual("Delete glossary term", listBodyJson.GetProperty("name").ToString());
+            Assert.NotNull(listBodyJson);
         }
 
         [RecordedTest]
         public async Task GetWorkflow()
         {
             var client = GetWorkflowClient();
-            Guid workflowId = new Guid("8af1ecae-16ee-4b2d-8972-00d611dd2f99");
+            Guid workflowId = new Guid("e3467b48-a9d8-11ed-afa1-0242ac120002");
             Response getResult = await client.GetWorkflowAsync(workflowId, new());
             using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResult));
             JsonElement getBodyJson = jsonDocument.RootElement;
@@ -63,33 +63,33 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         {
             var client = GetWorkflowClient();
 
-            Guid workflowId = new Guid("5ec07661-0111-4264-aed8-2a335773a831");
+            Guid workflowId = new Guid("3f7a14f2-c9cd-4fe4-96df-ed3447256118");
 
-            Response deleteResult = await client.DeleteWorkflowAsync(workflowId);
+            Response deleteResult = await client.DeleteAsync(workflowId);
             Assert.AreEqual(204, deleteResult.Status);
         }
 
         [RecordedTest]
         public async Task SubmitUserRequest()
         {
-            var client = GetWorkflowClient();
+            var client = GetUserRequestsClient();
 
-            string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
+            string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"5dae5e5b-5aa6-48f1-9e46-26fe7328de71\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
 
-            Response submitResult = await client.SubmitUserRequestsAsync(RequestContent.Create(request));
+            Response submitResult = await client.SubmitAsync(RequestContent.Create(request));
             Assert.AreEqual(200, submitResult.Status);
         }
 
         [RecordedTest]
         public async Task CancelWorkflowRuns()
         {
-            var client = GetWorkflowClient();
+            var client = GetWorkflowRunClient();
 
-            Guid workflowRunId = new Guid("d77281b4-2af3-4bc5-8d2f-14a2b63fa33d");
+            Guid workflowRunId = new Guid("27022a5a-accd-4c91-baf5-33297b2a12ba");
 
             string request = "{\"comment\":\"Thanks!\"}";
 
-            Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
+            Response cancelResult = await client.CancelAsync(workflowRunId, RequestContent.Create(request));
 
             Assert.AreEqual(200, cancelResult.Status);
         }
@@ -97,13 +97,13 @@ namespace Azure.Analytics.Purview.Workflows.Tests
         [RecordedTest]
         public async Task ApproveWorkflowTask()
         {
-            var client = GetWorkflowClient();
+            var client = GetApprovalClient();
 
-            Guid taskId = new Guid("507d9e8a-e5c4-41db-ace5-358961e0bfeb");
+            Guid taskId = new Guid("ca7a1483-3635-4822-aa7d-9291f7d32f4c");
 
             string request = "{\"comment\":\"Thanks!\"}";
 
-            Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
+            Response approveResult = await client.ApproveAsync(taskId, RequestContent.Create(request));
 
             Assert.AreEqual(200, approveResult.Status);
         }

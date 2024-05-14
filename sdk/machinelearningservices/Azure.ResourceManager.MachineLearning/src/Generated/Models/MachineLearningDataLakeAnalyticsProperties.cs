@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningDataLakeAnalyticsProperties. </summary>
     internal partial class MachineLearningDataLakeAnalyticsProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningDataLakeAnalyticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalyticsProperties"/>. </summary>
         public MachineLearningDataLakeAnalyticsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataLakeAnalyticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataLakeAnalyticsProperties"/>. </summary>
         /// <param name="dataLakeStoreAccountName"> DataLake Store Account Name. </param>
         internal MachineLearningDataLakeAnalyticsProperties(string dataLakeStoreAccountName)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The list of private endpoint connections for an IotHub. </summary>
     internal partial class IotHubPrivateEndpointConnectionsList
     {
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionsList"/>. </summary>
         internal IotHubPrivateEndpointConnectionsList()
         {
             Value = new ChangeTrackingList<IotHubPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionsList"/>. </summary>
         /// <param name="value"> The array of Private Endpoint Connections. </param>
         internal IotHubPrivateEndpointConnectionsList(IReadOnlyList<IotHubPrivateEndpointConnectionData> value)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of Private Endpoint connections. </summary>
     internal partial class SearchPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionListResult"/>. </summary>
         internal SearchPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of Private Endpoint connections. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
         internal SearchPrivateEndpointConnectionListResult(IReadOnlyList<SearchPrivateEndpointConnectionData> value, string nextLink)

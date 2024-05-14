@@ -1,14 +1,57 @@
 # Release History
 
-## 5.10.0-beta.1 (Unreleased)
+## 5.11.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added a `CheckpointPosition` struct to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `EventProcessorClient` and `BlobCheckpointStore` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
 
 ### Breaking Changes
 
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.  
+
+  This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no difference in behavior for normal usage scenarios.
+
 ### Bugs Fixed
 
+- Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping the processor.
+
+- Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
+
 ### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
+
+- Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+## 5.10.0 (2023-11-08)
+
+### Breaking Changes
+
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
+  and message `Activity` name from `EventHubs.Message` to `Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+### Bugs Fixed
+
+- Fixed a parameter type mismatch in ETW #7 (ReceiveComplete) which caused the duration argument of the operation to be interpreted as a Unicode string and fail to render properly in the formatted message.
+
+### Other Changes
+
+- When an Event Hub is disabled, it will now be detected and result in a terminal `EventHubsException` with its reason set to `FailureReason.ResourceNotFound`.
+
+## 5.9.3 (2023-09-12)
+
+### Other Changes
+
+- Several improvements to logging have been made to capture additional context and fix typos.  Most notable among them is the inclusion of starting and ending sequence numbers when events are read from Event Hubs and dispatched for processing.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3.  This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
 
 ## 5.9.2 (2023-06-06)
 

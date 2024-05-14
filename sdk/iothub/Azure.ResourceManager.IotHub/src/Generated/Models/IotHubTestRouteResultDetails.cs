@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Detailed result of testing a route. </summary>
     internal partial class IotHubTestRouteResultDetails
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         internal IotHubTestRouteResultDetails()
         {
             CompilationErrors = new ChangeTrackingList<RouteCompilationError>();
         }
 
-        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         /// <param name="compilationErrors"> JSON-serialized list of route compilation errors. </param>
         internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors)
         {

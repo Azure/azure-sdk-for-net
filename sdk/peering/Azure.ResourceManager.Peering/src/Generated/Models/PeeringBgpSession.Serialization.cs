@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftSessionIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftSessionIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("peerSessionIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("peerSessionIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }

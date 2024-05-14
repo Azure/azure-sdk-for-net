@@ -13,9 +13,9 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Salesforce Service Cloud object dataset. </summary>
-    public partial class SalesforceServiceCloudObjectDataset : DataFactoryDatasetDefinition
+    public partial class SalesforceServiceCloudObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceServiceCloudObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "SalesforceServiceCloudObject";
         }
 
-        /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

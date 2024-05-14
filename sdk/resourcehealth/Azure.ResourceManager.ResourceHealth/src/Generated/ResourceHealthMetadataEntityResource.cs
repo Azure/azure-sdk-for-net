@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A Class representing a ResourceHealthMetadataEntity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceHealthMetadataEntityResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceHealthMetadataEntityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetResourceHealthMetadataEntity method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceHealthMetadataEntityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceHealthMetadataEntityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetResourceHealthMetadataEntity method.
     /// </summary>
     public partial class ResourceHealthMetadataEntityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceHealthMetadataEntityResource"/> instance. </summary>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string name)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/metadata/{name}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly MetadataRestOperations _resourceHealthMetadataEntityMetadataRestClient;
         private readonly ResourceHealthMetadataEntityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/metadata";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceHealthMetadataEntityResource"/> class for mocking. </summary>
         protected ResourceHealthMetadataEntityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceHealthMetadataEntityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceHealthMetadataEntityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceHealthMetadataEntityResource(ArmClient client, ResourceHealthMetadataEntityData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/metadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +99,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthMetadataEntityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +138,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthMetadataEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

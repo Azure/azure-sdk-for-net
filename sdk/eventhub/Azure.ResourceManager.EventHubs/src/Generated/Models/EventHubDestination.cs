@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Capture storage details for capture description. </summary>
     public partial class EventHubDestination
     {
-        /// <summary> Initializes a new instance of EventHubDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubDestination"/>. </summary>
         public EventHubDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubDestination"/>. </summary>
         /// <param name="name"> Name for capture destination. </param>
         /// <param name="storageAccountResourceId"> Resource id of the storage account to be used to create the blobs. </param>
         /// <param name="blobContainer"> Blob container Name. </param>

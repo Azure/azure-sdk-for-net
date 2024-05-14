@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list linked storage accounts service operation response. </summary>
     internal partial class LinkedStorageAccountsListResult
     {
-        /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedStorageAccountsListResult"/>. </summary>
         internal LinkedStorageAccountsListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsLinkedStorageAccountsData>();
         }
 
-        /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedStorageAccountsListResult"/>. </summary>
         /// <param name="value"> A list of linked storage accounts instances. </param>
         internal LinkedStorageAccountsListResult(IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> value)
         {

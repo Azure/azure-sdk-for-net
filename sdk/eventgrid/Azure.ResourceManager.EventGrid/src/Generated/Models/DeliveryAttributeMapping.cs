@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class DeliveryAttributeMapping
     {
-        /// <summary> Initializes a new instance of DeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
         protected DeliveryAttributeMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of DeliveryAttributeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
         internal DeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType)

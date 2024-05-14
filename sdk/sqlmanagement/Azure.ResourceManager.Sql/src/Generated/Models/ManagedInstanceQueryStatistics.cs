@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Execution statistics for one particular query. </summary>
     internal partial class ManagedInstanceQueryStatistics
     {
-        /// <summary> Initializes a new instance of ManagedInstanceQueryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceQueryStatistics"/>. </summary>
         internal ManagedInstanceQueryStatistics()
         {
             Value = new ChangeTrackingList<QueryStatistics>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceQueryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceQueryStatistics"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ManagedInstanceQueryStatistics(IReadOnlyList<QueryStatistics> value, string nextLink)

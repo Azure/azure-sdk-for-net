@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CertificateThumbprint);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(CertificateThumbprint.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(CertificateThumbprint))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WriteEndObject();
         }

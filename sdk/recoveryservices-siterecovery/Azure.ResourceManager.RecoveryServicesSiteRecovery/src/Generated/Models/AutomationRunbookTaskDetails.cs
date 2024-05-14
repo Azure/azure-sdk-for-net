@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents the task details for an automation runbook. </summary>
     public partial class AutomationRunbookTaskDetails : SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookTaskDetails"/>. </summary>
         internal AutomationRunbookTaskDetails()
         {
             InstanceType = "AutomationRunbookTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="name"> The recovery plan task name. </param>
         /// <param name="cloudServiceName"> The cloud service of the automation runbook account. </param>

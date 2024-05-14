@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsDataConnectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsDataConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsDataConnectorData"/>. </summary>
         public SecurityInsightsDataConnectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsDataConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsDataConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

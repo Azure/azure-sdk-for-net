@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The details for the Managed Services offer’s plan in Azure Marketplace. </summary>
     public partial class ManagedServicesPlan
     {
-        /// <summary> Initializes a new instance of ManagedServicesPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
         /// <param name="name"> Azure Marketplace plan name. </param>
         /// <param name="publisher"> Azure Marketplace publisher ID. </param>
         /// <param name="product"> Azure Marketplace product code. </param>

@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document type info. </summary>
     public partial class DocumentTypeDetails
     {
-        /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldSchema"/> is null. </exception>
         internal DocumentTypeDetails(IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema)
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             FieldConfidence = new ChangeTrackingDictionary<string, float>();
         }
 
-        /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTypeDetails"/>. </summary>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="fieldSchema"> Description of the document semantic schema using a JSON Schema style syntax. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Actions which to take by the auto-heal module when a rule is triggered. </summary>
     public partial class AutoHealActions
     {
-        /// <summary> Initializes a new instance of AutoHealActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealActions"/>. </summary>
         public AutoHealActions()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoHealActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealActions"/>. </summary>
         /// <param name="actionType"> Predefined action to be taken. </param>
         /// <param name="customAction"> Custom action to be taken. </param>
         /// <param name="minProcessExecutionTime">

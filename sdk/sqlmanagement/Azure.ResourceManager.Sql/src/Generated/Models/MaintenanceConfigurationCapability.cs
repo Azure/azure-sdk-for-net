@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The maintenance configuration capability. </summary>
     public partial class MaintenanceConfigurationCapability
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCapability"/>. </summary>
         internal MaintenanceConfigurationCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the maintenance configuration. </param>
         /// <param name="status"> The status of the capability. </param>

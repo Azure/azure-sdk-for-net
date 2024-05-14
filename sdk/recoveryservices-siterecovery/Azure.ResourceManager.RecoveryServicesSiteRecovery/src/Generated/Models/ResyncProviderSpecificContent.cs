@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ResyncProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of ResyncProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResyncProviderSpecificContent"/>. </summary>
         protected ResyncProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResyncProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal ResyncProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

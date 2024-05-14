@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Paged list of private link resources. </summary>
     internal partial class PrivateLinkResourceList
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
         /// <param name="value"> Collection of items of type results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateLinkResourceList(IEnumerable<PurviewPrivateLinkResourceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
         /// <param name="count"> Total item count. </param>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>

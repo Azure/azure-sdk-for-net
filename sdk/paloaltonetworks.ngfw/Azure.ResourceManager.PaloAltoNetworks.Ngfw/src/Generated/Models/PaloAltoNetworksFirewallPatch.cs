@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the FirewallResource. </summary>
     public partial class PaloAltoNetworksFirewallPatch
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallPatch"/>. </summary>
         public PaloAltoNetworksFirewallPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The updatable properties of the FirewallResource. </param>
+        internal PaloAltoNetworksFirewallPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, FirewallUpdateProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

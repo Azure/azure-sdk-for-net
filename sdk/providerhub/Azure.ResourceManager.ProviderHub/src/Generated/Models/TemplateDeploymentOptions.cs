@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TemplateDeploymentOptions. </summary>
     public partial class TemplateDeploymentOptions
     {
-        /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentOptions"/>. </summary>
         public TemplateDeploymentOptions()
         {
             PreflightOptions = new ChangeTrackingList<PreflightOption>();
         }
 
-        /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentOptions"/>. </summary>
         /// <param name="isPreflightSupported"></param>
         /// <param name="preflightOptions"></param>
         internal TemplateDeploymentOptions(bool? isPreflightSupported, IList<PreflightOption> preflightOptions)

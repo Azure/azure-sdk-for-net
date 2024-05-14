@@ -28,6 +28,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -97,6 +107,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             WebHookActivityMethod method = default;
@@ -123,6 +135,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -219,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebHookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);
+            return new WebHookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);
         }
 
         internal partial class WebHookActivityConverter : JsonConverter<WebHookActivity>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class HealthcareApisIotFhirDestinationData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationData"/>. </summary>
         /// <param name="resourceIdentityResolutionType"> Determines how resource identity is resolved on the destination. </param>
         /// <param name="fhirServiceResourceId"> Fully qualified resource id of the FHIR service to connect to. </param>
         /// <param name="fhirMapping"> FHIR Mappings. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthcareApis
             FhirMapping = fhirMapping;
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotFhirDestinationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

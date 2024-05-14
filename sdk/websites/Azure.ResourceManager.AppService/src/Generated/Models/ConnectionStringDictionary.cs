@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String dictionary resource. </summary>
     public partial class ConnectionStringDictionary : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectionStringDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStringDictionary"/>. </summary>
         public ConnectionStringDictionary()
         {
             Properties = new ChangeTrackingDictionary<string, ConnStringValueTypePair>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionStringDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStringDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

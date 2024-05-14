@@ -1,0 +1,4342 @@
+{
+    "status": "succeeded",
+    "createdDateTime": "2021-08-24T20:35:35Z",
+    "lastUpdatedDateTime": "2021-08-24T20:35:37Z",
+    "analyzeResult": {
+        "apiVersion": "2021-07-30-preview",
+        "modelId": "prebuilt-layout",
+        "stringIndexType": "textElements",
+        "content": "Purchase Order\nHero Limited\nCompany Phone: 555-348-6512\nWebsite: www.herolimited.com\nEmail:\naccounts@herolimited.com\nShipped To\nVendor Name: Tish Williams\nCompany Name: Tish's Wishes\nAddress: 932 N Cantaloupe Road\nSeattle, WA 38383\nPurchase Order\nDated As: 02/10/2020\nPurchase Order #: 9328424\nPhone: 323-245-2943\nShipped From\nName: Larry Longshore\nCompany Name: Longshore Supply\nAddress: 382 N Cool Road\nBellevue WA 93939\nPhone: 938-242-4924\nDetails\nQuantity\nUnit Price\nTotal\nParty Favor purple\n20\n5.00\n100.00\nParty Hat Blue\n20\n5.00\n100.00\nParty Cloth White\n20\n5.00\n100.00\nParty Maraca White\n20\n5.00\n100.00\nLarry Longshore\nLarry Longshore\nShipping Manager\nAdditional Notes:\nSUBTOTAL\n$400.00\nTAX\n$14.00\nTOTAL\n$414.00\nUnpack Carefully. Enjoy. Longshore Supply wishes you a happy party and is always here for\nfor your party supply needs. For larger events and rentals please visit us at our affiliates\nwebpage:\nwww.longshoreevents.org",
+        "pages": [
+            {
+                "pageNumber": 1,
+                "angle": 0,
+                "width": 1700,
+                "height": 2200,
+                "unit": "pixel",
+                "words": [
+                    {
+                        "content": "Purchase",
+                        "boundingBox": [
+                            137,
+                            140,
+                            259,
+                            139,
+                            259,
+                            167,
+                            137,
+                            167
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 0,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "Order",
+                        "boundingBox": [
+                            264,
+                            139,
+                            350,
+                            139,
+                            349,
+                            167,
+                            264,
+                            167
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 9,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Hero",
+                        "boundingBox": [
+                            621,
+                            208,
+                            769,
+                            206,
+                            769,
+                            266,
+                            620,
+                            266
+                        ],
+                        "confidence": 0.983,
+                        "span": {
+                            "offset": 15,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Limited",
+                        "boundingBox": [
+                            793,
+                            205,
+                            1058,
+                            204,
+                            1057,
+                            266,
+                            793,
+                            266
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 20,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Company",
+                        "boundingBox": [
+                            163,
+                            353,
+                            270,
+                            351,
+                            270,
+                            379,
+                            164,
+                            378
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 28,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Phone:",
+                        "boundingBox": [
+                            275,
+                            351,
+                            358,
+                            351,
+                            358,
+                            378,
+                            275,
+                            379
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 36,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "555-348-6512",
+                        "boundingBox": [
+                            363,
+                            351,
+                            525,
+                            351,
+                            525,
+                            374,
+                            363,
+                            378
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 43,
+                            "length": 12
+                        }
+                    },
+                    {
+                        "content": "Website:",
+                        "boundingBox": [
+                            167,
+                            394,
+                            266,
+                            393,
+                            266,
+                            418,
+                            167,
+                            417
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 56,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "www.herolimited.com",
+                        "boundingBox": [
+                            271,
+                            393,
+                            519,
+                            394,
+                            519,
+                            418,
+                            271,
+                            418
+                        ],
+                        "confidence": 0.987,
+                        "span": {
+                            "offset": 65,
+                            "length": 19
+                        }
+                    },
+                    {
+                        "content": "Email:",
+                        "boundingBox": [
+                            165,
+                            435,
+                            237,
+                            435,
+                            237,
+                            460,
+                            165,
+                            460
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 85,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "accounts@herolimited.com",
+                        "boundingBox": [
+                            164,
+                            481,
+                            472,
+                            479,
+                            472,
+                            503,
+                            165,
+                            503
+                        ],
+                        "confidence": 0.959,
+                        "span": {
+                            "offset": 92,
+                            "length": 24
+                        }
+                    },
+                    {
+                        "content": "Shipped",
+                        "boundingBox": [
+                            167,
+                            547,
+                            325,
+                            548,
+                            325,
+                            592,
+                            168,
+                            592
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 117,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "To",
+                        "boundingBox": [
+                            337,
+                            547,
+                            390,
+                            547,
+                            389,
+                            591,
+                            337,
+                            592
+                        ],
+                        "confidence": 0.999,
+                        "span": {
+                            "offset": 125,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "Vendor",
+                        "boundingBox": [
+                            159,
+                            611,
+                            250,
+                            610,
+                            250,
+                            638,
+                            160,
+                            637
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 128,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Name:",
+                        "boundingBox": [
+                            256,
+                            610,
+                            341,
+                            609,
+                            341,
+                            638,
+                            256,
+                            638
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 135,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Tish",
+                        "boundingBox": [
+                            347,
+                            609,
+                            398,
+                            609,
+                            397,
+                            638,
+                            346,
+                            638
+                        ],
+                        "confidence": 0.991,
+                        "span": {
+                            "offset": 141,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Williams",
+                        "boundingBox": [
+                            403,
+                            609,
+                            516,
+                            610,
+                            515,
+                            637,
+                            402,
+                            638
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 146,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "Company",
+                        "boundingBox": [
+                            160,
+                            649,
+                            277,
+                            647,
+                            277,
+                            677,
+                            161,
+                            678
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 155,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Name:",
+                        "boundingBox": [
+                            282,
+                            647,
+                            368,
+                            647,
+                            368,
+                            676,
+                            283,
+                            677
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 163,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Tish's",
+                        "boundingBox": [
+                            373,
+                            647,
+                            444,
+                            647,
+                            444,
+                            675,
+                            373,
+                            676
+                        ],
+                        "confidence": 0.989,
+                        "span": {
+                            "offset": 169,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Wishes",
+                        "boundingBox": [
+                            450,
+                            647,
+                            546,
+                            648,
+                            545,
+                            673,
+                            449,
+                            675
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 176,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Address:",
+                        "boundingBox": [
+                            161,
+                            685,
+                            266,
+                            685,
+                            265,
+                            713,
+                            160,
+                            711
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 183,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "932",
+                        "boundingBox": [
+                            271,
+                            685,
+                            319,
+                            685,
+                            319,
+                            713,
+                            271,
+                            713
+                        ],
+                        "confidence": 0.99,
+                        "span": {
+                            "offset": 192,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "N",
+                        "boundingBox": [
+                            325,
+                            685,
+                            341,
+                            685,
+                            341,
+                            713,
+                            324,
+                            713
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 196,
+                            "length": 1
+                        }
+                    },
+                    {
+                        "content": "Cantaloupe",
+                        "boundingBox": [
+                            351,
+                            685,
+                            494,
+                            686,
+                            494,
+                            714,
+                            350,
+                            713
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 198,
+                            "length": 10
+                        }
+                    },
+                    {
+                        "content": "Road",
+                        "boundingBox": [
+                            499,
+                            686,
+                            564,
+                            686,
+                            564,
+                            714,
+                            499,
+                            714
+                        ],
+                        "confidence": 0.992,
+                        "span": {
+                            "offset": 209,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Seattle,",
+                        "boundingBox": [
+                            275,
+                            723,
+                            365,
+                            722,
+                            365,
+                            750,
+                            275,
+                            749
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 214,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "WA",
+                        "boundingBox": [
+                            370,
+                            722,
+                            417,
+                            722,
+                            417,
+                            750,
+                            370,
+                            750
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 223,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "38383",
+                        "boundingBox": [
+                            422,
+                            722,
+                            502,
+                            722,
+                            501,
+                            749,
+                            422,
+                            750
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 226,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Purchase",
+                        "boundingBox": [
+                            1113,
+                            322,
+                            1365,
+                            321,
+                            1364,
+                            370,
+                            1113,
+                            368
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 232,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "Order",
+                        "boundingBox": [
+                            1381,
+                            321,
+                            1550,
+                            321,
+                            1548,
+                            370,
+                            1380,
+                            370
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 241,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Dated",
+                        "boundingBox": [
+                            1025,
+                            421,
+                            1103,
+                            420,
+                            1103,
+                            448,
+                            1025,
+                            448
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 247,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "As:",
+                        "boundingBox": [
+                            1111,
+                            420,
+                            1156,
+                            420,
+                            1155,
+                            449,
+                            1111,
+                            448
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 253,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "02/10/2020",
+                        "boundingBox": [
+                            1161,
+                            420,
+                            1312,
+                            421,
+                            1312,
+                            449,
+                            1161,
+                            449
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 257,
+                            "length": 10
+                        }
+                    },
+                    {
+                        "content": "Purchase",
+                        "boundingBox": [
+                            1023,
+                            461,
+                            1146,
+                            461,
+                            1146,
+                            489,
+                            1023,
+                            488
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 268,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "Order",
+                        "boundingBox": [
+                            1151,
+                            461,
+                            1236,
+                            461,
+                            1236,
+                            489,
+                            1151,
+                            489
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 277,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "#:",
+                        "boundingBox": [
+                            1242,
+                            461,
+                            1269,
+                            461,
+                            1268,
+                            489,
+                            1241,
+                            489
+                        ],
+                        "confidence": 0.954,
+                        "span": {
+                            "offset": 283,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "9328424",
+                        "boundingBox": [
+                            1274,
+                            461,
+                            1386,
+                            462,
+                            1385,
+                            488,
+                            1274,
+                            489
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 286,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Phone:",
+                        "boundingBox": [
+                            760,
+                            722,
+                            848,
+                            722,
+                            848,
+                            749,
+                            760,
+                            748
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 294,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "323-245-2943",
+                        "boundingBox": [
+                            853,
+                            722,
+                            1028,
+                            722,
+                            1028,
+                            748,
+                            853,
+                            749
+                        ],
+                        "confidence": 0.988,
+                        "span": {
+                            "offset": 301,
+                            "length": 12
+                        }
+                    },
+                    {
+                        "content": "Shipped",
+                        "boundingBox": [
+                            167,
+                            784,
+                            324,
+                            785,
+                            324,
+                            830,
+                            168,
+                            829
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 314,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "From",
+                        "boundingBox": [
+                            332,
+                            785,
+                            431,
+                            785,
+                            430,
+                            827,
+                            333,
+                            830
+                        ],
+                        "confidence": 0.988,
+                        "span": {
+                            "offset": 322,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Name:",
+                        "boundingBox": [
+                            164,
+                            850,
+                            245,
+                            850,
+                            244,
+                            884,
+                            162,
+                            884
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 327,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Larry",
+                        "boundingBox": [
+                            251,
+                            850,
+                            314,
+                            850,
+                            313,
+                            885,
+                            250,
+                            884
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 333,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Longshore",
+                        "boundingBox": [
+                            321,
+                            850,
+                            456,
+                            849,
+                            456,
+                            884,
+                            320,
+                            885
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 339,
+                            "length": 9
+                        }
+                    },
+                    {
+                        "content": "Company",
+                        "boundingBox": [
+                            164,
+                            890,
+                            280,
+                            889,
+                            281,
+                            919,
+                            165,
+                            919
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 349,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Name:",
+                        "boundingBox": [
+                            286,
+                            889,
+                            370,
+                            889,
+                            371,
+                            919,
+                            287,
+                            919
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 357,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Longshore",
+                        "boundingBox": [
+                            376,
+                            889,
+                            508,
+                            890,
+                            508,
+                            920,
+                            377,
+                            919
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 363,
+                            "length": 9
+                        }
+                    },
+                    {
+                        "content": "Supply",
+                        "boundingBox": [
+                            514,
+                            890,
+                            604,
+                            890,
+                            603,
+                            920,
+                            513,
+                            920
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 373,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Address:",
+                        "boundingBox": [
+                            166,
+                            926,
+                            272,
+                            926,
+                            272,
+                            953,
+                            166,
+                            953
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 380,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "382",
+                        "boundingBox": [
+                            277,
+                            926,
+                            324,
+                            925,
+                            324,
+                            953,
+                            277,
+                            953
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 389,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "N",
+                        "boundingBox": [
+                            329,
+                            925,
+                            346,
+                            925,
+                            346,
+                            953,
+                            330,
+                            953
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 393,
+                            "length": 1
+                        }
+                    },
+                    {
+                        "content": "Cool",
+                        "boundingBox": [
+                            355,
+                            925,
+                            412,
+                            926,
+                            412,
+                            953,
+                            355,
+                            953
+                        ],
+                        "confidence": 0.991,
+                        "span": {
+                            "offset": 395,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Road",
+                        "boundingBox": [
+                            417,
+                            926,
+                            482,
+                            926,
+                            482,
+                            953,
+                            418,
+                            953
+                        ],
+                        "confidence": 0.992,
+                        "span": {
+                            "offset": 400,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Bellevue",
+                        "boundingBox": [
+                            284,
+                            964,
+                            386,
+                            964,
+                            386,
+                            990,
+                            283,
+                            990
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 405,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "WA",
+                        "boundingBox": [
+                            391,
+                            964,
+                            438,
+                            964,
+                            438,
+                            990,
+                            391,
+                            990
+                        ],
+                        "confidence": 0.999,
+                        "span": {
+                            "offset": 414,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "93939",
+                        "boundingBox": [
+                            443,
+                            964,
+                            525,
+                            963,
+                            525,
+                            990,
+                            443,
+                            990
+                        ],
+                        "confidence": 0.964,
+                        "span": {
+                            "offset": 417,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Phone:",
+                        "boundingBox": [
+                            759,
+                            964,
+                            844,
+                            964,
+                            844,
+                            990,
+                            758,
+                            990
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 423,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "938-242-4924",
+                        "boundingBox": [
+                            850,
+                            964,
+                            1024,
+                            964,
+                            1024,
+                            990,
+                            849,
+                            990
+                        ],
+                        "confidence": 0.956,
+                        "span": {
+                            "offset": 430,
+                            "length": 12
+                        }
+                    },
+                    {
+                        "content": "Details",
+                        "boundingBox": [
+                            447,
+                            1048,
+                            556,
+                            1048,
+                            556,
+                            1078,
+                            446,
+                            1078
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 443,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Quantity",
+                        "boundingBox": [
+                            886,
+                            1048,
+                            1030,
+                            1047,
+                            1030,
+                            1084,
+                            886,
+                            1084
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 451,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "Unit",
+                        "boundingBox": [
+                            1112,
+                            1047,
+                            1175,
+                            1047,
+                            1175,
+                            1078,
+                            1111,
+                            1078
+                        ],
+                        "confidence": 0.992,
+                        "span": {
+                            "offset": 460,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "Price",
+                        "boundingBox": [
+                            1181,
+                            1047,
+                            1265,
+                            1048,
+                            1264,
+                            1078,
+                            1181,
+                            1078
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 465,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Total",
+                        "boundingBox": [
+                            1381,
+                            1047,
+                            1467,
+                            1047,
+                            1467,
+                            1077,
+                            1381,
+                            1077
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 471,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Party",
+                        "boundingBox": [
+                            171,
+                            1092,
+                            230,
+                            1092,
+                            230,
+                            1126,
+                            171,
+                            1126
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 477,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Favor",
+                        "boundingBox": [
+                            236,
+                            1092,
+                            309,
+                            1092,
+                            308,
+                            1127,
+                            236,
+                            1126
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 483,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "purple",
+                        "boundingBox": [
+                            315,
+                            1092,
+                            403,
+                            1093,
+                            403,
+                            1128,
+                            315,
+                            1127
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 489,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            859,
+                            1094,
+                            887,
+                            1094,
+                            887,
+                            1119,
+                            859,
+                            1119
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 496,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1240,
+                            1094,
+                            1291,
+                            1094,
+                            1292,
+                            1119,
+                            1240,
+                            1119
+                        ],
+                        "confidence": 0.99,
+                        "span": {
+                            "offset": 499,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1445,
+                            1097,
+                            1524,
+                            1095,
+                            1524,
+                            1120,
+                            1444,
+                            1120
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 504,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Party",
+                        "boundingBox": [
+                            173,
+                            1136,
+                            233,
+                            1135,
+                            233,
+                            1164,
+                            173,
+                            1163
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 511,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Hat",
+                        "boundingBox": [
+                            238,
+                            1135,
+                            284,
+                            1135,
+                            285,
+                            1165,
+                            239,
+                            1164
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 517,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "Blue",
+                        "boundingBox": [
+                            290,
+                            1135,
+                            349,
+                            1135,
+                            350,
+                            1164,
+                            290,
+                            1165
+                        ],
+                        "confidence": 0.991,
+                        "span": {
+                            "offset": 521,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            859,
+                            1135,
+                            887,
+                            1135,
+                            887,
+                            1160,
+                            859,
+                            1160
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 526,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1238,
+                            1135,
+                            1291,
+                            1135,
+                            1291,
+                            1160,
+                            1238,
+                            1160
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 529,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1443,
+                            1136,
+                            1525,
+                            1135,
+                            1525,
+                            1160,
+                            1444,
+                            1161
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 534,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Party",
+                        "boundingBox": [
+                            173,
+                            1179,
+                            232,
+                            1179,
+                            232,
+                            1209,
+                            173,
+                            1208
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 541,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Cloth",
+                        "boundingBox": [
+                            238,
+                            1179,
+                            306,
+                            1179,
+                            306,
+                            1209,
+                            238,
+                            1209
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 547,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "White",
+                        "boundingBox": [
+                            312,
+                            1179,
+                            392,
+                            1178,
+                            392,
+                            1208,
+                            312,
+                            1209
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 553,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            860,
+                            1179,
+                            888,
+                            1179,
+                            888,
+                            1204,
+                            860,
+                            1203
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 559,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1239,
+                            1179,
+                            1290,
+                            1178,
+                            1291,
+                            1203,
+                            1239,
+                            1204
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 562,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1443,
+                            1181,
+                            1525,
+                            1180,
+                            1525,
+                            1204,
+                            1444,
+                            1205
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 567,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Party",
+                        "boundingBox": [
+                            173,
+                            1222,
+                            234,
+                            1222,
+                            233,
+                            1252,
+                            172,
+                            1251
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 574,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Maraca",
+                        "boundingBox": [
+                            240,
+                            1222,
+                            333,
+                            1222,
+                            333,
+                            1251,
+                            239,
+                            1252
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 580,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "White",
+                        "boundingBox": [
+                            338,
+                            1222,
+                            420,
+                            1222,
+                            420,
+                            1249,
+                            338,
+                            1251
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 587,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            860,
+                            1223,
+                            887,
+                            1223,
+                            887,
+                            1247,
+                            860,
+                            1247
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 593,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1239,
+                            1221,
+                            1291,
+                            1221,
+                            1291,
+                            1247,
+                            1239,
+                            1247
+                        ],
+                        "confidence": 0.988,
+                        "span": {
+                            "offset": 596,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1444,
+                            1224,
+                            1525,
+                            1223,
+                            1524,
+                            1247,
+                            1444,
+                            1248
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 601,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Larry",
+                        "boundingBox": [
+                            448,
+                            1671,
+                            565,
+                            1671,
+                            564,
+                            1724,
+                            447,
+                            1722
+                        ],
+                        "confidence": 0.915,
+                        "span": {
+                            "offset": 608,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Longshore",
+                        "boundingBox": [
+                            575,
+                            1671,
+                            791,
+                            1671,
+                            792,
+                            1718,
+                            574,
+                            1724
+                        ],
+                        "confidence": 0.866,
+                        "span": {
+                            "offset": 614,
+                            "length": 9
+                        }
+                    },
+                    {
+                        "content": "Larry",
+                        "boundingBox": [
+                            530,
+                            1719,
+                            592,
+                            1719,
+                            592,
+                            1744,
+                            530,
+                            1743
+                        ],
+                        "confidence": 0.445,
+                        "span": {
+                            "offset": 624,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "Longshore",
+                        "boundingBox": [
+                            596,
+                            1719,
+                            717,
+                            1719,
+                            719,
+                            1743,
+                            597,
+                            1744
+                        ],
+                        "confidence": 0.963,
+                        "span": {
+                            "offset": 630,
+                            "length": 9
+                        }
+                    },
+                    {
+                        "content": "Shipping",
+                        "boundingBox": [
+                            528,
+                            1752,
+                            621,
+                            1753,
+                            620,
+                            1780,
+                            528,
+                            1778
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 640,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "Manager",
+                        "boundingBox": [
+                            626,
+                            1753,
+                            732,
+                            1754,
+                            732,
+                            1779,
+                            626,
+                            1780
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 649,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Additional",
+                        "boundingBox": [
+                            173,
+                            1796,
+                            348,
+                            1796,
+                            348,
+                            1832,
+                            173,
+                            1831
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 657,
+                            "length": 10
+                        }
+                    },
+                    {
+                        "content": "Notes:",
+                        "boundingBox": [
+                            355,
+                            1796,
+                            477,
+                            1797,
+                            476,
+                            1833,
+                            355,
+                            1832
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 668,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "SUBTOTAL",
+                        "boundingBox": [
+                            1147,
+                            1575,
+                            1293,
+                            1575,
+                            1293,
+                            1600,
+                            1147,
+                            1600
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 675,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "$400.00",
+                        "boundingBox": [
+                            1425,
+                            1572,
+                            1526,
+                            1572,
+                            1526,
+                            1598,
+                            1426,
+                            1599
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 684,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "TAX",
+                        "boundingBox": [
+                            1236,
+                            1618,
+                            1288,
+                            1618,
+                            1288,
+                            1643,
+                            1236,
+                            1643
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 692,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "$14.00",
+                        "boundingBox": [
+                            1442,
+                            1616,
+                            1526,
+                            1615,
+                            1525,
+                            1642,
+                            1442,
+                            1644
+                        ],
+                        "confidence": 0.989,
+                        "span": {
+                            "offset": 696,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "TOTAL",
+                        "boundingBox": [
+                            1204,
+                            1674,
+                            1294,
+                            1673,
+                            1293,
+                            1699,
+                            1205,
+                            1699
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 703,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "$414.00",
+                        "boundingBox": [
+                            1426,
+                            1671,
+                            1526,
+                            1670,
+                            1526,
+                            1697,
+                            1428,
+                            1698
+                        ],
+                        "confidence": 0.988,
+                        "span": {
+                            "offset": 709,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "Unpack",
+                        "boundingBox": [
+                            175,
+                            1879,
+                            260,
+                            1879,
+                            260,
+                            1910,
+                            175,
+                            1910
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 717,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Carefully.",
+                        "boundingBox": [
+                            267,
+                            1879,
+                            387,
+                            1879,
+                            386,
+                            1911,
+                            266,
+                            1910
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 724,
+                            "length": 10
+                        }
+                    },
+                    {
+                        "content": "Enjoy.",
+                        "boundingBox": [
+                            393,
+                            1879,
+                            468,
+                            1878,
+                            467,
+                            1912,
+                            393,
+                            1911
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 735,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "Longshore",
+                        "boundingBox": [
+                            474,
+                            1878,
+                            636,
+                            1878,
+                            636,
+                            1912,
+                            474,
+                            1912
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 742,
+                            "length": 9
+                        }
+                    },
+                    {
+                        "content": "Supply",
+                        "boundingBox": [
+                            643,
+                            1878,
+                            745,
+                            1878,
+                            745,
+                            1912,
+                            642,
+                            1912
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 752,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "wishes",
+                        "boundingBox": [
+                            752,
+                            1878,
+                            857,
+                            1878,
+                            856,
+                            1913,
+                            751,
+                            1912
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 759,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "you",
+                        "boundingBox": [
+                            864,
+                            1878,
+                            920,
+                            1878,
+                            920,
+                            1913,
+                            863,
+                            1913
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 766,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "a",
+                        "boundingBox": [
+                            927,
+                            1878,
+                            947,
+                            1878,
+                            946,
+                            1913,
+                            926,
+                            1913
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 770,
+                            "length": 1
+                        }
+                    },
+                    {
+                        "content": "happy",
+                        "boundingBox": [
+                            955,
+                            1878,
+                            1049,
+                            1878,
+                            1048,
+                            1912,
+                            955,
+                            1913
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 772,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "party",
+                        "boundingBox": [
+                            1056,
+                            1878,
+                            1132,
+                            1878,
+                            1131,
+                            1912,
+                            1055,
+                            1912
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 778,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "and",
+                        "boundingBox": [
+                            1139,
+                            1878,
+                            1196,
+                            1878,
+                            1195,
+                            1912,
+                            1138,
+                            1912
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 784,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "is",
+                        "boundingBox": [
+                            1202,
+                            1878,
+                            1231,
+                            1878,
+                            1230,
+                            1912,
+                            1201,
+                            1912
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 788,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "always",
+                        "boundingBox": [
+                            1237,
+                            1878,
+                            1342,
+                            1878,
+                            1341,
+                            1911,
+                            1236,
+                            1912
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 791,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "here",
+                        "boundingBox": [
+                            1349,
+                            1878,
+                            1419,
+                            1878,
+                            1418,
+                            1911,
+                            1348,
+                            1911
+                        ],
+                        "confidence": 0.991,
+                        "span": {
+                            "offset": 798,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "for",
+                        "boundingBox": [
+                            1425,
+                            1878,
+                            1471,
+                            1878,
+                            1470,
+                            1911,
+                            1424,
+                            1911
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 803,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "for",
+                        "boundingBox": [
+                            171,
+                            1924,
+                            206,
+                            1924,
+                            206,
+                            1958,
+                            171,
+                            1958
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 807,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "your",
+                        "boundingBox": [
+                            213,
+                            1924,
+                            280,
+                            1924,
+                            280,
+                            1958,
+                            212,
+                            1958
+                        ],
+                        "confidence": 0.992,
+                        "span": {
+                            "offset": 811,
+                            "length": 4
+                        }
+                    },
+                    {
+                        "content": "party",
+                        "boundingBox": [
+                            287,
+                            1924,
+                            364,
+                            1924,
+                            364,
+                            1958,
+                            287,
+                            1958
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 816,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "supply",
+                        "boundingBox": [
+                            370,
+                            1924,
+                            471,
+                            1923,
+                            471,
+                            1958,
+                            370,
+                            1958
+                        ],
+                        "confidence": 0.993,
+                        "span": {
+                            "offset": 822,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "needs.",
+                        "boundingBox": [
+                            478,
+                            1923,
+                            578,
+                            1923,
+                            578,
+                            1958,
+                            477,
+                            1958
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 829,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "For",
+                        "boundingBox": [
+                            585,
+                            1923,
+                            640,
+                            1923,
+                            640,
+                            1958,
+                            585,
+                            1958
+                        ],
+                        "confidence": 0.988,
+                        "span": {
+                            "offset": 836,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "larger",
+                        "boundingBox": [
+                            646,
+                            1923,
+                            734,
+                            1923,
+                            734,
+                            1957,
+                            646,
+                            1958
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 840,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "events",
+                        "boundingBox": [
+                            740,
+                            1923,
+                            841,
+                            1923,
+                            841,
+                            1957,
+                            740,
+                            1957
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 847,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "and",
+                        "boundingBox": [
+                            848,
+                            1923,
+                            907,
+                            1923,
+                            907,
+                            1957,
+                            848,
+                            1957
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 854,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "rentals",
+                        "boundingBox": [
+                            913,
+                            1923,
+                            1016,
+                            1923,
+                            1016,
+                            1956,
+                            913,
+                            1957
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 858,
+                            "length": 7
+                        }
+                    },
+                    {
+                        "content": "please",
+                        "boundingBox": [
+                            1023,
+                            1923,
+                            1123,
+                            1923,
+                            1124,
+                            1956,
+                            1023,
+                            1956
+                        ],
+                        "confidence": 0.997,
+                        "span": {
+                            "offset": 866,
+                            "length": 6
+                        }
+                    },
+                    {
+                        "content": "visit",
+                        "boundingBox": [
+                            1130,
+                            1923,
+                            1191,
+                            1923,
+                            1191,
+                            1956,
+                            1130,
+                            1956
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 873,
+                            "length": 5
+                        }
+                    },
+                    {
+                        "content": "us",
+                        "boundingBox": [
+                            1198,
+                            1923,
+                            1233,
+                            1923,
+                            1233,
+                            1956,
+                            1198,
+                            1956
+                        ],
+                        "confidence": 0.999,
+                        "span": {
+                            "offset": 879,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "at",
+                        "boundingBox": [
+                            1239,
+                            1923,
+                            1272,
+                            1923,
+                            1272,
+                            1955,
+                            1240,
+                            1955
+                        ],
+                        "confidence": 0.994,
+                        "span": {
+                            "offset": 882,
+                            "length": 2
+                        }
+                    },
+                    {
+                        "content": "our",
+                        "boundingBox": [
+                            1279,
+                            1923,
+                            1329,
+                            1924,
+                            1329,
+                            1955,
+                            1279,
+                            1955
+                        ],
+                        "confidence": 0.998,
+                        "span": {
+                            "offset": 885,
+                            "length": 3
+                        }
+                    },
+                    {
+                        "content": "affiliates",
+                        "boundingBox": [
+                            1336,
+                            1924,
+                            1463,
+                            1924,
+                            1463,
+                            1954,
+                            1336,
+                            1955
+                        ],
+                        "confidence": 0.995,
+                        "span": {
+                            "offset": 889,
+                            "length": 10
+                        }
+                    },
+                    {
+                        "content": "webpage:",
+                        "boundingBox": [
+                            173,
+                            1956,
+                            318,
+                            1959,
+                            318,
+                            1993,
+                            173,
+                            1991
+                        ],
+                        "confidence": 0.996,
+                        "span": {
+                            "offset": 900,
+                            "length": 8
+                        }
+                    },
+                    {
+                        "content": "www.longshoreevents.org",
+                        "boundingBox": [
+                            459,
+                            1993,
+                            842,
+                            1992,
+                            840,
+                            2023,
+                            461,
+                            2023
+                        ],
+                        "confidence": 0.984,
+                        "span": {
+                            "offset": 909,
+                            "length": 23
+                        }
+                    }
+                ],
+                "selectionMarks": [],
+                "lines": [
+                    {
+                        "content": "Purchase Order",
+                        "boundingBox": [
+                            136,
+                            139,
+                            351,
+                            138,
+                            351,
+                            166,
+                            136,
+                            166
+                        ],
+                        "spans": [
+                            {
+                                "offset": 0,
+                                "length": 14
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Hero Limited",
+                        "boundingBox": [
+                            620,
+                            205,
+                            1074,
+                            204,
+                            1075,
+                            265,
+                            620,
+                            266
+                        ],
+                        "spans": [
+                            {
+                                "offset": 15,
+                                "length": 12
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Company Phone: 555-348-6512",
+                        "boundingBox": [
+                            163,
+                            352,
+                            528,
+                            350,
+                            528,
+                            376,
+                            163,
+                            379
+                        ],
+                        "spans": [
+                            {
+                                "offset": 28,
+                                "length": 27
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Website: www.herolimited.com",
+                        "boundingBox": [
+                            166,
+                            393,
+                            529,
+                            393,
+                            529,
+                            418,
+                            166,
+                            417
+                        ],
+                        "spans": [
+                            {
+                                "offset": 56,
+                                "length": 28
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Email:",
+                        "boundingBox": [
+                            165,
+                            435,
+                            237,
+                            435,
+                            237,
+                            460,
+                            165,
+                            460
+                        ],
+                        "spans": [
+                            {
+                                "offset": 85,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "content": "accounts@herolimited.com",
+                        "boundingBox": [
+                            164,
+                            479,
+                            482,
+                            478,
+                            483,
+                            502,
+                            164,
+                            503
+                        ],
+                        "spans": [
+                            {
+                                "offset": 92,
+                                "length": 24
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Shipped To",
+                        "boundingBox": [
+                            167,
+                            547,
+                            397,
+                            546,
+                            397,
+                            591,
+                            167,
+                            592
+                        ],
+                        "spans": [
+                            {
+                                "offset": 117,
+                                "length": 10
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Vendor Name: Tish Williams",
+                        "boundingBox": [
+                            159,
+                            609,
+                            518,
+                            609,
+                            518,
+                            637,
+                            159,
+                            637
+                        ],
+                        "spans": [
+                            {
+                                "offset": 128,
+                                "length": 26
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Company Name: Tish's Wishes",
+                        "boundingBox": [
+                            159,
+                            648,
+                            547,
+                            647,
+                            547,
+                            675,
+                            160,
+                            677
+                        ],
+                        "spans": [
+                            {
+                                "offset": 155,
+                                "length": 27
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Address: 932 N Cantaloupe Road",
+                        "boundingBox": [
+                            160,
+                            684,
+                            569,
+                            685,
+                            569,
+                            714,
+                            160,
+                            712
+                        ],
+                        "spans": [
+                            {
+                                "offset": 183,
+                                "length": 30
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Seattle, WA 38383",
+                        "boundingBox": [
+                            274,
+                            722,
+                            508,
+                            721,
+                            508,
+                            748,
+                            274,
+                            749
+                        ],
+                        "spans": [
+                            {
+                                "offset": 214,
+                                "length": 17
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Purchase Order",
+                        "boundingBox": [
+                            1112,
+                            321,
+                            1554,
+                            321,
+                            1554,
+                            369,
+                            1112,
+                            369
+                        ],
+                        "spans": [
+                            {
+                                "offset": 232,
+                                "length": 14
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Dated As: 02/10/2020",
+                        "boundingBox": [
+                            1024,
+                            419,
+                            1317,
+                            419,
+                            1317,
+                            448,
+                            1024,
+                            448
+                        ],
+                        "spans": [
+                            {
+                                "offset": 247,
+                                "length": 20
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Purchase Order #: 9328424",
+                        "boundingBox": [
+                            1023,
+                            461,
+                            1390,
+                            461,
+                            1390,
+                            489,
+                            1023,
+                            488
+                        ],
+                        "spans": [
+                            {
+                                "offset": 268,
+                                "length": 25
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Phone: 323-245-2943",
+                        "boundingBox": [
+                            759,
+                            722,
+                            1032,
+                            721,
+                            1032,
+                            747,
+                            759,
+                            748
+                        ],
+                        "spans": [
+                            {
+                                "offset": 294,
+                                "length": 19
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Shipped From",
+                        "boundingBox": [
+                            167,
+                            784,
+                            452,
+                            784,
+                            453,
+                            829,
+                            167,
+                            830
+                        ],
+                        "spans": [
+                            {
+                                "offset": 314,
+                                "length": 12
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Name: Larry Longshore",
+                        "boundingBox": [
+                            162,
+                            849,
+                            458,
+                            849,
+                            458,
+                            883,
+                            162,
+                            884
+                        ],
+                        "spans": [
+                            {
+                                "offset": 327,
+                                "length": 21
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Company Name: Longshore Supply",
+                        "boundingBox": [
+                            163,
+                            889,
+                            605,
+                            889,
+                            605,
+                            919,
+                            163,
+                            918
+                        ],
+                        "spans": [
+                            {
+                                "offset": 349,
+                                "length": 30
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Address: 382 N Cool Road",
+                        "boundingBox": [
+                            165,
+                            925,
+                            488,
+                            925,
+                            488,
+                            952,
+                            165,
+                            952
+                        ],
+                        "spans": [
+                            {
+                                "offset": 380,
+                                "length": 24
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Bellevue WA 93939",
+                        "boundingBox": [
+                            283,
+                            963,
+                            527,
+                            963,
+                            527,
+                            989,
+                            283,
+                            990
+                        ],
+                        "spans": [
+                            {
+                                "offset": 405,
+                                "length": 17
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Phone: 938-242-4924",
+                        "boundingBox": [
+                            757,
+                            964,
+                            1029,
+                            963,
+                            1030,
+                            989,
+                            757,
+                            990
+                        ],
+                        "spans": [
+                            {
+                                "offset": 423,
+                                "length": 19
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Details",
+                        "boundingBox": [
+                            446,
+                            1047,
+                            558,
+                            1047,
+                            558,
+                            1077,
+                            446,
+                            1077
+                        ],
+                        "spans": [
+                            {
+                                "offset": 443,
+                                "length": 7
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Quantity",
+                        "boundingBox": [
+                            885,
+                            1047,
+                            1034,
+                            1047,
+                            1034,
+                            1083,
+                            886,
+                            1083
+                        ],
+                        "spans": [
+                            {
+                                "offset": 451,
+                                "length": 8
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Unit Price",
+                        "boundingBox": [
+                            1111,
+                            1047,
+                            1270,
+                            1047,
+                            1269,
+                            1078,
+                            1111,
+                            1077
+                        ],
+                        "spans": [
+                            {
+                                "offset": 460,
+                                "length": 10
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Total",
+                        "boundingBox": [
+                            1381,
+                            1047,
+                            1467,
+                            1047,
+                            1467,
+                            1077,
+                            1381,
+                            1077
+                        ],
+                        "spans": [
+                            {
+                                "offset": 471,
+                                "length": 5
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Party Favor purple",
+                        "boundingBox": [
+                            170,
+                            1091,
+                            403,
+                            1092,
+                            403,
+                            1127,
+                            170,
+                            1125
+                        ],
+                        "spans": [
+                            {
+                                "offset": 477,
+                                "length": 18
+                            }
+                        ]
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            859,
+                            1094,
+                            893,
+                            1094,
+                            893,
+                            1119,
+                            859,
+                            1119
+                        ],
+                        "spans": [
+                            {
+                                "offset": 496,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1240,
+                            1095,
+                            1295,
+                            1094,
+                            1294,
+                            1119,
+                            1240,
+                            1119
+                        ],
+                        "spans": [
+                            {
+                                "offset": 499,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1444,
+                            1095,
+                            1529,
+                            1094,
+                            1529,
+                            1119,
+                            1444,
+                            1120
+                        ],
+                        "spans": [
+                            {
+                                "offset": 504,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Party Hat Blue",
+                        "boundingBox": [
+                            173,
+                            1134,
+                            353,
+                            1134,
+                            353,
+                            1164,
+                            173,
+                            1164
+                        ],
+                        "spans": [
+                            {
+                                "offset": 511,
+                                "length": 14
+                            }
+                        ]
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            859,
+                            1135,
+                            893,
+                            1135,
+                            891,
+                            1160,
+                            860,
+                            1160
+                        ],
+                        "spans": [
+                            {
+                                "offset": 526,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1239,
+                            1135,
+                            1297,
+                            1135,
+                            1296,
+                            1159,
+                            1238,
+                            1160
+                        ],
+                        "spans": [
+                            {
+                                "offset": 529,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1443,
+                            1135,
+                            1529,
+                            1135,
+                            1530,
+                            1159,
+                            1443,
+                            1160
+                        ],
+                        "spans": [
+                            {
+                                "offset": 534,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Party Cloth White",
+                        "boundingBox": [
+                            172,
+                            1179,
+                            393,
+                            1178,
+                            393,
+                            1208,
+                            172,
+                            1208
+                        ],
+                        "spans": [
+                            {
+                                "offset": 541,
+                                "length": 17
+                            }
+                        ]
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            860,
+                            1179,
+                            892,
+                            1179,
+                            891,
+                            1204,
+                            860,
+                            1203
+                        ],
+                        "spans": [
+                            {
+                                "offset": 559,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1239,
+                            1179,
+                            1295,
+                            1178,
+                            1295,
+                            1203,
+                            1239,
+                            1204
+                        ],
+                        "spans": [
+                            {
+                                "offset": 562,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1442,
+                            1180,
+                            1530,
+                            1180,
+                            1530,
+                            1203,
+                            1442,
+                            1204
+                        ],
+                        "spans": [
+                            {
+                                "offset": 567,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Party Maraca White",
+                        "boundingBox": [
+                            172,
+                            1221,
+                            422,
+                            1221,
+                            422,
+                            1250,
+                            172,
+                            1251
+                        ],
+                        "spans": [
+                            {
+                                "offset": 574,
+                                "length": 18
+                            }
+                        ]
+                    },
+                    {
+                        "content": "20",
+                        "boundingBox": [
+                            860,
+                            1223,
+                            893,
+                            1223,
+                            893,
+                            1247,
+                            861,
+                            1247
+                        ],
+                        "spans": [
+                            {
+                                "offset": 593,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "content": "5.00",
+                        "boundingBox": [
+                            1239,
+                            1221,
+                            1294,
+                            1222,
+                            1294,
+                            1246,
+                            1239,
+                            1247
+                        ],
+                        "spans": [
+                            {
+                                "offset": 596,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "content": "100.00",
+                        "boundingBox": [
+                            1443,
+                            1223,
+                            1530,
+                            1222,
+                            1530,
+                            1246,
+                            1444,
+                            1247
+                        ],
+                        "spans": [
+                            {
+                                "offset": 601,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Larry Longshore",
+                        "boundingBox": [
+                            446,
+                            1671,
+                            793,
+                            1670,
+                            794,
+                            1722,
+                            446,
+                            1724
+                        ],
+                        "spans": [
+                            {
+                                "offset": 608,
+                                "length": 15
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Larry Longshore",
+                        "boundingBox": [
+                            529,
+                            1718,
+                            723,
+                            1718,
+                            723,
+                            1744,
+                            529,
+                            1744
+                        ],
+                        "spans": [
+                            {
+                                "offset": 624,
+                                "length": 15
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Shipping Manager",
+                        "boundingBox": [
+                            527,
+                            1751,
+                            733,
+                            1752,
+                            733,
+                            1779,
+                            527,
+                            1778
+                        ],
+                        "spans": [
+                            {
+                                "offset": 640,
+                                "length": 16
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Additional Notes:",
+                        "boundingBox": [
+                            172,
+                            1796,
+                            478,
+                            1796,
+                            478,
+                            1832,
+                            172,
+                            1831
+                        ],
+                        "spans": [
+                            {
+                                "offset": 657,
+                                "length": 17
+                            }
+                        ]
+                    },
+                    {
+                        "content": "SUBTOTAL",
+                        "boundingBox": [
+                            1146,
+                            1573,
+                            1296,
+                            1573,
+                            1296,
+                            1600,
+                            1146,
+                            1600
+                        ],
+                        "spans": [
+                            {
+                                "offset": 675,
+                                "length": 8
+                            }
+                        ]
+                    },
+                    {
+                        "content": "$400.00",
+                        "boundingBox": [
+                            1425,
+                            1571,
+                            1530,
+                            1571,
+                            1530,
+                            1598,
+                            1425,
+                            1598
+                        ],
+                        "spans": [
+                            {
+                                "offset": 684,
+                                "length": 7
+                            }
+                        ]
+                    },
+                    {
+                        "content": "TAX",
+                        "boundingBox": [
+                            1236,
+                            1618,
+                            1296,
+                            1618,
+                            1295,
+                            1643,
+                            1236,
+                            1643
+                        ],
+                        "spans": [
+                            {
+                                "offset": 692,
+                                "length": 3
+                            }
+                        ]
+                    },
+                    {
+                        "content": "$14.00",
+                        "boundingBox": [
+                            1441,
+                            1615,
+                            1528,
+                            1615,
+                            1528,
+                            1641,
+                            1441,
+                            1643
+                        ],
+                        "spans": [
+                            {
+                                "offset": 696,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "content": "TOTAL",
+                        "boundingBox": [
+                            1203,
+                            1673,
+                            1297,
+                            1673,
+                            1297,
+                            1698,
+                            1204,
+                            1699
+                        ],
+                        "spans": [
+                            {
+                                "offset": 703,
+                                "length": 5
+                            }
+                        ]
+                    },
+                    {
+                        "content": "$414.00",
+                        "boundingBox": [
+                            1426,
+                            1670,
+                            1529,
+                            1670,
+                            1529,
+                            1697,
+                            1426,
+                            1697
+                        ],
+                        "spans": [
+                            {
+                                "offset": 709,
+                                "length": 7
+                            }
+                        ]
+                    },
+                    {
+                        "content": "Unpack Carefully. Enjoy. Longshore Supply wishes you a happy party and is always here for",
+                        "boundingBox": [
+                            174,
+                            1877,
+                            1470,
+                            1877,
+                            1470,
+                            1911,
+                            174,
+                            1912
+                        ],
+                        "spans": [
+                            {
+                                "offset": 717,
+                                "length": 89
+                            }
+                        ]
+                    },
+                    {
+                        "content": "for your party supply needs. For larger events and rentals please visit us at our affiliates",
+                        "boundingBox": [
+                            170,
+                            1923,
+                            1466,
+                            1923,
+                            1466,
+                            1955,
+                            170,
+                            1957
+                        ],
+                        "spans": [
+                            {
+                                "offset": 807,
+                                "length": 92
+                            }
+                        ]
+                    },
+                    {
+                        "content": "webpage:",
+                        "boundingBox": [
+                            172,
+                            1956,
+                            318,
+                            1958,
+                            318,
+                            1992,
+                            172,
+                            1990
+                        ],
+                        "spans": [
+                            {
+                                "offset": 900,
+                                "length": 8
+                            }
+                        ]
+                    },
+                    {
+                        "content": "www.longshoreevents.org",
+                        "boundingBox": [
+                            459,
+                            1989,
+                            846,
+                            1989,
+                            846,
+                            2023,
+                            459,
+                            2023
+                        ],
+                        "spans": [
+                            {
+                                "offset": 909,
+                                "length": 23
+                            }
+                        ]
+                    }
+                ],
+                "spans": [
+                    {
+                        "offset": 0,
+                        "length": 932
+                    }
+                ]
+            }
+        ],
+        "tables": [
+            {
+                "rowCount": 5,
+                "columnCount": 5,
+                "cells": [
+                    {
+                        "kind": "columnHeader",
+                        "rowIndex": 0,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 2,
+                        "content": "Details",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    155,
+                                    1037,
+                                    844,
+                                    1037,
+                                    846,
+                                    1086,
+                                    155,
+                                    1086
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 443,
+                                "length": 7
+                            }
+                        ]
+                    },
+                    {
+                        "kind": "columnHeader",
+                        "rowIndex": 0,
+                        "columnIndex": 2,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "Quantity",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    844,
+                                    1037,
+                                    1072,
+                                    1037,
+                                    1072,
+                                    1086,
+                                    846,
+                                    1086
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 451,
+                                "length": 8
+                            }
+                        ]
+                    },
+                    {
+                        "kind": "columnHeader",
+                        "rowIndex": 0,
+                        "columnIndex": 3,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "Unit Price",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1072,
+                                    1037,
+                                    1309,
+                                    1037,
+                                    1309,
+                                    1086,
+                                    1072,
+                                    1086
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 460,
+                                "length": 10
+                            }
+                        ]
+                    },
+                    {
+                        "kind": "columnHeader",
+                        "rowIndex": 0,
+                        "columnIndex": 4,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "Total",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1037,
+                                    1543,
+                                    1037,
+                                    1543,
+                                    1086,
+                                    1309,
+                                    1086
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 471,
+                                "length": 5
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 1,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 2,
+                        "content": "Party Favor purple",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    155,
+                                    1086,
+                                    846,
+                                    1086,
+                                    846,
+                                    1126,
+                                    155,
+                                    1126
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 477,
+                                "length": 18
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 1,
+                        "columnIndex": 2,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "20",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    846,
+                                    1086,
+                                    1072,
+                                    1086,
+                                    1072,
+                                    1126,
+                                    846,
+                                    1126
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 496,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 1,
+                        "columnIndex": 3,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "5.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1072,
+                                    1086,
+                                    1309,
+                                    1086,
+                                    1309,
+                                    1126,
+                                    1072,
+                                    1126
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 499,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 1,
+                        "columnIndex": 4,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "100.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1086,
+                                    1543,
+                                    1086,
+                                    1543,
+                                    1128,
+                                    1309,
+                                    1126
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 504,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 2,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 2,
+                        "content": "Party Hat Blue",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    155,
+                                    1126,
+                                    846,
+                                    1126,
+                                    846,
+                                    1171,
+                                    155,
+                                    1171
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 511,
+                                "length": 14
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 2,
+                        "columnIndex": 2,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "20",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    846,
+                                    1126,
+                                    1072,
+                                    1126,
+                                    1072,
+                                    1171,
+                                    846,
+                                    1171
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 526,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 2,
+                        "columnIndex": 3,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "5.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1072,
+                                    1126,
+                                    1309,
+                                    1126,
+                                    1309,
+                                    1171,
+                                    1072,
+                                    1171
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 529,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 2,
+                        "columnIndex": 4,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "100.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1126,
+                                    1543,
+                                    1128,
+                                    1543,
+                                    1171,
+                                    1309,
+                                    1171
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 534,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 3,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 2,
+                        "content": "Party Cloth White",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    155,
+                                    1171,
+                                    846,
+                                    1171,
+                                    846,
+                                    1214,
+                                    155,
+                                    1214
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 541,
+                                "length": 17
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 3,
+                        "columnIndex": 2,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "20",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    846,
+                                    1171,
+                                    1072,
+                                    1171,
+                                    1072,
+                                    1214,
+                                    846,
+                                    1214
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 559,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 3,
+                        "columnIndex": 3,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "5.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1072,
+                                    1171,
+                                    1309,
+                                    1171,
+                                    1309,
+                                    1214,
+                                    1072,
+                                    1214
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 562,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 3,
+                        "columnIndex": 4,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "100.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1171,
+                                    1543,
+                                    1171,
+                                    1543,
+                                    1216,
+                                    1309,
+                                    1214
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 567,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 4,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 2,
+                        "content": "Party Maraca White",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    155,
+                                    1214,
+                                    846,
+                                    1214,
+                                    846,
+                                    1259,
+                                    155,
+                                    1259
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 574,
+                                "length": 18
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 4,
+                        "columnIndex": 2,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "20",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    846,
+                                    1214,
+                                    1072,
+                                    1214,
+                                    1072,
+                                    1259,
+                                    846,
+                                    1259
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 593,
+                                "length": 2
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 4,
+                        "columnIndex": 3,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "5.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1072,
+                                    1214,
+                                    1309,
+                                    1214,
+                                    1309,
+                                    1259,
+                                    1072,
+                                    1259
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 596,
+                                "length": 4
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 4,
+                        "columnIndex": 4,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "100.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1214,
+                                    1543,
+                                    1216,
+                                    1543,
+                                    1259,
+                                    1309,
+                                    1259
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 601,
+                                "length": 6
+                            }
+                        ]
+                    }
+                ],
+                "boundingRegions": [
+                    {
+                        "pageNumber": 1,
+                        "boundingBox": [
+                            153,
+                            1036,
+                            1547,
+                            1036,
+                            1547,
+                            1265,
+                            153,
+                            1265
+                        ]
+                    }
+                ],
+                "spans": [
+                    {
+                        "offset": 443,
+                        "length": 164
+                    }
+                ]
+            },
+            {
+                "rowCount": 4,
+                "columnCount": 2,
+                "cells": [
+                    {
+                        "kind": "columnHeader",
+                        "rowIndex": 0,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "SUBTOTAL",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1070,
+                                    1565,
+                                    1309,
+                                    1565,
+                                    1309,
+                                    1609,
+                                    1071,
+                                    1609
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 675,
+                                "length": 8
+                            }
+                        ]
+                    },
+                    {
+                        "kind": "columnHeader",
+                        "rowIndex": 0,
+                        "columnIndex": 1,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "$400.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1565,
+                                    1544,
+                                    1564,
+                                    1544,
+                                    1609,
+                                    1309,
+                                    1609
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 684,
+                                "length": 7
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 1,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "TAX",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1071,
+                                    1609,
+                                    1309,
+                                    1609,
+                                    1309,
+                                    1652,
+                                    1071,
+                                    1652
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 692,
+                                "length": 3
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 1,
+                        "columnIndex": 1,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "$14.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1609,
+                                    1544,
+                                    1609,
+                                    1544,
+                                    1652,
+                                    1309,
+                                    1652
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 696,
+                                "length": 6
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 2,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1071,
+                                    1652,
+                                    1309,
+                                    1652,
+                                    1309,
+                                    1664,
+                                    1071,
+                                    1664
+                                ]
+                            }
+                        ],
+                        "spans": []
+                    },
+                    {
+                        "rowIndex": 2,
+                        "columnIndex": 1,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1652,
+                                    1544,
+                                    1652,
+                                    1544,
+                                    1664,
+                                    1309,
+                                    1664
+                                ]
+                            }
+                        ],
+                        "spans": []
+                    },
+                    {
+                        "rowIndex": 3,
+                        "columnIndex": 0,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "TOTAL",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1071,
+                                    1664,
+                                    1309,
+                                    1664,
+                                    1309,
+                                    1707,
+                                    1071,
+                                    1706
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 703,
+                                "length": 5
+                            }
+                        ]
+                    },
+                    {
+                        "rowIndex": 3,
+                        "columnIndex": 1,
+                        "rowSpan": 1,
+                        "columnSpan": 1,
+                        "content": "$414.00",
+                        "boundingRegions": [
+                            {
+                                "pageNumber": 1,
+                                "boundingBox": [
+                                    1309,
+                                    1664,
+                                    1544,
+                                    1664,
+                                    1544,
+                                    1707,
+                                    1309,
+                                    1707
+                                ]
+                            }
+                        ],
+                        "spans": [
+                            {
+                                "offset": 709,
+                                "length": 7
+                            }
+                        ]
+                    }
+                ],
+                "boundingRegions": [
+                    {
+                        "pageNumber": 1,
+                        "boundingBox": [
+                            1063,
+                            1563,
+                            1560,
+                            1563,
+                            1560,
+                            1709,
+                            1063,
+                            1709
+                        ]
+                    }
+                ],
+                "spans": [
+                    {
+                        "offset": 675,
+                        "length": 41
+                    }
+                ]
+            }
+        ]
+    }
+}

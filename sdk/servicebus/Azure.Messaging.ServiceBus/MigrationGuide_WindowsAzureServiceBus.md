@@ -88,7 +88,7 @@ By using a single top-level client, we can implicitly share a single AMQP connec
 
 ### Default transport type
 
-The default transport type in `Azure.Messaging.ServiceBus` is AMQP. The new library no longer supports SBMP, and as such you will need to migrate to AMQP. The behavioral differences have been described in [Use legacy WindowsAzure.ServiceBus .NET framework library with AMQP 1.0](service-bus-amqp-dotnet.md#behavioral-differences). It is possible to use AMQP with WebSockets over port 443 by setting the [TransportType](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclientoptions.transporttype?view=azure-dotnet#azure-messaging-servicebus-servicebusclientoptions-transporttype) on the options used when creating your `ServiceBusClient`.
+The default transport type in `Azure.Messaging.ServiceBus` is AMQP. The new library no longer supports SBMP, and as such you will need to migrate to AMQP. The behavioral differences have been described in [Use legacy WindowsAzure.ServiceBus .NET framework library with AMQP 1.0](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-amqp-dotnet). It is possible to use AMQP with WebSockets over port 443 by setting the [TransportType](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclientoptions.transporttype?view=azure-dotnet#azure-messaging-servicebus-servicebusclientoptions-transporttype) on the options used when creating your `ServiceBusClient`.
 
 ### BrokeredMessage changed to Message
 
@@ -228,11 +228,11 @@ Console.WriteLine($"Received message with Body:{receivedMessage.GetBody<String>(
 await receivedMessage.CompleteAsync();
 ```
 
-In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses a push-based approach to deliver messages to event handlers that you provide while managing locks, message completion, concurrenc, and resiliency.  The processor also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
+In `Azure.Messaging.ServiceBus`, we introduced `ServiceBusProcessor` which uses a push-based approach to deliver messages to event handlers that you provide while managing locks, message completion, concurrency, and resiliency.  The processor also provides a graceful shutdown via the `StopProcessingAsync` method which will ensure that no more messages will be received, but at the same time you can continue the processing and settling the messages already in flight.
 
 The concept of a receiver remains for users who need to have a more fine-grained control over the reading and settling messages. The difference is that this is now created from the top-level `ServiceBusClient` via the `CreateReceiver` method taking the queue or subscription you want to read from and creating a receiver specific to that entity.
 
-Another notable difference from the `WindowsAzure.ServiceBus` when it comes to receiving messages, is that `Azure.Messaging.ServiceBus` uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are owned by the service  and cannot be set when sending messages. 
+Another notable difference from `WindowsAzure.ServiceBus` when it comes to receiving messages, is that `Azure.Messaging.ServiceBus` uses a separate type for received messages, `ServiceBusReceivedMessage`. This helps reduce the surface area of the sendable messages by excluding properties that are owned by the service  and cannot be set when sending messages. 
 
  To support testing, the `ServiceBusModelFactory.ServiceBusReceivedMessage` method can be used to mock a message received from Service Bus. In general, all types that are meant to be created only by the library can be created for mocking using the `ServiceBusModelFactory` static class.
 
@@ -354,9 +354,19 @@ var options = new ServiceBusSessionProcessorOptions
 // create a session processor that we can use to process the messages
 await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
 
-// configure the message and error handler to use
+// configure the message and error event handler to use - these event handlers are required
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
+
+// configure optional event handlers that will be executed when a session starts processing and stops processing
+// NOTE: The SessionInitializingAsync event is raised when the processor obtains a lock for a session. This does not mean the session was
+// never processed before by this or any other ServiceBusSessionProcessor instances. Similarly, the SessionClosingAsync
+// event is raised when no more messages are available for the session being processed subject to the SessionIdleTimeout
+// in the ServiceBusSessionProcessorOptions. If additional messages are sent for that session later, the SessionInitializingAsync and SessionClosingAsync
+// events would be raised again.
+
+processor.SessionInitializingAsync += SessionInitializingHandler;
+processor.SessionClosingAsync += SessionClosingHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
@@ -367,7 +377,7 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message
-    await args.SetSessionStateAsync(new BinaryData("some state"));
+    await args.SetSessionStateAsync(new BinaryData("Some state specific to this session when processing a message."));
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -382,10 +392,27 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     return Task.CompletedTask;
 }
 
+async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+{
+    await args.SetSessionStateAsync(new BinaryData("Some state specific to this session when the session is opened for processing."));
+}
+
+async Task SessionClosingHandler(ProcessSessionEventArgs args)
+{
+    // We may want to clear the session state when no more messages are available for the session or when some known terminal message
+    // has been received. This is entirely dependent on the application scenario.
+    BinaryData sessionState = await args.GetSessionStateAsync();
+    if (sessionState.ToString() ==
+        "Some state that indicates the final message was received for the session")
+    {
+        await args.SetSessionStateAsync(null);
+    }
+}
+
 // start processing
 await processor.StartProcessingAsync();
 
-// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+// since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
 Console.ReadKey();
 ```
 

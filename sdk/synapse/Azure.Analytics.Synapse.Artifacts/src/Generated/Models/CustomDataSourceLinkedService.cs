@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Custom linked service. </summary>
     public partial class CustomDataSourceLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/>. </summary>
         /// <param name="typeProperties"> Custom linked service properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public CustomDataSourceLinkedService(object typeProperties)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "CustomDataSource";
         }
 
-        /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

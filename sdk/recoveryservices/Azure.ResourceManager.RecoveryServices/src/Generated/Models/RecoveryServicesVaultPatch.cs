@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Patch Resource information, as returned by the resource provider. </summary>
     public partial class RecoveryServicesVaultPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public RecoveryServicesVaultPatch(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevCenter.Mocking;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,366 +20,359 @@ namespace Azure.ResourceManager.DevCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevCenter. </summary>
     public static partial class DevCenterExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableDevCenterArmClient GetMockableDevCenterArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableDevCenterArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableDevCenterResourceGroupResource GetMockableDevCenterResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableDevCenterResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableDevCenterSubscriptionResource GetMockableDevCenterSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableDevCenterSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DevCenterResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterResource"/> object. </returns>
         public static DevCenterResource GetDevCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterResource.ValidateResourceId(id);
-                return new DevCenterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterProjectResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterProjectResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterProjectResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterProjectResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterProjectResource"/> object. </returns>
         public static DevCenterProjectResource GetDevCenterProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterProjectResource.ValidateResourceId(id);
-                return new DevCenterProjectResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ProjectAttachedNetworkConnectionResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectAttachedNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource"/> object. </returns>
         public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
-                return new ProjectAttachedNetworkConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region AttachedNetworkConnectionResource
+            return GetMockableDevCenterArmClient(client).GetProjectAttachedNetworkConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="AttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetAttachedNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AttachedNetworkConnectionResource"/> object. </returns>
         public static AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AttachedNetworkConnectionResource.ValidateResourceId(id);
-                return new AttachedNetworkConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterGalleryResource
+            return GetMockableDevCenterArmClient(client).GetAttachedNetworkConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterGalleryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterGalleryResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterGalleryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterGalleryResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterGalleryResource"/> object. </returns>
         public static DevCenterGalleryResource GetDevCenterGalleryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterGalleryResource.ValidateResourceId(id);
-                return new DevCenterGalleryResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterImageResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterGalleryResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterImageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterImageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterImageResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterImageResource"/> object. </returns>
         public static DevCenterImageResource GetDevCenterImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterImageResource.ValidateResourceId(id);
-                return new DevCenterImageResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ImageVersionResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterImageResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="ImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ImageVersionResource.CreateResourceIdentifier" /> to create an <see cref="ImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetImageVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImageVersionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ImageVersionResource"/> object. </returns>
         public static ImageVersionResource GetImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ImageVersionResource.ValidateResourceId(id);
-                return new ImageVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterCatalogResource
+            return GetMockableDevCenterArmClient(client).GetImageVersionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterCatalogResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterCatalogResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterCatalogResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterCatalogResource"/> object. </returns>
         public static DevCenterCatalogResource GetDevCenterCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterCatalogResource.ValidateResourceId(id);
-                return new DevCenterCatalogResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterEnvironmentTypeResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterCatalogResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterEnvironmentTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource"/> object. </returns>
         public static DevCenterEnvironmentTypeResource GetDevCenterEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterEnvironmentTypeResource.ValidateResourceId(id);
-                return new DevCenterEnvironmentTypeResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region AllowedEnvironmentTypeResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterEnvironmentTypeResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="AllowedEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AllowedEnvironmentTypeResource.CreateResourceIdentifier" /> to create an <see cref="AllowedEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetAllowedEnvironmentTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource"/> object. </returns>
         public static AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AllowedEnvironmentTypeResource.ValidateResourceId(id);
-                return new AllowedEnvironmentTypeResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterProjectEnvironmentResource
+            return GetMockableDevCenterArmClient(client).GetAllowedEnvironmentTypeResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterProjectEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterProjectEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterProjectEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource"/> object. </returns>
         public static DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterProjectEnvironmentResource.ValidateResourceId(id);
-                return new DevCenterProjectEnvironmentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevBoxDefinitionResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterProjectEnvironmentResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevBoxDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevBoxDefinitionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevBoxDefinitionResource"/> object. </returns>
         public static DevBoxDefinitionResource GetDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevBoxDefinitionResource.ValidateResourceId(id);
-                return new DevBoxDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ProjectDevBoxDefinitionResource
+            return GetMockableDevCenterArmClient(client).GetDevBoxDefinitionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetProjectDevBoxDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource"/> object. </returns>
         public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectDevBoxDefinitionResource.ValidateResourceId(id);
-                return new ProjectDevBoxDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterPoolResource
+            return GetMockableDevCenterArmClient(client).GetProjectDevBoxDefinitionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterPoolResource"/> object. </returns>
         public static DevCenterPoolResource GetDevCenterPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterPoolResource.ValidateResourceId(id);
-                return new DevCenterPoolResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterScheduleResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterPoolResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterScheduleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterScheduleResource"/> object. </returns>
         public static DevCenterScheduleResource GetDevCenterScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterScheduleResource.ValidateResourceId(id);
-                return new DevCenterScheduleResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DevCenterNetworkConnectionResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterScheduleResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetDevCenterNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource"/> object. </returns>
         public static DevCenterNetworkConnectionResource GetDevCenterNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterNetworkConnectionResource.ValidateResourceId(id);
-                return new DevCenterNetworkConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HealthCheckStatusDetailResource
+            return GetMockableDevCenterArmClient(client).GetDevCenterNetworkConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HealthCheckStatusDetailResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthCheckStatusDetailResource.CreateResourceIdentifier" /> to create a <see cref="HealthCheckStatusDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterArmClient.GetHealthCheckStatusDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource"/> object. </returns>
         public static HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthCheckStatusDetailResource.ValidateResourceId(id);
-                return new HealthCheckStatusDetailResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of DevCenterResources in the ResourceGroupResource. </summary>
+            return GetMockableDevCenterArmClient(client).GetHealthCheckStatusDetailResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of DevCenterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
         public static DevCenterCollection GetDevCenters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenters();
         }
 
         /// <summary>
@@ -392,17 +386,31 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>DevCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterResource>> GetDevCenterAsync(this ResourceGroupResource resourceGroupResource, string devCenterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevCenters().GetAsync(devCenterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterAsync(devCenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -416,25 +424,48 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>DevCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenter(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="devCenterName"> The name of the devcenter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="devCenterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="devCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DevCenterResource> GetDevCenter(this ResourceGroupResource resourceGroupResource, string devCenterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevCenters().Get(devCenterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenter(devCenterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DevCenterProjectResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterProjects()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
         public static DevCenterProjectCollection GetDevCenterProjects(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterProjects();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterProjects();
         }
 
         /// <summary>
@@ -448,17 +479,31 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterProjectAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterProjectResource>> GetDevCenterProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevCenterProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterProjectAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -472,25 +517,48 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterProject(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="projectName"> The name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DevCenterProjectResource> GetDevCenterProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevCenterProjects().Get(projectName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterProject(projectName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterNetworkConnections()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
         public static DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterNetworkConnections();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterNetworkConnections();
         }
 
         /// <summary>
@@ -504,17 +572,31 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterNetworkConnectionAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterNetworkConnectionAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -528,17 +610,31 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterResourceGroupResource.GetDevCenterNetworkConnection(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterNetworkConnection(networkConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -552,15 +648,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenters(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DevCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -574,15 +685,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenters(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DevCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenters(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenters(top, cancellationToken);
         }
 
         /// <summary>
@@ -596,15 +722,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterProjects(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -618,15 +759,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterProjects(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterProjectResource> GetDevCenterProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
         }
 
         /// <summary>
@@ -640,19 +796,27 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>OperationStatuses_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<DevCenterOperationStatus>> GetDevCenterOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -666,19 +830,27 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>OperationStatuses_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static Response<DevCenterOperationStatus> GetDevCenterOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -692,15 +864,26 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -714,15 +897,26 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Usages_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterUsagesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -736,17 +930,25 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability(DevCenterNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevCenterSubscriptionResource(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -760,17 +962,25 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability_Execute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.CheckDevCenterNameAvailability(DevCenterNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -784,15 +994,26 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Skus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -806,15 +1027,26 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Skus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterSkusBySubscription(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
         }
 
         /// <summary>
@@ -828,15 +1060,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -850,15 +1097,30 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDevCenterSubscriptionResource.GetDevCenterNetworkConnections(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
         }
     }
 }

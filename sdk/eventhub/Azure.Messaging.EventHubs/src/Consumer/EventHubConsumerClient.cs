@@ -39,6 +39,8 @@ namespace Azure.Messaging.EventHubs.Consumer
     ///   unmanaged objects are properly cleaned up.
     /// </remarks>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "Event Hubs are AMQP-based services and don't use ClientOptions functionality")]
     public class EventHubConsumerClient : IAsyncDisposable
     {
@@ -837,7 +839,6 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
             await CloseAsync().ConfigureAwait(false);

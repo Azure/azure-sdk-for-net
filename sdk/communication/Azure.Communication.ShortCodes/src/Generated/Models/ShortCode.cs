@@ -14,13 +14,13 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Represents a number, ShortCode or AlphaId, acquired in a given country. </summary>
     public partial class ShortCode
     {
-        /// <summary> Initializes a new instance of ShortCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
         internal ShortCode()
         {
             ProgramBriefIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ShortCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
         /// <param name="number"> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </param>
         /// <param name="numberType"> The type of number e.g. 'ShortCode', 'AlphaId'. </param>
         /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. 'US'. </param>

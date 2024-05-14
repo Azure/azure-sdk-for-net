@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The response of a NewRelicMonitorResource list operation. </summary>
     internal partial class NewRelicMonitorResourceListResult
     {
-        /// <summary> Initializes a new instance of NewRelicMonitorResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/>. </summary>
         /// <param name="value"> The NewRelicMonitorResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicMonitorResourceListResult(IEnumerable<NewRelicMonitorResourceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicMonitorResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/>. </summary>
         /// <param name="value"> The NewRelicMonitorResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal NewRelicMonitorResourceListResult(IReadOnlyList<NewRelicMonitorResourceData> value, Uri nextLink)

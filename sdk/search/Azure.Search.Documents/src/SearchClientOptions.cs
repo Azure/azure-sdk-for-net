@@ -32,21 +32,21 @@ namespace Azure.Search.Documents
             V2020_06_30 = 1,
 
             /// <summary>
-            /// The 2021_04_30_Preview version of the Azure Cognitive Search service.
+            /// The 2023_11_01 version of the Azure Cognitive Search service.
             /// </summary>
-            V2021_04_30_Preview = 2,
+            V2023_11_01 = 2,
 
             /// <summary>
-            /// The 2023_07_01_Preview version of the Azure Cognitive Search service.
+            /// The 2023_10_01_Preview version of the Azure Cognitive Search service.
             /// </summary>
-            V2023_07_01_Preview = 3,
+            V2023_10_01_Preview = 3,
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_07_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01_Preview;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -199,8 +199,8 @@ namespace Azure.Search.Documents
             version switch
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => version,
-                SearchClientOptions.ServiceVersion.V2021_04_30_Preview => version,
-                SearchClientOptions.ServiceVersion.V2023_07_01_Preview => version,
+                SearchClientOptions.ServiceVersion.V2023_11_01 => version,
+                SearchClientOptions.ServiceVersion.V2023_10_01_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -223,8 +223,8 @@ namespace Azure.Search.Documents
             version switch
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
-                SearchClientOptions.ServiceVersion.V2021_04_30_Preview => "2021-04-30-Preview",
-                SearchClientOptions.ServiceVersion.V2023_07_01_Preview => "2023-07-01-Preview",
+                SearchClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
+                SearchClientOptions.ServiceVersion.V2023_10_01_Preview => "2023-10-01-Preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

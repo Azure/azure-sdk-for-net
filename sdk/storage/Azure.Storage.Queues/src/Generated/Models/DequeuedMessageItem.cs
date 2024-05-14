@@ -13,7 +13,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned in the QueueMessageList array when calling Get Messages on a Queue. </summary>
     internal partial class DequeuedMessageItem
     {
-        /// <summary> Initializes a new instance of DequeuedMessageItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DequeuedMessageItem"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
         /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>

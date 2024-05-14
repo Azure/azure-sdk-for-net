@@ -13,11 +13,20 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The parameters for the script actions to execute on a running cluster. </summary>
     public partial class ExecuteScriptActionContent
     {
-        /// <summary> Initializes a new instance of ExecuteScriptActionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
         /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
         public ExecuteScriptActionContent(bool persistOnSuccess)
         {
             ScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
+            PersistOnSuccess = persistOnSuccess;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
+        /// <param name="scriptActions"> The list of run time script actions. </param>
+        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
+        internal ExecuteScriptActionContent(IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess)
+        {
+            ScriptActions = scriptActions;
             PersistOnSuccess = persistOnSuccess;
         }
 

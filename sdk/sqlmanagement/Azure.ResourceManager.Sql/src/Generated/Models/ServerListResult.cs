@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of servers. </summary>
     internal partial class ServerListResult
     {
-        /// <summary> Initializes a new instance of ServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerListResult"/>. </summary>
         internal ServerListResult()
         {
             Value = new ChangeTrackingList<SqlServerData>();
         }
 
-        /// <summary> Initializes a new instance of ServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ServerListResult(IReadOnlyList<SqlServerData> value, string nextLink)

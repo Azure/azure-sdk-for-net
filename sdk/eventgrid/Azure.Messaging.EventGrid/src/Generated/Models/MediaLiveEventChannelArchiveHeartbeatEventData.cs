@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Channel Archive heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventChannelArchiveHeartbeat event. </summary>
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/>. </summary>
         /// <param name="channelLatencyMsInternal"> Gets the channel latency in ms. </param>
         /// <param name="latencyResultCode"> Gets the latency result code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="channelLatencyMsInternal"/> or <paramref name="latencyResultCode"/> is null. </exception>

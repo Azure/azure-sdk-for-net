@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation split. </summary>
     public partial class SplitContent
     {
-        /// <summary> Initializes a new instance of SplitContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SplitContent"/>. </summary>
         public SplitContent()
         {
             Quantities = new ChangeTrackingList<int>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SplitContent"/>. </summary>
+        /// <param name="quantities"> List of the quantities in the new reservations to create. </param>
+        /// <param name="reservationId"> Resource id of the reservation to be split. Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        internal SplitContent(IList<int> quantities, ResourceIdentifier reservationId)
+        {
+            Quantities = quantities;
+            ReservationId = reservationId;
         }
 
         /// <summary> List of the quantities in the new reservations to create. </summary>

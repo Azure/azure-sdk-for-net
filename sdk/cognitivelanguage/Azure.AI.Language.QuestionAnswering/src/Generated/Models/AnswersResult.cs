@@ -13,13 +13,13 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Represents List of Question Answers. </summary>
     public partial class AnswersResult
     {
-        /// <summary> Initializes a new instance of AnswersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswersResult"/>. </summary>
         internal AnswersResult()
         {
             Answers = new ChangeTrackingList<KnowledgeBaseAnswer>();
         }
 
-        /// <summary> Initializes a new instance of AnswersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswersResult"/>. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         internal AnswersResult(IReadOnlyList<KnowledgeBaseAnswer> answers)
         {

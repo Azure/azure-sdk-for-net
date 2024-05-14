@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     public abstract partial class SecurityInsightsAutomationRuleCondition
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleCondition"/>. </summary>
         protected SecurityInsightsAutomationRuleCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleCondition"/>. </summary>
         /// <param name="conditionType"></param>
         internal SecurityInsightsAutomationRuleCondition(ConditionType conditionType)
         {

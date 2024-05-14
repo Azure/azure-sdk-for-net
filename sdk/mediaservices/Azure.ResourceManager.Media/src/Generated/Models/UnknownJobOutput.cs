@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownJobOutput. </summary>
     internal partial class UnknownJobOutput : MediaJobOutput
     {
-        /// <summary> Initializes a new instance of UnknownJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">

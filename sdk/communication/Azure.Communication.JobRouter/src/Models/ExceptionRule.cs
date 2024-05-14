@@ -4,25 +4,41 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExceptionRule")]
-    public partial class ExceptionRule
+    public partial class ExceptionRule : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of ExceptionRule. </summary>
+        /// <summary> Initializes a new instance of an exception rule. </summary>
+        /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
-        /// <param name="actions"> A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trigger"/> or <paramref name="actions"/> is null. </exception>
-        public ExceptionRule(ExceptionTrigger trigger, IDictionary<string, ExceptionAction?> actions)
+        /// <exception cref="ArgumentNullException"> <paramref name="trigger"/>. </exception>
+        public ExceptionRule(string id, ExceptionTrigger trigger)
         {
+            Id = id ?? throw new ArgumentNullException(nameof(id));
             Trigger = trigger ?? throw new ArgumentNullException(nameof(trigger));
-            Actions = actions ?? throw new ArgumentNullException(nameof(actions));
         }
 
-        /// <summary> A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action. </summary>
-        public IDictionary<string, ExceptionAction?> Actions { get; }
+        /// <summary> A collection of actions to perform once the exception is triggered. </summary>
+        public IList<ExceptionAction> Actions { get; } = new List<ExceptionAction>();
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("trigger"u8);
+            writer.WriteObjectValue(Trigger);
+            writer.WritePropertyName("actions"u8);
+            writer.WriteStartArray();
+            foreach (var item in Actions)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> The move custom error info. </summary>
     internal partial class MoveErrorInfo
     {
-        /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveErrorInfo"/>. </summary>
         internal MoveErrorInfo()
         {
             InfoMoverResources = new ChangeTrackingList<AffectedMoverResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveErrorInfo"/>. </summary>
         /// <param name="infoMoverResources"> The affected move resources. </param>
         internal MoveErrorInfo(IReadOnlyList<AffectedMoverResourceInfo> infoMoverResources)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> The operation error info. </summary>
     public partial class MoverOperationErrorAdditionalInfo
     {
-        /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationErrorAdditionalInfo"/>. </summary>
         internal MoverOperationErrorAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationErrorAdditionalInfo"/>. </summary>
         /// <param name="operationErrorAdditionalInfoType"> The error type. </param>
         /// <param name="info"> The operation error info. </param>
         internal MoverOperationErrorAdditionalInfo(string operationErrorAdditionalInfoType, MoveErrorInfo info)

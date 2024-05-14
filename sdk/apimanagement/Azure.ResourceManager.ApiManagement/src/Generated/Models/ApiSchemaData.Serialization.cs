@@ -6,17 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiSchemaData : IUtf8JsonSerializable
+    public partial class ApiSchemaData : IUtf8JsonSerializable, IJsonModel<ApiSchemaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiSchemaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiSchemaData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ContentType))
@@ -37,7 +67,10 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definitions);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Definitions.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Definitions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Components))
@@ -46,16 +79,48 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Components);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Components.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Components))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiSchemaData DeserializeApiSchemaData(JsonElement element)
+        ApiSchemaData IJsonModel<ApiSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiSchemaData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiSchemaData(document.RootElement, options);
+        }
+
+        internal static ApiSchemaData DeserializeApiSchemaData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +133,8 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> value = default;
             Optional<BinaryData> definitions = default;
             Optional<BinaryData> components = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -146,8 +213,44 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiSchemaData(id, name, type, systemData.Value, contentType.Value, value.Value, definitions.Value, components.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiSchemaData(id, name, type, systemData.Value, contentType.Value, value.Value, definitions.Value, components.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiSchemaData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiSchemaData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiSchemaData IPersistableModel<ApiSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiSchemaData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiSchemaData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

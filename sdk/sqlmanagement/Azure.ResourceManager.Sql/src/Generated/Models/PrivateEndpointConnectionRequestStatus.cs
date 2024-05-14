@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the private endpoint connection requests status. </summary>
     public partial class PrivateEndpointConnectionRequestStatus
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestStatus"/>. </summary>
         internal PrivateEndpointConnectionRequestStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestStatus"/>. </summary>
         /// <param name="privateLinkServiceId"> Resource id for which the private endpoint is created. </param>
         /// <param name="privateEndpointConnectionName"> The connection name for the private endpoint. </param>
         /// <param name="status"> Status of this private endpoint connection. </param>

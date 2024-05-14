@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteConfigResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteConfigResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteConfig method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteConfigResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteConfigResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteConfig method.
     /// </summary>
     public partial class WebSiteConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
         private readonly SiteConfigData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteConfigResource"/> class for mocking. </summary>
         protected WebSiteConfigResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteConfigResource(ArmClient client, SiteConfigData data) : this(client, data.Id)
@@ -67,9 +74,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteConfigSnapshotResources and their operations over a SiteConfigSnapshotResource. </returns>
         public virtual SiteConfigSnapshotCollection GetSiteConfigSnapshots()
         {
-            return GetCachedClient(Client => new SiteConfigSnapshotCollection(Client, Id));
+            return GetCachedClient(client => new SiteConfigSnapshotCollection(client, Id));
         }
 
         /// <summary>
@@ -110,12 +114,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteConfigSnapshotResource>> GetSiteConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -133,12 +145,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteConfigSnapshotResource> GetSiteConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
         {
@@ -155,6 +175,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +216,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfiguration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,6 +255,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,6 +298,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateConfiguration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> JSON representation of a SiteConfig object. See example. </param>
@@ -287,6 +339,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_CreateOrUpdateConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,6 +386,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_CreateOrUpdateConfiguration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteConfigResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -364,15 +432,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListConfigurationSnapshotInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteConfigurationSnapshotInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfoAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -386,15 +462,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListConfigurationSnapshotInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteConfigurationSnapshotInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteConfigurationSnapshotInfo> GetConfigurationSnapshotInfo(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
         }
     }
 }

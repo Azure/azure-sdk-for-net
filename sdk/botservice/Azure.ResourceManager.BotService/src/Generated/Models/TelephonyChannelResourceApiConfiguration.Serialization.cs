@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyChannelResourceApiConfiguration : IUtf8JsonSerializable
+    public partial class TelephonyChannelResourceApiConfiguration : IUtf8JsonSerializable, IJsonModel<TelephonyChannelResourceApiConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelephonyChannelResourceApiConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TelephonyChannelResourceApiConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelResourceApiConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -80,11 +91,40 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TelephonyChannelResourceApiConfiguration DeserializeTelephonyChannelResourceApiConfiguration(JsonElement element)
+        TelephonyChannelResourceApiConfiguration IJsonModel<TelephonyChannelResourceApiConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelResourceApiConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelephonyChannelResourceApiConfiguration(document.RootElement, options);
+        }
+
+        internal static TelephonyChannelResourceApiConfiguration DeserializeTelephonyChannelResourceApiConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +135,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> cognitiveServiceRegion = default;
             Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
             Optional<string> defaultLocale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,8 +194,44 @@ namespace Azure.ResourceManager.BotService.Models
                     defaultLocale = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TelephonyChannelResourceApiConfiguration(id.Value, providerName.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TelephonyChannelResourceApiConfiguration(id.Value, providerName.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TelephonyChannelResourceApiConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelResourceApiConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TelephonyChannelResourceApiConfiguration IPersistableModel<TelephonyChannelResourceApiConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelResourceApiConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTelephonyChannelResourceApiConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TelephonyChannelResourceApiConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

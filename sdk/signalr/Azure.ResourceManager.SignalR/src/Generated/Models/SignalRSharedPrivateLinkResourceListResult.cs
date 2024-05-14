@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> A list of shared private link resources. </summary>
     internal partial class SignalRSharedPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceListResult"/>. </summary>
         internal SignalRSharedPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSharedPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of the shared private link resources. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
         internal SignalRSharedPrivateLinkResourceListResult(IReadOnlyList<SignalRSharedPrivateLinkResourceData> value, string nextLink)

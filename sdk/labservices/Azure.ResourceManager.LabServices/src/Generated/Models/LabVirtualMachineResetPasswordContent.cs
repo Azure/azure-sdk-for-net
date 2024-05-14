@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Body of a reset password request. </summary>
     public partial class LabVirtualMachineResetPasswordContent
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineResetPasswordContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineResetPasswordContent"/>. </summary>
         /// <param name="username"> The user whose password is being reset. </param>
         /// <param name="password"> The password. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>

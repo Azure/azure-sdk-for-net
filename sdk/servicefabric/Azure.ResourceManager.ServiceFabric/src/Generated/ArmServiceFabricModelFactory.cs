@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceFabricModelFactory
     {
-        /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ServiceFabricClusterData(id, name, resourceType, systemData, tags, location, addOnFeatures?.ToList(), availableClusterVersions?.ToList(), azureActiveDirectory, certificate, certificateCommonNames, clientCertificateCommonNames?.ToList(), clientCertificateThumbprints?.ToList(), clusterCodeVersion, clusterEndpoint, clusterId, clusterState, diagnosticsStorageAccountConfig, isEventStoreServiceEnabled, fabricSettings?.ToList(), managementEndpoint, nodeTypes?.ToList(), provisioningState, reliabilityLevel, reverseProxyCertificate, reverseProxyCertificateCommonNames, upgradeDescription, upgradeMode, maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value) : null, vmImage, serviceFabricZonalUpgradeMode, vmssZonalUpgradeMode, isInfrastructureServiceManagerEnabled, upgradeWave, upgradePauseStartOn, upgradePauseEndOn, isWaveUpgradePaused, notifications?.ToList(), etag);
         }
 
-        /// <summary> Initializes a new instance of ClusterVersionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterVersionDetails"/>. </summary>
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterVersionDetails(codeVersion, supportExpireOn, environment);
         }
 
-        /// <summary> Initializes a new instance of ClusterCodeVersionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterCodeVersionsResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterCodeVersionsResult(id, name, resourceType, systemData, codeVersion, supportExpireOn, environment);
         }
 
-        /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UpgradableVersionPathResult"/>. </summary>
         /// <param name="supportedPath"></param>
         /// <returns> A new <see cref="Models.UpgradableVersionPathResult"/> instance for mocking. </returns>
         public static UpgradableVersionPathResult UpgradableVersionPathResult(IEnumerable<string> supportedPath = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new UpgradableVersionPathResult(supportedPath?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricApplicationTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ServiceFabricApplicationTypeData(id, name, resourceType, systemData, tags, location, provisioningState, etag);
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ServiceFabricApplicationTypeVersionData(id, name, resourceType, systemData, tags, location, provisioningState, appPackageUri, defaultParameterList, etag);
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ServiceFabricApplicationData(id, name, resourceType, systemData, tags, location, identity, typeVersion, parameters, upgradePolicy, minimumNodes, maximumNodes, removeApplicationCapacity, metrics?.ToList(), managedIdentities?.ToList(), provisioningState, typeName, etag);
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricApplicationPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

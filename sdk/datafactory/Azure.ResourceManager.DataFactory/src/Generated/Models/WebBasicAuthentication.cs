@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A WebLinkedService that uses basic authentication to communicate with an HTTP endpoint. </summary>
     public partial class WebBasicAuthentication : WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AuthenticationType = WebAuthenticationType.Basic;
         }
 
-        /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>

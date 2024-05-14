@@ -246,6 +246,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
             var receivedEvents = default(List<EventData>);
+            var firstReceivedEvent = default(EventData);
             var lastReceivedEvent = default(EventData);
 
             var stopWatch = ValueStopwatch.StartNew();
@@ -293,6 +294,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (receivedEventCount > 0)
                         {
+                            firstReceivedEvent = receivedEvents[0];
                             lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
                             if (lastReceivedEvent.Offset > long.MinValue)
@@ -387,7 +389,18 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, operationId, failedAttemptCount, receivedEventCount, stopWatch.GetElapsedTime().TotalSeconds);
+                EventHubsEventSource.Log.EventReceiveComplete(
+                    EventHubName,
+                    ConsumerGroup,
+                    PartitionId,
+                    operationId,
+                    failedAttemptCount,
+                    receivedEventCount,
+                    stopWatch.GetElapsedTime().TotalSeconds,
+                    firstReceivedEvent?.SequenceNumber.ToString(),
+                    LastReceivedEvent?.SequenceNumber.ToString(),
+                    maximumEventCount,
+                    waitTime.TotalSeconds);
             }
         }
 

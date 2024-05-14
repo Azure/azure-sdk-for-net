@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Backend address of a frontDoor load balancer. </summary>
     public partial class FrontDoorBackend
     {
-        /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackend"/>. </summary>
         public FrontDoorBackend()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackend"/>. </summary>
         /// <param name="address"> Location of the backend (IP address or FQDN). </param>
         /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
         /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>

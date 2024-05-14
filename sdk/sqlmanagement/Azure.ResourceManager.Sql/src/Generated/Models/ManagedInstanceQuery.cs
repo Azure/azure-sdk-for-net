@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Database query. </summary>
     public partial class ManagedInstanceQuery : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceQuery"/>. </summary>
         public ManagedInstanceQuery()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceQuery"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

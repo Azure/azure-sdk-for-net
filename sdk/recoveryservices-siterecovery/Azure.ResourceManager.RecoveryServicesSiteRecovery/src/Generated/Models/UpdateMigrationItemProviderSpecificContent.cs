@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class UpdateMigrationItemProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of UpdateMigrationItemProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateMigrationItemProviderSpecificContent"/>. </summary>
         protected UpdateMigrationItemProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMigrationItemProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal UpdateMigrationItemProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

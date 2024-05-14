@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines weights on index fields for which matches should boost scoring in search queries. </summary>
     public partial class TextWeights
     {
-        /// <summary> Initializes a new instance of TextWeights. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
         public TextWeights(IDictionary<string, double> weights)

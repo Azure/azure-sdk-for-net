@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents the response to a list elastic pool database activity request. </summary>
     internal partial class ElasticPoolDatabaseActivityListResult
     {
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/>. </summary>
         /// <param name="value"> The list of elastic pool database activities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ElasticPoolDatabaseActivityListResult(IEnumerable<ElasticPoolDatabaseActivity> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/>. </summary>
         /// <param name="value"> The list of elastic pool database activities. </param>
         internal ElasticPoolDatabaseActivityListResult(IReadOnlyList<ElasticPoolDatabaseActivity> value)
         {

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -12,19 +15,96 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudClusterVirtualMachineData : IUtf8JsonSerializable
+    public partial class AvsPrivateCloudClusterVirtualMachineData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudClusterVirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterVirtualMachineData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MoRefId))
+            {
+                writer.WritePropertyName("moRefId"u8);
+                writer.WriteStringValue(MoRefId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FolderPath))
+            {
+                writer.WritePropertyName("folderPath"u8);
+                writer.WriteStringValue(FolderPath);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RestrictMovement))
+            {
+                writer.WritePropertyName("restrictMovement"u8);
+                writer.WriteStringValue(RestrictMovement.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AvsPrivateCloudClusterVirtualMachineData DeserializeAvsPrivateCloudClusterVirtualMachineData(JsonElement element)
+        AvsPrivateCloudClusterVirtualMachineData IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterVirtualMachineData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvsPrivateCloudClusterVirtualMachineData(document.RootElement, options);
+        }
+
+        internal static AvsPrivateCloudClusterVirtualMachineData DeserializeAvsPrivateCloudClusterVirtualMachineData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +117,8 @@ namespace Azure.ResourceManager.Avs
             Optional<string> moRefId = default;
             Optional<string> folderPath = default;
             Optional<VirtualMachineRestrictMovementState> restrictMovement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -99,8 +181,44 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvsPrivateCloudClusterVirtualMachineData(id, name, type, systemData.Value, displayName.Value, moRefId.Value, folderPath.Value, Optional.ToNullable(restrictMovement));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvsPrivateCloudClusterVirtualMachineData(id, name, type, systemData.Value, displayName.Value, moRefId.Value, folderPath.Value, Optional.ToNullable(restrictMovement), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterVirtualMachineData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AvsPrivateCloudClusterVirtualMachineData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvsPrivateCloudClusterVirtualMachineData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterVirtualMachineData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

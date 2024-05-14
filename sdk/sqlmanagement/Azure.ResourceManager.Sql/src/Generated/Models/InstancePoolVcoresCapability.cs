@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed instance virtual cores capability. </summary>
     public partial class InstancePoolVcoresCapability
     {
-        /// <summary> Initializes a new instance of InstancePoolVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolVcoresCapability"/>. </summary>
         internal InstancePoolVcoresCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
         /// <param name="storageLimit"> Storage limit. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a FqdnListLocalRulestackResource list operation. </summary>
     internal partial class LocalRulestackFqdnListResult
     {
-        /// <summary> Initializes a new instance of LocalRulestackFqdnListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LocalRulestackFqdnListResult(IEnumerable<LocalRulestackFqdnData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackFqdnListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal LocalRulestackFqdnListResult(IReadOnlyList<LocalRulestackFqdnData> value, string nextLink)

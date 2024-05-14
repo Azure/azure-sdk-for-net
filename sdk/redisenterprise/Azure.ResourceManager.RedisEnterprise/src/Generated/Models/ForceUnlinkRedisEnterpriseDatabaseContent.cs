@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Parameters for a Redis Enterprise Active Geo Replication Force Unlink operation. </summary>
     public partial class ForceUnlinkRedisEnterpriseDatabaseContent
     {
-        /// <summary> Initializes a new instance of ForceUnlinkRedisEnterpriseDatabaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
         /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
         public ForceUnlinkRedisEnterpriseDatabaseContent(IEnumerable<ResourceIdentifier> ids)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Argument.AssertNotNull(ids, nameof(ids));
 
             Ids = ids.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForceUnlinkRedisEnterpriseDatabaseContent"/>. </summary>
+        /// <param name="ids"> The resource IDs of the database resources to be unlinked. </param>
+        internal ForceUnlinkRedisEnterpriseDatabaseContent(IList<ResourceIdentifier> ids)
+        {
+            Ids = ids;
         }
 
         /// <summary> The resource IDs of the database resources to be unlinked. </summary>

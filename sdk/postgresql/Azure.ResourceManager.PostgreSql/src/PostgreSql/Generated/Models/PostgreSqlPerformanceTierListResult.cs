@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of performance tiers. </summary>
     internal partial class PostgreSqlPerformanceTierListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierListResult"/>. </summary>
         internal PostgreSqlPerformanceTierListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlPerformanceTierProperties>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierListResult"/>. </summary>
         /// <param name="value"> The list of performance tiers. </param>
         internal PostgreSqlPerformanceTierListResult(IReadOnlyList<PostgreSqlPerformanceTierProperties> value)
         {

@@ -13,11 +13,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure specific reprotect input. </summary>
     public partial class A2AReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2AReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReprotectContent"/>. </summary>
         public A2AReprotectContent()
         {
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
             InstanceType = "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AReprotectContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryContainerId"> The recovery container Id. </param>
+        /// <param name="vmDisks"> The list of vm disk details. </param>
+        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
+        /// <param name="recoveryCloudServiceId"> The recovery cloud service Id. Valid for V1 scenarios. </param>
+        /// <param name="recoveryAvailabilitySetId"> The recovery availability set. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        internal A2AReprotectContent(string instanceType, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId) : base(instanceType)
+        {
+            RecoveryContainerId = recoveryContainerId;
+            VmDisks = vmDisks;
+            RecoveryResourceGroupId = recoveryResourceGroupId;
+            RecoveryCloudServiceId = recoveryCloudServiceId;
+            RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
+            PolicyId = policyId;
+            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The recovery container Id. </summary>

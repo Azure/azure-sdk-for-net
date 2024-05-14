@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of SKU information. </summary>
     public partial class AppServiceSkuResult
     {
-        /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuResult"/>. </summary>
         internal AppServiceSkuResult()
         {
             Skus = new ChangeTrackingList<GlobalCsmSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuResult"/>. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="skus"> List of SKUs the subscription is able to use. </param>
         internal AppServiceSkuResult(ResourceType? resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus)

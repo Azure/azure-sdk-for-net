@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set the connectivity, storage and workload settings. </summary>
     public partial class SqlServerConfigurationsManagementSettings
     {
-        /// <summary> Initializes a new instance of SqlServerConfigurationsManagementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerConfigurationsManagementSettings"/>. </summary>
         public SqlServerConfigurationsManagementSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerConfigurationsManagementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerConfigurationsManagementSettings"/>. </summary>
         /// <param name="sqlConnectivityUpdateSettings"> SQL connectivity type settings. </param>
         /// <param name="sqlWorkloadTypeUpdateSettings"> SQL workload type settings. </param>
         /// <param name="sqlStorageUpdateSettings"> SQL storage update settings. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The Mobility Service update details. </summary>
     public partial class MobilityServiceUpdate
     {
-        /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobilityServiceUpdate"/>. </summary>
         internal MobilityServiceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobilityServiceUpdate"/>. </summary>
         /// <param name="version"> The version of the latest update. </param>
         /// <param name="rebootStatus"> The reboot status of the update - whether it is required or not. </param>
         /// <param name="osType"> The OS type. </param>

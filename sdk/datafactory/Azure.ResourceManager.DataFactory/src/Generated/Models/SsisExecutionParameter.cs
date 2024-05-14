@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SSIS execution parameter. </summary>
     public partial class SsisExecutionParameter
     {
-        /// <summary> Initializes a new instance of SsisExecutionParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/>. </summary>
         /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisExecutionParameter(DataFactoryElement<string> value)

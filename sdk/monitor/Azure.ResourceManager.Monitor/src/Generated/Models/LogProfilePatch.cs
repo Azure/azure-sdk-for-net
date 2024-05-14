@@ -13,12 +13,29 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The log profile resource for patch operations. </summary>
     public partial class LogProfilePatch
     {
-        /// <summary> Initializes a new instance of LogProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfilePatch"/>. </summary>
         public LogProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Locations = new ChangeTrackingList<AzureLocation>();
             Categories = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogProfilePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="storageAccountId"> the resource id of the storage account to which you would like to send the Activity Log. </param>
+        /// <param name="serviceBusRuleId"> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </param>
+        /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </param>
+        /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
+        /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
+        internal LogProfilePatch(IDictionary<string, string> tags, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, IList<AzureLocation> locations, IList<string> categories, RetentionPolicy retentionPolicy)
+        {
+            Tags = tags;
+            StorageAccountId = storageAccountId;
+            ServiceBusRuleId = serviceBusRuleId;
+            Locations = locations;
+            Categories = categories;
+            RetentionPolicy = retentionPolicy;
         }
 
         /// <summary> Resource tags. </summary>

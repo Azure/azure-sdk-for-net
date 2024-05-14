@@ -33,6 +33,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
+            if (Optional.IsDefined(DataCollector))
+            {
+                if (DataCollector != null)
+                {
+                    writer.WritePropertyName("dataCollector"u8);
+                    writer.WriteObjectValue(DataCollector);
+                }
+                else
+                {
+                    writer.WriteNull("dataCollector");
+                }
+            }
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
                 writer.WritePropertyName("egressPublicNetworkAccess"u8);
@@ -207,6 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<MachineLearningContainerResourceRequirements> containerResourceRequirements = default;
             Optional<bool> appInsightsEnabled = default;
+            Optional<DataCollector> dataCollector = default;
             Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
             Optional<string> instanceType = default;
@@ -241,6 +254,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     appInsightsEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("dataCollector"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataCollector = null;
+                        continue;
+                    }
+                    dataCollector = DataCollector.DeserializeDataCollector(property.Value);
                     continue;
                 }
                 if (property.NameEquals("egressPublicNetworkAccess"u8))
@@ -397,7 +420,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
+            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
         }
     }
 }

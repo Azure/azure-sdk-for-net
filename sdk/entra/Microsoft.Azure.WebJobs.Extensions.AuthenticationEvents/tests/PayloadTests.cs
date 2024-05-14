@@ -1,10 +1,8 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using NUnit.Framework;
-using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
@@ -66,29 +64,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case TestTypes.NoAction:
                     return (Payloads.TokenIssuanceStart.TokenIssuanceStart.NoActionResponse, @"{'errors':['No Actions Found. Please supply atleast one action.']}", HttpStatusCode.InternalServerError);
                 case TestTypes.Empty:
-                    return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}", HttpStatusCode.InternalServerError);
+                    return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return: JSON is null or empty.']}", HttpStatusCode.InternalServerError);
                 case TestTypes.ValidCloudEvent:
                     return (Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);
                 default:
                     return (string.Empty, string.Empty, HttpStatusCode.NotFound);
             }
         }
-    }
-
-    internal class TestAuthResponse : AuthenticationEventResponse
-    {
-        internal TestAuthResponse(HttpStatusCode code, string content)
-            : this(code)
-        {
-            Content = new StringContent(content);
-        }
-
-        internal TestAuthResponse(HttpStatusCode code)
-        {
-            StatusCode = code;
-        }
-
-        internal override void Invalidate()
-        { }
     }
 }

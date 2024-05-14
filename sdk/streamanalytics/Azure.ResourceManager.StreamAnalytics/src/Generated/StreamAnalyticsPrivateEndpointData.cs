@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamAnalyticsPrivateEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointData"/>. </summary>
         public StreamAnalyticsPrivateEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

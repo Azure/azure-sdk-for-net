@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Function Overview ARM resource. </summary>
     public partial class StaticSiteFunctionOverview : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
         public StaticSiteFunctionOverview()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

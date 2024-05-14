@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HyperV replica 2012 R2 (Blue) replication details. </summary>
     public partial class HyperVReplicaBlueReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of HyperVReplicaBlueReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBlueReplicationDetails"/>. </summary>
         internal HyperVReplicaBlueReplicationDetails()
         {
             VmNics = new ChangeTrackingList<VmNicDetails>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "HyperVReplica2012R2";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBlueReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBlueReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="lastReplicatedOn"> The Last replication time. </param>
         /// <param name="vmNics"> The PE Network details. </param>

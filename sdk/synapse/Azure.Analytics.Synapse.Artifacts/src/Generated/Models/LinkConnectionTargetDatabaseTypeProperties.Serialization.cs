@@ -28,6 +28,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("dropExistingTargetTableOnStart"u8);
                 writer.WriteBooleanValue(DropExistingTargetTableOnStart.Value);
             }
+            if (Optional.IsDefined(ActionOnExistingTargetTable))
+            {
+                writer.WritePropertyName("actionOnExistingTargetTable"u8);
+                writer.WriteStringValue(ActionOnExistingTargetTable.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -39,6 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<bool> crossTableTransaction = default;
             Optional<bool> dropExistingTargetTableOnStart = default;
+            Optional<ActionOnExistingTargetTable> actionOnExistingTargetTable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crossTableTransaction"u8))
@@ -59,8 +65,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dropExistingTargetTableOnStart = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("actionOnExistingTargetTable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actionOnExistingTargetTable = new ActionOnExistingTargetTable(property.Value.GetString());
+                    continue;
+                }
             }
-            return new LinkConnectionTargetDatabaseTypeProperties(Optional.ToNullable(crossTableTransaction), Optional.ToNullable(dropExistingTargetTableOnStart));
+            return new LinkConnectionTargetDatabaseTypeProperties(Optional.ToNullable(crossTableTransaction), Optional.ToNullable(dropExistingTargetTableOnStart), Optional.ToNullable(actionOnExistingTargetTable));
         }
 
         internal partial class LinkConnectionTargetDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionTargetDatabaseTypeProperties>

@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A piece of clinical information, expressed as a code in a clinical coding system, extended by semantic information. </summary>
     public partial class ExtendedClinicalCodedElement
     {
-        /// <summary> Initializes a new instance of ExtendedClinicalCodedElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedClinicalCodedElement"/>. </summary>
         /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
         /// <param name="code"> The code within the given clinical coding system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="system"/> or <paramref name="code"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of ExtendedClinicalCodedElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedClinicalCodedElement"/>. </summary>
         /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
         /// <param name="code"> The code within the given clinical coding system. </param>
         /// <param name="name"> The name of this coded concept in the coding system. </param>

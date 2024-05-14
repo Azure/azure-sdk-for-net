@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewClassificationRuleClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="classificationRuleName"> The String to use. </param>
+        /// <param name="classificationRuleName"> The <see cref="string"/> to use. </param>
         public static IAzureClientBuilder<PurviewClassificationRuleClient, PurviewScanningServiceClientOptions> AddPurviewClassificationRuleClient<TBuilder>(this TBuilder builder, Uri endpoint, string classificationRuleName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -36,7 +36,7 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewDataSourceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
         public static IAzureClientBuilder<PurviewDataSourceClient, PurviewScanningServiceClientOptions> AddPurviewDataSourceClient<TBuilder>(this TBuilder builder, Uri endpoint, string dataSourceName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -46,8 +46,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="PurviewScanClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
-        /// <param name="scanName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
+        /// <param name="scanName"> The <see cref="string"/> to use. </param>
         public static IAzureClientBuilder<PurviewScanClient, PurviewScanningServiceClientOptions> AddPurviewScanClient<TBuilder>(this TBuilder builder, Uri endpoint, string dataSourceName, string scanName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

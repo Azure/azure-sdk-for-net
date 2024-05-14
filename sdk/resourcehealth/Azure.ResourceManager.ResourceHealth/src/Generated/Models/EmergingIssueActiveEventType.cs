@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Active event type of emerging issue. </summary>
     public partial class EmergingIssueActiveEventType
     {
-        /// <summary> Initializes a new instance of EmergingIssueActiveEventType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueActiveEventType"/>. </summary>
         internal EmergingIssueActiveEventType()
         {
             Impacts = new ChangeTrackingList<EmergingIssueImpact>();
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueActiveEventType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueActiveEventType"/>. </summary>
         /// <param name="title"> The active event title. </param>
         /// <param name="description"> The details of active event. </param>
         /// <param name="trackingId"> The tracking id of this active event. </param>

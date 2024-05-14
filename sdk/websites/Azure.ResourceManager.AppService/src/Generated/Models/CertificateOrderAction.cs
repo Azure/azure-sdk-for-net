@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Certificate order action. </summary>
     public partial class CertificateOrderAction : ResourceData
     {
-        /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateOrderAction"/>. </summary>
         public CertificateOrderAction()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateOrderAction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

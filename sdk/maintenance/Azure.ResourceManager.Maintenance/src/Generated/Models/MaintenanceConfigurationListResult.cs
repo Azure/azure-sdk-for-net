@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Response for MaintenanceConfigurations list. </summary>
     internal partial class MaintenanceConfigurationListResult
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationListResult"/>. </summary>
         internal MaintenanceConfigurationListResult()
         {
             Value = new ChangeTrackingList<MaintenanceConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of maintenance Configurations. </param>
         internal MaintenanceConfigurationListResult(IReadOnlyList<MaintenanceConfigurationData> value)
         {

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,15 +16,43 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualHubData : IUtf8JsonSerializable
+    public partial class VirtualHubData : IUtf8JsonSerializable, IJsonModel<VirtualHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHubData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -82,6 +112,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(SecurityProviderName))
             {
                 writer.WritePropertyName("securityProviderName"u8);
@@ -101,6 +136,41 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RoutingState))
+            {
+                writer.WritePropertyName("routingState"u8);
+                writer.WriteStringValue(RoutingState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
+            {
+                writer.WritePropertyName("bgpConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in BgpConnections)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            {
+                writer.WritePropertyName("ipConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurations)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RouteMaps))
+            {
+                writer.WritePropertyName("routeMaps"u8);
+                writer.WriteStartArray();
+                foreach (var item in RouteMaps)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(VirtualRouterAsn))
             {
@@ -138,11 +208,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualHubData DeserializeVirtualHubData(JsonElement element)
+        VirtualHubData IJsonModel<VirtualHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHubData(document.RootElement, options);
+        }
+
+        internal static VirtualHubData DeserializeVirtualHubData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,6 +275,8 @@ namespace Azure.ResourceManager.Network
             Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
             Optional<HubRoutingPreference> hubRoutingPreference = default;
             Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -461,8 +562,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
         }
+
+        BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualHubData IPersistableModel<VirtualHubData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualHubData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get deleted app for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get deleted app for a subscription at location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Get all deleted apps for a subscription at location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceProvisioningServices.Mocking;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,119 +20,112 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeviceProvisioningServices. </summary>
     public static partial class DeviceProvisioningServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableDeviceProvisioningServicesArmClient GetMockableDeviceProvisioningServicesArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableDeviceProvisioningServicesArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableDeviceProvisioningServicesResourceGroupResource GetMockableDeviceProvisioningServicesResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableDeviceProvisioningServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableDeviceProvisioningServicesSubscriptionResource GetMockableDeviceProvisioningServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableDeviceProvisioningServicesSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DeviceProvisioningServicesCertificateResource
         /// <summary>
         /// Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeviceProvisioningServicesCertificateResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServicesCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource"/> object. </returns>
         public static DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServicesCertificateResource.ValidateResourceId(id);
-                return new DeviceProvisioningServicesCertificateResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DeviceProvisioningServiceResource
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesCertificateResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DeviceProvisioningServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeviceProvisioningServiceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceProvisioningServiceResource"/> object. </returns>
         public static DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServiceResource.ValidateResourceId(id);
-                return new DeviceProvisioningServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DeviceProvisioningServicesPrivateLinkResource
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServiceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeviceProvisioningServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> object. </returns>
         public static DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServicesPrivateLinkResource.ValidateResourceId(id);
-                return new DeviceProvisioningServicesPrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DeviceProvisioningServicesPrivateEndpointConnectionResource
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesPrivateLinkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
         public static DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new DeviceProvisioningServicesPrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource. </summary>
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
         public static DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDeviceProvisioningServices();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningServices();
         }
 
         /// <summary>
@@ -145,17 +139,31 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDeviceProvisioningServices().GetAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningServiceAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,17 +177,31 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDeviceProvisioningServices().Get(provisioningServiceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningService(provisioningServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -193,14 +215,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -214,14 +251,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
         }
 
         /// <summary>
@@ -235,17 +287,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -259,17 +323,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
+            return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
         }
     }
 }

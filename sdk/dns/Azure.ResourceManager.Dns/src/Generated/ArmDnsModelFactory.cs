@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDnsModelFactory
     {
-        /// <summary> Initializes a new instance of DnssecConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnssecConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnssecConfigData(id, name, resourceType, systemData, etag, provisioningState, signingKeys?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DnsSigningKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DnsSigningKey"/>. </summary>
         /// <param name="delegationSignerInfo"> The delegation signer information. </param>
         /// <param name="flags"> The flags specifies how the key is used. </param>
         /// <param name="keyTag"> The key tag value of the DNSKEY Resource Record. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsSigningKey(delegationSignerInfo?.ToList(), flags, keyTag, protocol, publicKey, securityAlgorithmType);
         }
 
-        /// <summary> Initializes a new instance of DelegationSignerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DelegationSignerInfo"/>. </summary>
         /// <param name="digestAlgorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
         /// <param name="digestValue"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
         /// <param name="record"> The record represents a delegation signer (DS) record. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DelegationSignerInfo(digestAlgorithmType, digestValue, record);
         }
 
-        /// <summary> Initializes a new instance of DnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, maxNumberOfRecordsPerRecord, numberOfRecords, nameServers?.ToList(), zoneType, registrationVirtualNetworks?.ToList(), resolutionVirtualNetworks?.ToList(), signingKeys?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DnsResourceReferenceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReferenceResult"/>. </summary>
         /// <param name="dnsResourceReferences"> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </param>
         /// <returns> A new <see cref="Models.DnsResourceReferenceResult"/> instance for mocking. </returns>
         public static DnsResourceReferenceResult DnsResourceReferenceResult(IEnumerable<DnsResourceReference> dnsResourceReferences = null)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsResourceReferenceResult(dnsResourceReferences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DnsResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReference"/>. </summary>
         /// <param name="dnsResources"> A list of dns Records. </param>
         /// <param name="targetResourceId"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>

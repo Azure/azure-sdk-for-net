@@ -188,6 +188,136 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventHubBufferedProducerClient" />
+        ///   class.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubBufferedProducerAppliesDiagnosticIdToEventsOnEnqueue()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            Activity activity = new Activity("SomeActivity");
+#if NET462
+            activity.SetIdFormat(ActivityIdFormat.W3C);
+#endif
+            activity.Start();
+
+            var eventHubName = "SomeName";
+            var endpoint = "some.endpoint.com";
+            var fakeConnection = new MockConnection(endpoint, eventHubName);
+
+            var writtenEventsData = new List<EventData>();
+
+            var mockProducer = new Mock<EventHubProducerClient>(fakeConnection, new EventHubProducerClientOptions());
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { "0"});
+            int times = 0;
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) =>
+                {
+                    List<EventData> events = new List<EventData>();
+                    if (times++ == 0)
+                    {
+                        events = writtenEventsData;
+                    }
+
+                    return new ValueTask<EventDataBatch>(
+                        EventHubsModelFactory.EventDataBatch(long.MaxValue, events, options));
+                });
+
+            mockProducer
+                .Setup(m => m.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
+
+            bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
+            await bufferedProducer.EnqueueEventsAsync(new[]
+            {
+                new EventData(ReadOnlyMemory<byte>.Empty),
+                new EventData(ReadOnlyMemory<byte>.Empty)
+            });
+
+            // Stop the activity before flushing so that we verify that the events are instrumented at time of enqueueing
+            activity.Stop();
+
+            await bufferedProducer.FlushAsync();
+            Assert.That(writtenEventsData.Count, Is.EqualTo(2), "All events should have been instrumented.");
+
+            foreach (EventData eventData in writtenEventsData)
+            {
+                Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
+                ActivityContext.TryParse((string)value, null, out var context);
+                Assert.That(context.TraceId, Is.EqualTo(activity.TraceId), "The trace identifier should match the activity in the active scope when the events were enqueued.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventHubBufferedProducerClient" />
+        ///   class when enqueueing a single event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubBufferedProducerAppliesDiagnosticIdToSingleEventOnEnqueue()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
+            Activity activity = new Activity("SomeActivity");
+#if NET462
+            activity.SetIdFormat(ActivityIdFormat.W3C);
+#endif
+            activity.Start();
+
+            var eventHubName = "SomeName";
+            var endpoint = "some.endpoint.com";
+            var fakeConnection = new MockConnection(endpoint, eventHubName);
+
+            var writtenEventsData = new List<EventData>();
+
+            var mockProducer = new Mock<EventHubProducerClient>(fakeConnection, new EventHubProducerClientOptions());
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { "0"});
+            int times = 0;
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) =>
+                {
+                    List<EventData> events = new List<EventData>();
+                    if (times++ == 0)
+                    {
+                        events = writtenEventsData;
+                    }
+
+                    return new ValueTask<EventDataBatch>(
+                        EventHubsModelFactory.EventDataBatch(long.MaxValue, events, options));
+                });
+
+            mockProducer
+                .Setup(m => m.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
+
+            bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
+            await bufferedProducer.EnqueueEventAsync(new EventData(ReadOnlyMemory<byte>.Empty));
+
+            // Stop the activity before flushing so that we verify that the events are instrumented at time of enqueueing
+            activity.Stop();
+
+            await bufferedProducer.FlushAsync();
+            Assert.That(writtenEventsData.Count, Is.EqualTo(1), "All events should have been instrumented.");
+
+            foreach (EventData eventData in writtenEventsData)
+            {
+                Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
+                ActivityContext.TryParse((string)value, null, out var context);
+                Assert.That(context.TraceId, Is.EqualTo(activity.TraceId), "The trace identifier should match the activity in the active scope when the events were enqueued.");
+            }
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
         /// </summary>
@@ -342,7 +472,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorCreatesScopeForEventProcessing()
+        public async Task EventProcessorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -443,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
+        public async Task EventProcessorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -505,7 +635,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options) => Mock.Of<TransportClient>();
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true) => Mock.Of<TransportClient>();
         }
     }
 }

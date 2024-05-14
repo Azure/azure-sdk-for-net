@@ -19,14 +19,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<ConnectionDetail>> connectionDetails = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<IReadOnlyList<HybridComputeConnectionDetail>> connectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new HybridComputePublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectionDetails"u8))
@@ -44,10 +48,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<ConnectionDetail> array = new List<ConnectionDetail>();
+                    List<HybridComputeConnectionDetail> array = new List<HybridComputeConnectionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionDetail.DeserializeConnectionDetail(item));
+                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
                     }
                     connectionDetails = array;
                     continue;

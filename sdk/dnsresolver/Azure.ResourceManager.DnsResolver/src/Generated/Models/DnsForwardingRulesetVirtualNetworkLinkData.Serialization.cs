@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
-            JsonSerializer.Serialize(writer, VirtualNetwork); if (Optional.IsCollectionDefined(Metadata))
+            JsonSerializer.Serialize(writer, VirtualNetwork);
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

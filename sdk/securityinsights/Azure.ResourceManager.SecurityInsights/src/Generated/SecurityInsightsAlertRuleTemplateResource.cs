@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsAlertRuleTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAlertRuleTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAlertRuleTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsAlertRuleTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsAlertRuleTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsAlertRuleTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsAlertRuleTemplate method.
     /// </summary>
     public partial class SecurityInsightsAlertRuleTemplateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsAlertRuleTemplateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="alertRuleTemplateId"> The alertRuleTemplateId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string alertRuleTemplateId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly AlertRuleTemplatesRestOperations _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient;
         private readonly SecurityInsightsAlertRuleTemplateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/alertRuleTemplates";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleTemplateResource"/> class for mocking. </summary>
         protected SecurityInsightsAlertRuleTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsAlertRuleTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsAlertRuleTemplateResource(ArmClient client, SecurityInsightsAlertRuleTemplateData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/alertRuleTemplates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AlertRuleTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRuleTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

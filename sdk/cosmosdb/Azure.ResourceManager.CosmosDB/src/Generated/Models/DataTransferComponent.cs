@@ -23,11 +23,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         private const string CosmosDBCassandraValue = "CosmosDBCassandra";
+        private const string CosmosDBMongoValue = "CosmosDBMongo";
         private const string CosmosDBSqlValue = "CosmosDBSql";
         private const string AzureBlobStorageValue = "AzureBlobStorage";
 
         /// <summary> CosmosDBCassandra. </summary>
         public static DataTransferComponent CosmosDBCassandra { get; } = new DataTransferComponent(CosmosDBCassandraValue);
+        /// <summary> CosmosDBMongo. </summary>
+        public static DataTransferComponent CosmosDBMongo { get; } = new DataTransferComponent(CosmosDBMongoValue);
         /// <summary> CosmosDBSql. </summary>
         public static DataTransferComponent CosmosDBSql { get; } = new DataTransferComponent(CosmosDBSqlValue);
         /// <summary> AzureBlobStorage. </summary>

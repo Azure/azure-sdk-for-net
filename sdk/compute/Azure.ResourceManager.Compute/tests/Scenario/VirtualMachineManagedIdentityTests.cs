@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-11-01")]
+    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-11-01", "2023-07-01", "2023-09-01")]
     public class VirtualMachineManagedIdentityTests : VirtualMachineTestBase
     {
         public VirtualMachineManagedIdentityTests(bool async, string apiVersion)

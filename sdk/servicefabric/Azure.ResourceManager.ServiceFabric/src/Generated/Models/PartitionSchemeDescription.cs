@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public abstract partial class PartitionSchemeDescription
     {
-        /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/>. </summary>
         protected PartitionSchemeDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         internal PartitionSchemeDescription(ApplicationPartitionScheme partitionScheme)
         {

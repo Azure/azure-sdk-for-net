@@ -17,11 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceGuardResourceId))
-            {
-                writer.WritePropertyName("resourceGuardResourceId"u8);
-                writer.WriteStringValue(ResourceGuardResourceId);
-            }
+            writer.WritePropertyName("resourceGuardResourceId"u8);
+            writer.WriteStringValue(ResourceGuardResourceId);
             if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
@@ -35,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceGuardResourceId = default;
+            ResourceIdentifier resourceGuardResourceId = default;
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<string> description = default;
@@ -59,10 +56,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceGuardResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -86,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastUpdatedTime = property.Value.GetDateTimeOffset();
+                    lastUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -95,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ResourceGuardProxyProperties(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value);
+            return new ResourceGuardProxyProperties(resourceGuardResourceId, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value);
         }
     }
 }

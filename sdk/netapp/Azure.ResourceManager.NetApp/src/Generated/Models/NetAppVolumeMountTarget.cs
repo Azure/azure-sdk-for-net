@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Mount target properties. </summary>
     public partial class NetAppVolumeMountTarget
     {
-        /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         internal NetAppVolumeMountTarget(Guid fileSystemId)
         {
             FileSystemId = fileSystemId;
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address. </param>

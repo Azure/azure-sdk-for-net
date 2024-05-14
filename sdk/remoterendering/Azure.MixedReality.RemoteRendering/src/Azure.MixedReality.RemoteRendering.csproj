@@ -5,6 +5,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure MixedReality</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Authors>Microsoft</Authors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>

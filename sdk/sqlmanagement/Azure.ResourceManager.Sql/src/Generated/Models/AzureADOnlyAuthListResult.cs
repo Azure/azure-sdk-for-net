@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of active directory only authentications. </summary>
     internal partial class AzureADOnlyAuthListResult
     {
-        /// <summary> Initializes a new instance of AzureADOnlyAuthListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureADOnlyAuthListResult"/>. </summary>
         internal AzureADOnlyAuthListResult()
         {
             Value = new ChangeTrackingList<SqlServerAzureADOnlyAuthenticationData>();
         }
 
-        /// <summary> Initializes a new instance of AzureADOnlyAuthListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureADOnlyAuthListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal AzureADOnlyAuthListResult(IReadOnlyList<SqlServerAzureADOnlyAuthenticationData> value, string nextLink)

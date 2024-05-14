@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The StorageServiceAccessPolicy. </summary>
     public partial class StorageServiceAccessPolicy
     {
-        /// <summary> Initializes a new instance of StorageServiceAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageServiceAccessPolicy"/>. </summary>
         public StorageServiceAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageServiceAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageServiceAccessPolicy"/>. </summary>
         /// <param name="startOn"> Start time of the access policy. </param>
         /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> List of abbreviated permissions. </param>

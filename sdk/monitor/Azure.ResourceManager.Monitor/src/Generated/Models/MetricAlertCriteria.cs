@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class MetricAlertCriteria
     {
-        /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertCriteria"/>. </summary>
         public MetricAlertCriteria()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertCriteria"/>. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal MetricAlertCriteria(MonitorOdataType odataType, IDictionary<string, BinaryData> additionalProperties)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

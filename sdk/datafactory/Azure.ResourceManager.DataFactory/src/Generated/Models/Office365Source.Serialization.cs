@@ -76,7 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> dateFilterColumn = default;
             Optional<DataFactoryElement<string>> startTime = default;
             Optional<DataFactoryElement<string>> endTime = default;
-            Optional<DataFactoryElement<IList<OutputColumn>>> outputColumns = default;
+            Optional<DataFactoryElement<IList<Office365TableOutputColumn>>> outputColumns = default;
             string type = default;
             Optional<DataFactoryElement<int>> sourceRetryCount = default;
             Optional<DataFactoryElement<string>> sourceRetryWait = default;
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<OutputColumn>>>(property.Value.GetRawText());
+                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<Office365TableOutputColumn>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

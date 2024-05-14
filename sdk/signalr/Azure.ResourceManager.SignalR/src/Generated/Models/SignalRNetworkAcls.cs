@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Network ACLs for the resource. </summary>
     public partial class SignalRNetworkAcls
     {
-        /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcls"/>. </summary>
         public SignalRNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<SignalRPrivateEndpointAcl>();
         }
 
-        /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNetworkAcls"/>. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>

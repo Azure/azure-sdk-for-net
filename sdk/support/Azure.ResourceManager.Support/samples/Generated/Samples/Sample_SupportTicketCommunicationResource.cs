@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCommunicationDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
             // this example is just showing the usage of "Communications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AddCommunicationToSubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSupportTicketCommunication.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSupportTicketCommunication.json
             // this example is just showing the usage of "Communications_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

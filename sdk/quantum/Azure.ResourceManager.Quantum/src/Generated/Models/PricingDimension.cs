@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about pricing dimension. </summary>
     public partial class PricingDimension
     {
-        /// <summary> Initializes a new instance of PricingDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="PricingDimension"/>. </summary>
         internal PricingDimension()
         {
         }
 
-        /// <summary> Initializes a new instance of PricingDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="PricingDimension"/>. </summary>
         /// <param name="id"> Unique id of this pricing dimension. </param>
         /// <param name="name"> The display name of this pricing dimension. </param>
         internal PricingDimension(string id, string name)

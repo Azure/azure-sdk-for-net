@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class DataMaskingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataMaskingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingPolicyData"/>. </summary>
         public DataMaskingPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMaskingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

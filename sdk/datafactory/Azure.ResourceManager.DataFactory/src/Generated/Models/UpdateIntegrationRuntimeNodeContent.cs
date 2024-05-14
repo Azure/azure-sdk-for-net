@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Update integration runtime node request. </summary>
     public partial class UpdateIntegrationRuntimeNodeContent
     {
-        /// <summary> Initializes a new instance of UpdateIntegrationRuntimeNodeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
         public UpdateIntegrationRuntimeNodeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
+        /// <param name="concurrentJobsLimit"> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </param>
+        internal UpdateIntegrationRuntimeNodeContent(int? concurrentJobsLimit)
+        {
+            ConcurrentJobsLimit = concurrentJobsLimit;
         }
 
         /// <summary> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </summary>

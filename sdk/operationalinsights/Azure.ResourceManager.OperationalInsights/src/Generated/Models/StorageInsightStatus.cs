@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The status of the storage insight. </summary>
     public partial class StorageInsightStatus
     {
-        /// <summary> Initializes a new instance of StorageInsightStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightStatus"/>. </summary>
         /// <param name="state"> The state of the storage insight connection to the workspace. </param>
         internal StorageInsightStatus(StorageInsightState state)
         {
             State = state;
         }
 
-        /// <summary> Initializes a new instance of StorageInsightStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightStatus"/>. </summary>
         /// <param name="state"> The state of the storage insight connection to the workspace. </param>
         /// <param name="description"> Description of the state of the storage insight. </param>
         internal StorageInsightStatus(StorageInsightState state, string description)

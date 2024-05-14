@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class RelayServiceConnectionEntityData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayServiceConnectionEntityData"/>. </summary>
         public RelayServiceConnectionEntityData()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayServiceConnectionEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

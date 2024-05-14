@@ -13,10 +13,27 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookParameterPatch. </summary>
     internal partial class WebhookHookParameterPatch
     {
-        /// <summary> Initializes a new instance of WebhookHookParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameterPatch"/>. </summary>
         public WebhookHookParameterPatch()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameterPatch"/>. </summary>
+        /// <param name="endpoint"> API address, will be called when alert is triggered, only support POST method via SSL. </param>
+        /// <param name="username"> (Deprecated) The username, if using basic authentication. </param>
+        /// <param name="password"> (Deprecated) The password, if using basic authentication. </param>
+        /// <param name="headers"> custom headers in api call. </param>
+        /// <param name="certificateKey"> The certificate key, if using client certificate. </param>
+        /// <param name="certificatePassword"> The certificate password, if using client certificate. </param>
+        internal WebhookHookParameterPatch(string endpoint, string username, string password, IDictionary<string, string> headers, string certificateKey, string certificatePassword)
+        {
+            Endpoint = endpoint;
+            Username = username;
+            Password = password;
+            Headers = headers;
+            CertificateKey = certificateKey;
+            CertificatePassword = certificatePassword;
         }
 
         /// <summary> API address, will be called when alert is triggered, only support POST method via SSL. </summary>

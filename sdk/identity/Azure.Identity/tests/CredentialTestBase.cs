@@ -15,6 +15,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Gee.External.Capstone.M68K;
 using Microsoft.Identity.Client;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -115,7 +116,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = mockTransport,
                 TenantId = TenantId,
-                IsSupportLoggingEnabled = isSupportLoggingEnabled
+                IsUnsafeSupportLoggingEnabled = isSupportLoggingEnabled
             };
             var credential = GetTokenCredential(config);
             if (!CredentialTestHelpers.IsMsalCredential(credential))
@@ -190,12 +191,12 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token, actualToken.Token);
         }
 
-        [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
-        public async Task VerifyAllowedTenantEnforcementCredentials(AllowedTenantsTestParameters parameters)
+        [Test]
+        public void VerifyAllowedTenantEnforcementCredentials()
         {
             // Configure the transport
             var token = Guid.NewGuid().ToString();
-            string resolvedTenantId = parameters.TokenRequestContext.TenantId ?? parameters.TenantId ?? TenantId;
+            string resolvedTenantId = TenantId;
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", resolvedTenantId);
             bool calledDiscoveryEndpoint = false;
             bool isPubClient = false;
@@ -227,22 +228,26 @@ namespace Azure.Identity.Tests
                 return response;
             });
 
+            var mockResolver = new Mock<TenantIdResolverBase>() { CallBase = true };
             var config = new CommonCredentialTestConfig()
             {
                 Transport = mockTransport,
-                TenantId = parameters.TenantId,
-                RequestContext = parameters.TokenRequestContext,
-                AdditionallyAllowedTenants = parameters.AdditionallyAllowedTenants
+                TenantId = TenantId,
+                RequestContext = new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()),
+                AdditionallyAllowedTenants = new List<string> { Guid.NewGuid().ToString() },
+                TestTentantIdResolver = mockResolver.Object
             };
             var credential = GetTokenCredential(config);
 
-            if (credential is SharedTokenCacheCredential)
-            {
-                Assert.Ignore("Tenant Enforcement tests do not apply to the SharedTokenCacheCredential.");
-            }
-
             isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
+
+            // Assert that Resolver is called and that the resolved tenant is the expected tenant
+            mockResolver.Setup(r => r.Resolve(It.IsAny<string>(), It.IsAny<TokenRequestContext>(), It.IsAny<string[]>())).Callback<string, TokenRequestContext, IList<string>>((tenantId, context, additionalTenants) =>
+            {
+                Assert.AreEqual(config.TenantId, tenantId);
+                Assert.AreEqual(config.RequestContext.TenantId, context.TenantId);
+                Assert.AreEqual(config.AdditionallyAllowedTenants, additionalTenants);
+            }).Returns(resolvedTenantId);
         }
 
         [Test]
@@ -350,6 +355,91 @@ namespace Azure.Identity.Tests
             Assert.True(observedNoCae);
         }
 
+        [Test]
+        public async Task TokenRequestContextClaimsPassedToMSAL()
+        {
+            var caeClaim = new CaeClaim();
+            InitMockAuthenticationResult();
+            bool claimsIsVerified = false;
+            var msalPub = new MockMsalPublicClient(null, null, null, null, options)
+            {
+                SilentAuthFactory = (_, claims, _, _, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                },
+                ExtendedSilentAuthFactory = (_, claims, _, _, _, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                },
+                InteractiveAuthFactory = (_, claims, _, _, _, _, _, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                },
+                DeviceCodeAuthFactory = (_, claims, _, _, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                },
+                UserPassAuthFactory = (_, claims, _, _, _, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                },
+                Accounts = new List<IAccount> { new MockAccount(ExpectedUsername, TenantId) }
+            };
+            var msalConf = new MockMsalConfidentialClient(null, null, null, null, null, options)
+                .WithAuthCodeFactory((_, _, _, _, claims, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                })
+                .WithClientFactory((_, _, claims, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return result;
+                })
+                .WithOnBehalfOfFactory((_, _, _, claims, _, _, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return new ValueTask<AuthenticationResult>(result);
+                })
+                .WithSilentFactory((_, _, _, _, claims, _) =>
+                {
+                    Assert.AreEqual(caeClaim.ToString(), claims, "Claims passed to msal should match");
+                    claimsIsVerified = true;
+                    return new ValueTask<AuthenticationResult>(result);
+                });
+            var config = new CommonCredentialTestConfig()
+            {
+                TenantId = TenantId,
+                MockPublicMsalClient = msalPub,
+                MockConfidentialMsalClient = msalConf,
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("TokenRequestContextClaimsPassedToMSAL tests do not apply to the non-MSAL credentials.");
+            }
+            var context = new TokenRequestContext(new[] { Scope }, claims: caeClaim.ToString());
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
+
+            var actualToken = await credential.GetTokenAsync(context, CancellationToken.None);
+
+            Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
+            Assert.True(claimsIsVerified);
+        }
+
         public class AllowedTenantsTestParameters
         {
             public string TenantId { get; set; }
@@ -367,6 +457,8 @@ namespace Azure.Identity.Tests
                 return ToDebugString();
             }
         }
+
+        public static readonly char[] NegativeTestCharacters = new char[] { '|', '&', ';', '\'', '"', '!', '@', '$', '%', '^', '*', '(', ')', '=', '[', ']', '{', '}', '<', '>', '?' };
 
         public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases()
         {
@@ -405,74 +497,37 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public static async Task AssertAllowedTenantIdsEnforcedAsync(AllowedTenantsTestParameters parameters, TokenCredential credential)
-        {
-            bool expAllowed = parameters.TenantId == null
-                || parameters.TokenRequestContext.TenantId == null
-                || parameters.TenantId == parameters.TokenRequestContext.TenantId
-                || parameters.AdditionallyAllowedTenants.Contains(parameters.TokenRequestContext.TenantId)
-                || parameters.AdditionallyAllowedTenants.Contains("*");
-
-            if (expAllowed)
-            {
-                var accessToken = await credential.GetTokenAsync(parameters.TokenRequestContext, default);
-
-                Assert.IsNotNull(accessToken.Token);
-            }
-            else
-            {
-                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => { await credential.GetTokenAsync(parameters.TokenRequestContext, default); });
-
-                StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {parameters.TokenRequestContext.TenantId}", ex.Message);
-            }
-        }
-
         public void TestSetup(TokenCredentialOptions options = null)
         {
             expectedTenantId = null;
             expectedReplyUri = null;
             authCode = Guid.NewGuid().ToString();
             options = options ?? new TokenCredentialOptions();
-            expectedToken = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.UtcNow.AddHours(1));
-            expectedUserAssertion = Guid.NewGuid().ToString();
-            expiresOn = DateTimeOffset.Now.AddHours(1);
-            result = new AuthenticationResult(
-                expectedToken,
-                false,
-                null,
-                expiresOn,
-                expiresOn,
-                TenantId,
-                new MockAccount("username"),
-                null,
-                new[] { Scope },
-                Guid.NewGuid(),
-                null,
-                "Bearer");
+            InitMockAuthenticationResult();
 
             mockConfidentialMsalClient = new MockMsalConfidentialClient(null, null, null, null, null, options)
                 .WithSilentFactory(
-                    (_, _tenantId, _replyUri, _) =>
+                    (_, _, _tenantId, _replyUri, _, _) =>
                     {
                         Assert.AreEqual(expectedTenantId, _tenantId);
                         Assert.AreEqual(expectedReplyUri, _replyUri);
                         return new ValueTask<AuthenticationResult>(result);
                     })
                 .WithAuthCodeFactory(
-                    (_, _tenantId, _replyUri, _) =>
+                    (_a, _b, _tenantId, _replyUri, _c, _d) =>
                     {
                         Assert.AreEqual(expectedTenantId, _tenantId);
                         Assert.AreEqual(expectedReplyUri, _replyUri);
                         return result;
                     })
                 .WithOnBehalfOfFactory(
-                    (_, _, userAssertion, _, _) =>
+                    (_, _, userAssertion, _, _, _, _) =>
                     {
                         Assert.AreEqual(expectedUserAssertion, userAssertion.Assertion);
                         return new ValueTask<AuthenticationResult>(result);
                     })
                 .WithClientFactory(
-                    (_, _tenantId) =>
+                    (_, _tenantId, _, _) =>
                     {
                         Assert.AreEqual(expectedTenantId, _tenantId);
                         return result;
@@ -495,12 +550,7 @@ namespace Azure.Identity.Tests
                 Guid.NewGuid(),
                 null,
                 "Bearer");
-            mockPublicMsalClient.SilentAuthFactory = (_, tId) =>
-            {
-                Assert.AreEqual(expectedTenantId, tId);
-                return publicResult;
-            };
-            mockPublicMsalClient.DeviceCodeAuthFactory = (_, _) =>
+            mockPublicMsalClient.DeviceCodeAuthFactory = (_, _, _, _, _) =>
             {
                 // Assert.AreEqual(tenantId, tId);
                 return publicResult;
@@ -510,7 +560,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
             };
-            mockPublicMsalClient.SilentAuthFactory = (_, tenant) =>
+            mockPublicMsalClient.SilentAuthFactory = (_, _, _, tenant, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
@@ -520,7 +570,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
             };
-            mockPublicMsalClient.UserPassAuthFactory = (_, tenant) =>
+            mockPublicMsalClient.UserPassAuthFactory = (_, _, _, _, tenant, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
@@ -530,6 +580,26 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
             };
+        }
+
+        private void InitMockAuthenticationResult()
+        {
+            expectedToken = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.UtcNow.AddHours(1));
+            expectedUserAssertion = Guid.NewGuid().ToString();
+            expiresOn = DateTimeOffset.Now.AddHours(1);
+            result = new AuthenticationResult(
+                expectedToken,
+                false,
+                null,
+                expiresOn,
+                expiresOn,
+                TenantId,
+                new MockAccount("username"),
+                null,
+                new[] { Scope },
+                Guid.NewGuid(),
+                null,
+                "Bearer");
         }
 
         protected async Task<string> ReadMockRequestContent(MockRequest request)
@@ -554,6 +624,9 @@ namespace Azure.Identity.Tests
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
             public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
+            internal TenantIdResolverBase TestTentantIdResolver { get; set; }
+            internal MockMsalConfidentialClient MockConfidentialMsalClient { get; set; }
+            internal MockMsalPublicClient MockPublicMsalClient { get; set; }
         }
 
         public class Claims
@@ -568,6 +641,31 @@ namespace Azure.Identity.Tests
             {
                 public string[] values { get; set; }
             }
+        }
+
+        public class CaeClaim
+        {
+            public AccessTokenPart access_token { get; set; }
+
+            public CaeClaim(bool isEssential = true, string value = "1701724716")
+            {
+                access_token = new AccessTokenPart { nbf = new Nbf { essential = isEssential, value = value } };
+            }
+            public override string ToString()
+            {
+                return System.Text.Json.JsonSerializer.Serialize(this);
+            }
+        }
+
+        public class AccessTokenPart
+        {
+            public Nbf nbf { get; set; }
+        }
+
+        public class Nbf
+        {
+            public bool essential { get; set; }
+            public string value { get; set; }
         }
     }
 }

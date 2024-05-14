@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Request body to authorize document model copy. </summary>
     internal partial class AuthorizeCopyRequest
     {
-        /// <summary> Initializes a new instance of AuthorizeCopyRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyRequest"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public AuthorizeCopyRequest(string modelId)
@@ -23,6 +23,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyRequest"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        internal AuthorizeCopyRequest(string modelId, string description, IDictionary<string, string> tags)
+        {
+            ModelId = modelId;
+            Description = description;
+            Tags = tags;
         }
 
         /// <summary> Unique document model name. </summary>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peering service locations. </summary>
     internal partial class PeeringServiceLocationListResult
     {
-        /// <summary> Initializes a new instance of PeeringServiceLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocationListResult"/>. </summary>
         internal PeeringServiceLocationListResult()
         {
             Value = new ChangeTrackingList<PeeringServiceLocation>();
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceLocationListResult"/>. </summary>
         /// <param name="value"> The list of peering service locations. </param>
         /// <param name="nextLink"> The link to fetch the next page of peering service locations. </param>
         internal PeeringServiceLocationListResult(IReadOnlyList<PeeringServiceLocation> value, string nextLink)

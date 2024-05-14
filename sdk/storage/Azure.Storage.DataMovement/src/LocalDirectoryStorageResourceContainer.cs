@@ -14,24 +14,13 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the local directory to transfer to or from
     /// </summary>
-    public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
+    internal class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
-        private string _path;
+        private Uri _uri;
 
-        /// <summary>
-        /// Gets the path
-        /// </summary>
-        public override string Path => _path;
+        public override Uri Uri => _uri;
 
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected internal override bool CanProduceUri => false;
-
-        /// <summary>
-        /// Cannot get Uri. Will throw NotSupportedException();
-        /// </summary>
-        public override Uri Uri => throw new NotSupportedException();
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Constructor
@@ -40,7 +29,24 @@ namespace Azure.Storage.DataMovement
         public LocalDirectoryStorageResourceContainer(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            _path = path;
+            UriBuilder uriBuilder= new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = path,
+            };
+            _uri = uriBuilder.Uri;
+        }
+
+        /// <summary>
+        /// Internal Constructor for uri
+        /// </summary>
+        /// <param name="uri"></param>
+        internal LocalDirectoryStorageResourceContainer(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
+            _uri = uri;
         }
 
         /// <summary>
@@ -48,9 +54,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="childPath"></param>
         /// <returns></returns>
-        protected internal override StorageResourceSingle GetChildStorageResource(string childPath)
+        protected internal override StorageResourceItem GetStorageResourceReference(string childPath)
         {
-            string concatPath = System.IO.Path.Combine(Path, childPath);
+            Uri concatPath = _uri.AppendToPath(childPath);
             return new LocalFileStorageResource(concatPath);
         }
 
@@ -64,39 +70,43 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            PathScanner scanner = new PathScanner(_path);
+            PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
-                // Skip over directories for now since directory creation is unnecessary.
-                if (!fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
+                if (fileSystemInfo.Attributes.HasFlag(FileAttributes.Directory))
                 {
+                    // Directory - but check for the case where it returns the directory you're currently listing
+                    if (fileSystemInfo.FullName != _uri.LocalPath)
+                    {
+                        yield return new LocalDirectoryStorageResourceContainer(fileSystemInfo.FullName);
+                    }
+                }
+                else
+                {
+                    // File
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
         }
 
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static LocalDirectoryStorageResourceContainer RehydrateResource(
-            DataTransferProperties transferProperties,
-            bool isSource)
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            return new LocalSourceCheckpointData();
+        }
 
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new LocalDestinationCheckpointData();
+        }
 
-            return new LocalDirectoryStorageResourceContainer(storedPath);
+        protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
+
+        protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            UriBuilder uri = new UriBuilder(_uri);
+            uri.Path = Path.Combine(uri.Path, path);
+            return new LocalDirectoryStorageResourceContainer(uri.Uri);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteStringValue(PartitionOption.Value.ToString());
+                writer.WriteObjectValue(PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> batchSize = default;
             Optional<object> customRfcReadTableFunctionModule = default;
             Optional<object> sapDataColumnDelimiter = default;
-            Optional<SapTablePartitionOption> partitionOption = default;
+            Optional<object> partitionOption = default;
             Optional<SapTablePartitionSettings> partitionSettings = default;
             Optional<object> queryTimeout = default;
             Optional<object> additionalColumns = default;
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    partitionOption = new SapTablePartitionOption(property.Value.GetString());
+                    partitionOption = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"u8))
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, Optional.ToNullable(partitionOption), partitionSettings.Value);
+            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, partitionOption.Value, partitionSettings.Value);
         }
 
         internal partial class SapTableSourceConverter : JsonConverter<SapTableSource>

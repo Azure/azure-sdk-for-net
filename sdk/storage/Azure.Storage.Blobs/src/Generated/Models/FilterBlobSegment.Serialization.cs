@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -40,7 +39,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 blobs = array;
             }
-            return new FilterBlobSegment(serviceEndpoint, where, blobs, nextMarker);
+            return new FilterBlobSegment(serviceEndpoint, @where, blobs, nextMarker);
         }
     }
 }

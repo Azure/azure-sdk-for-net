@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRCustomCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateData"/>. </summary>
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SignalR
             KeyVaultSecretName = keyVaultSecretName;
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

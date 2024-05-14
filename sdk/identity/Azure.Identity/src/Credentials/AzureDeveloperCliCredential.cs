@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure Developer CLI to obtain an access token.
+    /// Enables authentication to Microsoft Entra ID using Azure Developer CLI to obtain an access token.
     /// </summary>
     public class AzureDeveloperCliCredential : TokenCredential
     {
@@ -43,6 +43,7 @@ namespace Azure.Identity
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal bool _isChainedCredential;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
@@ -54,18 +55,19 @@ namespace Azure.Identity
         /// <summary>
         /// Create an instance of the <see cref="AzureDeveloperCliCredential"/> class.
         /// </summary>
-        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        /// <param name="options"> The Microsoft Entra tenant (directory) ID of the service principal. </param>
         public AzureDeveloperCliCredential(AzureDeveloperCliCredentialOptions options)
             : this(CredentialPipeline.GetInstance(null), default, options)
         { }
 
         internal AzureDeveloperCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureDeveloperCliCredentialOptions options = null)
         {
-            _logPII = options?.IsSupportLoggingEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _pipeline = pipeline;
             _processService = processService ?? ProcessService.Default;
-            TenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
             _isChainedCredential = options?.IsChainedCredential ?? false;
@@ -111,6 +113,13 @@ namespace Azure.Identity
         private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
             string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
+
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
+
+            foreach (var scope in context.Scopes)
+            {
+                ScopeUtilities.ValidateScope(scope);
+            }
 
             GetFileNameAndArguments(context.Scopes, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);

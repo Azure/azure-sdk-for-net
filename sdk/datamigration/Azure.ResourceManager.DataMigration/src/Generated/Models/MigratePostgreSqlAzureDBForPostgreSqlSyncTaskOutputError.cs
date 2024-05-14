@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>. </summary>
         internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "ErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Migration error. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, ReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, ReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType, serializedAdditionalRawData)
         {
             Error = error;
             Events = events;

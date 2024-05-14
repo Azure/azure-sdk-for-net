@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of action groups. </summary>
     internal partial class ActionGroupList
     {
-        /// <summary> Initializes a new instance of ActionGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupList"/>. </summary>
         internal ActionGroupList()
         {
             Value = new ChangeTrackingList<ActionGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ActionGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupList"/>. </summary>
         /// <param name="value"> The list of action groups. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
         internal ActionGroupList(IReadOnlyList<ActionGroupData> value, string nextLink)

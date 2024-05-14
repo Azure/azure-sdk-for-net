@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedDiskResource" /> and their operations.
-    /// Each <see cref="ManagedDiskResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ManagedDiskCollection" /> instance call the GetManagedDisks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ManagedDiskResource"/> and their operations.
+    /// Each <see cref="ManagedDiskResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ManagedDiskCollection"/> instance call the GetManagedDisks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ManagedDiskCollection : ArmCollection, IEnumerable<ManagedDiskResource>, IAsyncEnumerable<ManagedDiskResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Disks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Disks_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Disks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Disks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,15 +253,23 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Disks_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDiskResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDiskDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDiskDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +283,23 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Disks_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDiskResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDiskDisksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDiskDisksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDiskResource(Client, ManagedDiskData.DeserializeManagedDiskData(e)), _managedDiskDisksClientDiagnostics, Pipeline, "ManagedDiskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +312,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Disks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +356,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Disks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
@@ -315,6 +380,96 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _managedDiskDisksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Disks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedDiskResource>> GetIfExistsAsync(string diskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
+            using var scope = _managedDiskDisksClientDiagnostics.CreateScope("ManagedDiskCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedDiskDisksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedDiskResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedDiskResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Disks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDiskResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskName"> The name of the managed disk that is being created. The name can't be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
+        public virtual NullableResponse<ManagedDiskResource> GetIfExists(string diskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
+            using var scope = _managedDiskDisksClientDiagnostics.CreateScope("ManagedDiskCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedDiskDisksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedDiskResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedDiskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

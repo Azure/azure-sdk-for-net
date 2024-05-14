@@ -14,7 +14,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> An inference made by the Onco Phenotype model regarding a patient. </summary>
     public partial class OncoPhenotypeInference
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeInference. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeInference"/>. </summary>
         /// <param name="type"> The type of the Onco Phenotype inference. </param>
         /// <param name="value"> The value of the inference, as relevant for the given inference type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Evidence = new ChangeTrackingList<InferenceEvidence>();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeInference. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeInference"/>. </summary>
         /// <param name="type"> The type of the Onco Phenotype inference. </param>
         /// <param name="value"> The value of the inference, as relevant for the given inference type. </param>
         /// <param name="description"> The description corresponding to the inference value. </param>

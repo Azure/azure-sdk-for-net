@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
+            if (Optional.IsDefined(ScalingProperties))
+            {
+                writer.WritePropertyName("scalingProperties"u8);
+                writer.WriteObjectValue(ScalingProperties);
+            }
+            if (Optional.IsDefined(UserProfile))
+            {
+                writer.WritePropertyName("userProfile"u8);
+                writer.WriteObjectValue(UserProfile);
+            }
             writer.WriteEndObject();
         }
 
@@ -44,13 +54,15 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NginxProvisioningState> provisioningState = default;
             Optional<string> nginxVersion = default;
             Optional<string> managedResourceGroup = default;
             Optional<NginxNetworkProfile> networkProfile = default;
             Optional<string> ipAddress = default;
             Optional<bool> enableDiagnosticsSupport = default;
             Optional<NginxLogging> logging = default;
+            Optional<NginxDeploymentScalingProperties> scalingProperties = default;
+            Optional<NginxDeploymentUserProfile> userProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -59,7 +71,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NginxProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nginxVersion"u8))
@@ -104,8 +116,26 @@ namespace Azure.ResourceManager.Nginx.Models
                     logging = NginxLogging.DeserializeNginxLogging(property.Value);
                     continue;
                 }
+                if (property.NameEquals("scalingProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("userProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value);
+                    continue;
+                }
             }
-            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value);
+            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value);
         }
     }
 }

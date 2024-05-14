@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Avs.Models;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadNetworkResource" /> and their operations.
-    /// Each <see cref="WorkloadNetworkResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="WorkloadNetworkCollection" /> instance call the GetWorkloadNetworks method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="WorkloadNetworkResource"/> and their operations.
+    /// Each <see cref="WorkloadNetworkResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="WorkloadNetworkCollection"/> instance call the GetWorkloadNetworks method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class WorkloadNetworkCollection : ArmCollection, IEnumerable<WorkloadNetworkResource>, IAsyncEnumerable<WorkloadNetworkResource>
     {
@@ -64,6 +65,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
@@ -96,6 +105,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,15 +147,23 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkResource(Client, WorkloadNetworkData.DeserializeWorkloadNetworkData(e)), _workloadNetworkClientDiagnostics, Pipeline, "WorkloadNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkResource(Client, WorkloadNetworkData.DeserializeWorkloadNetworkData(e)), _workloadNetworkClientDiagnostics, Pipeline, "WorkloadNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,15 +177,23 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkResource(Client, WorkloadNetworkData.DeserializeWorkloadNetworkData(e)), _workloadNetworkClientDiagnostics, Pipeline, "WorkloadNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkResource(Client, WorkloadNetworkData.DeserializeWorkloadNetworkData(e)), _workloadNetworkClientDiagnostics, Pipeline, "WorkloadNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,6 +206,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +246,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
@@ -217,6 +266,88 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _workloadNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workloadNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<WorkloadNetworkResource>> GetIfExistsAsync(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workloadNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/{workloadNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<WorkloadNetworkResource> GetIfExists(WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _workloadNetworkClientDiagnostics.CreateScope("WorkloadNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workloadNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.1 (2023-10-27)
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.10.3`.
+
+## 1.7.0 (2023-08-08)
+
+### Features Added
+
+- Added support for creating `WorkloadIdentityCredential` objects from the configuration using the `"credential": "workloadidentity"`. Users must provide values for the `tenantId`, `clientId`, and newly added `tokenFilePath` keys in the configuration, or they must set the environment variables `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_FEDERATED_TOKEN_FILE`.
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.9.0`.
 
 ## 1.6.3 (2023-03-10)
 

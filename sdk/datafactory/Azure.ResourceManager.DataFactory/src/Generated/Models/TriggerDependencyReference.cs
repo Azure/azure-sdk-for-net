@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class TriggerDependencyReference : DependencyReference
     {
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TriggerDependencyReference(DataFactoryTriggerReference referenceTrigger)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependencyReferenceType = "TriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         internal TriggerDependencyReference(string dependencyReferenceType, DataFactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)

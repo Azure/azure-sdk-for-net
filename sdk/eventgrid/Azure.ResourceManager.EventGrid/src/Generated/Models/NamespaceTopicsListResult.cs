@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List namespace topics operation. </summary>
     internal partial class NamespaceTopicsListResult
     {
-        /// <summary> Initializes a new instance of NamespaceTopicsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicsListResult"/>. </summary>
         internal NamespaceTopicsListResult()
         {
             Value = new ChangeTrackingList<NamespaceTopicData>();
         }
 
-        /// <summary> Initializes a new instance of NamespaceTopicsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicsListResult"/>. </summary>
         /// <param name="value"> A collection of namespace topics. </param>
         /// <param name="nextLink"> A link for the next page of namespace topics. </param>
         internal NamespaceTopicsListResult(IReadOnlyList<NamespaceTopicData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Check Name Availability Request. </summary>
     public partial class MixedRealityNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource Name To Verify. </param>
         /// <param name="resourceType"> Fully qualified resource type which includes provider namespace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>

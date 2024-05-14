@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes the current state of an existing Private Link Service connection to the Azure Private Endpoint. </summary>
     public partial class SearchServicePrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of SearchServicePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServicePrivateLinkServiceConnectionState"/>. </summary>
         public SearchServicePrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchServicePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServicePrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Status of the the private link service connection. Can be Pending, Approved, Rejected, or Disconnected. </param>
         /// <param name="description"> The description for the private link service connection state. </param>
         /// <param name="actionsRequired"> A description of any extra actions that may be required. </param>

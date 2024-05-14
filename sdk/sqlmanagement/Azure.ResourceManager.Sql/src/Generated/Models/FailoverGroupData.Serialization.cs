@@ -51,12 +51,17 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Databases))
+            if (Optional.IsCollectionDefined(FailoverDatabases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (var item in Databases)
+                foreach (var item in FailoverDatabases)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -82,7 +87,7 @@ namespace Azure.ResourceManager.Sql
             Optional<FailoverGroupReplicationRole> replicationRole = default;
             Optional<string> replicationState = default;
             Optional<IList<PartnerServerInfo>> partnerServers = default;
-            Optional<IList<string>> databases = default;
+            Optional<IList<ResourceIdentifier>> databases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -193,10 +198,17 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             databases = array;
                             continue;

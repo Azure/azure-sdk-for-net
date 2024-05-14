@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model class for event details of a HyperVReplica E2A event. </summary>
     public partial class HyperVReplicaAzureEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureEventDetails"/>. </summary>
         internal HyperVReplicaAzureEventDetails()
         {
             InstanceType = "HyperVReplicaAzure";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="containerName"> The container friendly name. </param>
         /// <param name="fabricName"> The fabric friendly name. </param>

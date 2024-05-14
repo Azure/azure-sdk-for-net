@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult
     {
-        /// <summary> Initializes a new instance of ListUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         internal ListUsagesResult()
         {
             Value = new ChangeTrackingList<MachineLearningUsage>();
         }
 
-        /// <summary> Initializes a new instance of ListUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The list of AML resource usages. </param>
         /// <param name="nextLink"> The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information. </param>
         internal ListUsagesResult(IReadOnlyList<MachineLearningUsage> value, string nextLink)

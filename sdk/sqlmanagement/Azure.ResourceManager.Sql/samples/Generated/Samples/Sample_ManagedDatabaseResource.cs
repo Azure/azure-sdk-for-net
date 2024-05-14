@@ -495,7 +495,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsAManagedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseGet.json
             // this example is just showing the usage of "ManagedDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -527,7 +527,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteManagedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseDelete.json
             // this example is just showing the usage of "ManagedDatabases_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -555,7 +555,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdatesAManagedDatabaseWithMaximalProperties()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseUpdateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseUpdateMax.json
             // this example is just showing the usage of "ManagedDatabases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -595,7 +595,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdatesAManagedDatabaseWithMinimalProperties()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseUpdateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseUpdateMin.json
             // this example is just showing the usage of "ManagedDatabases_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -635,7 +635,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CancelMove_CancelsAManagedDatabaseMove()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseCancelMove.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseCancelMove.json
             // this example is just showing the usage of "ManagedDatabases_CancelMove" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -653,7 +653,7 @@ Column = "Column3",
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation
-            ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition = new ManagedDatabaseMoveDefinition(new ResourceIdentifier("subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"));
+            ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition = new ManagedDatabaseMoveDefinition(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"));
             await managedDatabase.CancelMoveAsync(WaitUntil.Completed, managedDatabaseMoveDefinition);
 
             Console.WriteLine($"Succeeded");
@@ -664,7 +664,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CompleteMove_CompletesAManagedDatabaseMove()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseCompleteMove.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseCompleteMove.json
             // this example is just showing the usage of "ManagedDatabases_CompleteMove" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -682,7 +682,7 @@ Column = "Column3",
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation
-            ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition = new ManagedDatabaseMoveDefinition(new ResourceIdentifier("subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"));
+            ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition = new ManagedDatabaseMoveDefinition(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"));
             await managedDatabase.CompleteMoveAsync(WaitUntil.Completed, managedDatabaseMoveDefinition);
 
             Console.WriteLine($"Succeeded");
@@ -693,7 +693,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CompleteRestore_CompletesAManagedDatabaseExternalBackupRestore()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseCompleteExternalRestore.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseCompleteExternalRestore.json
             // this example is just showing the usage of "ManagedDatabases_CompleteRestore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -722,7 +722,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartMove_StartsAManagedDatabaseMoveWithAllOptionalParametersSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseStartMoveMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseStartMoveMax.json
             // this example is just showing the usage of "ManagedDatabases_StartMove" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -740,7 +740,7 @@ Column = "Column3",
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation
-            ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition = new ManagedDatabaseStartMoveDefinition(new ResourceIdentifier("subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"))
+            ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition = new ManagedDatabaseStartMoveDefinition(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"))
             {
                 OperationMode = ManagedDatabaseMoveOperationMode.Copy,
             };
@@ -754,7 +754,7 @@ Column = "Column3",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartMove_StartsAManagedDatabaseMoveWithNoOptionalParametersSpecified()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedDatabaseStartMoveMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseStartMoveMin.json
             // this example is just showing the usage of "ManagedDatabases_StartMove" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -772,7 +772,7 @@ Column = "Column3",
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation
-            ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition = new ManagedDatabaseStartMoveDefinition(new ResourceIdentifier("subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"));
+            ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition = new ManagedDatabaseStartMoveDefinition(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.Sql/managedInstances/testInstanceTgt/databases/testDatabase"));
             await managedDatabase.StartMoveAsync(WaitUntil.Completed, managedDatabaseStartMoveDefinition);
 
             Console.WriteLine($"Succeeded");

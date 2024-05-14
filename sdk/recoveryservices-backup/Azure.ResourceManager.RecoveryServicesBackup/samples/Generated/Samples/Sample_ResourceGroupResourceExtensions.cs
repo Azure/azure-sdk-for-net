@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupProtectionIntents_ListProtectionIntentWithBackupManagementTypeFilter()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureWorkload/BackupProtectionIntent_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureWorkload/BackupProtectionIntent_List.json
             // this example is just showing the usage of "BackupProtectionIntent_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupUsageSummaries_GetProtectedContainersUsagesSummary()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/Common/BackupProtectionContainers_UsageSummary_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupProtectionContainers_UsageSummary_Get.json
             // this example is just showing the usage of "BackupUsageSummaries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupUsageSummaries_GetProtectedItemsUsagesSummary()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/Common/BackupProtectedItem_UsageSummary_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupProtectedItem_UsageSummary_Get.json
             // this example is just showing the usage of "BackupUsageSummaries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExportJob_ExportJobs()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/Common/TriggerExportJobs.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/TriggerExportJobs.json
             // this example is just showing the usage of "Jobs_Export" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupProtectedItems_ListProtectedItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/BackupProtectedItems_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/BackupProtectedItems_List.json
             // this example is just showing the usage of "BackupProtectedItems_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProtectableContainers_ListProtectableItemsWithBackupManagementTypeFilterAsAzureStorage()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureStorage/ProtectableContainers_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectableContainers_List.json
             // this example is just showing the usage of "ProtectableContainers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupProtectableItems_ListProtectableItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/BackupProtectableItems_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/BackupProtectableItems_List.json
             // this example is just showing the usage of "BackupProtectableItems_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBackupProtectionContainers_ListBackupProtectionContainers()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureStorage/ProtectionContainers_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionContainers_List.json
             // this example is just showing the usage of "BackupProtectionContainers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSoftDeletedProtectionContainers_ListBackupProtectionContainers()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureStorage/SoftDeletedContainers_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/SoftDeletedContainers_List.json
             // this example is just showing the usage of "DeletedProtectionContainers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityPin_GetVaultSecurityPin()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/Common/BackupSecurityPin_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupSecurityPin_Get.json
             // this example is just showing the usage of "SecurityPINs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,6 +333,150 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             string vaultName = "SwaggerTest";
             TokenInformation result = await resourceGroupResource.GetSecurityPinAsync(vaultName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get the rehydration cost for recovery point
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task PostFetchTieringCost_GetTheRehydrationCostForRecoveryPoint()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForRehydrate.json
+            // this example is just showing the usage of "FetchTieringCost_Post" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "netsdktestrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "testVault";
+            FetchTieringCostInfoContent content = new FetchTieringCostInfoForRehydrationContent(RecoveryPointTierType.ArchivedRP, RecoveryPointTierType.HardenedRP, "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "1222343434", RehydrationPriority.High);
+            ArmOperation<TieringCostInfo> lro = await resourceGroupResource.PostFetchTieringCostAsync(WaitUntil.Completed, vaultName, content);
+            TieringCostInfo result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get the tiering savings cost info for policy
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task PostFetchTieringCost_GetTheTieringSavingsCostInfoForPolicy()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForPolicy.json
+            // this example is just showing the usage of "FetchTieringCost_Post" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "netsdktestrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "testVault";
+            FetchTieringCostInfoContent content = new FetchTieringCostSavingsInfoForPolicyContent(RecoveryPointTierType.HardenedRP, RecoveryPointTierType.ArchivedRP, "monthly");
+            ArmOperation<TieringCostInfo> lro = await resourceGroupResource.PostFetchTieringCostAsync(WaitUntil.Completed, vaultName, content);
+            TieringCostInfo result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get the tiering savings cost info for protected item
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task PostFetchTieringCost_GetTheTieringSavingsCostInfoForProtectedItem()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForProtectedItem.json
+            // this example is just showing the usage of "FetchTieringCost_Post" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "netsdktestrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "testVault";
+            FetchTieringCostInfoContent content = new FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType.HardenedRP, RecoveryPointTierType.ArchivedRP, "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1");
+            ArmOperation<TieringCostInfo> lro = await resourceGroupResource.PostFetchTieringCostAsync(WaitUntil.Completed, vaultName, content);
+            TieringCostInfo result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get the tiering savings cost info for vault
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task PostFetchTieringCost_GetTheTieringSavingsCostInfoForVault()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForVault.json
+            // this example is just showing the usage of "FetchTieringCost_Post" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "netsdktestrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "testVault";
+            FetchTieringCostInfoContent content = new FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType.HardenedRP, RecoveryPointTierType.ArchivedRP);
+            ArmOperation<TieringCostInfo> lro = await resourceGroupResource.PostFetchTieringCostAsync(WaitUntil.Completed, vaultName, content);
+            TieringCostInfo result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Fetch Tiering Cost Operation Result
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetGetTieringCostOperationResult_FetchTieringCostOperationResult()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/GetTieringCostOperationResult.json
+            // this example is just showing the usage of "GetTieringCostOperationResult_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "04cf684a-d41f-4550-9f70-7708a3a2283b";
+            string resourceGroupName = "gaallaRG";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "gaallavaultbvtd2msi";
+            string operationId = "0f48183b-0a44-4dca-aec1-bba5daab888a";
+            TieringCostInfo result = await resourceGroupResource.GetGetTieringCostOperationResultAsync(vaultName, operationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

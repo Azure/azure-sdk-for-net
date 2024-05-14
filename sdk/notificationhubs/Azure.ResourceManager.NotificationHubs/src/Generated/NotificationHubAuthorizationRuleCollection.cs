@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.NotificationHubs.Models;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NotificationHubAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="NotificationHubAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="NotificationHubResource" />.
-    /// To get a <see cref="NotificationHubAuthorizationRuleCollection" /> instance call the GetNotificationHubAuthorizationRules method from an instance of <see cref="NotificationHubResource" />.
+    /// A class representing a collection of <see cref="NotificationHubAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="NotificationHubAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="NotificationHubResource"/>.
+    /// To get a <see cref="NotificationHubAuthorizationRuleCollection"/> instance call the GetNotificationHubAuthorizationRules method from an instance of <see cref="NotificationHubResource"/>.
     /// </summary>
     public partial class NotificationHubAuthorizationRuleCollection : ArmCollection, IEnumerable<NotificationHubAuthorizationRuleResource>, IAsyncEnumerable<NotificationHubAuthorizationRuleResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_CreateOrUpdateAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_CreateOrUpdateAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> authorization rule name. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,15 +253,23 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_ListAuthorizationRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +283,23 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_ListAuthorizationRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubAuthorizationRuleResource(Client, NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(e)), _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics, Pipeline, "NotificationHubAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +312,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +356,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>NotificationHubs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> authorization rule name. </param>
@@ -315,6 +380,96 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationHubs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationRuleName"> authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NotificationHubAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationHubAuthorizationRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationHubs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationRuleName"> authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual NullableResponse<NotificationHubAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationHubAuthorizationRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Parameters for a Redis Enterprise active geo-replication flush operation. </summary>
     public partial class FlushRedisEnterpriseDatabaseContent
     {
-        /// <summary> Initializes a new instance of FlushRedisEnterpriseDatabaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlushRedisEnterpriseDatabaseContent"/>. </summary>
         public FlushRedisEnterpriseDatabaseContent()
         {
             Ids = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlushRedisEnterpriseDatabaseContent"/>. </summary>
+        /// <param name="ids"> The resource identifiers of all the other database resources in the georeplication group to be flushed. </param>
+        internal FlushRedisEnterpriseDatabaseContent(IList<string> ids)
+        {
+            Ids = ids;
         }
 
         /// <summary> The resource identifiers of all the other database resources in the georeplication group to be flushed. </summary>

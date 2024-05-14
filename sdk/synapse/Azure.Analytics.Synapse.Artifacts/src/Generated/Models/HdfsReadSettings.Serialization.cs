@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+                writer.WriteObjectValue(EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;
             Optional<object> fileListPath = default;
-            Optional<bool> enablePartitionDiscovery = default;
+            Optional<object> enablePartitionDiscovery = default;
             Optional<object> partitionRootPath = default;
             Optional<object> modifiedDatetimeStart = default;
             Optional<object> modifiedDatetimeEnd = default;
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    enablePartitionDiscovery = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionRootPath"u8))
@@ -213,7 +213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value, deleteFilesAfterCompletion.Value);
+            return new HdfsReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value, deleteFilesAfterCompletion.Value);
         }
 
         internal partial class HdfsReadSettingsConverter : JsonConverter<HdfsReadSettings>

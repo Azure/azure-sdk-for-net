@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SelfHelp.Mocking;
 using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
@@ -18,47 +19,27 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary> A class to add extension methods to Azure.ResourceManager.SelfHelp. </summary>
     public static partial class SelfHelpExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableSelfHelpArmClient GetMockableSelfHelpArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableSelfHelpArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-        #region SelfHelpDiagnosticResource
         /// <summary>
-        /// Gets an object representing a <see cref="SelfHelpDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SelfHelpDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of SelfHelpDiagnosticResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnostics(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SelfHelpDiagnosticResource" /> object. </returns>
-        public static SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SelfHelpDiagnosticResource.ValidateResourceId(id);
-                return new SelfHelpDiagnosticResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of SelfHelpDiagnosticResources in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
         public static SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiagnostics();
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnostics(scope);
         }
 
         /// <summary>
@@ -72,18 +53,32 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnosticAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return await client.GetSelfHelpDiagnostics(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnosticAsync(scope, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,22 +92,228 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnostic(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetSelfHelpDiagnostics(scope).Get(diagnosticsResourceName, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnostic(scope, diagnosticsResourceName, cancellationToken);
         }
 
         /// <summary>
-        /// This API is used to check the uniqueness of a resource name used for a diagnostic check.
+        /// Gets a collection of SolutionResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSolutionResources(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> An object representing collection of SolutionResources and their operations over a SolutionResource. </returns>
+        public static SolutionResourceCollection GetSolutionResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSolutionResources(scope);
+        }
+
+        /// <summary>
+        /// Get the solution using the applicable solutionResourceName while creating the solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Solution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSolutionResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SolutionResource>> GetSolutionResourceAsync(this ArmClient client, ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).GetSolutionResourceAsync(scope, solutionResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the solution using the applicable solutionResourceName while creating the solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Solution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSolutionResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SolutionResource> GetSolutionResource(this ArmClient client, ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSolutionResource(scope, solutionResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TroubleshooterResources in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetTroubleshooterResources(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> An object representing collection of TroubleshooterResources and their operations over a TroubleshooterResource. </returns>
+        public static TroubleshooterResourceCollection GetTroubleshooterResources(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetTroubleshooterResources(scope);
+        }
+
+        /// <summary>
+        /// Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Troubleshooters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TroubleshooterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetTroubleshooterResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TroubleshooterResource>> GetTroubleshooterResourceAsync(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).GetTroubleshooterResourceAsync(scope, troubleshooterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Troubleshooters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TroubleshooterResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetTroubleshooterResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<TroubleshooterResource> GetTroubleshooterResource(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetTroubleshooterResource(scope, troubleshooterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,21 +321,32 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_CheckNameAvailability</description>
+        /// <description>CheckNameAvailability_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetArmResourceExtensionClient(client, scope).CheckSelfHelpNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// This API is used to check the uniqueness of a resource name used for a diagnostic check.
+        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,21 +354,32 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_CheckNameAvailability</description>
+        /// <description>CheckNameAvailability_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).CheckSelfHelpNameAvailability(content, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailability(scope, content, cancellationToken);
         }
 
         /// <summary>
-        /// Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
+        /// Lists the relevant Azure diagnostics and solutions using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. We will do our best to return the most effective solutions based on the type of inputs, in the request URL  &lt;br/&gt;&lt;br/&gt; Mandatory input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -166,20 +389,31 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>DiscoverySolution_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="filter"> 'ProblemClassificationId' or 'Id' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The filter supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiscoverySolutionsAsync(scope, filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
-        /// Solutions Discovery is the initial point of entry within Help API, which helps you identify the relevant solutions for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can discover solutions using resourceUri OR resourceUri + problemClassificationId.&lt;br/&gt;&lt;br/&gt;We will do our best in returning relevant diagnostics for your Azure issue.&lt;br/&gt;&lt;br/&gt; Get the problemClassificationId(s) using this [reference](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP).&lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; ‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
+        /// Lists the relevant Azure diagnostics and solutions using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. We will do our best to return the most effective solutions based on the type of inputs, in the request URL  &lt;br/&gt;&lt;br/&gt; Mandatory input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -189,16 +423,84 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>DiscoverySolution_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> Can be used to filter solutionIds by 'ProblemClassificationId'. The filter supports only 'and' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e' and ProblemClassificationId eq '0a9673c2-7af6-4e19-90d3-4ee2461076d9'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="filter"> 'ProblemClassificationId' or 'Id' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The filter supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetSelfHelpDiscoverySolutions(filter, skiptoken, cancellationToken);
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiscoverySolutions(scope, filter, skiptoken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SelfHelpDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SelfHelpDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SelfHelpDiagnosticResource"/> object. </returns>
+        public static SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnosticResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSolutionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
+        public static SolutionResource GetSolutionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetSolutionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TroubleshooterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TroubleshooterResource.CreateResourceIdentifier" /> to create a <see cref="TroubleshooterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetTroubleshooterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TroubleshooterResource"/> object. </returns>
+        public static TroubleshooterResource GetTroubleshooterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSelfHelpArmClient(client).GetTroubleshooterResource(id);
         }
     }
 }

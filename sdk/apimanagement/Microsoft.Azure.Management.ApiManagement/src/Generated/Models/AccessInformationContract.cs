@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Tenant Settings.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AccessInformationContract : Resource
+    public partial class AccessInformationContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the AccessInformationContract class.

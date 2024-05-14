@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataNetwork"u8);
-            JsonSerializer.Serialize(writer, DataNetwork); writer.WritePropertyName("sessionAmbr"u8);
+            JsonSerializer.Serialize(writer, DataNetwork);
+            writer.WritePropertyName("sessionAmbr"u8);
             writer.WriteObjectValue(SessionAmbr);
             if (Optional.IsDefined(FiveQi))
             {
@@ -80,10 +81,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Ambr sessionAmbr = default;
             Optional<int> _5qi = default;
             Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<PreemptionCapability> preemptionCapability = default;
-            Optional<PreemptionVulnerability> preemptionVulnerability = default;
-            Optional<PduSessionType> defaultSessionType = default;
-            Optional<IList<PduSessionType>> additionalAllowedSessionTypes = default;
+            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
+            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            Optional<MobileNetworkPduSessionType> defaultSessionType = default;
+            Optional<IList<MobileNetworkPduSessionType>> additionalAllowedSessionTypes = default;
             IList<WritableSubResource> allowedServices = default;
             Optional<int> maximumNumberOfBufferedPackets = default;
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    preemptionCapability = new PreemptionCapability(property.Value.GetString());
+                    preemptionCapability = new MobileNetworkPreemptionCapability(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("preemptionVulnerability"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    preemptionVulnerability = new PreemptionVulnerability(property.Value.GetString());
+                    preemptionVulnerability = new MobileNetworkPreemptionVulnerability(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultSessionType"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    defaultSessionType = new PduSessionType(property.Value.GetString());
+                    defaultSessionType = new MobileNetworkPduSessionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("additionalAllowedSessionTypes"u8))
@@ -149,10 +150,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<PduSessionType> array = new List<PduSessionType>();
+                    List<MobileNetworkPduSessionType> array = new List<MobileNetworkPduSessionType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new PduSessionType(item.GetString()));
+                        array.Add(new MobileNetworkPduSessionType(item.GetString()));
                     }
                     additionalAllowedSessionTypes = array;
                     continue;

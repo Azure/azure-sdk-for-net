@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Sync Session status object. </summary>
     public partial class ServerEndpointSyncActivityStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointSyncActivityStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncActivityStatus"/>. </summary>
         internal ServerEndpointSyncActivityStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncActivityStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncActivityStatus"/>. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="perItemErrorCount"> Per item error count. </param>
         /// <param name="appliedItemCount"> Applied item count. </param>

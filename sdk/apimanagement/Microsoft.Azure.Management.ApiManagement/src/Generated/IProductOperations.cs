@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Lists a collection of products in the specified service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the details of the product specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Creates or Updates a product.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Update existing product details.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Delete product.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Lists a collection of products associated with tags.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

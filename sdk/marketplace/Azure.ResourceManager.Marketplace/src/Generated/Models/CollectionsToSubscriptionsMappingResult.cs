@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> A map of collections subscriptions details. </summary>
     public partial class CollectionsToSubscriptionsMappingResult
     {
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingResult"/>. </summary>
         internal CollectionsToSubscriptionsMappingResult()
         {
             Details = new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>();
         }
 
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingResult"/>. </summary>
         /// <param name="details"> The map of collections subscriptions. </param>
         internal CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details)
         {

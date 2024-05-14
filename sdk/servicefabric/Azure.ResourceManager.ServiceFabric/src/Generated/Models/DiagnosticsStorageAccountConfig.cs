@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The storage account information for storing Service Fabric diagnostic logs. </summary>
     public partial class DiagnosticsStorageAccountConfig
     {
-        /// <summary> Initializes a new instance of DiagnosticsStorageAccountConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsStorageAccountConfig"/>. </summary>
         /// <param name="storageAccountName"> The Azure storage account name. </param>
         /// <param name="protectedAccountKeyName"> The protected diagnostics storage key name. </param>
         /// <param name="blobEndpoint"> The blob endpoint of the azure storage account. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TableEndpoint = tableEndpoint;
         }
 
-        /// <summary> Initializes a new instance of DiagnosticsStorageAccountConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsStorageAccountConfig"/>. </summary>
         /// <param name="storageAccountName"> The Azure storage account name. </param>
         /// <param name="protectedAccountKeyName"> The protected diagnostics storage key name. </param>
         /// <param name="protectedAccountKeyName2"> The secondary protected diagnostics storage key name. If one of the storage account keys is rotated the cluster will fallback to using the other. </param>

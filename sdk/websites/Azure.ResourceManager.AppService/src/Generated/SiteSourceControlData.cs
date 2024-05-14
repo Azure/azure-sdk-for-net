@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteSourceControlData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSourceControlData"/>. </summary>
         public SiteSourceControlData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceAzureADOnlyAuthenticationData"/>. </summary>
         public ManagedInstanceAzureADOnlyAuthenticationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceAzureADOnlyAuthenticationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

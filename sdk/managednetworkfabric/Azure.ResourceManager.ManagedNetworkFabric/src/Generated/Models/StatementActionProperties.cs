@@ -10,19 +10,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route policy action properties. </summary>
     public partial class StatementActionProperties
     {
-        /// <summary> Initializes a new instance of StatementActionProperties. </summary>
-        /// <param name="actionType"> action. Example: Permit | Deny. </param>
-        public StatementActionProperties(CommunityActionType actionType)
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/>. </summary>
+        /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
+        public StatementActionProperties(RoutePolicyActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of StatementActionProperties. </summary>
-        /// <param name="localPreference"> localPreference of the route policy. </param>
-        /// <param name="actionType"> action. Example: Permit | Deny. </param>
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/>. </summary>
+        /// <param name="localPreference"> Local Preference of the route policy. </param>
+        /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         /// <param name="ipCommunityProperties"> IP Community Properties. </param>
         /// <param name="ipExtendedCommunityProperties"> IP Extended Community Properties. </param>
-        internal StatementActionProperties(long? localPreference, CommunityActionType actionType, ActionIPCommunityProperties ipCommunityProperties, ActionIPExtendedCommunityProperties ipExtendedCommunityProperties)
+        internal StatementActionProperties(long? localPreference, RoutePolicyActionType actionType, ActionIPCommunityProperties ipCommunityProperties, ActionIPExtendedCommunityProperties ipExtendedCommunityProperties)
         {
             LocalPreference = localPreference;
             ActionType = actionType;
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPExtendedCommunityProperties = ipExtendedCommunityProperties;
         }
 
-        /// <summary> localPreference of the route policy. </summary>
+        /// <summary> Local Preference of the route policy. </summary>
         public long? LocalPreference { get; set; }
-        /// <summary> action. Example: Permit | Deny. </summary>
-        public CommunityActionType ActionType { get; set; }
+        /// <summary> Action type. Example: Permit | Deny | Continue. </summary>
+        public RoutePolicyActionType ActionType { get; set; }
         /// <summary> IP Community Properties. </summary>
         public ActionIPCommunityProperties IPCommunityProperties { get; set; }
         /// <summary> IP Extended Community Properties. </summary>

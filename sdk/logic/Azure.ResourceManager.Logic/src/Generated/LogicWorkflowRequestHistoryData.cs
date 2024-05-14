@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowRequestHistoryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequestHistoryData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogicWorkflowRequestHistoryData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequestHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

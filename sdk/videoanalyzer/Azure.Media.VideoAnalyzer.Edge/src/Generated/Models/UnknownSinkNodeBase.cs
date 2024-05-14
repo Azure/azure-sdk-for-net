@@ -12,7 +12,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The UnknownSinkNodeBase. </summary>
     internal partial class UnknownSinkNodeBase : SinkNodeBase
     {
-        /// <summary> Initializes a new instance of UnknownSinkNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSinkNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

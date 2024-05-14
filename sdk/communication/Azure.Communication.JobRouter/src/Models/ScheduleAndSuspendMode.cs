@@ -2,26 +2,34 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Security.Cryptography;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenSuppress("ScheduleAndSuspendMode")]
-    [CodeGenSuppress("ScheduleAndSuspendMode", typeof(DateTimeOffset?))]
-    public partial class ScheduleAndSuspendMode
+    public partial class ScheduleAndSuspendMode : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
-        /// <param name="scheduleAt">The time at which the job will be scheduled.</param>
+        /// <param name="scheduleAt"> Requested schedule time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
-        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt)
+        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this(JobMatchingModeKind.ScheduleAndSuspend, scheduleAt)
         {
             Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
-            ScheduleAt = scheduleAt;
         }
 
-        /// <summary> Gets or sets the schedule at. </summary>
-        public DateTimeOffset ScheduleAt { get; }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScheduleAt))
+            {
+                writer.WritePropertyName("scheduleAt"u8);
+                writer.WriteStringValue(ScheduleAt, "O");
+            }
+
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+
+            writer.WriteEndObject();
+        }
     }
 }

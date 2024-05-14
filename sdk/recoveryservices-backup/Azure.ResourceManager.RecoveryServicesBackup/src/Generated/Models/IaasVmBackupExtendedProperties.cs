@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Extended Properties for Azure IaasVM Backup. </summary>
     public partial class IaasVmBackupExtendedProperties
     {
-        /// <summary> Initializes a new instance of IaasVmBackupExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupExtendedProperties"/>. </summary>
         public IaasVmBackupExtendedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupExtendedProperties"/>. </summary>
         /// <param name="diskExclusionProperties"> Extended Properties for Disk Exclusion. </param>
         /// <param name="linuxVmApplicationName"> Linux VM name. </param>
         internal IaasVmBackupExtendedProperties(DiskExclusionProperties diskExclusionProperties, string linuxVmApplicationName)

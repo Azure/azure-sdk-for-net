@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL storedProcedure resource object. </summary>
     public partial class CosmosDBSqlStoredProcedureResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName)
@@ -23,13 +56,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StoredProcedureName = storedProcedureName;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
-        internal CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName, string body)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName, string body, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoredProcedureName = storedProcedureName;
             Body = body;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureResourceInfo"/> for deserialization. </summary>
+        internal CosmosDBSqlStoredProcedureResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB SQL storedProcedure. </summary>

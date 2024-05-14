@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm failback specific policy details. </summary>
     public partial class InMageRcmFailbackPolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackPolicyDetails"/>. </summary>
         internal InMageRcmFailbackPolicyDetails()
         {
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackPolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency in minutes. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency in minutes. </param>

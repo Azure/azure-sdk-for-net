@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of Transform items. </summary>
     internal partial class MediaTransformListResult
     {
-        /// <summary> Initializes a new instance of MediaTransformListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformListResult"/>. </summary>
         internal MediaTransformListResult()
         {
             Value = new ChangeTrackingList<MediaTransformData>();
         }
 
-        /// <summary> Initializes a new instance of MediaTransformListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTransformListResult"/>. </summary>
         /// <param name="value"> A collection of Transform items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal MediaTransformListResult(IReadOnlyList<MediaTransformData> value, string odataNextLink)

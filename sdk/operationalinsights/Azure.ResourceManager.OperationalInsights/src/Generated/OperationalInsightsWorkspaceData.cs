@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OperationalInsightsWorkspaceData(AzureLocation location) : base(location)
         {
             PrivateLinkScopedResources = new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreOfferData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreOfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
         public PrivateStoreOfferData()
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace
             Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreOfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

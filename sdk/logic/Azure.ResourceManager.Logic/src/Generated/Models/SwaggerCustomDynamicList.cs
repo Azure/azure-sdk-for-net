@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger custom dynamic list. </summary>
     public partial class SwaggerCustomDynamicList
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicList"/>. </summary>
         public SwaggerCustomDynamicList()
         {
             Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicList"/>. </summary>
         /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
         /// <param name="builtInOperation"> The built in operation. </param>
         /// <param name="itemsPath"> The path to a response property (relative to the response object, not the response body) which contains an array of dynamic value items. </param>

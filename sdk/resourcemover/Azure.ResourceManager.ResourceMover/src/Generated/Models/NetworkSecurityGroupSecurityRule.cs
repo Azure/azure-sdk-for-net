@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Security Rule data model for Network Security Groups. </summary>
     public partial class NetworkSecurityGroupSecurityRule
     {
-        /// <summary> Initializes a new instance of NetworkSecurityGroupSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupSecurityRule"/>. </summary>
         public NetworkSecurityGroupSecurityRule()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupSecurityRule"/>. </summary>
         /// <param name="name"> Gets or sets the Security rule name. </param>
         /// <param name="access">
         /// Gets or sets whether network traffic is allowed or denied.

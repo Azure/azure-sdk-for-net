@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Elastic
     /// </summary>
     public partial class ElasticMonitorResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ElasticMonitorResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
                 writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
             }
+            if (Optional.IsDefined(IsLedgerOn))
+            {
+                writer.WritePropertyName("isLedgerOn"u8);
+                writer.WriteBooleanValue(IsLedgerOn.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -140,9 +145,9 @@ namespace Azure.ResourceManager.Sql
             Optional<ManagedDatabaseCreateMode> createMode = default;
             Optional<Uri> storageContainerUri = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<string> crossSubscriptionSourceDatabaseId = default;
+            Optional<ResourceIdentifier> crossSubscriptionSourceDatabaseId = default;
             Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
-            Optional<string> crossSubscriptionRestorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> crossSubscriptionRestorableDroppedDatabaseId = default;
             Optional<string> storageContainerIdentity = default;
             Optional<string> storageContainerSasToken = default;
             Optional<ResourceIdentifier> failoverGroupId = default;
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> autoCompleteRestore = default;
             Optional<string> lastBackupName = default;
             Optional<ResourceIdentifier> crossSubscriptionTargetManagedInstanceId = default;
+            Optional<bool> isLedgerOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -293,7 +299,11 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("crossSubscriptionSourceDatabaseId"u8))
                         {
-                            crossSubscriptionSourceDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionSourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"u8))
@@ -307,7 +317,11 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("crossSubscriptionRestorableDroppedDatabaseId"u8))
                         {
-                            crossSubscriptionRestorableDroppedDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionRestorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageContainerIdentity"u8))
@@ -370,11 +384,20 @@ namespace Azure.ResourceManager.Sql
                             crossSubscriptionTargetManagedInstanceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("isLedgerOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isLedgerOn = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value);
+            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value, Optional.ToNullable(isLedgerOn));
         }
     }
 }

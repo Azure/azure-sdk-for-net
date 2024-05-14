@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Delete activity. </summary>
     public partial class DeleteActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DeleteActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Delete activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
@@ -27,10 +27,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Delete";
         }
 
-        /// <summary> Initializes a new instance of DeleteActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -46,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </param>
-        internal DeleteActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object recursive, int? maxConcurrentConnections, object enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DeleteActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object recursive, int? maxConcurrentConnections, object enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Recursive = recursive;
             MaxConcurrentConnections = maxConcurrentConnections;

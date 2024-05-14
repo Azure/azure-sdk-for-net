@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the text for translation. </summary>
     public partial class InputTextItem
     {
-        /// <summary> Initializes a new instance of InputTextItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputTextItem"/>. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public InputTextItem(string text)

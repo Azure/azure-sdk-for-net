@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Grant sql control to managed identity. </summary>
     public partial class SynapseGrantSqlControlToManagedIdentity
     {
-        /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGrantSqlControlToManagedIdentity"/>. </summary>
         public SynapseGrantSqlControlToManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGrantSqlControlToManagedIdentity"/>. </summary>
         /// <param name="desiredState"> Desired state. </param>
         /// <param name="actualState"> Actual state. </param>
         internal SynapseGrantSqlControlToManagedIdentity(SynapseDesiredState? desiredState, SynapseGrantSqlControlToManagedIdentityState? actualState)

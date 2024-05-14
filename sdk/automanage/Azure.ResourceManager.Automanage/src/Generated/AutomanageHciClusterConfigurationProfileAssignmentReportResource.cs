@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageHciClusterConfigurationProfileAssignmentReport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageHciClusterConfigurationProfileAssignmentReportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> using the GetAutomanageHciClusterConfigurationProfileAssignmentReport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageHciClusterConfigurationProfileAssignmentReportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> using the GetAutomanageHciClusterConfigurationProfileAssignmentReport method.
     /// </summary>
     public partial class AutomanageHciClusterConfigurationProfileAssignmentReportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
+        /// <param name="reportName"> The reportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName, string reportName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly HCIReportsRestOperations _automanageHciClusterConfigurationProfileAssignmentReportHCIReportsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentReportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> class for mocking. </summary>
         protected AutomanageHciClusterConfigurationProfileAssignmentReportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageHciClusterConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>HCIReports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HCIReports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

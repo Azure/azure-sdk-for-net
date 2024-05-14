@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Payload object for upsert offer with multiple context and plans. </summary>
     public partial class MultiContextAndPlansContent
     {
-        /// <summary> Initializes a new instance of MultiContextAndPlansContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiContextAndPlansContent"/>. </summary>
         public MultiContextAndPlansContent()
         {
             PlansContext = new ChangeTrackingList<ContextAndPlansDetails>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiContextAndPlansContent"/>. </summary>
+        /// <param name="offerId"> The offer ID which contains the plans. </param>
+        /// <param name="eTag"> The offer's eTag. </param>
+        /// <param name="plansContext"></param>
+        internal MultiContextAndPlansContent(string offerId, ETag? eTag, IList<ContextAndPlansDetails> plansContext)
+        {
+            OfferId = offerId;
+            ETag = eTag;
+            PlansContext = plansContext;
         }
 
         /// <summary> The offer ID which contains the plans. </summary>

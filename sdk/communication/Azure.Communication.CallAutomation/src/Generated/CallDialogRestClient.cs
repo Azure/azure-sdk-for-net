@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallDialogRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallDialogRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-03-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -135,7 +135,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopDialogRequest(string callConnectionId, string dialogId)
+        internal HttpMessage CreateStopDialogRequest(string callConnectionId, string dialogId, string operationCallbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,6 +146,10 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/dialogs/", false);
             uri.AppendPath(dialogId, true);
+            if (operationCallbackUri != null)
+            {
+                uri.AppendQuery("operationCallbackUri", operationCallbackUri, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -155,9 +159,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Stop a dialog. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
+        /// <param name="operationCallbackUri"> Opeation callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
-        public async Task<Response> StopDialogAsync(string callConnectionId, string dialogId, CancellationToken cancellationToken = default)
+        public async Task<Response> StopDialogAsync(string callConnectionId, string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -168,7 +173,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(dialogId));
             }
 
-            using var message = CreateStopDialogRequest(callConnectionId, dialogId);
+            using var message = CreateStopDialogRequest(callConnectionId, dialogId, operationCallbackUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -182,9 +187,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Stop a dialog. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
+        /// <param name="operationCallbackUri"> Opeation callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
-        public Response StopDialog(string callConnectionId, string dialogId, CancellationToken cancellationToken = default)
+        public Response StopDialog(string callConnectionId, string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -195,11 +201,98 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(dialogId));
             }
 
-            using var message = CreateStopDialogRequest(callConnectionId, dialogId);
+            using var message = CreateStopDialogRequest(callConnectionId, dialogId, operationCallbackUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateDialogRequest(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/dialogs/", false);
+            uri.AppendPath(dialogId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(updateDialogRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update an ongoing dialog in a call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="dialogId"> The dialog id. </param>
+        /// <param name="updateDialogRequest"> The update dialog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
+        /// <remarks> Update a dialog. </remarks>
+        public async Task<Response> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (dialogId == null)
+            {
+                throw new ArgumentNullException(nameof(dialogId));
+            }
+            if (updateDialogRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateDialogRequest));
+            }
+
+            using var message = CreateUpdateDialogRequest(callConnectionId, dialogId, updateDialogRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Update an ongoing dialog in a call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="dialogId"> The dialog id. </param>
+        /// <param name="updateDialogRequest"> The update dialog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
+        /// <remarks> Update a dialog. </remarks>
+        public Response UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (dialogId == null)
+            {
+                throw new ArgumentNullException(nameof(dialogId));
+            }
+            if (updateDialogRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateDialogRequest));
+            }
+
+            using var message = CreateUpdateDialogRequest(callConnectionId, dialogId, updateDialogRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

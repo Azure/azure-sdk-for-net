@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of BackupGenericEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericEngine"/>. </summary>
         protected BackupGenericEngine()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupGenericEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericEngine"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>

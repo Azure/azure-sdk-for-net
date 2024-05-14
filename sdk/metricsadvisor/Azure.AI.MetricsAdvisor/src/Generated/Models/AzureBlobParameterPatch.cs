@@ -10,9 +10,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureBlobParameterPatch. </summary>
     internal partial class AzureBlobParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureBlobParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameterPatch"/>. </summary>
         public AzureBlobParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Blob. </param>
+        /// <param name="container"> The container name in this Azure Blob. </param>
+        /// <param name="blobTemplate"> The path template in this container. </param>
+        internal AzureBlobParameterPatch(string connectionString, string container, string blobTemplate)
+        {
+            ConnectionString = connectionString;
+            Container = container;
+            BlobTemplate = blobTemplate;
         }
 
         /// <summary> The connection string of this Azure Blob. </summary>

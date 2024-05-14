@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,12 +15,13 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\common\Azure.Core.Tests.Common.csproj" />
+    <ProjectReference Include="..\..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
 </Project>

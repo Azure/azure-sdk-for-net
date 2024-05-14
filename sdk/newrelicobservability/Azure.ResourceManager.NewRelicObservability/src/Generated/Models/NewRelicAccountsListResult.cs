@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Response of get all accounts Operation. </summary>
     internal partial class NewRelicAccountsListResult
     {
-        /// <summary> Initializes a new instance of NewRelicAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAccountsListResult"/>. </summary>
         /// <param name="value"> The AccountResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicAccountsListResult(IEnumerable<NewRelicAccountResourceData> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAccountsListResult"/>. </summary>
         /// <param name="value"> The AccountResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal NewRelicAccountsListResult(IReadOnlyList<NewRelicAccountResourceData> value, Uri nextLink)

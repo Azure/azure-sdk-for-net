@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -12,24 +11,24 @@ namespace Azure.AI.OpenAI.Tests
     public class OpenAIImageTests : OpenAITestBase
     {
         public OpenAIImageTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Live)
+            : base(Scenario.ImageGenerations, isAsync)//, RecordedTestMode.Live)
         {
         }
 
         [RecordedTest]
-        [TestCase(OpenAIClientServiceTarget.Azure)]
-        [TestCase(OpenAIClientServiceTarget.NonAzure)]
-        public async Task CanGenerateImages(OpenAIClientServiceTarget serviceTarget)
+        [TestCase(Service.Azure)]
+        [TestCase(Service.NonAzure)]
+        public async Task CanGenerateImages(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            Assert.That(client, Is.InstanceOf<OpenAIClient>());
+            string deploymentName = GetDeploymentOrModelName(serviceTarget);
 
             const string prompt = "a simplistic picture of a cyberpunk money dreaming of electric bananas";
             var requestOptions = new ImageGenerationOptions()
             {
+                DeploymentName = deploymentName,
                 Prompt = prompt,
-                Size = ImageSize.Size256x256,
-                ImageCount = 2,
+                ImageCount = 1,
                 User = "placeholder",
             };
             Assert.That(requestOptions, Is.InstanceOf<ImageGenerationOptions>());
@@ -48,16 +47,45 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(imageGenerations.Data, Is.Not.Null.Or.Empty);
             Assert.That(imageGenerations.Data.Count, Is.EqualTo(requestOptions.ImageCount));
 
-            ImageLocation firstImageLocation = imageGenerations.Data[0];
+            ImageGenerationData firstImageLocation = imageGenerations.Data[0];
             Assert.That(firstImageLocation, Is.Not.Null);
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
+        }
 
-            ImageLocation secondImageLocation = imageGenerations.Data[1] as ImageLocation;
-            Assert.That(secondImageLocation, Is.Not.Null);
-            Assert.That(secondImageLocation.Url, Is.Not.Null.Or.Empty);
-            Assert.That(
-                secondImageLocation.Url.ToString(),
-                Is.Not.EquivalentTo(firstImageLocation.Url.ToString()));
+        [RecordedTest]
+        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview, false)]
+        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_12_01_Preview, false)]
+        [TestCase(Service.NonAzure)]
+        public async Task DallE2LegacySupport(
+            Service serviceTarget,
+            OpenAIClientOptions.ServiceVersion azureServiceVersion = default,
+            bool shouldWork = true)
+        {
+            OpenAIClient client = GetTestClient(
+                serviceTarget,
+                Scenario.LegacyImageGenerations,
+                azureServiceVersionOverride: azureServiceVersion);
+
+            var requestOptions = new ImageGenerationOptions()
+            {
+                Prompt = "an old dall-e-2 image generator still creating images",
+            };
+
+            if (shouldWork)
+            {
+                Response<ImageGenerations> response = await client.GetImageGenerationsAsync(requestOptions);
+                Assert.That(response.Value, Is.InstanceOf<ImageGenerations>());
+
+                Assert.That(response.Value.Data, Is.Not.Null.Or.Empty);
+                Assert.That(response.Value.Data[0].Url, Is.Not.Null.Or.Empty);
+            }
+            else
+            {
+                ArgumentNullException exception = Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                {
+                    await client.GetImageGenerationsAsync(requestOptions);
+                });
+            }
         }
     }
 }

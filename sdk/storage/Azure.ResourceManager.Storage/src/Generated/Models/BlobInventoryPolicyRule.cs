@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An object that wraps the blob inventory rule. Each rule is uniquely defined by name. </summary>
     public partial class BlobInventoryPolicyRule
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyRule"/>. </summary>
         /// <param name="isEnabled"> Rule is enabled when set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>

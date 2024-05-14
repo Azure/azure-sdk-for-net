@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt disk input for update. </summary>
     public partial class VMwareCbtUpdateDiskContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtUpdateDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public VMwareCbtUpdateDiskContent(string diskId)
@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="targetDiskName"> The target disk name. </param>
+        /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
+        internal VMwareCbtUpdateDiskContent(string diskId, string targetDiskName, string isOSDisk)
+        {
+            DiskId = diskId;
+            TargetDiskName = targetDiskName;
+            IsOSDisk = isOSDisk;
         }
 
         /// <summary> The disk Id. </summary>

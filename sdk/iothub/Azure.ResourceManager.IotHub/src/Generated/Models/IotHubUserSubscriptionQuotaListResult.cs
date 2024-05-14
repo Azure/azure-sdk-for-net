@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Json-serialized array of User subscription quota response. </summary>
     internal partial class IotHubUserSubscriptionQuotaListResult
     {
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuotaListResult"/>. </summary>
         internal IotHubUserSubscriptionQuotaListResult()
         {
             Value = new ChangeTrackingList<IotHubUserSubscriptionQuota>();
         }
 
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuotaListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal IotHubUserSubscriptionQuotaListResult(IReadOnlyList<IotHubUserSubscriptionQuota> value, string nextLink)

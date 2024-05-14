@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Information about payment related to a reservation order. </summary>
     public partial class PaymentDetail
     {
-        /// <summary> Initializes a new instance of PaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentDetail"/>. </summary>
         internal PaymentDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of PaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
         /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.Translation.Text
     /// </summary>
     public partial class TranslationLanguage
     {
-        /// <summary> Initializes a new instance of TranslationLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the virtual network subnets resource settings. </summary>
     public partial class SubnetResourceSettings
     {
-        /// <summary> Initializes a new instance of SubnetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetResourceSettings"/>. </summary>
         public SubnetResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SubnetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the Subnet name. </param>
         /// <param name="addressPrefix"> Gets or sets address prefix for the subnet. </param>
         /// <param name="networkSecurityGroup"> Defines reference to NSG. </param>

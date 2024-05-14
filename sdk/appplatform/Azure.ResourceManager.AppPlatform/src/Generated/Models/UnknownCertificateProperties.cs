@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The UnknownCertificateProperties. </summary>
     internal partial class UnknownCertificateProperties : AppPlatformCertificateProperties
     {
-        /// <summary> Initializes a new instance of UnknownCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
@@ -23,9 +23,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
         /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
-        internal UnknownCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState, serializedAdditionalRawData)
         {
             CertificatePropertiesType = certificatePropertiesType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCertificateProperties"/> for deserialization. </summary>
+        internal UnknownCertificateProperties()
+        {
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt specific resync input. </summary>
     public partial class VMwareCbtResyncContent : ResyncProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtResyncContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResyncContent"/>. </summary>
         /// <param name="skipCbtReset"> A value indicating whether CBT is to be reset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skipCbtReset"/> is null. </exception>
         public VMwareCbtResyncContent(string skipCbtReset)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             SkipCbtReset = skipCbtReset;
             InstanceType = "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtResyncContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="skipCbtReset"> A value indicating whether CBT is to be reset. </param>
+        internal VMwareCbtResyncContent(string instanceType, string skipCbtReset) : base(instanceType)
+        {
+            SkipCbtReset = skipCbtReset;
+            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> A value indicating whether CBT is to be reset. </summary>

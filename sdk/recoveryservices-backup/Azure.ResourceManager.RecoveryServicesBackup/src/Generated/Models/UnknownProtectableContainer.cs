@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownProtectableContainer. </summary>
     internal partial class UnknownProtectableContainer : ProtectableContainer
     {
-        /// <summary> Initializes a new instance of UnknownProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectableContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">

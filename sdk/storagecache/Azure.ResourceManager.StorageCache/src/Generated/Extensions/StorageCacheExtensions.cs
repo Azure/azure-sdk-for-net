@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageCache.Mocking;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
@@ -19,100 +20,93 @@ namespace Azure.ResourceManager.StorageCache
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageCache. </summary>
     public static partial class StorageCacheExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableStorageCacheArmClient GetMockableStorageCacheArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableStorageCacheArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableStorageCacheResourceGroupResource GetMockableStorageCacheResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableStorageCacheResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableStorageCacheSubscriptionResource GetMockableStorageCacheSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableStorageCacheSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region AmlFileSystemResource
         /// <summary>
         /// Gets an object representing an <see cref="AmlFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AmlFileSystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheArmClient.GetAmlFileSystemResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AmlFileSystemResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AmlFileSystemResource"/> object. </returns>
         public static AmlFileSystemResource GetAmlFileSystemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AmlFileSystemResource.ValidateResourceId(id);
-                return new AmlFileSystemResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageCacheResource
+            return GetMockableStorageCacheArmClient(client).GetAmlFileSystemResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StorageCacheResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheArmClient.GetStorageCacheResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageCacheResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageCacheResource"/> object. </returns>
         public static StorageCacheResource GetStorageCacheResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageCacheResource.ValidateResourceId(id);
-                return new StorageCacheResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageTargetResource
+            return GetMockableStorageCacheArmClient(client).GetStorageCacheResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StorageTargetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageTargetResource.CreateResourceIdentifier" /> to create a <see cref="StorageTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheArmClient.GetStorageTargetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageTargetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageTargetResource"/> object. </returns>
         public static StorageTargetResource GetStorageTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageTargetResource.ValidateResourceId(id);
-                return new StorageTargetResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of AmlFileSystemResources in the ResourceGroupResource. </summary>
+            return GetMockableStorageCacheArmClient(client).GetStorageTargetResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of AmlFileSystemResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheResourceGroupResource.GetAmlFileSystems()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AmlFileSystemResources and their operations over a AmlFileSystemResource. </returns>
         public static AmlFileSystemCollection GetAmlFileSystems(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAmlFileSystems();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageCacheResourceGroupResource(resourceGroupResource).GetAmlFileSystems();
         }
 
         /// <summary>
@@ -126,17 +120,31 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheResourceGroupResource.GetAmlFileSystemAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="amlFileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AmlFileSystemResource>> GetAmlFileSystemAsync(this ResourceGroupResource resourceGroupResource, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAmlFileSystems().GetAsync(amlFileSystemName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStorageCacheResourceGroupResource(resourceGroupResource).GetAmlFileSystemAsync(amlFileSystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,25 +158,48 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheResourceGroupResource.GetAmlFileSystem(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="amlFileSystemName"> Name for the AML file system. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="amlFileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="amlFileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="amlFileSystemName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<AmlFileSystemResource> GetAmlFileSystem(this ResourceGroupResource resourceGroupResource, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAmlFileSystems().Get(amlFileSystemName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageCacheResourceGroupResource(resourceGroupResource).GetAmlFileSystem(amlFileSystemName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageCacheResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of StorageCacheResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheResourceGroupResource.GetStorageCaches()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StorageCacheResources and their operations over a StorageCacheResource. </returns>
         public static StorageCacheCollection GetStorageCaches(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageCaches();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageCacheResourceGroupResource(resourceGroupResource).GetStorageCaches();
         }
 
         /// <summary>
@@ -182,17 +213,31 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheResourceGroupResource.GetStorageCacheAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StorageCacheResource>> GetStorageCacheAsync(this ResourceGroupResource resourceGroupResource, string cacheName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageCaches().GetAsync(cacheName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStorageCacheResourceGroupResource(resourceGroupResource).GetStorageCacheAsync(cacheName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,17 +251,31 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheResourceGroupResource.GetStorageCache(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StorageCacheResource> GetStorageCache(this ResourceGroupResource resourceGroupResource, string cacheName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageCaches().Get(cacheName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStorageCacheResourceGroupResource(resourceGroupResource).GetStorageCache(cacheName, cancellationToken);
         }
 
         /// <summary>
@@ -230,14 +289,29 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetAmlFileSystems(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AmlFileSystemResource> GetAmlFileSystemsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFileSystemsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetAmlFileSystemsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -251,14 +325,29 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetAmlFileSystems(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AmlFileSystemResource> GetAmlFileSystems(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFileSystems(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetAmlFileSystems(cancellationToken);
         }
 
         /// <summary>
@@ -272,14 +361,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>checkAmlFSSubnets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.CheckAmlFSSubnets(AmlFileSystemSubnetContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information about the subnets to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response> CheckAmlFSSubnetsAsync(this SubscriptionResource subscriptionResource, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAmlFSSubnetsAsync(content, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableStorageCacheSubscriptionResource(subscriptionResource).CheckAmlFSSubnetsAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -293,14 +393,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>checkAmlFSSubnets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.CheckAmlFSSubnets(AmlFileSystemSubnetContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information about the subnets to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response CheckAmlFSSubnets(this SubscriptionResource subscriptionResource, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAmlFSSubnets(content, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).CheckAmlFSSubnets(content, cancellationToken);
         }
 
         /// <summary>
@@ -314,14 +425,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>getRequiredAmlFSSubnetsSize</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetRequiredAmlFSSubnetsSize(RequiredAmlFileSystemSubnetsSizeContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<RequiredAmlFileSystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(this SubscriptionResource subscriptionResource, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRequiredAmlFSSubnetsSizeAsync(content, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetRequiredAmlFSSubnetsSizeAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -335,14 +457,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>getRequiredAmlFSSubnetsSize</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetRequiredAmlFSSubnetsSize(RequiredAmlFileSystemSubnetsSizeContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<RequiredAmlFileSystemSubnetsSize> GetRequiredAmlFSSubnetsSize(this SubscriptionResource subscriptionResource, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRequiredAmlFSSubnetsSize(content, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetRequiredAmlFSSubnetsSize(content, cancellationToken);
         }
 
         /// <summary>
@@ -356,14 +489,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCacheSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StorageCacheSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheSkusAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCacheSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -377,14 +521,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCacheSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageCacheSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheSku> GetStorageCacheSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheSkus(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCacheSkus(cancellationToken);
         }
 
         /// <summary>
@@ -398,14 +553,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetUsageModels(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StorageCacheUsageModel"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheUsageModel> GetUsageModelsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsageModelsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetUsageModelsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -419,14 +585,25 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetUsageModels(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageCacheUsageModel"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheUsageModel> GetUsageModels(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsageModels(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetUsageModels(cancellationToken);
         }
 
         /// <summary>
@@ -440,15 +617,26 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCacheUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StorageCacheUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheUsagesAsync(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCacheUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -462,15 +650,26 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCacheUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageCacheUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheUsage> GetStorageCacheUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheUsages(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCacheUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -484,14 +683,29 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCaches(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheResource> GetStorageCachesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCachesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCachesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -505,14 +719,29 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStorageCacheSubscriptionResource.GetStorageCaches(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheResource> GetStorageCaches(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCaches(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStorageCacheSubscriptionResource(subscriptionResource).GetStorageCaches(cancellationToken);
         }
     }
 }

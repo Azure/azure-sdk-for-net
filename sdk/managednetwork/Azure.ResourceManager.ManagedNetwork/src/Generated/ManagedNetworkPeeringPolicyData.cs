@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// </summary>
     public partial class ManagedNetworkPeeringPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyData"/>. </summary>
         public ManagedNetworkPeeringPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

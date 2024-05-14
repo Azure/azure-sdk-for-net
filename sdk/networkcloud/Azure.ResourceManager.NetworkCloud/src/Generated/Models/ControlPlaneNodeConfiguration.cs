@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ControlPlaneNodeConfiguration represents the selection of virtual machines and size of the control plane for a Kubernetes cluster. </summary>
     public partial class ControlPlaneNodeConfiguration
     {
-        /// <summary> Initializes a new instance of ControlPlaneNodeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodeConfiguration"/>. </summary>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="vmSkuName"> The name of the VM SKU supplied during creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSkuName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             VmSkuName = vmSkuName;
         }
 
-        /// <summary> Initializes a new instance of ControlPlaneNodeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodeConfiguration"/>. </summary>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in the control plane. </param>
         /// <param name="availabilityZones"> The list of availability zones of the Network Cloud cluster to be used for the provisioning of nodes in the control plane. If not specified, all availability zones will be used. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>

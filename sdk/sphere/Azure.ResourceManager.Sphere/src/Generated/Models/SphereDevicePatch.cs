@@ -7,21 +7,22 @@
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The type used for update operations of the Device.
-    /// Serialized Name: DeviceUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the Device. </summary>
     public partial class SphereDevicePatch
     {
-        /// <summary> Initializes a new instance of SphereDevicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
         public SphereDevicePatch()
         {
         }
 
-        /// <summary>
-        /// Device group id
-        /// Serialized Name: DeviceUpdate.properties.deviceGroupId
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
+        /// <param name="deviceGroupId"> Device group id. </param>
+        internal SphereDevicePatch(string deviceGroupId)
+        {
+            DeviceGroupId = deviceGroupId;
+        }
+
+        /// <summary> Device group id. </summary>
         public string DeviceGroupId { get; set; }
     }
 }

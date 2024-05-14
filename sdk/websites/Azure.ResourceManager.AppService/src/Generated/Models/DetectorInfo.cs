@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Definition of Detector. </summary>
     public partial class DetectorInfo
     {
-        /// <summary> Initializes a new instance of DetectorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorInfo"/>. </summary>
         public DetectorInfo()
         {
             SupportTopicList = new ChangeTrackingList<DetectorSupportTopic>();
             AnalysisType = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DetectorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorInfo"/>. </summary>
         /// <param name="id"> Id of detector. </param>
         /// <param name="name"> Name of detector. </param>
         /// <param name="description"> Short description of the detector and its purpose. </param>

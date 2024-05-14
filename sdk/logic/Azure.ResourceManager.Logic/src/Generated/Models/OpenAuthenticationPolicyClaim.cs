@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> Open authentication policy claim. </summary>
     public partial class OpenAuthenticationPolicyClaim
     {
-        /// <summary> Initializes a new instance of OpenAuthenticationPolicyClaim. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationPolicyClaim"/>. </summary>
         public OpenAuthenticationPolicyClaim()
         {
         }
 
-        /// <summary> Initializes a new instance of OpenAuthenticationPolicyClaim. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationPolicyClaim"/>. </summary>
         /// <param name="name"> The name of the claim. </param>
         /// <param name="value"> The value of the claim. </param>
         internal OpenAuthenticationPolicyClaim(string name, string value)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
     public partial class ResourceHealthAvailabilityStateRecentlyResolved
     {
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStateRecentlyResolved. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStateRecentlyResolved"/>. </summary>
         internal ResourceHealthAvailabilityStateRecentlyResolved()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStateRecentlyResolved. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStateRecentlyResolved"/>. </summary>
         /// <param name="unavailableOccuredOn"> Timestamp for when the availabilityState changed to Unavailable. </param>
         /// <param name="resolvedOn"> Timestamp when the availabilityState changes to Available. </param>
         /// <param name="unavailableSummary"> Brief description of cause of the resource becoming unavailable. </param>

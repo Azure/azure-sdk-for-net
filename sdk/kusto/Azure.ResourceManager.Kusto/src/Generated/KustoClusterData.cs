@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of KustoClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto
             PrivateEndpointConnections = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KustoClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

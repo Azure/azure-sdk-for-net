@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of a namespace resource. </summary>
     public partial class ServiceBusNamespacePatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceBusNamespacePatch(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

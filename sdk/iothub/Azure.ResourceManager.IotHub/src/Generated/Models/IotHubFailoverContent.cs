@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Use to provide failover region when requesting manual Failover for a hub. </summary>
     public partial class IotHubFailoverContent
     {
-        /// <summary> Initializes a new instance of IotHubFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubFailoverContent"/>. </summary>
         /// <param name="failoverRegion"> Region the hub will be failed over to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverRegion"/> is null. </exception>
         public IotHubFailoverContent(string failoverRegion)

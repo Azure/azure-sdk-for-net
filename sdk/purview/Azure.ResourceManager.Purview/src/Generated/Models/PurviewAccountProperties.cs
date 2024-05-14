@@ -15,10 +15,40 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The account properties. </summary>
     public partial class PurviewAccountProperties
     {
-        /// <summary> Initializes a new instance of PurviewAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountProperties"/>. </summary>
         public PurviewAccountProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountProperties"/>. </summary>
+        /// <param name="cloudConnectors">
+        /// Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        /// </param>
+        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
+        /// <param name="createdBy"> Gets the creator of the entity. </param>
+        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
+        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
+        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
+        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
+        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
+        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
+        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
+        internal PurviewAccountProperties(CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess)
+        {
+            CloudConnectors = cloudConnectors;
+            CreatedOn = createdOn;
+            CreatedBy = createdBy;
+            CreatedByObjectId = createdByObjectId;
+            Endpoints = endpoints;
+            FriendlyName = friendlyName;
+            ManagedResourceGroupName = managedResourceGroupName;
+            ManagedResources = managedResources;
+            PrivateEndpointConnections = privateEndpointConnections;
+            ProvisioningState = provisioningState;
+            PublicNetworkAccess = publicNetworkAccess;
         }
 
         /// <summary>

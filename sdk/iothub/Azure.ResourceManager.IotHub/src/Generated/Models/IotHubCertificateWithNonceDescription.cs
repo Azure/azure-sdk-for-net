@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The X509 Certificate. </summary>
     public partial class IotHubCertificateWithNonceDescription : ResourceData
     {
-        /// <summary> Initializes a new instance of IotHubCertificateWithNonceDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateWithNonceDescription"/>. </summary>
         internal IotHubCertificateWithNonceDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateWithNonceDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateWithNonceDescription"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -23,8 +23,8 @@ namespace Azure.Verticals.AgriFood.Farming
     {
         protected Attachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string attachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string attachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string partyId, string attachmentId, Azure.RequestContext context) { throw null; }
@@ -114,8 +114,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class FarmBeatsClient
     {
         protected FarmBeatsClient() { }
-        public FarmBeatsClient(Azure.Core.TokenCredential credential) { }
-        public FarmBeatsClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options) { }
+        public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Verticals.AgriFood.Farming.ApplicationData GetApplicationDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.Attachments GetAttachmentsClient(string apiVersion = "2022-11-01-preview") { throw null; }
@@ -255,8 +255,8 @@ namespace Azure.Verticals.AgriFood.Farming
     {
         protected InsightAttachments() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Download(string partyId, string modelId, string resourceType, string resourceId, string insightAttachmentId, Azure.RequestContext context) { throw null; }

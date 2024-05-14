@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Quota properties for the specified resource. </summary>
     public partial class QuotaProperties
     {
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         public QuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         /// <param name="limit">
         /// Resource quota limit properties.
         /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

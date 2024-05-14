@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class representing database principal entity. </summary>
     public partial class KustoDatabasePrincipal
     {
-        /// <summary> Initializes a new instance of KustoDatabasePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipal"/>. </summary>
         /// <param name="role"> Database principal role. </param>
         /// <param name="name"> Database principal name. </param>
         /// <param name="principalType"> Database principal type. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             PrincipalType = principalType;
         }
 
-        /// <summary> Initializes a new instance of KustoDatabasePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipal"/>. </summary>
         /// <param name="role"> Database principal role. </param>
         /// <param name="name"> Database principal name. </param>
         /// <param name="principalType"> Database principal type. </param>

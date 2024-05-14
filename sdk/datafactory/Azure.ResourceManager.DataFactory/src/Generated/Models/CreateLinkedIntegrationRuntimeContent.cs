@@ -12,9 +12,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The linked integration runtime information. </summary>
     public partial class CreateLinkedIntegrationRuntimeContent
     {
-        /// <summary> Initializes a new instance of CreateLinkedIntegrationRuntimeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
         public CreateLinkedIntegrationRuntimeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
+        /// <param name="name"> The name of the linked integration runtime. </param>
+        /// <param name="subscriptionId"> The ID of the subscription that the linked integration runtime belongs to. </param>
+        /// <param name="dataFactoryName"> The name of the data factory that the linked integration runtime belongs to. </param>
+        /// <param name="dataFactoryLocation"> The location of the data factory that the linked integration runtime belongs to. </param>
+        internal CreateLinkedIntegrationRuntimeContent(string name, string subscriptionId, string dataFactoryName, AzureLocation? dataFactoryLocation)
+        {
+            Name = name;
+            SubscriptionId = subscriptionId;
+            DataFactoryName = dataFactoryName;
+            DataFactoryLocation = dataFactoryLocation;
         }
 
         /// <summary> The name of the linked integration runtime. </summary>

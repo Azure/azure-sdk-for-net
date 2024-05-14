@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> PrivateLinkHub patch details. </summary>
     public partial class SynapsePrivateLinkHubPatch
     {
-        /// <summary> Initializes a new instance of SynapsePrivateLinkHubPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkHubPatch"/>. </summary>
         public SynapsePrivateLinkHubPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkHubPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal SynapsePrivateLinkHubPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

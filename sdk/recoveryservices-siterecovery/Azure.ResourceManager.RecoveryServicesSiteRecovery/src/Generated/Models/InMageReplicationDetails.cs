@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage provider specific settings. </summary>
     public partial class InMageReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageReplicationDetails"/>. </summary>
         internal InMageReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageProtectedDiskDetails>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMage";
         }
 
-        /// <summary> Initializes a new instance of InMageReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="activeSiteType"> The active location of the VM. If the VM is being protected from Azure, this field will take values from { Azure, OnPrem }. If the VM is being protected between two data-centers, this field will be OnPrem always. </param>
         /// <param name="sourceVmCpuCount"> The CPU count of the VM on the primary side. </param>

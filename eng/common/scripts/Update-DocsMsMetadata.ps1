@@ -32,14 +32,6 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 The docker image id in format of '$containerRegistry/$imageName:$tag'
 e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
 
-.PARAMETER TenantId
-The aad tenant id/object id.
-
-.PARAMETER ClientId
-The add client id/application id.
-
-.PARAMETER ClientSecret
-The client secret of add app.
 #>
 
 param(
@@ -59,16 +51,7 @@ param(
   [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
-  [string]$PackageSourceOverride,
-
-  [Parameter(Mandatory = $false)]
-  [string]$TenantId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientSecret
+  [string]$PackageSourceOverride
 )
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
@@ -105,28 +88,10 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
   }
 
-  # Get the first code owners of the package.
-  Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
-  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath
-  if (!$author) {
-    $author = "ramya-rao-a"
-    $msauthor = "ramyar"
-  }
-  else {
-    $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
-  }
-  # Default value
-  if (!$msauthor) {
-    $msauthor = $author
-  }
-  Write-Host "The author of package: $author"
-  Write-Host "The ms author of package: $msauthor"
   $header = @"
 ---
 title: $foundTitle
 keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
-author: $author
-ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
 ms.devlang: $Language
@@ -205,7 +170,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     Write-Host "The docs metadata json $packageMetadataName does not exist, creating a new one to docs repo..."
     New-Item -ItemType Directory -Path $packageInfoLocation -Force
   }
-  $packageInfoJson = ConvertTo-Json $packageInfo
+  $packageInfoJson = ConvertTo-Json $packageInfo -Depth 100
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson

@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The UnknownAddonProperties. </summary>
     internal partial class UnknownAddonProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of UnknownAddonProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        internal UnknownAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState) : base(addonType, provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(addonType, provisioningState, serializedAdditionalRawData)
         {
             AddonType = addonType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/> for deserialization. </summary>
+        internal UnknownAddonProperties()
+        {
         }
     }
 }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ProviderHub
     /// </summary>
     public partial class DefaultRolloutData : ResourceData
     {
-        /// <summary> Initializes a new instance of DefaultRolloutData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutData"/>. </summary>
         public DefaultRolloutData()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

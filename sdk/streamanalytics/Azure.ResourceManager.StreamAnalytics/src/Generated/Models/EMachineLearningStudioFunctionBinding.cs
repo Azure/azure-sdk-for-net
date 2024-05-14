@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The binding to an Azure Machine Learning Studio. </summary>
     public partial class EMachineLearningStudioFunctionBinding : StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of EMachineLearningStudioFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="EMachineLearningStudioFunctionBinding"/>. </summary>
         public EMachineLearningStudioFunctionBinding()
         {
             Outputs = new ChangeTrackingList<MachineLearningStudioOutputColumn>();
             FunctionBindingType = "Microsoft.MachineLearning/WebService";
         }
 
-        /// <summary> Initializes a new instance of EMachineLearningStudioFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="EMachineLearningStudioFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
         /// <param name="endpoint"> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </param>
         /// <param name="apiKey"> The API key used to authenticate with Request-Response endpoint. </param>

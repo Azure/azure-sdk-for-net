@@ -10,16 +10,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// The MachineLearningScheduleAction.
     /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+    /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
     /// </summary>
     public abstract partial class MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of MachineLearningScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleAction"/>. </summary>
         protected MachineLearningScheduleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
         internal MachineLearningScheduleAction(ScheduleActionType actionType)
         {

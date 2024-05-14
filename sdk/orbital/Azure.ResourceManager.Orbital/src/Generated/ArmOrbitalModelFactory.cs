@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmOrbitalModelFactory
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Orbital.OrbitalSpacecraftData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalSpacecraftData(id, name, resourceType, systemData, tags, location, etag, provisioningState, noradId, titleLine, tleLine1, tleLine2, links?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OrbitalSpacecraftLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalSpacecraftLink(name, centerFrequencyMHz, bandwidthMHz, direction, polarization, authorizations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AuthorizedGroundStation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthorizedGroundStation"/>. </summary>
         /// <param name="groundStationName"> Groundstation name. </param>
         /// <param name="expireOn"> Date of authorization expiration. </param>
         /// <returns> A new <see cref="Models.AuthorizedGroundStation"/> instance for mocking. </returns>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new AuthorizedGroundStation(groundStationName, expireOn);
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Orbital.OrbitalContactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalContactData(id, name, resourceType, systemData, etag, provisioningState, status, reservationStartOn, reservationEndOn, rxStartOn, rxEndOn, txStartOn, txEndOn, errorMessage, maximumElevationDegrees, startAzimuthDegrees, endAzimuthDegrees, groundStationName, startElevationDegrees, endElevationDegrees, antennaConfiguration, contactProfileId != null ? ResourceManagerModelFactory.WritableSubResource(contactProfileId) : null);
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactAntennaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OrbitalContactAntennaConfiguration"/>. </summary>
         /// <param name="destinationIP"> The destination IP a packet can be sent to. This would for example be the TCP endpoint you would send data to. </param>
         /// <param name="sourceIPs"> List of Source IP. </param>
         /// <returns> A new <see cref="Models.OrbitalContactAntennaConfiguration"/> instance for mocking. </returns>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalContactAntennaConfiguration(destinationIP, sourceIPs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OrbitalAvailableContactsResult"/>. </summary>
         /// <param name="values"> A list of available contacts. </param>
         /// <returns> A new <see cref="Models.OrbitalAvailableContactsResult"/> instance for mocking. </returns>
         public static OrbitalAvailableContactsResult OrbitalAvailableContactsResult(IEnumerable<OrbitalAvailableContact> values = null)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalAvailableContactsResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OrbitalAvailableContact"/>. </summary>
         /// <param name="spacecraftId"> The reference to the spacecraft resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="maximumElevationDegrees"> Maximum elevation of the antenna during the contact in decimal degrees. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalAvailableContact(spacecraftId != null ? ResourceManagerModelFactory.WritableSubResource(spacecraftId) : null, groundStationName, maximumElevationDegrees, txStartOn, txEndOn, rxStartOn, rxEndOn, startAzimuthDegrees, endAzimuthDegrees, startElevationDegrees, endElevationDegrees);
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Orbital.OrbitalContactProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalContactProfileData(id, name, resourceType, systemData, tags, location, etag, provisioningState, minimumViableContactDuration, minimumElevationDegrees, autoTrackingConfiguration, eventHubUri, networkSubnetId != null ? new ContactProfilesPropertiesNetworkConfiguration(networkSubnetId) : null, links?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AvailableGroundStationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Orbital.AvailableGroundStationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

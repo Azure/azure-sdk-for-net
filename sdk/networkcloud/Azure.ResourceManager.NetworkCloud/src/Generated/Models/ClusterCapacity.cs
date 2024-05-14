@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterCapacity represents various details regarding compute capacity. </summary>
     public partial class ClusterCapacity
     {
-        /// <summary> Initializes a new instance of ClusterCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCapacity"/>. </summary>
         internal ClusterCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCapacity"/>. </summary>
         /// <param name="availableApplianceStorageGB"> The remaining appliance-based storage in GB available for workload use. </param>
         /// <param name="availableCoreCount"> The remaining number of cores that are available in this cluster for workload use. </param>
         /// <param name="availableHostStorageGB"> The remaining machine or host-based storage in GB available for workload use. </param>

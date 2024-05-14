@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters body to pass for resource name availability check. </summary>
     public partial class RedisNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of RedisNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

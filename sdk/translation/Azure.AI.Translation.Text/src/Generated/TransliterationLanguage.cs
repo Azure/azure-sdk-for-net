@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Text
     /// </summary>
     public partial class TransliterationLanguage
     {
-        /// <summary> Initializes a new instance of TransliterationLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Text
             Scripts = scripts.ToList();
         }
 
-        /// <summary> Initializes a new instance of TransliterationLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>

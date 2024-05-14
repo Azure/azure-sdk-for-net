@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -92,11 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(AlwaysEncryptedSettings))
             {
@@ -115,7 +114,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -138,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<SqlAlwaysEncryptedProperties> alwaysEncryptedSettings = default;
             Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -260,11 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("alwaysEncryptedSettings"u8))

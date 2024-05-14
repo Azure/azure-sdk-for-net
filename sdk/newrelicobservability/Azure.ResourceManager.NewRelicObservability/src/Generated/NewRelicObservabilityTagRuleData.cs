@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// </summary>
     public partial class NewRelicObservabilityTagRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleData"/>. </summary>
         public NewRelicObservabilityTagRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

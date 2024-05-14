@@ -6,15 +6,183 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class CostManagementDimension
+    public partial class CostManagementDimension : IUtf8JsonSerializable, IJsonModel<CostManagementDimension>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CostManagementDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteStringValue(Sku);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsFilterEnabled))
+            {
+                writer.WritePropertyName("filterEnabled"u8);
+                writer.WriteBooleanValue(IsFilterEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsGroupingEnabled))
+            {
+                writer.WritePropertyName("groupingEnabled"u8);
+                writer.WriteBooleanValue(IsGroupingEnabled.Value);
+            }
+            if (Optional.IsCollectionDefined(Data))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in Data)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Total))
+            {
+                writer.WritePropertyName("total"u8);
+                writer.WriteNumberValue(Total.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageStart))
+            {
+                writer.WritePropertyName("usageStart"u8);
+                writer.WriteStringValue(UsageStart.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
+            {
+                writer.WritePropertyName("usageEnd"u8);
+                writer.WriteStringValue(UsageEnd.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CostManagementDimension IJsonModel<CostManagementDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCostManagementDimension(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<CostManagementDimension>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimension>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CostManagementDimension IPersistableModel<CostManagementDimension>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimension>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCostManagementDimension(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CostManagementDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

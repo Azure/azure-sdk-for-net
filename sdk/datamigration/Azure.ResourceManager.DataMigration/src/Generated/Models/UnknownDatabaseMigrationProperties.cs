@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The UnknownDatabaseMigrationProperties. </summary>
     internal partial class UnknownDatabaseMigrationProperties : DatabaseMigrationProperties
     {
-        /// <summary> Initializes a new instance of UnknownDatabaseMigrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDatabaseMigrationProperties"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -27,9 +28,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        internal UnknownDatabaseMigrationProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDatabaseMigrationProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDatabaseMigrationProperties"/> for deserialization. </summary>
+        internal UnknownDatabaseMigrationProperties()
+        {
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Generic backup copy. </summary>
     public partial class GenericRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericRecoveryPoint"/>. </summary>
         public GenericRecoveryPoint()
         {
             ObjectType = "GenericRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="friendlyName"> Friendly name of the backup copy. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. </param>

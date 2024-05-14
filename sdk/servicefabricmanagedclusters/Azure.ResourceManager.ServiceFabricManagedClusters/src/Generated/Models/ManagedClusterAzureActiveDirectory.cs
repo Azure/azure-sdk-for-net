@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The settings to enable AAD authentication on the cluster. </summary>
     public partial class ManagedClusterAzureActiveDirectory
     {
-        /// <summary> Initializes a new instance of ManagedClusterAzureActiveDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureActiveDirectory"/>. </summary>
         public ManagedClusterAzureActiveDirectory()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAzureActiveDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureActiveDirectory"/>. </summary>
         /// <param name="tenantId"> Azure active directory tenant id. </param>
         /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
         /// <param name="clientApplication"> Azure active directory client application id. </param>

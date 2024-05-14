@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> The secret access keys used for authenticating connections to redis. </summary>
     public partial class RedisEnterpriseDataAccessKeys
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseDataAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDataAccessKeys"/>. </summary>
         internal RedisEnterpriseDataAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseDataAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDataAccessKeys"/>. </summary>
         /// <param name="primaryKey"> The current primary key that clients can use to authenticate. </param>
         /// <param name="secondaryKey"> The current secondary key that clients can use to authenticate. </param>
         internal RedisEnterpriseDataAccessKeys(string primaryKey, string secondaryKey)

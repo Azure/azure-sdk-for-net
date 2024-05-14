@@ -1,8 +1,13 @@
 namespace Azure.ResourceManager.Blueprint
 {
-    public partial class ArtifactData : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ArtifactData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.ArtifactData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.ArtifactData>
     {
-        public ArtifactData() { }
+        protected ArtifactData() { }
+        Azure.ResourceManager.Blueprint.ArtifactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.ArtifactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.ArtifactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.ArtifactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.ArtifactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.ArtifactData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.ArtifactData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>, System.Collections.IEnumerable
     {
@@ -15,11 +20,13 @@ namespace Azure.ResourceManager.Blueprint
         public virtual Azure.Pageable<Azure.ResourceManager.Blueprint.AssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Blueprint.AssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource>> GetAsync(string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Blueprint.AssignmentResource> GetIfExists(string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Blueprint.AssignmentResource>> GetIfExistsAsync(string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Blueprint.AssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.AssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class AssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.AssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentData>
     {
         public AssignmentData(Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity identity, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterValue> parameters, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ResourceGroupValue> resourceGroups, Azure.Core.AzureLocation location) { }
         public string BlueprintId { get { throw null; } set { } }
@@ -33,6 +40,11 @@ namespace Azure.ResourceManager.Blueprint
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ResourceGroupValue> ResourceGroups { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public Azure.ResourceManager.Blueprint.Models.AssignmentStatus Status { get { throw null; } }
+        Azure.ResourceManager.Blueprint.AssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.AssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.AssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.AssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AssignmentOperationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.AssignmentOperationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.AssignmentOperationResource>, System.Collections.IEnumerable
     {
@@ -43,11 +55,13 @@ namespace Azure.ResourceManager.Blueprint
         public virtual Azure.Pageable<Azure.ResourceManager.Blueprint.AssignmentOperationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Blueprint.AssignmentOperationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.AssignmentOperationResource>> GetAsync(string assignmentOperationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Blueprint.AssignmentOperationResource> GetIfExists(string assignmentOperationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Blueprint.AssignmentOperationResource>> GetIfExistsAsync(string assignmentOperationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Blueprint.AssignmentOperationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.AssignmentOperationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.AssignmentOperationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.AssignmentOperationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AssignmentOperationData : Azure.ResourceManager.Models.ResourceData
+    public partial class AssignmentOperationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>
     {
         public AssignmentOperationData() { }
         public string AssignmentState { get { throw null; } set { } }
@@ -56,6 +70,11 @@ namespace Azure.ResourceManager.Blueprint
         public string TimeCreated { get { throw null; } set { } }
         public string TimeFinished { get { throw null; } set { } }
         public string TimeStarted { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.AssignmentOperationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.AssignmentOperationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.AssignmentOperationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AssignmentOperationResource : Azure.ResourceManager.ArmResource
     {
@@ -97,6 +116,8 @@ namespace Azure.ResourceManager.Blueprint
         public virtual Azure.Pageable<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>> GetAsync(string artifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> GetIfExists(string artifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>> GetIfExistsAsync(string artifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -126,11 +147,13 @@ namespace Azure.ResourceManager.Blueprint
         public virtual Azure.Pageable<Azure.ResourceManager.Blueprint.BlueprintResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Blueprint.BlueprintResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintResource>> GetAsync(string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Blueprint.BlueprintResource> GetIfExists(string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Blueprint.BlueprintResource>> GetIfExistsAsync(string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Blueprint.BlueprintResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.BlueprintResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.BlueprintResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.BlueprintResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BlueprintData : Azure.ResourceManager.Models.ResourceData
+    public partial class BlueprintData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.BlueprintData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.BlueprintData>
     {
         public BlueprintData() { }
         public string Description { get { throw null; } set { } }
@@ -141,6 +164,11 @@ namespace Azure.ResourceManager.Blueprint
         public Azure.ResourceManager.Blueprint.Models.BlueprintStatus Status { get { throw null; } }
         public Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope? TargetScope { get { throw null; } set { } }
         public System.BinaryData Versions { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.BlueprintData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.BlueprintData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.BlueprintData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.BlueprintData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.BlueprintData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.BlueprintData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.BlueprintData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class BlueprintExtensions
     {
@@ -188,6 +216,8 @@ namespace Azure.ResourceManager.Blueprint
         public virtual Azure.Pageable<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>> GetAsync(string artifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> GetIfExists(string artifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>> GetIfExistsAsync(string artifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -211,8 +241,10 @@ namespace Azure.ResourceManager.Blueprint
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Blueprint.PublishedBlueprintResource> Get(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.PublishedBlueprintResource>> GetAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Blueprint.PublishedBlueprintResource> GetIfExists(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Blueprint.PublishedBlueprintResource>> GetIfExistsAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PublishedBlueprintData : Azure.ResourceManager.Models.ResourceData
+    public partial class PublishedBlueprintData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>
     {
         public PublishedBlueprintData() { }
         public string BlueprintName { get { throw null; } set { } }
@@ -223,6 +255,11 @@ namespace Azure.ResourceManager.Blueprint
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition> ResourceGroups { get { throw null; } }
         public Azure.ResourceManager.Blueprint.Models.BlueprintStatus Status { get { throw null; } }
         public Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope? TargetScope { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.PublishedBlueprintData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.PublishedBlueprintData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.PublishedBlueprintData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PublishedBlueprintResource : Azure.ResourceManager.ArmResource
     {
@@ -242,13 +279,32 @@ namespace Azure.ResourceManager.Blueprint
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.PublishedBlueprintResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Blueprint.PublishedBlueprintData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Blueprint.Mocking
+{
+    public partial class MockableBlueprintArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableBlueprintArmClient() { }
+        public virtual Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource> GetAssignment(Azure.Core.ResourceIdentifier scope, string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource>> GetAssignmentAsync(Azure.Core.ResourceIdentifier scope, string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentOperationResource GetAssignmentOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentResource GetAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.AssignmentCollection GetAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Blueprint.BlueprintResource> GetBlueprint(Azure.Core.ResourceIdentifier scope, string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintArtifactResource GetBlueprintArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintResource>> GetBlueprintAsync(Azure.Core.ResourceIdentifier scope, string blueprintName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintResource GetBlueprintResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintCollection GetBlueprints(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource GetBlueprintVersionArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Blueprint.PublishedBlueprintResource GetPublishedBlueprintResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Blueprint.Models
 {
     public static partial class ArmBlueprintModelFactory
     {
         public static Azure.ResourceManager.Blueprint.ArtifactData ArtifactData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = "Unknown") { throw null; }
         public static Azure.ResourceManager.Blueprint.AssignmentData AssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity identity = null, string displayName = null, string description = null, string blueprintId = null, string scope = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterValue> parameters = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ResourceGroupValue> resourceGroups = null, Azure.ResourceManager.Blueprint.Models.AssignmentStatus status = null, Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings locks = null, Azure.ResourceManager.Blueprint.Models.AssignmentProvisioningState? provisioningState = default(Azure.ResourceManager.Blueprint.Models.AssignmentProvisioningState?), Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation)) { throw null; }
-        public static Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResource AssignmentJobCreatedResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> properties = null) { throw null; }
+        public static Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult AssignmentJobCreatedResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> properties = null) { throw null; }
         public static Azure.ResourceManager.Blueprint.AssignmentOperationData AssignmentOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string blueprintVersion = null, string assignmentState = null, string timeCreated = null, string timeStarted = null, string timeFinished = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob> deployments = null) { throw null; }
         public static Azure.ResourceManager.Blueprint.Models.AssignmentStatus AssignmentStatus(System.DateTimeOffset? timeCreated = default(System.DateTimeOffset?), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> managedResources = null) { throw null; }
         public static Azure.ResourceManager.Blueprint.BlueprintData BlueprintData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, Azure.ResourceManager.Blueprint.Models.BlueprintStatus status = null, Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope? targetScope = default(Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterDefinition> parameters = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition> resourceGroups = null, System.BinaryData versions = null, System.BinaryData layout = null) { throw null; }
@@ -278,7 +334,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator !=(Azure.ResourceManager.Blueprint.Models.AssignmentDeleteBehavior left, Azure.ResourceManager.Blueprint.Models.AssignmentDeleteBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssignmentDeploymentJob
+    public partial class AssignmentDeploymentJob : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>
     {
         public AssignmentDeploymentJob() { }
         public string Action { get { throw null; } set { } }
@@ -288,17 +344,32 @@ namespace Azure.ResourceManager.Blueprint.Models
         public string Kind { get { throw null; } set { } }
         public System.Uri RequestUri { get { throw null; } set { } }
         public Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult Result { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AssignmentDeploymentJobResult
+    public partial class AssignmentDeploymentJobResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>
     {
         public AssignmentDeploymentJobResult() { }
         public Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError Error { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResource> Resources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult> Resources { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentDeploymentJobResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AssignmentJobCreatedResource : Azure.ResourceManager.Models.ResourceData
+    public partial class AssignmentJobCreatedResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>
     {
-        public AssignmentJobCreatedResource() { }
+        public AssignmentJobCreatedResult() { }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentJobCreatedResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssignmentLockMode : System.IEquatable<Azure.ResourceManager.Blueprint.Models.AssignmentLockMode>
@@ -319,12 +390,17 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator !=(Azure.ResourceManager.Blueprint.Models.AssignmentLockMode left, Azure.ResourceManager.Blueprint.Models.AssignmentLockMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssignmentLockSettings
+    public partial class AssignmentLockSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>
     {
         public AssignmentLockSettings() { }
         public System.Collections.Generic.IList<string> ExcludedActions { get { throw null; } }
         public System.Collections.Generic.IList<string> ExcludedPrincipals { get { throw null; } }
         public Azure.ResourceManager.Blueprint.Models.AssignmentLockMode? Mode { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentLockSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssignmentProvisioningState : System.IEquatable<Azure.ResourceManager.Blueprint.Models.AssignmentProvisioningState>
@@ -352,26 +428,46 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator !=(Azure.ResourceManager.Blueprint.Models.AssignmentProvisioningState left, Azure.ResourceManager.Blueprint.Models.AssignmentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssignmentStatus : Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase
+    public partial class AssignmentStatus : Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>
     {
         internal AssignmentStatus() { }
         public System.Collections.Generic.IReadOnlyList<string> ManagedResources { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.AssignmentStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.AssignmentStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AssignmentStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureResourceManagerError
+    public partial class AzureResourceManagerError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>
     {
         public AzureResourceManagerError() { }
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.AzureResourceManagerError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlueprintResourceStatusBase
+    public partial class BlueprintResourceStatusBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>
     {
         internal BlueprintResourceStatusBase() { }
         public System.DateTimeOffset? LastModified { get { throw null; } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlueprintStatus : Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase
+    public partial class BlueprintStatus : Azure.ResourceManager.Blueprint.Models.BlueprintResourceStatusBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>
     {
         internal BlueprintStatus() { }
+        Azure.ResourceManager.Blueprint.Models.BlueprintStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.BlueprintStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.BlueprintStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlueprintTargetScope : System.IEquatable<Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope>
@@ -391,13 +487,18 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator !=(Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope left, Azure.ResourceManager.Blueprint.Models.BlueprintTargetScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedServiceIdentity
+    public partial class ManagedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>
     {
         public ManagedServiceIdentity(Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentityType identityType) { }
         public Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentityType IdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentityType>
@@ -418,7 +519,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator !=(Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ParameterDefinition
+    public partial class ParameterDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>
     {
         public ParameterDefinition(Azure.ResourceManager.Blueprint.Models.TemplateParameterType templateParameterType) { }
         public System.Collections.Generic.IList<System.BinaryData> AllowedValues { get { throw null; } }
@@ -427,14 +528,24 @@ namespace Azure.ResourceManager.Blueprint.Models
         public string DisplayName { get { throw null; } set { } }
         public string StrongType { get { throw null; } set { } }
         public Azure.ResourceManager.Blueprint.Models.TemplateParameterType TemplateParameterType { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.ParameterDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.ParameterDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ParameterValue
+    public partial class ParameterValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>
     {
         public ParameterValue() { }
         public Azure.ResourceManager.Blueprint.Models.SecretValueReference Reference { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.ParameterValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.ParameterValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ParameterValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyAssignmentArtifact : Azure.ResourceManager.Blueprint.ArtifactData
+    public partial class PolicyAssignmentArtifact : Azure.ResourceManager.Blueprint.ArtifactData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>
     {
         public PolicyAssignmentArtifact(string policyDefinitionId, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterValue> parameters) { }
         public System.Collections.Generic.IList<string> DependsOn { get { throw null; } }
@@ -443,8 +554,13 @@ namespace Azure.ResourceManager.Blueprint.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.PolicyAssignmentArtifact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceGroupDefinition
+    public partial class ResourceGroupDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>
     {
         public ResourceGroupDefinition() { }
         public System.Collections.Generic.IList<string> DependsOn { get { throw null; } }
@@ -454,14 +570,24 @@ namespace Azure.ResourceManager.Blueprint.Models
         public string Name { get { throw null; } set { } }
         public string StrongType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceGroupValue
+    public partial class ResourceGroupValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>
     {
         public ResourceGroupValue() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.ResourceGroupValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.ResourceGroupValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.ResourceGroupValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RoleAssignmentArtifact : Azure.ResourceManager.Blueprint.ArtifactData
+    public partial class RoleAssignmentArtifact : Azure.ResourceManager.Blueprint.ArtifactData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>
     {
         public RoleAssignmentArtifact(string roleDefinitionId, System.BinaryData principalIds) { }
         public System.Collections.Generic.IList<string> DependsOn { get { throw null; } }
@@ -470,15 +596,25 @@ namespace Azure.ResourceManager.Blueprint.Models
         public System.BinaryData PrincipalIds { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.RoleAssignmentArtifact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecretValueReference
+    public partial class SecretValueReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>
     {
         public SecretValueReference(Azure.ResourceManager.Resources.Models.WritableSubResource keyVault, string secretName) { }
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.SecretValueReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.SecretValueReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.SecretValueReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TemplateArtifact : Azure.ResourceManager.Blueprint.ArtifactData
+    public partial class TemplateArtifact : Azure.ResourceManager.Blueprint.ArtifactData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>
     {
         public TemplateArtifact(System.BinaryData template, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterValue> parameters) { }
         public System.Collections.Generic.IList<string> DependsOn { get { throw null; } }
@@ -487,6 +623,11 @@ namespace Azure.ResourceManager.Blueprint.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Blueprint.Models.ParameterValue> Parameters { get { throw null; } }
         public string ResourceGroup { get { throw null; } set { } }
         public System.BinaryData Template { get { throw null; } set { } }
+        Azure.ResourceManager.Blueprint.Models.TemplateArtifact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.TemplateArtifact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.TemplateArtifact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TemplateParameterType : System.IEquatable<Azure.ResourceManager.Blueprint.Models.TemplateParameterType>
@@ -511,9 +652,14 @@ namespace Azure.ResourceManager.Blueprint.Models
         public static bool operator !=(Azure.ResourceManager.Blueprint.Models.TemplateParameterType left, Azure.ResourceManager.Blueprint.Models.TemplateParameterType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WhoIsBlueprintContract
+    public partial class WhoIsBlueprintContract : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>
     {
         internal WhoIsBlueprintContract() { }
         public string ObjectId { get { throw null; } }
+        Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Blueprint.Models.WhoIsBlueprintContract>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -10,9 +10,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Reverse replication input properties. </summary>
     public partial class ReverseReplicationProperties
     {
-        /// <summary> Initializes a new instance of ReverseReplicationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationProperties"/>. </summary>
         public ReverseReplicationProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReverseReplicationProperties"/>. </summary>
+        /// <param name="failoverDirection"> Failover direction. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific reverse replication input.
+        /// Please note <see cref="ReverseReplicationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AReprotectContent"/>, <see cref="HyperVReplicaAzureReprotectContent"/>, <see cref="InMageReprotectContent"/>, <see cref="InMageAzureV2ReprotectContent"/>, <see cref="InMageRcmReprotectContent"/> and <see cref="InMageRcmFailbackReprotectContent"/>.
+        /// </param>
+        internal ReverseReplicationProperties(string failoverDirection, ReverseReplicationProviderSpecificContent providerSpecificDetails)
+        {
+            FailoverDirection = failoverDirection;
+            ProviderSpecificDetails = providerSpecificDetails;
         }
 
         /// <summary> Failover direction. </summary>

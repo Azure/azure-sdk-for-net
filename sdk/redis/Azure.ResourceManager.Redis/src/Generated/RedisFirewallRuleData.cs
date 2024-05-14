@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Redis
             EndIP = endIP;
         }
 
-        /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

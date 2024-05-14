@@ -106,6 +106,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.TokenBodyParameters.Count, getResponse.Body.TokenBodyParameters.Count);
                     Assert.True(getResponse.Body.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
 
+                    // check default values for UseInTestConsole and UseInApiDocumentation
+                    Assert.True(getResponse.Body.UseInTestConsole);
+                    Assert.False(getResponse.Body.UseInApiDocumentation);
+
+
                     var secretsResponse = await testBase.client.AuthorizationServer.ListSecretsAsync(
                         testBase.rgName,
                         testBase.serviceName,
@@ -127,7 +132,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // update                    
                     var updateParameters = new AuthorizationServerUpdateContract
                     {
-                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword }
+                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword },
+                        UseInApiDocumentation = true,
+                        UseInTestConsole = false
                     };
 
                     testBase.client.AuthorizationServer.Update(
@@ -167,6 +174,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(authorizationServerContract.SupportState, getResponse.Body.SupportState);
                     Assert.Equal(authorizationServerContract.TokenBodyParameters.Count, getResponse.Body.TokenBodyParameters.Count);
                     Assert.True(getResponse.Body.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
+                    Assert.False(getResponse.Body.UseInTestConsole);
+                    Assert.True(getResponse.Body.UseInApiDocumentation);
 
                     // delete
                     testBase.client.AuthorizationServer.Delete(

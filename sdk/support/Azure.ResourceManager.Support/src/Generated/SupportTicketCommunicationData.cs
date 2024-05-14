@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketCommunicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
         public SupportTicketCommunicationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

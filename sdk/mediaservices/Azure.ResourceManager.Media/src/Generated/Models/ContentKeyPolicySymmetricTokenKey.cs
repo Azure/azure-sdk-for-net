@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies a symmetric key for token validation. </summary>
     public partial class ContentKeyPolicySymmetricTokenKey : ContentKeyPolicyRestrictionTokenKey
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicySymmetricTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicySymmetricTokenKey"/>. </summary>
         /// <param name="keyValue"> The key value of the key. </param>
         public ContentKeyPolicySymmetricTokenKey(byte[] keyValue)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicySymmetricTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicySymmetricTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="keyValue"> The key value of the key. </param>
         internal ContentKeyPolicySymmetricTokenKey(string odataType, byte[] keyValue) : base(odataType)

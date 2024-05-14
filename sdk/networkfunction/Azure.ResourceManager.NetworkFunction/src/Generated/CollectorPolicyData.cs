@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.NetworkFunction
     /// </summary>
     public partial class CollectorPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CollectorPolicyData(AzureLocation location) : base(location)
         {
             EmissionPolicies = new ChangeTrackingList<EmissionPoliciesPropertiesFormat>();
         }
 
-        /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

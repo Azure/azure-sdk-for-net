@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The properties of the registration assignment. </summary>
     public partial class ManagedServicesRegistrationAssignmentProperties
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentProperties"/>. </summary>
         /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             RegistrationId = registrationId;
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentProperties"/>. </summary>
         /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <param name="provisioningState"> The current provisioning state of the registration assignment. </param>
         /// <param name="registrationDefinition"> The registration definition associated with the registration assignment. </param>

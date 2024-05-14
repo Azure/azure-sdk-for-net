@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageCacheResource" /> and their operations.
-    /// Each <see cref="StorageCacheResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="StorageCacheCollection" /> instance call the GetStorageCaches method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="StorageCacheResource"/> and their operations.
+    /// Each <see cref="StorageCacheResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="StorageCacheCollection"/> instance call the GetStorageCaches method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class StorageCacheCollection : ArmCollection, IEnumerable<StorageCacheResource>, IAsyncEnumerable<StorageCacheResource>
     {
@@ -63,6 +64,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +114,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +163,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,15 +253,23 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheCachesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheCachesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,15 +283,23 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheCachesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheCachesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheResource(Client, StorageCacheData.DeserializeStorageCacheData(e)), _storageCacheCachesClientDiagnostics, Pipeline, "StorageCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,6 +312,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +356,14 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
@@ -315,6 +380,96 @@ namespace Azure.ResourceManager.StorageCache
             {
                 var response = _storageCacheCachesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cacheName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StorageCacheResource>> GetIfExistsAsync(string cacheName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+
+            using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _storageCacheCachesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cacheName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageCacheResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageCacheResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
+        public virtual NullableResponse<StorageCacheResource> GetIfExists(string cacheName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+
+            using var scope = _storageCacheCachesClientDiagnostics.CreateScope("StorageCacheCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _storageCacheCachesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cacheName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StorageCacheResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageCacheResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

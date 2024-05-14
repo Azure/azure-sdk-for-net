@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedInstanceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ManagedInstancePecProperty>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
-        /// <param name="dnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
+        /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
         /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
         /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
         /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="servicePrincipal"> The managed instance's service principal. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
             StorageSizeInGB = storageSizeInGB;
             Collation = collation;
             DnsZone = dnsZone;
-            DnsZonePartner = dnsZonePartner;
+            ManagedDnsZonePartner = managedDnsZonePartner;
             IsPublicDataEndpointEnabled = isPublicDataEndpointEnabled;
             SourceManagedInstanceId = sourceManagedInstanceId;
             RestorePointInTime = restorePointInTime;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The Dns Zone that the managed instance is in. </summary>
         public string DnsZone { get; }
         /// <summary> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </summary>
-        public string DnsZonePartner { get; set; }
+        public ResourceIdentifier ManagedDnsZonePartner { get; set; }
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         public bool? IsPublicDataEndpointEnabled { get; set; }
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>

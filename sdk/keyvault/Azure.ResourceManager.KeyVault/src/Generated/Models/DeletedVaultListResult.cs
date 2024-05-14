@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of vaults. </summary>
     internal partial class DeletedVaultListResult
     {
-        /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultListResult"/>. </summary>
         internal DeletedVaultListResult()
         {
             Value = new ChangeTrackingList<DeletedKeyVaultData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultListResult"/>. </summary>
         /// <param name="value"> The list of deleted vaults. </param>
         /// <param name="nextLink"> The URL to get the next set of deleted vaults. </param>
         internal DeletedVaultListResult(IReadOnlyList<DeletedKeyVaultData> value, string nextLink)

@@ -13,9 +13,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the GlobalRulestackResource. </summary>
     public partial class GlobalRulestackPatch
     {
-        /// <summary> Initializes a new instance of GlobalRulestackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPatch"/>. </summary>
         public GlobalRulestackPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPatch"/>. </summary>
+        /// <param name="location"> Global Location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="properties"> The updatable properties of the GlobalRulestackResource. </param>
+        internal GlobalRulestackPatch(AzureLocation? location, ManagedServiceIdentity identity, GlobalRulestackUpdateProperties properties)
+        {
+            Location = location;
+            Identity = identity;
+            Properties = properties;
         }
 
         /// <summary> Global Location. </summary>

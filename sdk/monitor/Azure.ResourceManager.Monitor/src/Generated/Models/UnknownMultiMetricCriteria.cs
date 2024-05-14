@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The UnknownMultiMetricCriteria. </summary>
     internal partial class UnknownMultiMetricCriteria : MultiMetricCriteria
     {
-        /// <summary> Initializes a new instance of UnknownMultiMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>

@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AgentPoolList represents a list of Kubernetes cluster agent pools. </summary>
     internal partial class AgentPoolList
     {
-        /// <summary> Initializes a new instance of AgentPoolList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolList"/>. </summary>
         internal AgentPoolList()
         {
-            Value = new ChangeTrackingList<AgentPoolData>();
+            Value = new ChangeTrackingList<NetworkCloudAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of agent pools. </param>
-        internal AgentPoolList(string nextLink, IReadOnlyList<AgentPoolData> value)
+        internal AgentPoolList(string nextLink, IReadOnlyList<NetworkCloudAgentPoolData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of agent pools. </summary>
-        public IReadOnlyList<AgentPoolData> Value { get; }
+        public IReadOnlyList<NetworkCloudAgentPoolData> Value { get; }
     }
 }

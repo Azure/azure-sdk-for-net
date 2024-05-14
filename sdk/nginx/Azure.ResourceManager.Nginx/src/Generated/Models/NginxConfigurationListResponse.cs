@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class NginxConfigurationListResponse
     {
-        /// <summary> Initializes a new instance of NginxConfigurationListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationListResponse"/>. </summary>
         internal NginxConfigurationListResponse()
         {
             Value = new ChangeTrackingList<NginxConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         internal NginxConfigurationListResponse(IReadOnlyList<NginxConfigurationData> value, string nextLink)

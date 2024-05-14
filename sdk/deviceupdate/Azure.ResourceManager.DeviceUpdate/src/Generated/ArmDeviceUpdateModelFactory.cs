@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDeviceUpdateModelFactory
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DeviceUpdateNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DeviceUpdateNameAvailabilityResult DeviceUpdateNameAvailabilityResult(bool? isNameAvailable = null, DeviceUpdateNameUnavailableReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new DeviceUpdateNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdateAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,18 +40,19 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the account. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
         /// <param name="sku"> Device Update Sku. </param>
+        /// <param name="encryption"> CMK encryption at rest properties. </param>
         /// <param name="locations"> Device Update account primary and failover location details. </param>
         /// <returns> A new <see cref="DeviceUpdate.DeviceUpdateAccountData"/> instance for mocking. </returns>
-        public static DeviceUpdateAccountData DeviceUpdateAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, string hostName = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = null, DeviceUpdateSku? sku = null, IEnumerable<DeviceUpdateAccountLocationDetail> locations = null)
+        public static DeviceUpdateAccountData DeviceUpdateAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, DeviceUpdateProvisioningState? provisioningState = null, string hostName = null, DeviceUpdatePublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = null, DeviceUpdateSku? sku = null, DeviceUpdateEncryption encryption = null, IEnumerable<DeviceUpdateAccountLocationDetail> locations = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<DeviceUpdatePrivateEndpointConnectionData>();
             locations ??= new List<DeviceUpdateAccountLocationDetail>();
 
-            return new DeviceUpdateAccountData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, publicNetworkAccess, privateEndpointConnections?.ToList(), sku, locations?.ToList());
+            return new DeviceUpdateAccountData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, publicNetworkAccess, privateEndpointConnections?.ToList(), sku, encryption, locations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,19 +66,19 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
             groupIds ??= new List<string>();
 
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState);
+            return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountLocationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateAccountLocationDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="role"> Whether the location is primary or failover. </param>
         /// <returns> A new <see cref="Models.DeviceUpdateAccountLocationDetail"/> instance for mocking. </returns>
         public static DeviceUpdateAccountLocationDetail DeviceUpdateAccountLocationDetail(string name = null, DeviceUpdateAccountLocationRole? role = null)
         {
-            return new DeviceUpdateAccountLocationDetail(name, role);
+            return new DeviceUpdateAccountLocationDetail(name, role, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdateInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,15 +91,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="enableDiagnostics"> Enables or Disables the diagnostic logs collection. </param>
         /// <param name="diagnosticStorageProperties"> Customer-initiated diagnostic log collection storage properties. </param>
         /// <returns> A new <see cref="DeviceUpdate.DeviceUpdateInstanceData"/> instance for mocking. </returns>
-        public static DeviceUpdateInstanceData DeviceUpdateInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, string accountName = null, IEnumerable<IotHubSettings> iotHubs = null, bool? enableDiagnostics = null, DiagnosticStorageProperties diagnosticStorageProperties = null)
+        public static DeviceUpdateInstanceData DeviceUpdateInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DeviceUpdateProvisioningState? provisioningState = null, string accountName = null, IEnumerable<DeviceUpdateIotHubSettings> iotHubs = null, bool? enableDiagnostics = null, DiagnosticStorageProperties diagnosticStorageProperties = null)
         {
             tags ??= new Dictionary<string, string>();
-            iotHubs ??= new List<IotHubSettings>();
+            iotHubs ??= new List<DeviceUpdateIotHubSettings>();
 
-            return new DeviceUpdateInstanceData(id, name, resourceType, systemData, tags, location, provisioningState, accountName, iotHubs?.ToList(), enableDiagnostics, diagnosticStorageProperties);
+            return new DeviceUpdateInstanceData(id, name, resourceType, systemData, tags, location, provisioningState, accountName, iotHubs?.ToList(), enableDiagnostics, diagnosticStorageProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -107,16 +108,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="provisioningState"> The provisioning state of private link group ID. </param>
-        /// <returns> A new <see cref="DeviceUpdate.PrivateLinkData"/> instance for mocking. </returns>
-        public static PrivateLinkData PrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, GroupIdProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="DeviceUpdate.DeviceUpdatePrivateLinkData"/> instance for mocking. </returns>
+        public static DeviceUpdatePrivateLinkData DeviceUpdatePrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, DeviceUpdatePrivateLinkProvisioningState? provisioningState = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new PrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState);
+            return new DeviceUpdatePrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -125,13 +126,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="eTag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
         /// <param name="status"> Operation status. </param>
-        /// <returns> A new <see cref="DeviceUpdate.PrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProxyData PrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string eTag = null, RemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
+        /// <returns> A new <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
+        public static DeviceUpdatePrivateEndpointConnectionProxyData DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string eTag = null, DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
         {
-            return new PrivateEndpointConnectionProxyData(id, name, resourceType, systemData, provisioningState, eTag, remotePrivateEndpoint, status);
+            return new DeviceUpdatePrivateEndpointConnectionProxyData(id, name, resourceType, systemData, provisioningState, eTag, remotePrivateEndpoint, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GroupConnectivityInformation"/>. </summary>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
         /// <param name="customerVisibleFqdns"> List of customer visible FQDNs. </param>
@@ -139,23 +140,23 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="redirectMapId"> Redirect map ID. </param>
         /// <param name="privateLinkServiceArmRegion"> PrivateLinkService ARM region. </param>
         /// <returns> A new <see cref="Models.GroupConnectivityInformation"/> instance for mocking. </returns>
-        public static GroupConnectivityInformation GroupConnectivityInformation(string groupId = null, string memberName = null, IEnumerable<string> customerVisibleFqdns = null, string internalFqdn = null, string redirectMapId = null, string privateLinkServiceArmRegion = null)
+        public static GroupConnectivityInformation GroupConnectivityInformation(string groupId = null, string memberName = null, IEnumerable<string> customerVisibleFqdns = null, string internalFqdn = null, string redirectMapId = null, AzureLocation? privateLinkServiceArmRegion = null)
         {
             customerVisibleFqdns ??= new List<string>();
 
-            return new GroupConnectivityInformation(groupId, memberName, customerVisibleFqdns?.ToList(), internalFqdn, redirectMapId, privateLinkServiceArmRegion);
+            return new GroupConnectivityInformation(groupId, memberName, customerVisibleFqdns?.ToList(), internalFqdn, redirectMapId, privateLinkServiceArmRegion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/>. </summary>
         /// <param name="id"> Connection details ID. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="linkIdentifier"> Link ID. </param>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
-        /// <returns> A new <see cref="Models.ConnectionDetails"/> instance for mocking. </returns>
-        public static ConnectionDetails ConnectionDetails(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
+        /// <returns> A new <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/> instance for mocking. </returns>
+        public static DeviceUpdatePrivateEndpointConnectionDetails DeviceUpdatePrivateEndpointConnectionDetails(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
         {
-            return new ConnectionDetails(id, privateIPAddress, linkIdentifier, groupId, memberName);
+            return new DeviceUpdatePrivateEndpointConnectionDetails(id, privateIPAddress, linkIdentifier, groupId, memberName, serializedAdditionalRawData: null);
         }
     }
 }

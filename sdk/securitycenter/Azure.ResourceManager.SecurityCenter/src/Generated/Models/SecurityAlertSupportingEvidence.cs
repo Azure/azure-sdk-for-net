@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
     public partial class SecurityAlertSupportingEvidence
     {
-        /// <summary> Initializes a new instance of SecurityAlertSupportingEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSupportingEvidence"/>. </summary>
         public SecurityAlertSupportingEvidence()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertSupportingEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSupportingEvidence"/>. </summary>
         /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityAlertSupportingEvidence(string securityAlertSupportingEvidenceType, IDictionary<string, BinaryData> additionalProperties)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

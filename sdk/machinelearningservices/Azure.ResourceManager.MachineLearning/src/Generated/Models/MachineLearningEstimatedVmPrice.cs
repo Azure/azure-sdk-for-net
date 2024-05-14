@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The estimated price info for using a VM of a particular OS type, tier, etc. </summary>
     public partial class MachineLearningEstimatedVmPrice
     {
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrice. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrice"/>. </summary>
         /// <param name="retailPrice"> The price charged for using the VM. </param>
         /// <param name="osType"> Operating system type used by the VM. </param>
         /// <param name="vmTier"> The type of the VM. </param>

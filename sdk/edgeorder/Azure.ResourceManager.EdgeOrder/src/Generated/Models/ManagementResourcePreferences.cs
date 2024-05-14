@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Management resource preference to link device. </summary>
     internal partial class ManagementResourcePreferences
     {
-        /// <summary> Initializes a new instance of ManagementResourcePreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementResourcePreferences"/>. </summary>
         public ManagementResourcePreferences()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementResourcePreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementResourcePreferences"/>. </summary>
         /// <param name="preferredManagementResourceId"> Customer preferred Management resource ARM ID. </param>
         internal ManagementResourcePreferences(string preferredManagementResourceId)
         {

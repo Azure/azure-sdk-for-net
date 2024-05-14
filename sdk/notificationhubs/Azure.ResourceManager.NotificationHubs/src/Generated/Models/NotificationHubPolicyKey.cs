@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Namespace/NotificationHub Regenerate Keys. </summary>
     public partial class NotificationHubPolicyKey
     {
-        /// <summary> Initializes a new instance of NotificationHubPolicyKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
         public NotificationHubPolicyKey()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
+        /// <param name="policyKey"> Name of the key that has to be regenerated for the Namespace/Notification Hub Authorization Rule. The value can be Primary Key/Secondary Key. </param>
+        internal NotificationHubPolicyKey(string policyKey)
+        {
+            PolicyKey = policyKey;
         }
 
         /// <summary> Name of the key that has to be regenerated for the Namespace/Notification Hub Authorization Rule. The value can be Primary Key/Secondary Key. </summary>

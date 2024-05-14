@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Input of the custom domain to be validated for DNS mapping. </summary>
     public partial class FrontDoorValidateCustomDomainContent
     {
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/>. </summary>
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public FrontDoorValidateCustomDomainContent(string hostName)

@@ -99,7 +99,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Translator);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Translator.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Translator))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(EnableStaging))
@@ -156,7 +159,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -175,7 +181,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -197,7 +206,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -212,14 +224,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<DatasetReference>> inputs = default;
             Optional<IList<DatasetReference>> outputs = default;
             Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkA> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
+            Optional<PipelineActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             CopyActivitySource source = default;
             CopySink sink = default;
             Optional<BinaryData> translator = default;
@@ -230,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<bool>> enableSkipIncompatibleRow = default;
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
             Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<LogSettings> logSettings = default;
+            Optional<DataFactoryLogSettings> logSettings = default;
             Optional<IList<BinaryData>> preserveRules = default;
             Optional<IList<BinaryData>> preserve = default;
             Optional<DataFactoryElement<bool>> validateDataConsistency = default;
@@ -282,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -306,7 +318,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    state = new ActivityState(property.Value.GetString());
+                    state = new PipelineActivityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onInactiveMarkAs"u8))
@@ -315,7 +327,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    onInactiveMarkAs = new ActivityOnInactiveMarkA(property.Value.GetString());
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependsOn"u8))
@@ -324,10 +336,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -338,10 +350,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -443,7 +455,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logSettings = LogSettings.DeserializeLogSettings(property0.Value);
+                            logSettings = DataFactoryLogSettings.DeserializeDataFactoryLogSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("preserveRules"u8))

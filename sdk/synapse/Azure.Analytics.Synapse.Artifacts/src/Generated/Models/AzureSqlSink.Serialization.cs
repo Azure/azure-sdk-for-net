@@ -34,16 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("preCopyScript"u8);
                 writer.WriteObjectValue(PreCopyScript);
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParameters))
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in StoredProcedureParameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(StoredProcedureParameters);
             }
             if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
@@ -99,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> sqlWriterStoredProcedureName = default;
             Optional<object> sqlWriterTableType = default;
             Optional<object> preCopyScript = default;
-            Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
+            Optional<object> storedProcedureParameters = default;
             Optional<object> storedProcedureTableTypeParameterName = default;
             Optional<object> tableOption = default;
             string type = default;
@@ -145,12 +139,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    Dictionary<string, StoredProcedureParameter> dictionary = new Dictionary<string, StoredProcedureParameter>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, StoredProcedureParameter.DeserializeStoredProcedureParameter(property0.Value));
-                    }
-                    storedProcedureParameters = dictionary;
+                    storedProcedureParameters = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("storedProcedureTableTypeParameterName"u8))
@@ -224,7 +213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, Optional.ToDictionary(storedProcedureParameters), storedProcedureTableTypeParameterName.Value, tableOption.Value);
+            return new AzureSqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, storedProcedureParameters.Value, storedProcedureTableTypeParameterName.Value, tableOption.Value);
         }
 
         internal partial class AzureSqlSinkConverter : JsonConverter<AzureSqlSink>

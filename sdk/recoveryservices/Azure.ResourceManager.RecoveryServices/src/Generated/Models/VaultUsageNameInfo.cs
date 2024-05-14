@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> The name of usage. </summary>
     public partial class VaultUsageNameInfo
     {
-        /// <summary> Initializes a new instance of VaultUsageNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageNameInfo"/>. </summary>
         internal VaultUsageNameInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultUsageNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageNameInfo"/>. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
         internal VaultUsageNameInfo(string value, string localizedValue)

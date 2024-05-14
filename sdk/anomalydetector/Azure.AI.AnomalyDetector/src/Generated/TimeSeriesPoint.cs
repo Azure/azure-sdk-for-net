@@ -12,14 +12,14 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Definition of input time series points. </summary>
     public partial class TimeSeriesPoint
     {
-        /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesPoint"/>. </summary>
         /// <param name="value"> Measurement of that point. </param>
         public TimeSeriesPoint(float value)
         {
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesPoint"/>. </summary>
         /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
         /// <param name="value"> Measurement of that point. </param>
         internal TimeSeriesPoint(DateTimeOffset? timestamp, float value)

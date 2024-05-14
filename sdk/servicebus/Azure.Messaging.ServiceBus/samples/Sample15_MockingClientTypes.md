@@ -5,6 +5,8 @@ The Service Bus client library is built to support unit testing with mocks, as d
 
 The following examples focus on scenarios likely to occur in applications, and demonstrate how to mock the Service Bus types typically used in each scenario. The code snippets utilize the mock object framework, Moq, in order to provide practical examples. However, many mocking frameworks exist and can be used with the same approach in mind.
 
+For more general information and examples on mocking with the Azure SDK, please see [Unit testing and mocking with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking).
+
 ## Table of contents
 
 - **Sending and receiving messages**

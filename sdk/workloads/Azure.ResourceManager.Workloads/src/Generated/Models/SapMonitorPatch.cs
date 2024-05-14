@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the request body for updating SAP monitor resource. </summary>
     public partial class SapMonitorPatch
     {
-        /// <summary> Initializes a new instance of SapMonitorPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorPatch"/>. </summary>
         public SapMonitorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapMonitorPatch"/>. </summary>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="identity"> [currently not in use] Managed service identity(user assigned identities). </param>
+        internal SapMonitorPatch(IDictionary<string, string> tags, UserAssignedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

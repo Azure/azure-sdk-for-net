@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            IDictionary<string, DataFactoryGlobalParameterSpecification> properties = default;
+            IDictionary<string, DataFactoryGlobalParameterProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    Dictionary<string, DataFactoryGlobalParameterSpecification> dictionary = new Dictionary<string, DataFactoryGlobalParameterSpecification>();
+                    Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataFactoryGlobalParameterSpecification.DeserializeDataFactoryGlobalParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property0.Value));
                     }
                     properties = dictionary;
                     continue;

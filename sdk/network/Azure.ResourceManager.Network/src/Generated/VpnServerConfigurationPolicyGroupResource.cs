@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VpnServerConfigurationPolicyGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VpnServerConfigurationPolicyGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVpnServerConfigurationPolicyGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VpnServerConfigurationResource" /> using the GetVpnServerConfigurationPolicyGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VpnServerConfigurationPolicyGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVpnServerConfigurationPolicyGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VpnServerConfigurationResource"/> using the GetVpnServerConfigurationPolicyGroup method.
     /// </summary>
     public partial class VpnServerConfigurationPolicyGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VpnServerConfigurationPolicyGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vpnServerConfigurationName"> The vpnServerConfigurationName. </param>
+        /// <param name="configurationPolicyGroupName"> The configurationPolicyGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly ConfigurationPolicyGroupsRestOperations _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient;
         private readonly VpnServerConfigurationPolicyGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups";
+
         /// <summary> Initializes a new instance of the <see cref="VpnServerConfigurationPolicyGroupResource"/> class for mocking. </summary>
         protected VpnServerConfigurationPolicyGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VpnServerConfigurationPolicyGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnServerConfigurationPolicyGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VpnServerConfigurationPolicyGroupResource(ArmClient client, VpnServerConfigurationPolicyGroupData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConfigurationPolicyGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConfigurationPolicyGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationPolicyGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConfigurationPolicyGroups_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationPolicyGroups_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationPolicyGroups_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

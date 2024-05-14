@@ -13,13 +13,13 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The HealthcareLinkingProperties. </summary>
     internal partial class HealthcareLinkingProperties
     {
-        /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLinkingProperties"/>. </summary>
         internal HealthcareLinkingProperties()
         {
             Links = new ChangeTrackingList<HealthcareEntityLink>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareLinkingProperties"/>. </summary>
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,7 +53,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicyAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context)
+        public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -88,7 +89,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicy(string,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context)
+        public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
@@ -194,7 +195,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataPoliciesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "values", "nextLink", context);
         }
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataPoliciesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataPoliciesNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "values", "nextLink", context);
         }
 
         internal HttpMessage CreateGetMetadataPoliciesRequest(RequestContext context)
@@ -227,7 +228,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies", false);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -243,7 +244,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies/", false);
             uri.AppendPath(policyId, true);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -261,7 +262,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataPolicies/", false);
             uri.AppendPath(policyId, true);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

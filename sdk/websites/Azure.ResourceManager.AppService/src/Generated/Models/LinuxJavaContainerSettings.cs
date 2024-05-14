@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Linux Java Container settings. </summary>
     public partial class LinuxJavaContainerSettings
     {
-        /// <summary> Initializes a new instance of LinuxJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxJavaContainerSettings"/>. </summary>
         internal LinuxJavaContainerSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxJavaContainerSettings"/>. </summary>
         /// <param name="java11Runtime"> Java 11 version (runtime only). </param>
         /// <param name="java8Runtime"> Java 8 version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>

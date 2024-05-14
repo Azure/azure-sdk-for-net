@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> SKU for the cache. </summary>
     internal partial class StorageCacheSkuInfo
     {
-        /// <summary> Initializes a new instance of StorageCacheSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuInfo"/>. </summary>
         public StorageCacheSkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuInfo"/>. </summary>
         /// <param name="name"> SKU name for this cache. </param>
         internal StorageCacheSkuInfo(string name)
         {

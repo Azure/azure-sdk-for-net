@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> BackupRequestBase is the base for all backup request. </summary>
     public partial class MySqlFlexibleServerBackupContentBase
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupContentBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupContentBase"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public MySqlFlexibleServerBackupContentBase(MySqlFlexibleServerBackupSettings backupSettings)

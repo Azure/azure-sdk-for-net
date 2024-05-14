@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxFrontendIPConfiguration. </summary>
     public partial class NginxFrontendIPConfiguration
     {
-        /// <summary> Initializes a new instance of NginxFrontendIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxFrontendIPConfiguration"/>. </summary>
         public NginxFrontendIPConfiguration()
         {
             PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
             PrivateIPAddresses = new ChangeTrackingList<NginxPrivateIPAddress>();
         }
 
-        /// <summary> Initializes a new instance of NginxFrontendIPConfiguration. </summary>
-        /// <param name="publicIPAddresses"></param>
+        /// <summary> Initializes a new instance of <see cref="NginxFrontendIPConfiguration"/>. </summary>
+        /// <param name="publicIPAddresses"> Gets the public ip addresses. </param>
         /// <param name="privateIPAddresses"></param>
         internal NginxFrontendIPConfiguration(IList<WritableSubResource> publicIPAddresses, IList<NginxPrivateIPAddress> privateIPAddresses)
         {

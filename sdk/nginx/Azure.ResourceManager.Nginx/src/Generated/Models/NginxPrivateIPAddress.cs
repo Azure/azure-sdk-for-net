@@ -5,21 +5,24 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxPrivateIPAddress. </summary>
     public partial class NginxPrivateIPAddress
     {
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         public NginxPrivateIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         /// <param name="privateIPAddress"></param>
         /// <param name="privateIPAllocationMethod"></param>
         /// <param name="subnetId"></param>
-        internal NginxPrivateIPAddress(string privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, string subnetId)
+        internal NginxPrivateIPAddress(IPAddress privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
@@ -27,10 +30,10 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Gets or sets the private ip address. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
         /// <summary> Gets or sets the private ip allocation method. </summary>
         public NginxPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Gets or sets the subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the details of the Cache specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-cache-external" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Updates the details of the cache specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes specific Cache.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

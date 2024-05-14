@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The UnknownPartitionSchemeDescription. </summary>
     internal partial class UnknownPartitionSchemeDescription : PartitionSchemeDescription
     {
-        /// <summary> Initializes a new instance of UnknownPartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         internal UnknownPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme) : base(partitionScheme)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Describes a script action on role on the cluster. </summary>
     public partial class ScriptAction
     {
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="parameters"> The parameters for the script provided. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Map Power Query mashup query to sink dataset(s). </summary>
     public partial class PowerQuerySinkMapping
     {
-        /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySinkMapping"/>. </summary>
         public PowerQuerySinkMapping()
         {
             DataflowSinks = new ChangeTrackingList<PowerQuerySink>();
         }
 
-        /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySinkMapping"/>. </summary>
         /// <param name="queryName"> Name of the query in Power Query mashup document. </param>
         /// <param name="dataflowSinks"> List of sinks mapped to Power Query mashup query. </param>
         internal PowerQuerySinkMapping(string queryName, IList<PowerQuerySink> dataflowSinks)

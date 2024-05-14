@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Append value for a Variable of type Array. </summary>
     public partial class AppendVariableActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppendVariableActivity(string name) : base(name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "AppendVariable";
         }
 
-        /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="variableName"> Name of the variable whose value needs to be appended to. </param>
         /// <param name="value"> Value to be appended. Type: could be a static value matching type of the variable item or Expression with resultType matching type of the variable item. </param>
-        internal AppendVariableActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, DataFactoryElement<BinaryData> value) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal AppendVariableActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, DataFactoryElement<BinaryData> value) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             VariableName = variableName;
             Value = value;

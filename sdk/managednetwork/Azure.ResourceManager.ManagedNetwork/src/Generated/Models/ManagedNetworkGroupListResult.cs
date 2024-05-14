@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Result of the request to list Managed Network Groups. It contains a list of groups and a URL link to get the next set of results. </summary>
     internal partial class ManagedNetworkGroupListResult
     {
-        /// <summary> Initializes a new instance of ManagedNetworkGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkGroupListResult"/>. </summary>
         internal ManagedNetworkGroupListResult()
         {
             Value = new ChangeTrackingList<ManagedNetworkGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkGroupListResult"/>. </summary>
         /// <param name="value"> Gets a page of ManagedNetworkGroup. </param>
         /// <param name="nextLink"> Gets the URL to get the next set of results. </param>
         internal ManagedNetworkGroupListResult(IReadOnlyList<ManagedNetworkGroupData> value, string nextLink)

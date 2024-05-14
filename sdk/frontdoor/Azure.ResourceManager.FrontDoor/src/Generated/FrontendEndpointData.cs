@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontendEndpointData : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of FrontendEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendEndpointData"/>. </summary>
         public FrontendEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontendEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendEndpointData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

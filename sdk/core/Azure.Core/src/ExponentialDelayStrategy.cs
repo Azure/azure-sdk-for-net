@@ -19,6 +19,6 @@ namespace Azure.Core
         }
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber) =>
-            TimeSpan.FromMilliseconds((1 << retryNumber) * _delay.TotalMilliseconds);
+            TimeSpan.FromMilliseconds((1 << (retryNumber - 1)) * _delay.TotalMilliseconds);
     }
 }

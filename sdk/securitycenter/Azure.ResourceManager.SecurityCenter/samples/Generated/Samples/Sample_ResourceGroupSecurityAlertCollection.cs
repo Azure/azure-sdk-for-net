@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -118,6 +119,49 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             bool result = await collection.ExistsAsync(alertName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get security alert on a resource group from a security data location
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetSecurityAlertOnAResourceGroupFromASecurityDataLocation()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-01-01/examples/Alerts/GetAlertResourceGroupLocation_example.json
+            // this example is just showing the usage of "Alerts_GetResourceGroupLevel" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string resourceGroupName = "myRg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ResourceGroupSecurityAlertResource
+            AzureLocation ascLocation = new AzureLocation("westeurope");
+            ResourceGroupSecurityAlertCollection collection = resourceGroupResource.GetResourceGroupSecurityAlerts(ascLocation);
+
+            // invoke the operation
+            string alertName = "2518298467986649999_4d25bfef-2d77-4a08-adc0-3e35715cc92a";
+            NullableResponse<ResourceGroupSecurityAlertResource> response = await collection.GetIfExistsAsync(alertName);
+            ResourceGroupSecurityAlertResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityAlertData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

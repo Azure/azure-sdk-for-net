@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppConnectedEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppConnectedEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppConnectedEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerAppConnectedEnvironment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppConnectedEnvironmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppConnectedEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppConnectedEnvironment method.
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppConnectedEnvironmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="connectedEnvironmentName"> The connectedEnvironmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}";
@@ -37,12 +40,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private readonly ContainerAppConnectedEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class for mocking. </summary>
         protected ContainerAppConnectedEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppConnectedEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppConnectedEnvironmentResource(ArmClient client, ContainerAppConnectedEnvironmentData data) : this(client, data.Id)
@@ -63,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentCertificateResources and their operations over a ContainerAppConnectedEnvironmentCertificateResource. </returns>
         public virtual ContainerAppConnectedEnvironmentCertificateCollection GetContainerAppConnectedEnvironmentCertificates()
         {
-            return GetCachedClient(Client => new ContainerAppConnectedEnvironmentCertificateCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -106,12 +109,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironmentsCertificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppConnectedEnvironmentCertificateResource>> GetContainerAppConnectedEnvironmentCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -129,12 +140,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironmentsCertificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppConnectedEnvironmentCertificateResource> GetContainerAppConnectedEnvironmentCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentDaprComponentResources and their operations over a ContainerAppConnectedEnvironmentDaprComponentResource. </returns>
         public virtual ContainerAppConnectedEnvironmentDaprComponentCollection GetContainerAppConnectedEnvironmentDaprComponents()
         {
-            return GetCachedClient(Client => new ContainerAppConnectedEnvironmentDaprComponentCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentDaprComponentCollection(client, Id));
         }
 
         /// <summary>
@@ -159,12 +178,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironmentsDaprComponents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppConnectedEnvironmentDaprComponentResource>> GetContainerAppConnectedEnvironmentDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
         {
@@ -182,12 +209,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironmentsDaprComponents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppConnectedEnvironmentDaprComponentResource> GetContainerAppConnectedEnvironmentDaprComponent(string componentName, CancellationToken cancellationToken = default)
         {
@@ -198,7 +233,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentStorageResources and their operations over a ContainerAppConnectedEnvironmentStorageResource. </returns>
         public virtual ContainerAppConnectedEnvironmentStorageCollection GetContainerAppConnectedEnvironmentStorages()
         {
-            return GetCachedClient(Client => new ContainerAppConnectedEnvironmentStorageCollection(Client, Id));
+            return GetCachedClient(client => new ContainerAppConnectedEnvironmentStorageCollection(client, Id));
         }
 
         /// <summary>
@@ -212,12 +247,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironmentsStorages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerAppConnectedEnvironmentStorageResource>> GetContainerAppConnectedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
         {
@@ -235,12 +278,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironmentsStorages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerAppConnectedEnvironmentStorageResource> GetContainerAppConnectedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
         {
@@ -257,6 +308,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +349,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -321,6 +388,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,6 +431,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -390,6 +473,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -420,6 +511,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -449,6 +548,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -483,6 +590,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppConnectedEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

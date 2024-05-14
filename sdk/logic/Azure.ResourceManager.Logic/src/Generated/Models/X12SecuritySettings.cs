@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement security settings. </summary>
     public partial class X12SecuritySettings
     {
-        /// <summary> Initializes a new instance of X12SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12SecuritySettings"/>. </summary>
         /// <param name="authorizationQualifier"> The authorization qualifier. </param>
         /// <param name="securityQualifier"> The security qualifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationQualifier"/> or <paramref name="securityQualifier"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             SecurityQualifier = securityQualifier;
         }
 
-        /// <summary> Initializes a new instance of X12SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12SecuritySettings"/>. </summary>
         /// <param name="authorizationQualifier"> The authorization qualifier. </param>
         /// <param name="authorizationValue"> The authorization value. </param>
         /// <param name="securityQualifier"> The security qualifier. </param>

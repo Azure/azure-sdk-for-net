@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The elastic pool edition capability. </summary>
     public partial class ElasticPoolEditionCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolEditionCapability"/>. </summary>
         internal ElasticPoolEditionCapability()
         {
             SupportedElasticPoolPerformanceLevels = new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolEditionCapability"/>. </summary>
         /// <param name="name"> The elastic pool edition name. </param>
         /// <param name="supportedElasticPoolPerformanceLevels"> The list of supported elastic pool DTU levels for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>

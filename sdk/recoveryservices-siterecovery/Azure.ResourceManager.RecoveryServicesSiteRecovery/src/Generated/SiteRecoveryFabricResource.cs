@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryFabric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryFabricResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryFabricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryFabric method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryFabricResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryFabricResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryFabric method.
     /// </summary>
     public partial class SiteRecoveryFabricResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryFabricResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationFabricsRestOperations _siteRecoveryFabricReplicationFabricsRestClient;
         private readonly SiteRecoveryFabricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricResource"/> class for mocking. </summary>
         protected SiteRecoveryFabricResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryFabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryFabricResource(ArmClient client, SiteRecoveryFabricData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryLogicalNetworkResources and their operations over a SiteRecoveryLogicalNetworkResource. </returns>
         public virtual SiteRecoveryLogicalNetworkCollection GetSiteRecoveryLogicalNetworks()
         {
-            return GetCachedClient(Client => new SiteRecoveryLogicalNetworkCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryLogicalNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -106,12 +110,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationLogicalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryLogicalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logicalNetworkName"> Logical network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryLogicalNetworkResource>> GetSiteRecoveryLogicalNetworkAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -129,12 +141,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationLogicalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryLogicalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logicalNetworkName"> Logical network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logicalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryLogicalNetworkResource> GetSiteRecoveryLogicalNetwork(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryNetworkResources and their operations over a SiteRecoveryNetworkResource. </returns>
         public virtual SiteRecoveryNetworkCollection GetSiteRecoveryNetworks()
         {
-            return GetCachedClient(Client => new SiteRecoveryNetworkCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -159,12 +179,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkName"> Primary network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryNetworkResource>> GetSiteRecoveryNetworkAsync(string networkName, CancellationToken cancellationToken = default)
         {
@@ -182,12 +210,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkName"> Primary network name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryNetworkResource> GetSiteRecoveryNetwork(string networkName, CancellationToken cancellationToken = default)
         {
@@ -198,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryProtectionContainerResources and their operations over a SiteRecoveryProtectionContainerResource. </returns>
         public virtual SiteRecoveryProtectionContainerCollection GetSiteRecoveryProtectionContainers()
         {
-            return GetCachedClient(Client => new SiteRecoveryProtectionContainerCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryProtectionContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -212,12 +248,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="protectionContainerName"> Protection container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryProtectionContainerResource>> GetSiteRecoveryProtectionContainerAsync(string protectionContainerName, CancellationToken cancellationToken = default)
         {
@@ -235,12 +279,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="protectionContainerName"> Protection container name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryProtectionContainerResource> GetSiteRecoveryProtectionContainer(string protectionContainerName, CancellationToken cancellationToken = default)
         {
@@ -251,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryServicesProviderResources and their operations over a SiteRecoveryServicesProviderResource. </returns>
         public virtual SiteRecoveryServicesProviderCollection GetSiteRecoveryServicesProviders()
         {
-            return GetCachedClient(Client => new SiteRecoveryServicesProviderCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryServicesProviderCollection(client, Id));
         }
 
         /// <summary>
@@ -265,12 +317,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryServicesProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryServicesProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Recovery services provider name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryServicesProviderResource>> GetSiteRecoveryServicesProviderAsync(string providerName, CancellationToken cancellationToken = default)
         {
@@ -288,12 +348,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryServicesProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryServicesProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Recovery services provider name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvider(string providerName, CancellationToken cancellationToken = default)
         {
@@ -304,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of StorageClassificationResources and their operations over a StorageClassificationResource. </returns>
         public virtual StorageClassificationCollection GetStorageClassifications()
         {
-            return GetCachedClient(Client => new StorageClassificationCollection(Client, Id));
+            return GetCachedClient(client => new StorageClassificationCollection(client, Id));
         }
 
         /// <summary>
@@ -318,12 +386,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageClassificationResource>> GetStorageClassificationAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
@@ -341,12 +417,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageClassificationResource> GetStorageClassification(string storageClassificationName, CancellationToken cancellationToken = default)
         {
@@ -357,7 +441,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryVCenterResources and their operations over a SiteRecoveryVCenterResource. </returns>
         public virtual SiteRecoveryVCenterCollection GetSiteRecoveryVCenters()
         {
-            return GetCachedClient(Client => new SiteRecoveryVCenterCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryVCenterCollection(client, Id));
         }
 
         /// <summary>
@@ -371,12 +455,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationvCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryVCenterResource>> GetSiteRecoveryVCenterAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
@@ -394,12 +486,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationvCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryVCenterResource> GetSiteRecoveryVCenter(string vCenterName, CancellationToken cancellationToken = default)
         {
@@ -416,6 +516,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,6 +558,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
@@ -482,6 +598,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,6 +645,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -559,6 +691,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_CheckConsistency</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -592,6 +732,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_CheckConsistency</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -627,6 +775,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_MigrateToAad</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -661,6 +817,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_MigrateToAad</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -694,6 +858,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_ReassociateGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -733,6 +905,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_ReassociateGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -771,6 +951,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -805,6 +993,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -838,6 +1034,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_RenewCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -876,6 +1080,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationFabrics_RenewCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

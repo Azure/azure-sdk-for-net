@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The parameters used to check the availability of the managed hsm name. </summary>
     public partial class ManagedHsmNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ManagedHsmNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The managed hsm name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedHsmNameAvailabilityContent(string name)

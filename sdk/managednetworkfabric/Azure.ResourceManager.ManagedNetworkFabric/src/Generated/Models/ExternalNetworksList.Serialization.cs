@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExternalNetworkData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricExternalNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<ExternalNetworkData> array = new List<ExternalNetworkData>();
+                    List<NetworkFabricExternalNetworkData> array = new List<NetworkFabricExternalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExternalNetworkData.DeserializeExternalNetworkData(item));
+                        array.Add(NetworkFabricExternalNetworkData.DeserializeNetworkFabricExternalNetworkData(item));
                     }
                     value = array;
                     continue;

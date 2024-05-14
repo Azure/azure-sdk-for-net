@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Replace all IP firewall rules request. </summary>
     public partial class ReplaceAllIPFirewallRulesContent
     {
-        /// <summary> Initializes a new instance of ReplaceAllIPFirewallRulesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllIPFirewallRulesContent"/>. </summary>
         public ReplaceAllIPFirewallRulesContent()
         {
             IPFirewallRules = new ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllIPFirewallRulesContent"/>. </summary>
+        /// <param name="ipFirewallRules"> IP firewall rule properties. </param>
+        internal ReplaceAllIPFirewallRulesContent(IDictionary<string, SynapseIPFirewallRuleProperties> ipFirewallRules)
+        {
+            IPFirewallRules = ipFirewallRules;
         }
 
         /// <summary> IP firewall rule properties. </summary>

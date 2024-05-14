@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The access control configuration. </summary>
     public partial class FlowAccessControlConfiguration
     {
-        /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         public FlowAccessControlConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         /// <param name="triggers"> The access control configuration for invoking workflow triggers. </param>
         /// <param name="contents"> The access control configuration for accessing workflow run contents. </param>
         /// <param name="actions"> The access control configuration for workflow actions. </param>

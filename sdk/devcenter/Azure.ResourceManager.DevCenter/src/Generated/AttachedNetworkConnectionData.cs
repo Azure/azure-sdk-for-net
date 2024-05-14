@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class AttachedNetworkConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AttachedNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionData"/>. </summary>
         public AttachedNetworkConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AttachedNetworkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

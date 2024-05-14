@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class KustoResourceSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of KustoResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoResourceSkuZoneDetails"/>. </summary>
         internal KustoResourceSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<KustoResourceSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of KustoResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         internal KustoResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<KustoResourceSkuCapabilities> capabilities)

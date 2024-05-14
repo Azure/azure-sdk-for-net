@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> List of guest configuration assignment reports. </summary>
     internal partial class GuestConfigurationAssignmentReportList
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportList"/>. </summary>
         internal GuestConfigurationAssignmentReportList()
         {
             Value = new ChangeTrackingList<GuestConfigurationAssignmentReport>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportList"/>. </summary>
         /// <param name="value"> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </param>
         internal GuestConfigurationAssignmentReportList(IReadOnlyList<GuestConfigurationAssignmentReport> value)
         {

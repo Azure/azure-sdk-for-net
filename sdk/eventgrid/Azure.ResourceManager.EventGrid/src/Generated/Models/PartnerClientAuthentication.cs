@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class PartnerClientAuthentication
     {
-        /// <summary> Initializes a new instance of PartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerClientAuthentication"/>. </summary>
         protected PartnerClientAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
         internal PartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType)
         {

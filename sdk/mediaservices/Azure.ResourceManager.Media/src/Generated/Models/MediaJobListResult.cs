@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of Job items. </summary>
     internal partial class MediaJobListResult
     {
-        /// <summary> Initializes a new instance of MediaJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobListResult"/>. </summary>
         internal MediaJobListResult()
         {
             Value = new ChangeTrackingList<MediaJobData>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobListResult"/>. </summary>
         /// <param name="value"> A collection of Job items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
         internal MediaJobListResult(IReadOnlyList<MediaJobData> value, string odataNextLink)

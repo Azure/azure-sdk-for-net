@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> security services. </summary>
     public partial class RulestackSecurityServices
     {
-        /// <summary> Initializes a new instance of RulestackSecurityServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServices"/>. </summary>
         public RulestackSecurityServices()
         {
         }
 
-        /// <summary> Initializes a new instance of RulestackSecurityServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServices"/>. </summary>
         /// <param name="vulnerabilityProfile"> IPs Vulnerability Profile Data. </param>
         /// <param name="antiSpywareProfile"> Anti spyware Profile data. </param>
         /// <param name="antiVirusProfile"> anti virus profile data. </param>

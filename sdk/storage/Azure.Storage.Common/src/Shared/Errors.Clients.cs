@@ -118,6 +118,9 @@ namespace Azure.Storage
 
         public static class ClientSideEncryption
         {
+            public static ArgumentException UnrecognizedVersion()
+                => new ArgumentException($"Unrecognized ClientSideEncryptionVersion");
+
             public static InvalidOperationException ClientSideEncryptionVersionNotSupported(string versionString = default)
                 => new InvalidOperationException("This library does not support the given version of client-side encryption." +
                     versionString == default ? "" : $" Version ID = {versionString}");

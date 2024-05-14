@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Migration item collection. </summary>
     internal partial class SiteRecoveryMigrationItemListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemListResult"/>. </summary>
         internal SiteRecoveryMigrationItemListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryMigrationItemData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemListResult"/>. </summary>
         /// <param name="value"> The list of migration items. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryMigrationItemListResult(IReadOnlyList<SiteRecoveryMigrationItemData> value, string nextLink)

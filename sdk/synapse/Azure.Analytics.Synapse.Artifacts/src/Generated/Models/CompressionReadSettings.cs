@@ -15,15 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
     /// </summary>
-    public partial class CompressionReadSettings
+    public abstract partial class CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
-        public CompressionReadSettings()
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
+        protected CompressionReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CompressionReadSettings(string type, IDictionary<string, object> additionalProperties)

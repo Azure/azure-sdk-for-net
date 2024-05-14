@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Description of the check name availability request properties. </summary>
     public partial class RelayNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of RelayNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The namespace name to check for availability. The namespace name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RelayNameAvailabilityContent(string name)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,51 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the MongoDB databases and their properties. </summary>
     internal partial class MongoDBDatabaseListResult
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseListResult"/>. </summary>
         internal MongoDBDatabaseListResult()
         {
             Value = new ChangeTrackingList<MongoDBDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseListResult"/>. </summary>
         /// <param name="value"> List of MongoDB databases and their properties. </param>
-        internal MongoDBDatabaseListResult(IReadOnlyList<MongoDBDatabaseData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBDatabaseListResult(IReadOnlyList<MongoDBDatabaseData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of MongoDB databases and their properties. </summary>

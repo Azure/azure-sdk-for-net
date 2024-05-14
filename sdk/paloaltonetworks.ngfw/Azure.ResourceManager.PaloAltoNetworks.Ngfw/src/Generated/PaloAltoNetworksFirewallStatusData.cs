@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class PaloAltoNetworksFirewallStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/>. </summary>
         public PaloAltoNetworksFirewallStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

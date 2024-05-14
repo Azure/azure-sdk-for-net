@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Domain regenerate share access key request. </summary>
     public partial class EventGridDomainRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of EventGridDomainRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public EventGridDomainRegenerateKeyContent(string keyName)

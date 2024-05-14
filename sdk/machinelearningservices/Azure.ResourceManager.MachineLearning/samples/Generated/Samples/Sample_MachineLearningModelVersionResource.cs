@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningModelVersionResource
     {
-        // Delete Model Version.
+        // Delete Workspace Model Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteModelVersion()
+        public async Task Delete_DeleteWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ModelVersion/delete.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ModelVersion/delete.json
             // this example is just showing the usage of "ModelVersions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get Model Version.
+        // Get Workspace Model Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetModelVersion()
+        public async Task Get_GetWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ModelVersion/get.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ModelVersion/get.json
             // this example is just showing the usage of "ModelVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateOrUpdate Model Version.
+        // CreateOrUpdate Workspace Model Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateOrUpdateModelVersion()
+        public async Task Update_CreateOrUpdateWorkspaceModelVersion()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2022-10-01/examples/ModelVersion/createOrUpdate.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ModelVersion/createOrUpdate.json
             // this example is just showing the usage of "ModelVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,6 +137,70 @@ Data =
             MachineLearningModelVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Package Workspace Model Version.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Package_PackageWorkspaceModelVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Workspace/ModelVersion/package.json
+            // this example is just showing the usage of "ModelVersions_Package" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningModelVersionResource created on azure
+            // for more information of creating MachineLearningModelVersionResource, please refer to the document of MachineLearningModelVersionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string name = "string";
+            string version = "string";
+            ResourceIdentifier machineLearningModelVersionResourceId = MachineLearningModelVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name, version);
+            MachineLearningModelVersionResource machineLearningModelVersion = client.GetMachineLearningModelVersionResource(machineLearningModelVersionResourceId);
+
+            // invoke the operation
+            ModelPackageContent content = new ModelPackageContent(new AzureMLBatchInferencingServer()
+            {
+                CodeConfiguration = new MachineLearningCodeConfiguration("string")
+                {
+                    CodeId = new ResourceIdentifier("string"),
+                },
+            }, "string")
+            {
+                BaseEnvironmentSource = new BaseEnvironmentType(new ResourceIdentifier("string")),
+                EnvironmentVariables =
+{
+["string"] = "string",
+},
+                Inputs =
+{
+new ModelPackageInput(PackageInputType.UriFile,new PackageInputPathUri()
+{
+Uri = new Uri("string"),
+})
+{
+Mode = PackageInputDeliveryMode.Download,
+MountPath = "string",
+}
+},
+                ModelConfiguration = new ModelConfiguration()
+                {
+                    Mode = new PackageInputDeliveryMode("ReadOnlyMount"),
+                    MountPath = "string",
+                },
+                Tags =
+{
+["string"] = "string",
+},
+            };
+            ArmOperation<ModelPackageResult> lro = await machineLearningModelVersion.PackageAsync(WaitUntil.Completed, content);
+            ModelPackageResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

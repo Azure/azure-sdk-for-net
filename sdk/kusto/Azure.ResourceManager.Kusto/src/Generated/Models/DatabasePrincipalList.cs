@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database principals operation request. </summary>
     public partial class DatabasePrincipalList
     {
-        /// <summary> Initializes a new instance of DatabasePrincipalList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalList"/>. </summary>
         public DatabasePrincipalList()
         {
             Value = new ChangeTrackingList<KustoDatabasePrincipal>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalList"/>. </summary>
+        /// <param name="value"> The list of Kusto database principals. </param>
+        internal DatabasePrincipalList(IList<KustoDatabasePrincipal> value)
+        {
+            Value = value;
         }
 
         /// <summary> The list of Kusto database principals. </summary>

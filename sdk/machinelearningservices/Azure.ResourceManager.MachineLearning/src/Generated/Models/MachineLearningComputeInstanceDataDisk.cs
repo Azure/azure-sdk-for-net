@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an Aml Instance DataDisk. </summary>
     public partial class MachineLearningComputeInstanceDataDisk
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataDisk"/>. </summary>
         internal MachineLearningComputeInstanceDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataDisk"/>. </summary>
         /// <param name="caching"> Caching type of Data Disk. </param>
         /// <param name="diskSizeGB"> The initial disk size in gigabytes. </param>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </param>

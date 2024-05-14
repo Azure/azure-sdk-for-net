@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is secret. </summary>
     public partial class SecretAuthInfo : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
         public SecretAuthInfo()
         {
             AuthType = LinkerAuthType.Secret;
         }
 
-        /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="name"> Username or account name for secret auth. </param>
         /// <param name="secretInfo">

@@ -10,12 +10,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan InMageRcmFailback failover input. </summary>
     public partial class RecoveryPlanInMageRcmFailbackFailoverContent : RecoveryPlanProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanInMageRcmFailbackFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageRcmFailbackFailoverContent"/>. </summary>
         /// <param name="recoveryPointType"> The recovery point type. </param>
         public RecoveryPlanInMageRcmFailbackFailoverContent(InMageRcmFailbackRecoveryPointType recoveryPointType)
         {
             RecoveryPointType = recoveryPointType;
             InstanceType = "InMageRcmFailback";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageRcmFailbackFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        /// <param name="useMultiVmSyncPoint"> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </param>
+        internal RecoveryPlanInMageRcmFailbackFailoverContent(string instanceType, InMageRcmFailbackRecoveryPointType recoveryPointType, string useMultiVmSyncPoint) : base(instanceType)
+        {
+            RecoveryPointType = recoveryPointType;
+            UseMultiVmSyncPoint = useMultiVmSyncPoint;
+            InstanceType = instanceType ?? "InMageRcmFailback";
         }
 
         /// <summary> The recovery point type. </summary>

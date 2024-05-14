@@ -14,11 +14,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow debug settings. </summary>
     public partial class DataFlowDebugPackageDebugSettings
     {
-        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
         public DataFlowDebugPackageDebugSettings()
         {
             SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
+        /// <param name="sourceSettings"> Source setting for data flow debug. </param>
+        /// <param name="parameters"> Data flow parameters. </param>
+        /// <param name="datasetParameters"> Parameters for dataset. </param>
+        internal DataFlowDebugPackageDebugSettings(IList<DataFlowSourceSetting> sourceSettings, IDictionary<string, BinaryData> parameters, BinaryData datasetParameters)
+        {
+            SourceSettings = sourceSettings;
+            Parameters = parameters;
+            DatasetParameters = datasetParameters;
         }
 
         /// <summary> Source setting for data flow debug. </summary>
@@ -29,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -60,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

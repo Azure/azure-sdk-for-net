@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application management policy. </summary>
     internal partial class ArmApplicationManagementPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationManagementPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagementPolicy"/>. </summary>
         public ArmApplicationManagementPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationManagementPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagementPolicy"/>. </summary>
         /// <param name="mode"> The managed application management mode. </param>
         internal ArmApplicationManagementPolicy(ArmApplicationManagementMode? mode)
         {

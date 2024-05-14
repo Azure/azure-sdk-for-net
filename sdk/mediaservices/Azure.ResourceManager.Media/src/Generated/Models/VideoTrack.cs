@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents a video track in the asset. </summary>
     public partial class VideoTrack : MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of VideoTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoTrack"/>. </summary>
         public VideoTrack()
         {
             OdataType = "#Microsoft.Media.VideoTrack";
         }
 
-        /// <summary> Initializes a new instance of VideoTrack. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoTrack"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal VideoTrack(string odataType) : base(odataType)
         {

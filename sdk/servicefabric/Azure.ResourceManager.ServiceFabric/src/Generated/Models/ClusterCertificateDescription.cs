@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the certificate details. </summary>
     public partial class ClusterCertificateDescription
     {
-        /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCertificateDescription"/>. </summary>
         /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> is null. </exception>
         public ClusterCertificateDescription(BinaryData thumbprint)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Thumbprint = thumbprint;
         }
 
-        /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCertificateDescription"/>. </summary>
         /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <param name="thumbprintSecondary"> Thumbprint of the secondary certificate. </param>
         /// <param name="x509StoreName"> The local certificate store location. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

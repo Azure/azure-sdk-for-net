@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Redis cache access keys. </summary>
     public partial class RedisAccessKeys
     {
-        /// <summary> Initializes a new instance of RedisAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisAccessKeys"/>. </summary>
         internal RedisAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisAccessKeys"/>. </summary>
         /// <param name="primaryKey"> The current primary key that clients can use to authenticate with Redis cache. </param>
         /// <param name="secondaryKey"> The current secondary key that clients can use to authenticate with Redis cache. </param>
         internal RedisAccessKeys(string primaryKey, string secondaryKey)

@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Variable values. </summary>
     public partial class VariableValues
     {
-        /// <summary> Initializes a new instance of VariableValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of VariableValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>

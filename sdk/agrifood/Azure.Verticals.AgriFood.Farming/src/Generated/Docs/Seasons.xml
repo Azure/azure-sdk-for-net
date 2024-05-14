@@ -2,13 +2,25 @@
 <doc>
   <members>
     <member name="GetSeasonAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetSeasonAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSeasonAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetSeasonAsync("<seasonId>", new RequestContext());
+Response response = await client.GetSeasonAsync("<seasonId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSeasonAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetSeasonAsync("<seasonId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -25,18 +37,29 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetSeason(string,RequestContext)">
-<example>
-This sample shows how to call GetSeason with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSeason and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetSeason("<seasonId>", new RequestContext());
+Response response = client.GetSeason("<seasonId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSeason with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetSeason("<seasonId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -53,30 +76,31 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdateAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {};
-
-Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateAsync("<seasonId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     year = 1234,
@@ -85,12 +109,12 @@ var data = new {
     source = "<source>",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-Response response = await client.CreateOrUpdateAsync("<seasonId>", RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateAsync("<seasonId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -107,30 +131,31 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {};
-
-Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdate("<seasonId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     year = 1234,
@@ -139,12 +164,12 @@ var data = new {
     source = "<source>",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-Response response = client.CreateOrUpdate("<seasonId>", RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdate("<seasonId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -161,42 +186,76 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="DeleteAsync(string,RequestContext)">
-<example>
-This sample shows how to call DeleteAsync with required parameters.
+      <example>
+This sample shows how to call DeleteAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<seasonId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<seasonId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="Delete(string,RequestContext)">
-<example>
-This sample shows how to call Delete with required parameters.
+      <example>
+This sample shows how to call Delete.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<seasonId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Delete("<seasonId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="GetSeasonsAsync(DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{int},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetSeasonsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSeasonsAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (var item in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<seasonIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (BinaryData item in client.GetSeasonsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSeasonsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetSeasonsAsync(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -213,19 +272,31 @@ await foreach (var item in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTim
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("createdBy").ToString());
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetSeasons(DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{int},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetSeasons with required parameters and parse the result.
+      <example>
+This sample shows how to call GetSeasons and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
 
-foreach (var item in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<seasonIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (BinaryData item in client.GetSeasons(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSeasons with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetSeasons(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("startDateTime").ToString());
@@ -242,10 +313,9 @@ foreach (var item in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.Utc
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("createdBy").ToString());
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

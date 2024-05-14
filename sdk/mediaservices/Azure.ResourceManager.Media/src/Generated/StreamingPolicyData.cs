@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class StreamingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of StreamingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyData"/>. </summary>
         public StreamingPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

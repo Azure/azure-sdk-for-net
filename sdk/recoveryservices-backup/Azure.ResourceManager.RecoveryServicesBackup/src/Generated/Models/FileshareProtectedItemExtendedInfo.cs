@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information about Azure File Share backup item. </summary>
     public partial class FileshareProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProtectedItemExtendedInfo"/>. </summary>
         public FileshareProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>

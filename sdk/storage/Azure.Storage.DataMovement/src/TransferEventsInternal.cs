@@ -16,8 +16,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler;
+        public event SyncAsyncEventHandler<TransferItemFailedEventArgs> TransferFailedEventHandler;
 
-        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailedEventHandler;
+        internal SyncAsyncEventHandler<TransferItemFailedEventArgs> GetFailed() => TransferFailedEventHandler;
     }
 }

@@ -18,7 +18,141 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourcesModelFactory
     {
-        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.TemplateSpecData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> Template Spec description. </param>
+        /// <param name="displayName"> Template Spec display name. </param>
+        /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
+        /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </param>
+        /// <returns> A new <see cref="Resources.TemplateSpecData"/> instance for mocking. </returns>
+        public static TemplateSpecData TemplateSpecData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, string displayName = null, BinaryData metadata = null, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            versions ??= new Dictionary<string, TemplateSpecVersionInfo>();
+
+            return new TemplateSpecData(id, name, resourceType, systemData, location, tags, description, displayName, metadata, versions);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecVersionInfo"/>. </summary>
+        /// <param name="description"> Template Spec version description. </param>
+        /// <param name="timeCreated"> The timestamp of when the version was created. </param>
+        /// <param name="timeModified"> The timestamp of when the version was last modified. </param>
+        /// <returns> A new <see cref="Models.TemplateSpecVersionInfo"/> instance for mocking. </returns>
+        public static TemplateSpecVersionInfo TemplateSpecVersionInfo(string description = null, DateTimeOffset? timeCreated = null, DateTimeOffset? timeModified = null)
+        {
+            return new TemplateSpecVersionInfo(description, timeCreated, timeModified);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.TemplateSpecPatch"/> instance for mocking. </returns>
+        public static TemplateSpecPatch TemplateSpecPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new TemplateSpecPatch(id, name, resourceType, systemData, tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.TemplateSpecVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> Template Spec version description. </param>
+        /// <param name="linkedTemplates"> An array of linked template artifacts. </param>
+        /// <param name="metadata"> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
+        /// <param name="mainTemplate"> The main Azure Resource Manager template content. </param>
+        /// <param name="uiFormDefinition"> The Azure Resource Manager template UI definition content. </param>
+        /// <returns> A new <see cref="Resources.TemplateSpecVersionData"/> instance for mocking. </returns>
+        public static TemplateSpecVersionData TemplateSpecVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, IEnumerable<LinkedTemplateArtifact> linkedTemplates = null, BinaryData metadata = null, BinaryData mainTemplate = null, BinaryData uiFormDefinition = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            linkedTemplates ??= new List<LinkedTemplateArtifact>();
+
+            return new TemplateSpecVersionData(id, name, resourceType, systemData, location, tags, description, linkedTemplates?.ToList(), metadata, mainTemplate, uiFormDefinition);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecVersionPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.TemplateSpecVersionPatch"/> instance for mocking. </returns>
+        public static TemplateSpecVersionPatch TemplateSpecVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new TemplateSpecVersionPatch(id, name, resourceType, systemData, tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentScriptData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
+        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="kind"> Type of the script. </param>
+        /// <returns> A new <see cref="Resources.ArmDeploymentScriptData"/> instance for mocking. </returns>
+        public static ArmDeploymentScriptData ArmDeploymentScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string kind = "Unknown")
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ArmDeploymentScriptData(id, name, resourceType, systemData, identity, location, tags, kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentScriptManagedIdentity"/>. </summary>
+        /// <param name="identityType"> Type of the managed identity. </param>
+        /// <param name="tenantId"> ID of the Azure Active Directory. </param>
+        /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentScriptManagedIdentity"/> instance for mocking. </returns>
+        public static ArmDeploymentScriptManagedIdentity ArmDeploymentScriptManagedIdentity(ArmDeploymentScriptManagedIdentityType? identityType = null, Guid? tenantId = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new ArmDeploymentScriptManagedIdentity(identityType, tenantId, userAssignedIdentities);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentScriptPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags to be updated. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentScriptPatch"/> instance for mocking. </returns>
+        public static ArmDeploymentScriptPatch ArmDeploymentScriptPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ArmDeploymentScriptPatch(id, name, resourceType, systemData, tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.ScriptLogData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="log"> Script execution logs in text format. </param>
+        /// <returns> A new <see cref="Resources.ScriptLogData"/> instance for mocking. </returns>
+        public static ScriptLogData ScriptLogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string log = null)
+        {
+            return new ScriptLogData(id, name, resourceType, systemData, log);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +168,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentData(id, name, resourceType, systemData, location, properties, tags);
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentPropertiesExtended"/>. </summary>
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
         /// <param name="timestamp"> The timestamp of the template deployment. </param>
@@ -63,7 +197,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentPropertiesExtended(provisioningState, correlationId, timestamp, duration, outputs, providers?.ToList(), dependencies?.ToList(), templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel) : null, errorDeployment, templateHash, outputResources?.ToList(), validatedResources?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDependency"/>. </summary>
         /// <param name="dependsOn"> The list of dependencies. </param>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
@@ -76,7 +210,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDependency(dependsOn?.ToList(), id, resourceType, resourceName);
         }
 
-        /// <summary> Initializes a new instance of BasicArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BasicArmDependency"/>. </summary>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
@@ -86,7 +220,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new BasicArmDependency(id, resourceType, resourceName);
         }
 
-        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorDeploymentExtended"/>. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
         /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
@@ -96,7 +230,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName);
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentValidateResult"/>. </summary>
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentValidateResult"/> instance for mocking. </returns>
@@ -105,7 +239,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentValidateResult(error, properties);
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentExportResult"/> instance for mocking. </returns>
         public static ArmDeploymentExportResult ArmDeploymentExportResult(BinaryData template = null)
@@ -113,7 +247,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentExportResult(template);
         }
 
-        /// <summary> Initializes a new instance of WhatIfOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WhatIfOperationResult"/>. </summary>
         /// <param name="status"> Status of the What-If operation. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
@@ -125,7 +259,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new WhatIfOperationResult(status, error, changes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WhatIfChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WhatIfChange"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
         /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
@@ -140,7 +274,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new WhatIfChange(resourceId, changeType, unsupportedReason, before, after, delta?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WhatIfPropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WhatIfPropertyChange"/>. </summary>
         /// <param name="path"> The path of the property. </param>
         /// <param name="propertyChangeType"> The type of property change. </param>
         /// <param name="before"> The value of the property before the deployment is executed. </param>
@@ -154,7 +288,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new WhatIfPropertyChange(path, propertyChangeType, before, after, children?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentOperation"/>. </summary>
         /// <param name="id"> Full deployment operation ID. </param>
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>
@@ -164,7 +298,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentOperation(id, operationId, properties);
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentOperationProperties"/>. </summary>
         /// <param name="provisioningOperation"> The name of the current provisioning operation. </param>
         /// <param name="provisioningState"> The state of the provisioning. </param>
         /// <param name="timestamp"> The date and time of the operation. </param>
@@ -181,7 +315,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmDeploymentOperationProperties(provisioningOperation, provisioningState, timestamp, duration, serviceRequestId, statusCode, statusMessage, targetResource, requestContent != null ? new HttpMessage(requestContent) : null, responseContent != null ? new HttpMessage(responseContent) : null);
         }
 
-        /// <summary> Initializes a new instance of StatusMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StatusMessage"/>. </summary>
         /// <param name="status"> Status of the deployment operation. </param>
         /// <param name="error"> The error reported by the operation. </param>
         /// <returns> A new <see cref="Models.StatusMessage"/> instance for mocking. </returns>
@@ -190,7 +324,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new StatusMessage(status, error);
         }
 
-        /// <summary> Initializes a new instance of TargetResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetResource"/>. </summary>
         /// <param name="id"> The ID of the resource. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
@@ -200,7 +334,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new TargetResource(id, resourceName, resourceType);
         }
 
-        /// <summary> Initializes a new instance of TemplateHashResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateHashResult"/>. </summary>
         /// <param name="minifiedTemplate"> The minified template string. </param>
         /// <param name="templateHash"> The template hash. </param>
         /// <returns> A new <see cref="Models.TemplateHashResult"/> instance for mocking. </returns>
@@ -209,7 +343,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new TemplateHashResult(minifiedTemplate, templateHash);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -246,7 +380,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationData(id, name, resourceType, systemData, tags, location, managedBy, sku, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPackageContact"/>. </summary>
         /// <param name="contactName"> The contact name. </param>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
@@ -256,7 +390,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationPackageContact(contactName, email, phone);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageSupportUris. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPackageSupportUris"/>. </summary>
         /// <param name="azurePublicCloudUri"> The public azure support URL. </param>
         /// <param name="azureGovernmentUri"> The government cloud support URL. </param>
         /// <returns> A new <see cref="Models.ArmApplicationPackageSupportUris"/> instance for mocking. </returns>
@@ -265,7 +399,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationPackageSupportUris(azurePublicCloudUri, azureGovernmentUri);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationArtifact"/>. </summary>
         /// <param name="name"> The managed application artifact name. </param>
         /// <param name="uri"> The managed application artifact blob uri. </param>
         /// <param name="artifactType"> The managed application artifact type. </param>
@@ -281,7 +415,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationArtifact(name, uri, artifactType);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationDetails"/>. </summary>
         /// <param name="objectId"> The client Oid. </param>
         /// <param name="puid"> The client Puid. </param>
         /// <param name="applicationId"> The client application Id. </param>
@@ -291,7 +425,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationDetails(objectId, puid, applicationId);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationManagedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="identityType"> The identity type. </param>
@@ -304,7 +438,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationManagedIdentity(principalId, tenantId, identityType, userAssignedIdentities);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationUserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
         /// <returns> A new <see cref="Models.ArmApplicationUserAssignedIdentity"/> instance for mocking. </returns>
@@ -313,7 +447,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationUserAssignedIdentity(principalId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -330,7 +464,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationResourceData(id, name, resourceType, systemData, tags, location, managedBy, sku);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -367,7 +501,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationPatch(id, name, resourceType, systemData, tags, location, managedBy, sku, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ArmApplicationDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -402,7 +536,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationDefinitionData(id, name, resourceType, systemData, tags, location, managedBy, sku, lockLevel, displayName, isEnabled, authorizations?.ToList(), artifacts?.ToList(), description, packageFileUri, mainTemplate, createUiDefinition, notificationEndpoints != null ? new ArmApplicationNotificationPolicy(notificationEndpoints?.ToList()) : null, lockingPolicy, deploymentMode.HasValue ? new ArmApplicationDeploymentPolicy(deploymentMode.Value) : null, managementMode != null ? new ArmApplicationManagementPolicy(managementMode) : null, policies?.ToList());
         }
 
-        /// <summary> Initializes a new instance of JitRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.JitRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -426,141 +560,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new JitRequestData(id, name, resourceType, systemData, tags, location, applicationResourceId, publisherTenantId, jitAuthorizationPolicies?.ToList(), jitSchedulingPolicy, provisioningState, jitRequestState, createdBy, updatedBy);
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
-        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="kind"> Type of the script. </param>
-        /// <returns> A new <see cref="Resources.ArmDeploymentScriptData"/> instance for mocking. </returns>
-        public static ArmDeploymentScriptData ArmDeploymentScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string kind = "Unknown")
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ArmDeploymentScriptData(id, name, resourceType, systemData, identity, location, tags, kind);
-        }
-
-        /// <summary> Initializes a new instance of ArmDeploymentScriptManagedIdentity. </summary>
-        /// <param name="identityType"> Type of the managed identity. </param>
-        /// <param name="tenantId"> ID of the Azure Active Directory. </param>
-        /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        /// <returns> A new <see cref="Models.ArmDeploymentScriptManagedIdentity"/> instance for mocking. </returns>
-        public static ArmDeploymentScriptManagedIdentity ArmDeploymentScriptManagedIdentity(ArmDeploymentScriptManagedIdentityType? identityType = null, Guid? tenantId = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new ArmDeploymentScriptManagedIdentity(identityType, tenantId, userAssignedIdentities);
-        }
-
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPatch. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags to be updated. </param>
-        /// <returns> A new <see cref="Models.ArmDeploymentScriptPatch"/> instance for mocking. </returns>
-        public static ArmDeploymentScriptPatch ArmDeploymentScriptPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ArmDeploymentScriptPatch(id, name, resourceType, systemData, tags);
-        }
-
-        /// <summary> Initializes a new instance of ScriptLogData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="log"> Script execution logs in text format. </param>
-        /// <returns> A new <see cref="Resources.ScriptLogData"/> instance for mocking. </returns>
-        public static ScriptLogData ScriptLogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string log = null)
-        {
-            return new ScriptLogData(id, name, resourceType, systemData, log);
-        }
-
-        /// <summary> Initializes a new instance of TemplateSpecData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="description"> Template Spec description. </param>
-        /// <param name="displayName"> Template Spec display name. </param>
-        /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
-        /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </param>
-        /// <returns> A new <see cref="Resources.TemplateSpecData"/> instance for mocking. </returns>
-        public static TemplateSpecData TemplateSpecData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, string displayName = null, BinaryData metadata = null, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            versions ??= new Dictionary<string, TemplateSpecVersionInfo>();
-
-            return new TemplateSpecData(id, name, resourceType, systemData, location, tags, description, displayName, metadata, versions);
-        }
-
-        /// <summary> Initializes a new instance of TemplateSpecVersionInfo. </summary>
-        /// <param name="description"> Template Spec version description. </param>
-        /// <param name="timeCreated"> The timestamp of when the version was created. </param>
-        /// <param name="timeModified"> The timestamp of when the version was last modified. </param>
-        /// <returns> A new <see cref="Models.TemplateSpecVersionInfo"/> instance for mocking. </returns>
-        public static TemplateSpecVersionInfo TemplateSpecVersionInfo(string description = null, DateTimeOffset? timeCreated = null, DateTimeOffset? timeModified = null)
-        {
-            return new TemplateSpecVersionInfo(description, timeCreated, timeModified);
-        }
-
-        /// <summary> Initializes a new instance of TemplateSpecPatch. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TemplateSpecPatch"/> instance for mocking. </returns>
-        public static TemplateSpecPatch TemplateSpecPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new TemplateSpecPatch(id, name, resourceType, systemData, tags);
-        }
-
-        /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="description"> Template Spec version description. </param>
-        /// <param name="linkedTemplates"> An array of linked template artifacts. </param>
-        /// <param name="metadata"> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
-        /// <param name="mainTemplate"> The main Azure Resource Manager template content. </param>
-        /// <param name="uiFormDefinition"> The Azure Resource Manager template UI definition content. </param>
-        /// <returns> A new <see cref="Resources.TemplateSpecVersionData"/> instance for mocking. </returns>
-        public static TemplateSpecVersionData TemplateSpecVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation location = default, IDictionary<string, string> tags = null, string description = null, IEnumerable<LinkedTemplateArtifact> linkedTemplates = null, BinaryData metadata = null, BinaryData mainTemplate = null, BinaryData uiFormDefinition = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            linkedTemplates ??= new List<LinkedTemplateArtifact>();
-
-            return new TemplateSpecVersionData(id, name, resourceType, systemData, location, tags, description, linkedTemplates?.ToList(), metadata, mainTemplate, uiFormDefinition);
-        }
-
-        /// <summary> Initializes a new instance of TemplateSpecVersionPatch. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TemplateSpecVersionPatch"/> instance for mocking. </returns>
-        public static TemplateSpecVersionPatch TemplateSpecVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new TemplateSpecVersionPatch(id, name, resourceType, systemData, tags);
-        }
-
-        /// <summary> Initializes a new instance of AzurePowerShellScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzurePowerShellScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzurePowerShell, containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
         }
 
-        /// <summary> Initializes a new instance of ScriptStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScriptStatus"/>. </summary>
         /// <param name="containerInstanceId"> ACI resource Id. </param>
         /// <param name="storageAccountId"> Storage account resource Id. </param>
         /// <param name="startOn"> Start time of the script execution. </param>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new ScriptStatus(containerInstanceId, storageAccountId, startOn, endOn, expireOn, error);
         }
 
-        /// <summary> Initializes a new instance of AzureCliScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureCliScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

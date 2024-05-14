@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary> A class representing the SecurityInsightsAutomationRule data model. </summary>
     public partial class SecurityInsightsAutomationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/>. </summary>
         /// <param name="displayName"> The display name of the automation rule. </param>
         /// <param name="order"> The order of execution of the automation rule. </param>
         /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAutomationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

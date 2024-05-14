@@ -38,13 +38,28 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (Optional.IsCollectionDefined(Databases))
+            if (Optional.IsCollectionDefined(FailoverDatabases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (var item in Databases)
+                foreach (var item in FailoverDatabases)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PartnerServers))
+            {
+                writer.WritePropertyName("partnerServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in PartnerServers)
+                {
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }

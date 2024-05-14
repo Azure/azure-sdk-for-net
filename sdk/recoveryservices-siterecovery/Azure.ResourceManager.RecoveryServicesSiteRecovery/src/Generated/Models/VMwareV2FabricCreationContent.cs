@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareV2 fabric provider specific settings. </summary>
     public partial class VMwareV2FabricCreationContent : FabricSpecificCreationContent
     {
-        /// <summary> Initializes a new instance of VMwareV2FabricCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/>. </summary>
         /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationSolutionId"/> is null. </exception>
         public VMwareV2FabricCreationContent(ResourceIdentifier migrationSolutionId)
@@ -22,6 +22,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             MigrationSolutionId = migrationSolutionId;
             InstanceType = "VMwareV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. </param>
+        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
+        /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
+        internal VMwareV2FabricCreationContent(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId) : base(instanceType)
+        {
+            VMwareSiteId = vmwareSiteId;
+            PhysicalSiteId = physicalSiteId;
+            MigrationSolutionId = migrationSolutionId;
+            InstanceType = instanceType ?? "VMwareV2";
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>

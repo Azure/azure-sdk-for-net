@@ -12,9 +12,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents an Active Directory administrator. </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
         public PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent"/>. </summary>
+        /// <param name="principalType"> The principal type used to represent the type of Active Directory Administrator. </param>
+        /// <param name="principalName"> Active Directory administrator principal name. </param>
+        /// <param name="tenantId"> The tenantId of the Active Directory administrator. </param>
+        internal PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId)
+        {
+            PrincipalType = principalType;
+            PrincipalName = principalName;
+            TenantId = tenantId;
         }
 
         /// <summary> The principal type used to represent the type of Active Directory Administrator. </summary>

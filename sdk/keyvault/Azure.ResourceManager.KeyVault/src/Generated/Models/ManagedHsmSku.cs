@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> SKU details. </summary>
     public partial class ManagedHsmSku
     {
-        /// <summary> Initializes a new instance of ManagedHsmSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmSku"/>. </summary>
         /// <param name="family"> SKU Family of the managed HSM Pool. </param>
         /// <param name="name"> SKU of the managed HSM Pool. </param>
         public ManagedHsmSku(ManagedHsmSkuFamily family, ManagedHsmSkuName name)

@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
     /// <summary> Participants to be added to the thread. </summary>
     internal partial class AddChatParticipantsRequest
     {
-        /// <summary> Initializes a new instance of AddChatParticipantsRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddChatParticipantsRequest"/>. </summary>
         /// <param name="participants"> Participants to add to a chat thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
         public AddChatParticipantsRequest(IEnumerable<ChatParticipantInternal> participants)
@@ -23,6 +23,13 @@ namespace Azure.Communication.Chat
             Argument.AssertNotNull(participants, nameof(participants));
 
             Participants = participants.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddChatParticipantsRequest"/>. </summary>
+        /// <param name="participants"> Participants to add to a chat thread. </param>
+        internal AddChatParticipantsRequest(IList<ChatParticipantInternal> participants)
+        {
+            Participants = participants;
         }
 
         /// <summary> Participants to add to a chat thread. </summary>

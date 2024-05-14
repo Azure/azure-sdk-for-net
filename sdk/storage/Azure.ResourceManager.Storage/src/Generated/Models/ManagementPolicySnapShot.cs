@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Management policy action for snapshot. </summary>
     public partial class ManagementPolicySnapShot
     {
-        /// <summary> Initializes a new instance of ManagementPolicySnapShot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySnapShot"/>. </summary>
         public ManagementPolicySnapShot()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicySnapShot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySnapShot"/>. </summary>
         /// <param name="tierToCool"> The function to tier blob snapshot to cool storage. </param>
         /// <param name="tierToArchive"> The function to tier blob snapshot to archive storage. </param>
         /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>

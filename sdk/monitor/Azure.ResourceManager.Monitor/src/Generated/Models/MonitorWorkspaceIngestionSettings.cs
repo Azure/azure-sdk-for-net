@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Settings for data ingestion. </summary>
     public partial class MonitorWorkspaceIngestionSettings
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceIngestionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceIngestionSettings"/>. </summary>
         internal MonitorWorkspaceIngestionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceIngestionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceIngestionSettings"/>. </summary>
         /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
         /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
         internal MonitorWorkspaceIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId, ResourceIdentifier dataCollectionEndpointResourceId)

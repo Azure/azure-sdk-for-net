@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputDataSource"/>. </summary>
         protected StreamingJobOutputDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         internal StreamingJobOutputDataSource(string outputDataSourceType)
         {

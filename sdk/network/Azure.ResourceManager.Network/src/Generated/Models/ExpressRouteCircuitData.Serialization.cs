@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,20 +16,43 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCircuitData : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExpressRouteCircuitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -107,6 +132,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(STag))
+            {
+                writer.WritePropertyName("stag"u8);
+                writer.WriteNumberValue(STag.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
@@ -122,12 +157,46 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
+            if (options.Format != "W" && Optional.IsDefined(AuthorizationStatus))
+            {
+                writer.WritePropertyName("authorizationStatus"u8);
+                writer.WriteStringValue(AuthorizationStatus);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element)
+        ExpressRouteCircuitData IJsonModel<ExpressRouteCircuitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCircuitData(document.RootElement, options);
+        }
+
+        internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +224,8 @@ namespace Azure.ResourceManager.Network
             Optional<bool> globalReachEnabled = default;
             Optional<string> authorizationKey = default;
             Optional<string> authorizationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -363,8 +434,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
         }
+
+        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExpressRouteCircuitData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExpressRouteCircuitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App runtime settings. </summary>
     public partial class FunctionAppRuntimeSettings
     {
-        /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeSettings"/>. </summary>
         internal FunctionAppRuntimeSettings()
         {
             AppSettingsDictionary = new ChangeTrackingDictionary<string, string>();
             SupportedFunctionsExtensionVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeSettings"/>. </summary>
         /// <param name="runtimeVersion"> Function App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class KeyAndSecretDetails
     {
-        /// <summary> Initializes a new instance of KeyAndSecretDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyAndSecretDetails"/>. </summary>
         public KeyAndSecretDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyAndSecretDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyAndSecretDetails"/>. </summary>
         /// <param name="kekDetails"> KEK is encryption key for BEK. </param>
         /// <param name="bekDetails"> BEK is bitlocker encryption key. </param>
         /// <param name="encryptionMechanism"> Encryption mechanism: None/ SinglePass/ DoublePass. </param>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MixedReality
     /// </summary>
     public partial class SpatialAnchorsAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnchorsAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SpatialAnchorsAccountData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnchorsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

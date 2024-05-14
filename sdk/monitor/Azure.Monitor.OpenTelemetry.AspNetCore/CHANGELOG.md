@@ -1,14 +1,78 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.1.0 (2024-01-25)
 
-### Features Added
+### Other Changes
+
+- Removed the code of internal vendored instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http`.
+  Previously users needed to manually add package references to these instrumentation libraries to apply any customizations. This will no longer be necessary.
+  Now that these packages have released stable versions, we will directly reference those and users will be able to apply any customizations using the publicly available APIs.
+  ([#41395](https://github.com/Azure/azure-sdk-for-net/pull/41395))
+- Update OpenTelemetry dependencies
+  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  - OpenTelemetry 1.7.0
+  - OpenTelemetry.Extensions.Hosting 1.7.0
+  - NEW: OpenTelemetry.Instrumentation.AspNetCore 1.7.0
+  - NEW: OpenTelemetry.Instrumentation.Http 1.7.0
+
+## 1.0.0 (2023-11-29)
+
+### Other Changes
+
+- Updated the code of vendored instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore`, `OpenTelemetry.Instrumentation.Http`, and `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET repository.
+  Code has been updated to [1.6.0-beta3](https://github.com/open-telemetry/opentelemetry-dotnet/tree/1.6.0-beta.3).
+  ([#40315](https://github.com/Azure/azure-sdk-for-net/pull/40315))
+
+## 1.0.0-beta.8 (2023-10-05)
 
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed package references to the beta versions of `OpenTelemetry.Instrumentation.AspNetCore`, `OpenTelemetry.Instrumentation.Http`, and `OpenTelemetry.Instrumentation.SqlClient`.
+  Instead, these packages are now internally vendored within the distro.
+  Due to this change, users will no longer be able to access the public APIs of these beta packages.
+  Manually adding package references to these instrumentation libraries in an application will cause the internal vendored instrumentation from the distro to be ignored.
+  If users choose to add these references, they must ensure to update their configuration subsequently. This includes incorporating the necessary instrumentation using either TracerProviderBuilder or MeterProviderBuilder.
 
 ### Other Changes
+
+- Vendored the code of instrumentation libraries `OpenTelemetry.Instrumentation.AspNetCore`, `OpenTelemetry.Instrumentation.Http`, and `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET repository.
+  Integrated the forked code and converted all of its public API to internal.
+  This ensures that `Azure.Monitor.OpenTelemetry.AspNetCore` has native support for ASP.NET Core, HTTP Client, and SQL instrumentation without needing external beta package references.
+- Vendored the code of the `OpenTelemetry.ResourceDetectors.Azure` resource detector from the OpenTelemetry .NET Contrib repository and made its public API internal.
+- Removed reference to the `OpenTelemetry.ResourceDetectors.Azure` resource detector package.
+- Replaced the project reference for `Azure.Monitor.OpenTelemetry.Exporter` with a 1.0.0 package reference.
+
+## 1.0.0-beta.7 (2023-09-20)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  ([#38833](https://github.com/Azure/azure-sdk-for-net/pull/38833))
+  - OpenTelemetry 1.6.0
+  - OpenTelemetry.Extensions.Hosting 1.6.0
+  - OpenTelemetry.ResourceDetectors.Azure 1.0.0-beta.3
+
+## 1.0.0-beta.6 (2023-08-09)
+
+### Features Added
+
+* Added `Resource` to traces, logs, and metrics with default configuration.
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+* Added resource detection for `Azure App Service` and `Azure Virtual Machine` environment. .
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+  ([#37881](https://github.com/Azure/azure-sdk-for-net/pull/37881))
+  - OpenTelemetry 1.5.1
+  - OpenTelemetry.Extensions.Hosting 1.5.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.5.1-beta.1
+  - OpenTelemetry.Instrumentation.Http 1.5.1-beta.1
+  - OpenTelemetry.Instrumentation.SqlClient 1.5.1-beta.1
+  - OpenTelemetry.ResourceDetectors.Azure 1.0.0-beta2
 
 ## 1.0.0-beta.5 (2023-07-13)
 

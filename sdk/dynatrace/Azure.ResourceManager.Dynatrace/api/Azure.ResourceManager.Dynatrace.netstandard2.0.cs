@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetIfExists(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetIfExistsAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class DynatraceMonitorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DynatraceMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DynatraceMonitorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
@@ -90,6 +92,8 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetIfExists(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetIfExistsAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -126,6 +130,8 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetIfExists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetIfExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -150,6 +156,29 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Update(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Dynatrace.Mocking
+{
+    public partial class MockableDynatraceArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDynatraceArmClient() { }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorResource GetDynatraceMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource GetDynatraceTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDynatraceResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDynatraceResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitor(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetDynatraceMonitorAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorCollection GetDynatraceMonitors() { throw null; }
+    }
+    public partial class MockableDynatraceSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDynatraceSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Dynatrace.Models

@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a cloud service Extension. </summary>
     public partial class CloudServiceExtension
     {
-        /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceExtension"/>. </summary>
         public CloudServiceExtension()
         {
             RolesAppliedTo = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="cloudServiceExtensionPropertiesType"> Specifies the type of the extension. </param>
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or '*' is specified, extension is applied to all roles in the cloud service. </param>
-        internal CloudServiceExtension(string name, string publisher, string cloudServiceExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault, string forceUpdateTag, string provisioningState, IList<string> rolesAppliedTo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceExtension(string name, string publisher, string cloudServiceExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault, string forceUpdateTag, string provisioningState, IList<string> rolesAppliedTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Publisher = publisher;
@@ -51,6 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             ForceUpdateTag = forceUpdateTag;
             ProvisioningState = provisioningState;
             RolesAppliedTo = rolesAppliedTo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -69,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -100,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

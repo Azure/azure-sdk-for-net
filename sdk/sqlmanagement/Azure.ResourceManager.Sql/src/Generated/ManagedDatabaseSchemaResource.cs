@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedDatabaseSchema along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseSchemaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseSchemaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseSchema method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDatabaseSchemaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDatabaseSchemaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedDatabaseSchema method.
     /// </summary>
     public partial class ManagedDatabaseSchemaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseSchemaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseSchemasRestOperations _managedDatabaseSchemaRestClient;
         private readonly DatabaseSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSchemaResource"/> class for mocking. </summary>
         protected ManagedDatabaseSchemaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseSchemaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDatabaseSchemaResource(ArmClient client, DatabaseSchemaData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseTableResources and their operations over a ManagedDatabaseTableResource. </returns>
         public virtual ManagedDatabaseTableCollection GetManagedDatabaseTables()
         {
-            return GetCachedClient(Client => new ManagedDatabaseTableCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseTableCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +109,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDatabaseTableResource>> GetManagedDatabaseTableAsync(string tableName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +140,20 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedDatabaseTableResource> GetManagedDatabaseTable(string tableName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +210,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedDatabaseSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDatabaseSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A rule management event data source. The discriminator fields is always RuleManagementEventDataSource in this case. </summary>
     public partial class RuleManagementEventDataSource : RuleDataSource
     {
-        /// <summary> Initializes a new instance of RuleManagementEventDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventDataSource"/>. </summary>
         public RuleManagementEventDataSource()
         {
             OdataType = "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource";
         }
 
-        /// <summary> Initializes a new instance of RuleManagementEventDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventDataSource"/>. </summary>
         /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
         /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>

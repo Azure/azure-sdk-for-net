@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> resource sku. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
@@ -36,7 +68,7 @@ namespace Azure.ResourceManager.ElasticSan
             PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +86,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -67,6 +101,13 @@ namespace Azure.ResourceManager.ElasticSan
             TotalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
             PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/> for deserialization. </summary>
+        internal ElasticSanData()
+        {
         }
 
         /// <summary> resource sku. </summary>
@@ -91,5 +132,7 @@ namespace Azure.ResourceManager.ElasticSan
         public long? TotalSizeTiB { get; }
         /// <summary> The list of Private Endpoint Connections. </summary>
         public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        public ElasticSanPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

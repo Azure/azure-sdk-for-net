@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Base tracked resource type for PATCH updates. </summary>
     public partial class DevCenterTrackedResourceUpdate
     {
-        /// <summary> Initializes a new instance of DevCenterTrackedResourceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterTrackedResourceUpdate"/>. </summary>
         public DevCenterTrackedResourceUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterTrackedResourceUpdate"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal DevCenterTrackedResourceUpdate(IDictionary<string, string> tags, AzureLocation? location)
+        {
+            Tags = tags;
+            Location = location;
         }
 
         /// <summary> Resource tags. </summary>

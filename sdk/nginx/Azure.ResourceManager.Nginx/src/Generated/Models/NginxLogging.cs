@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxLogging. </summary>
     internal partial class NginxLogging
     {
-        /// <summary> Initializes a new instance of NginxLogging. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxLogging"/>. </summary>
         public NginxLogging()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxLogging. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxLogging"/>. </summary>
         /// <param name="storageAccount"></param>
         internal NginxLogging(NginxStorageAccount storageAccount)
         {

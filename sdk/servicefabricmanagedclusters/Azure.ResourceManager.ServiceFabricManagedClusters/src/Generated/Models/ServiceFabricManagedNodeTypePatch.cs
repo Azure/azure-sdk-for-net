@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Node type update request. </summary>
     public partial class ServiceFabricManagedNodeTypePatch
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypePatch"/>. </summary>
         public ServiceFabricManagedNodeTypePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypePatch"/>. </summary>
+        /// <param name="tags"> Node type update parameters. </param>
+        /// <param name="sku"> The node type sku. </param>
+        internal ServiceFabricManagedNodeTypePatch(IDictionary<string, string> tags, NodeTypeSku sku)
+        {
+            Tags = tags;
+            Sku = sku;
         }
 
         /// <summary> Node type update parameters. </summary>

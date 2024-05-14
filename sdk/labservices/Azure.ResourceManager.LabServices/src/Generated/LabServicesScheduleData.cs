@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabServicesScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesScheduleData"/>. </summary>
         public LabServicesScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.LabServices
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

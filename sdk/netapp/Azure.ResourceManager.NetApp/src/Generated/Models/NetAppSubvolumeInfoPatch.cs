@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Subvolume Patch Request properties. </summary>
     public partial class NetAppSubvolumeInfoPatch
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumeInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoPatch"/>. </summary>
         public NetAppSubvolumeInfoPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoPatch"/>. </summary>
+        /// <param name="size"> Truncate subvolume to the provided size in bytes. </param>
+        /// <param name="path"> path to the subvolume. </param>
+        internal NetAppSubvolumeInfoPatch(long? size, string path)
+        {
+            Size = size;
+            Path = path;
         }
 
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery services provider properties. </summary>
     public partial class SiteRecoveryServicesProviderProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderProperties"/>. </summary>
         internal SiteRecoveryServicesProviderProperties()
         {
             AllowedScenarios = new ChangeTrackingList<string>();
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderProperties"/>. </summary>
         /// <param name="fabricType"> Type of the site. </param>
         /// <param name="friendlyName"> Friendly name of the DRA. </param>
         /// <param name="providerVersion"> The provider version. </param>

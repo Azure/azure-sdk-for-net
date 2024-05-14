@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Properties of key vault. </summary>
     public partial class StorageAccountKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKeyVaultProperties"/>. </summary>
         public StorageAccountKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>

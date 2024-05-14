@@ -53,6 +53,11 @@ namespace Azure.Storage.Files.Shares.Models
         public string ClientIp { get; }
 
         /// <summary>
+        /// Client Name that opened the handle.
+        /// </summary>
+        private string ClientName { get; }
+
+        /// <summary>
         /// Access rights of the handle.
         /// </summary>
         public ShareFileHandleAccessRights? AccessRights { get; }
@@ -64,6 +69,7 @@ namespace Azure.Storage.Files.Shares.Models
             string parentId,
             string sessionId,
             string clientIp,
+            string clientName,
             DateTimeOffset? openedOn,
             DateTimeOffset? lastReconnectedOn,
             ShareFileHandleAccessRights? accessRights)
@@ -74,6 +80,7 @@ namespace Azure.Storage.Files.Shares.Models
             ParentId = parentId;
             SessionId = sessionId;
             ClientIp = clientIp;
+            ClientName = clientName;
             OpenedOn = openedOn;
             LastReconnectedOn = lastReconnectedOn;
             AccessRights = accessRights;

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Reset Properties ARM resource. </summary>
     public partial class StaticSiteResetContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteResetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteResetContent"/>. </summary>
         public StaticSiteResetContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteResetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteResetContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

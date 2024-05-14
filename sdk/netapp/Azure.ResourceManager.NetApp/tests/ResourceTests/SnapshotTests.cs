@@ -177,6 +177,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
             Assert.IsTrue(await _snapshotCollection.ExistsAsync(snapshotName));
             Assert.IsFalse(await _snapshotCollection.ExistsAsync(snapshotName + "1"));
+            await LiveDelay(10000);
         }
 
         [RecordedTest]

@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BmcKeySetList represents a list of baseboard management controller key sets. </summary>
     internal partial class BmcKeySetList
     {
-        /// <summary> Initializes a new instance of BmcKeySetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BmcKeySetList"/>. </summary>
         internal BmcKeySetList()
         {
-            Value = new ChangeTrackingList<BmcKeySetData>();
+            Value = new ChangeTrackingList<NetworkCloudBmcKeySetData>();
         }
 
-        /// <summary> Initializes a new instance of BmcKeySetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BmcKeySetList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of baseboard management controller key sets. </param>
-        internal BmcKeySetList(string nextLink, IReadOnlyList<BmcKeySetData> value)
+        internal BmcKeySetList(string nextLink, IReadOnlyList<NetworkCloudBmcKeySetData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of baseboard management controller key sets. </summary>
-        public IReadOnlyList<BmcKeySetData> Value { get; }
+        public IReadOnlyList<NetworkCloudBmcKeySetData> Value { get; }
     }
 }

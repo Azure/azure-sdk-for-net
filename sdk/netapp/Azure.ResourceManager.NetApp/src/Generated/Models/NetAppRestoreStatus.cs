@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
-        /// <summary> Initializes a new instance of NetAppRestoreStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         internal NetAppRestoreStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppRestoreStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         /// <param name="isHealthy"> Restore health status. </param>
         /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
         /// <param name="mirrorState"> The status of the restore. </param>

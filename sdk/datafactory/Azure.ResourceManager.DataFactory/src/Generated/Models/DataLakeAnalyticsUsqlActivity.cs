@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data Lake Analytics U-SQL activity. </summary>
     public partial class DataLakeAnalyticsUsqlActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsUsqlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "DataLakeAnalyticsU-SQL";
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsUsqlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for U-SQL job request. </param>
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
-        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, ActivityState? state, ActivityOnInactiveMarkA? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, DataFactoryElement<int> degreeOfParallelism, DataFactoryElement<int> priority, IDictionary<string, BinaryData> parameters, DataFactoryElement<string> runtimeVersion, DataFactoryElement<string> compilationMode) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, DataFactoryElement<int> degreeOfParallelism, DataFactoryElement<int> priority, IDictionary<string, BinaryData> parameters, DataFactoryElement<string> runtimeVersion, DataFactoryElement<string> compilationMode) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

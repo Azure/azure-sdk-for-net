@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Backup management usage for vault. </summary>
     internal partial class BackupManagementUsageList
     {
-        /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsageList"/>. </summary>
         internal BackupManagementUsageList()
         {
             Value = new ChangeTrackingList<BackupManagementUsage>();
         }
 
-        /// <summary> Initializes a new instance of BackupManagementUsageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupManagementUsageList"/>. </summary>
         /// <param name="value"> The list of backup management usages for the given vault. </param>
         internal BackupManagementUsageList(IReadOnlyList<BackupManagementUsage> value)
         {

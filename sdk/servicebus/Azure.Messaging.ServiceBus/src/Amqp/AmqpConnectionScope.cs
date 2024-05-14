@@ -1320,12 +1320,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string hostName,
             int port)
         {
+            // Allow the host to control the size of the transport buffers for sending and
+            // receiving by setting the value to -1.  This results in much improved throughput
+            // across platforms, as different Linux distros have different needs to
+            // maximize efficiency, with Window having its own needs as well.
             var tcpSettings = new TcpTransportSettings
             {
                 Host = hostName,
                 Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
-                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
+                ReceiveBufferSize = -1,
+                SendBufferSize = -1
             };
 
             return new TlsTransportSettings(tcpSettings)

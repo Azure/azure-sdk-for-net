@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Private link resource. </summary>
     public partial class WebPubSubPrivateLink : ResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubPrivateLink"/>. </summary>
         public WebPubSubPrivateLink()
         {
             RequiredMembers = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubPrivateLink"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

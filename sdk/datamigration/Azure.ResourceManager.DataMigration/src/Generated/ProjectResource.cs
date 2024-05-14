@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a Project along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProjectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataMigrationServiceResource" /> using the GetProject method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProjectResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataMigrationServiceResource"/> using the GetProject method.
     /// </summary>
     public partial class ProjectResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProjectResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="projectName"> The projectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string projectName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly ProjectsRestOperations _projectRestClient;
         private readonly ProjectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/projects";
+
         /// <summary> Initializes a new instance of the <see cref="ProjectResource"/> class for mocking. </summary>
         protected ProjectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProjectResource(ArmClient client, ProjectData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/projects";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of ServiceProjectTaskResources and their operations over a ServiceProjectTaskResource. </returns>
         public virtual ServiceProjectTaskCollection GetServiceProjectTasks()
         {
-            return GetCachedClient(Client => new ServiceProjectTaskCollection(Client, Id));
+            return GetCachedClient(client => new ServiceProjectTaskCollection(client, Id));
         }
 
         /// <summary>
@@ -105,13 +109,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the Task. </param>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceProjectTaskResource>> GetServiceProjectTaskAsync(string taskName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -129,13 +141,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Tasks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceProjectTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the Task. </param>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceProjectTaskResource> GetServiceProjectTask(string taskName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -146,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of ProjectFileResources and their operations over a ProjectFileResource. </returns>
         public virtual ProjectFileCollection GetProjectFiles()
         {
-            return GetCachedClient(Client => new ProjectFileCollection(Client, Id));
+            return GetCachedClient(client => new ProjectFileCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +180,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProjectFileResource>> GetProjectFileAsync(string fileName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +211,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectFileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProjectFileResource> GetProjectFile(string fileName, CancellationToken cancellationToken = default)
         {
@@ -205,6 +241,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +282,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +321,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +365,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -340,6 +408,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Information about the project. </param>
@@ -374,6 +450,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Information about the project. </param>
@@ -407,6 +491,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,6 +554,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -516,6 +616,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -565,6 +673,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -613,6 +729,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,6 +789,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

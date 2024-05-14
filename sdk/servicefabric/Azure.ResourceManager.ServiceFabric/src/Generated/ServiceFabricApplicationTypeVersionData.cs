@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricApplicationTypeVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricApplicationTypeVersionData(AzureLocation location) : base(location)
         {
             DefaultParameterList = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

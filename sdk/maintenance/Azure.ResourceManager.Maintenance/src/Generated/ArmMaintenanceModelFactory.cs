@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMaintenanceModelFactory
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceConfigurationData(id, name, resourceType, systemData, tags, location, @namespace, extensionProperties, maintenanceScope, visibility, installPatches, startOn, expireOn, duration, timeZone, recurEvery);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceApplyUpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceApplyUpdateData(id, name, resourceType, systemData, status, resourceId, lastUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceConfigurationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceConfigurationAssignmentData(id, name, resourceType, systemData, location, maintenanceConfigurationId, resourceId, filter);
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceUpdate"/>. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>

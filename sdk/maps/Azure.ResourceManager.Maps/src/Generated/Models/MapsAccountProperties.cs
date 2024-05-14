@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Additional Map account properties. </summary>
     public partial class MapsAccountProperties
     {
-        /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountProperties"/>. </summary>
         public MapsAccountProperties()
         {
             LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
         }
 
-        /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountProperties"/>. </summary>
         /// <param name="uniqueId"> A unique identifier for the maps account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
         /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Salesforce object dataset. </summary>
     public partial class SalesforceObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SalesforceObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SalesforceObject";
         }
 
-        /// <summary> Initializes a new instance of SalesforceObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

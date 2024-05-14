@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Backup properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerBackupProperties
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupProperties"/>. </summary>
         public PostgreSqlFlexibleServerBackupProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> A value indicating whether Geo-Redundant backup is enabled on the server. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for server. </param>

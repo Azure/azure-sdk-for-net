@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication agent details. </summary>
     public partial class ReplicationAgentDetails
     {
-        /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationAgentDetails"/>. </summary>
         internal ReplicationAgentDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationAgentDetails"/>. </summary>
         /// <param name="id"> The replication agent Id. </param>
         /// <param name="name"> The replication agent name. </param>
         /// <param name="biosId"> The replication agent Bios Id. </param>

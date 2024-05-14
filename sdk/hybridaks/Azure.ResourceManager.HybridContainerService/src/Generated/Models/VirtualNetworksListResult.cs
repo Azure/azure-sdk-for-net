@@ -11,16 +11,16 @@ using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The VirtualNetworksListResult. </summary>
+    /// <summary> A list of virtual network resources. </summary>
     internal partial class VirtualNetworksListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         internal VirtualNetworksListResult()
         {
             Value = new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal VirtualNetworksListResult(IReadOnlyList<HybridContainerServiceVirtualNetworkData> value, string nextLink)

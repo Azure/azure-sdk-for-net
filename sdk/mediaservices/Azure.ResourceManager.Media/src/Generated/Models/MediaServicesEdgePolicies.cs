@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The MediaServicesEdgePolicies. </summary>
     public partial class MediaServicesEdgePolicies
     {
-        /// <summary> Initializes a new instance of MediaServicesEdgePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesEdgePolicies"/>. </summary>
         internal MediaServicesEdgePolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaServicesEdgePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesEdgePolicies"/>. </summary>
         /// <param name="usageDataCollectionPolicy"></param>
         internal MediaServicesEdgePolicies(EdgeUsageDataCollectionPolicy usageDataCollectionPolicy)
         {

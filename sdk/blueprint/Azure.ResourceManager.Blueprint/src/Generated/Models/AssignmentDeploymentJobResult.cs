@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,58 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Result of each individual deployment in a blueprint assignment. </summary>
     public partial class AssignmentDeploymentJobResult
     {
-        /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJobResult"/>. </summary>
         public AssignmentDeploymentJobResult()
         {
-            Resources = new ChangeTrackingList<AssignmentJobCreatedResource>();
+            Resources = new ChangeTrackingList<AssignmentJobCreatedResult>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJobResult"/>. </summary>
         /// <param name="error"> Contains error details if deployment job failed. </param>
         /// <param name="resources"> Resources created as result of the deployment job. </param>
-        internal AssignmentDeploymentJobResult(AzureResourceManagerError error, IList<AssignmentJobCreatedResource> resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentDeploymentJobResult(AzureResourceManagerError error, IList<AssignmentJobCreatedResult> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contains error details if deployment job failed. </summary>
         public AzureResourceManagerError Error { get; set; }
         /// <summary> Resources created as result of the deployment job. </summary>
-        public IList<AssignmentJobCreatedResource> Resources { get; }
+        public IList<AssignmentJobCreatedResult> Resources { get; }
     }
 }

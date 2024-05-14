@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningRecurrenceTrigger. </summary>
     public partial class MachineLearningRecurrenceTrigger : MachineLearningTriggerBase
     {
-        /// <summary> Initializes a new instance of MachineLearningRecurrenceTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         public MachineLearningRecurrenceTrigger(MachineLearningRecurrenceFrequency frequency, int interval)
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TriggerType = MachineLearningTriggerType.Recurrence;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningRecurrenceTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"

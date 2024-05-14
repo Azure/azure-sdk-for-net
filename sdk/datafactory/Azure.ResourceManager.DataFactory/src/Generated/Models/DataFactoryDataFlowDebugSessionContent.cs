@@ -10,9 +10,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Request body structure for creating data flow debug session. </summary>
     public partial class DataFactoryDataFlowDebugSessionContent
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugSessionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugSessionContent"/>. </summary>
         public DataFactoryDataFlowDebugSessionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugSessionContent"/>. </summary>
+        /// <param name="computeType"> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
+        /// <param name="coreCount"> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
+        /// <param name="timeToLiveInMinutes"> Time to live setting of the cluster in minutes. </param>
+        /// <param name="integrationRuntime"> Set to use integration runtime setting for data flow debug session. </param>
+        internal DataFactoryDataFlowDebugSessionContent(string computeType, int? coreCount, int? timeToLiveInMinutes, DataFactoryIntegrationRuntimeDebugInfo integrationRuntime)
+        {
+            ComputeType = computeType;
+            CoreCount = coreCount;
+            TimeToLiveInMinutes = timeToLiveInMinutes;
+            IntegrationRuntime = integrationRuntime;
         }
 
         /// <summary> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>

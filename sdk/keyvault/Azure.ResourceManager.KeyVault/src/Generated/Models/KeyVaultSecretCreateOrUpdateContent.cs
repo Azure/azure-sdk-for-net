@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for creating or updating a secret. </summary>
     public partial class KeyVaultSecretCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of KeyVaultSecretCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultSecretCreateOrUpdateContent(SecretProperties properties)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the secret. </param>
+        /// <param name="properties"> Properties of the secret. </param>
+        internal KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags, SecretProperties properties)
+        {
+            Tags = tags;
             Properties = properties;
         }
 

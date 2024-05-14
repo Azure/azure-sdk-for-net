@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Additional information. </summary>
     internal partial class ResourceHealthEventAdditionalInformation
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventAdditionalInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventAdditionalInformation"/>. </summary>
         internal ResourceHealthEventAdditionalInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventAdditionalInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventAdditionalInformation"/>. </summary>
         /// <param name="message"> Additional information Message. </param>
         internal ResourceHealthEventAdditionalInformation(string message)
         {

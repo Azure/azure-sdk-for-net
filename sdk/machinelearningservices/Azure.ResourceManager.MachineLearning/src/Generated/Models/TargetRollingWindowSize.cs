@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class TargetRollingWindowSize
     {
-        /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRollingWindowSize"/>. </summary>
         protected TargetRollingWindowSize()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
         internal TargetRollingWindowSize(TargetRollingWindowSizeMode mode)
         {

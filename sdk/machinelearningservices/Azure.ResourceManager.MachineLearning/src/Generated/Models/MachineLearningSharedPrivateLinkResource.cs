@@ -12,35 +12,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningSharedPrivateLinkResource. </summary>
     public partial class MachineLearningSharedPrivateLinkResource
     {
-        /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         public MachineLearningSharedPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSharedPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         /// <param name="name"> Unique name of the private link. </param>
-        /// <param name="privateLinkResourceId"> The resource id that private link links to. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="groupId"> group id of the private link. </param>
+        /// <param name="privateLinkResourceId"> the resource id that private link links to. </param>
         /// <param name="requestMessage"> Request message. </param>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        internal MachineLearningSharedPrivateLinkResource(string name, ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
+        /// <param name="status"> Connection status of the service consumer with the service provider. </param>
+        internal MachineLearningSharedPrivateLinkResource(string name, string groupId, ResourceIdentifier privateLinkResourceId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
             Name = name;
-            PrivateLinkResourceId = privateLinkResourceId;
             GroupId = groupId;
+            PrivateLinkResourceId = privateLinkResourceId;
             RequestMessage = requestMessage;
             Status = status;
         }
 
         /// <summary> Unique name of the private link. </summary>
         public string Name { get; set; }
-        /// <summary> The resource id that private link links to. </summary>
-        public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary> The private link resource group id. </summary>
+        /// <summary> group id of the private link. </summary>
         public string GroupId { get; set; }
+        /// <summary> the resource id that private link links to. </summary>
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> Request message. </summary>
         public string RequestMessage { get; set; }
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
+        /// <summary> Connection status of the service consumer with the service provider. </summary>
         public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

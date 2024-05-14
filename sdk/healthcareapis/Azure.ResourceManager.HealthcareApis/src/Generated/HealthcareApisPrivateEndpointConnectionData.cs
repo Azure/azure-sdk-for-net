@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class HealthcareApisPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthcareApisPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisPrivateEndpointConnectionData"/>. </summary>
         public HealthcareApisPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

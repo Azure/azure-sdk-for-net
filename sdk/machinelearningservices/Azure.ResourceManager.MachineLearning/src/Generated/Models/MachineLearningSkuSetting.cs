@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> SkuSetting fulfills the need for stripped down SKU info in ARM contract. </summary>
     public partial class MachineLearningSkuSetting
     {
-        /// <summary> Initializes a new instance of MachineLearningSkuSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuSetting"/>. </summary>
         /// <param name="name"> [Required] The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal MachineLearningSkuSetting(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuSetting"/>. </summary>
         /// <param name="name"> [Required] The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         internal MachineLearningSkuSetting(string name, MachineLearningSkuTier? tier)

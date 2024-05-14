@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the single server configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
     public partial class SingleServerConfiguration : InfrastructureConfiguration
     {
-        /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
             DeploymentType = SapDeploymentType.SingleServer;
         }
 
-        /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleServerConfiguration"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="networkConfiguration"> Network configuration for the server. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The AuthorizationActionMapping. </summary>
     public partial class AuthorizationActionMapping
     {
-        /// <summary> Initializes a new instance of AuthorizationActionMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationActionMapping"/>. </summary>
         public AuthorizationActionMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationActionMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationActionMapping"/>. </summary>
         /// <param name="original"></param>
         /// <param name="desired"></param>
         internal AuthorizationActionMapping(string original, string desired)

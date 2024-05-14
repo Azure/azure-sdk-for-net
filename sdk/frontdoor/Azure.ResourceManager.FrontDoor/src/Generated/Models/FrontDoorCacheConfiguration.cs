@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object. </summary>
     public partial class FrontDoorCacheConfiguration
     {
-        /// <summary> Initializes a new instance of FrontDoorCacheConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCacheConfiguration"/>. </summary>
         public FrontDoorCacheConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCacheConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCacheConfiguration"/>. </summary>
         /// <param name="queryParameterStripDirective"> Treatment of URL query terms when forming the cache key. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
         /// <param name="dynamicCompression"> Whether to use dynamic compression for cached content. </param>

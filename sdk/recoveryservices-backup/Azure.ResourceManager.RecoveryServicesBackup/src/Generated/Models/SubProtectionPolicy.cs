@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Sub-protection policy which includes schedule and retention. </summary>
     public partial class SubProtectionPolicy
     {
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         public SubProtectionPolicy()
         {
             TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
         }
 
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         /// <param name="policyType"> Type of backup policy type. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
@@ -36,12 +36,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
-        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy)
+        /// <param name="snapshotBackupAdditionalDetails"> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </param>
+        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails)
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             TieringPolicy = tieringPolicy;
+            SnapshotBackupAdditionalDetails = snapshotBackupAdditionalDetails;
         }
 
         /// <summary> Type of backup policy type. </summary>
@@ -64,5 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </summary>
         public IDictionary<string, BackupTieringPolicy> TieringPolicy { get; }
+        /// <summary> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </summary>
+        public SnapshotBackupAdditionalDetails SnapshotBackupAdditionalDetails { get; set; }
     }
 }

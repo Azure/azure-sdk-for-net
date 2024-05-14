@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The ResourceGuardOperationDetail. </summary>
     public partial class ResourceGuardOperationDetail
     {
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         public ResourceGuardOperationDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         /// <param name="vaultCriticalOperation"></param>
         /// <param name="defaultResourceId"></param>
         internal ResourceGuardOperationDetail(string vaultCriticalOperation, ResourceIdentifier defaultResourceId)

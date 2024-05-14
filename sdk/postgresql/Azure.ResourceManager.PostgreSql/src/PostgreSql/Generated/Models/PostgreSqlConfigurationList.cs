@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of server configurations. </summary>
     public partial class PostgreSqlConfigurationList
     {
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConfigurationList"/>. </summary>
         public PostgreSqlConfigurationList()
         {
             Value = new ChangeTrackingList<PostgreSqlConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConfigurationList"/>. </summary>
         /// <param name="value"> The list of server configurations. </param>
         internal PostgreSqlConfigurationList(IList<PostgreSqlConfigurationData> value)
         {

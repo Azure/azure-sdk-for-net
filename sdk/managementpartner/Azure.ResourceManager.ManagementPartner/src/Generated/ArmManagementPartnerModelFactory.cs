@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmManagementPartnerModelFactory
     {
-        /// <summary> Initializes a new instance of PartnerResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPartner.PartnerResponseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             return new PartnerResponseData(id, name, resourceType, systemData, etag, partnerId, partnerName, tenantId, objectId, version, updatedOn, createdOn, state);
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationResponse"/>. </summary>
         /// <param name="name"> this is the operation response name. </param>
         /// <param name="display"> this is the operation display. </param>
         /// <param name="origin"> the is operation response origin information. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             return new OperationResponse(name, display, origin);
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationDisplay"/>. </summary>
         /// <param name="provider"> the is management partner provider. </param>
         /// <param name="resource"> the is management partner resource. </param>
         /// <param name="operation"> the is management partner operation. </param>

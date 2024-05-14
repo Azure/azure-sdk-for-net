@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.NotificationHubs
     /// </summary>
     public partial class NotificationHubNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubNamespaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

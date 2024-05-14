@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Represents available Sku pricing tiers. </summary>
     public partial class NamespaceSku
     {
-        /// <summary> Initializes a new instance of NamespaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceSku"/>. </summary>
         public NamespaceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacity">
         /// Specifies the number of Throughput Units that defines the capacity for the namespace. The property default value is

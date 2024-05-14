@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a Virtual Machine software patch. </summary>
     public partial class VirtualMachineSoftwarePatchProperties
     {
-        /// <summary> Initializes a new instance of VirtualMachineSoftwarePatchProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSoftwarePatchProperties"/>. </summary>
         internal VirtualMachineSoftwarePatchProperties()
         {
             Classifications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSoftwarePatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSoftwarePatchProperties"/>. </summary>
         /// <param name="patchId"> A unique identifier for the patch. </param>
         /// <param name="name"> The friendly name of the patch. </param>
         /// <param name="version"> The version number of the patch. This property applies only to Linux patches. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publishedOn"> The UTC timestamp when the repository published this patch. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp of the last update to this patch record. </param>
         /// <param name="assessmentState"> Describes the availability of a given patch. </param>
-        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VmGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedOn, DateTimeOffset? lastModifiedOn, PatchAssessmentState? assessmentState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VmGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedOn, DateTimeOffset? lastModifiedOn, PatchAssessmentState? assessmentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatchId = patchId;
             Name = name;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             PublishedOn = publishedOn;
             LastModifiedOn = lastModifiedOn;
             AssessmentState = assessmentState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique identifier for the patch. </summary>

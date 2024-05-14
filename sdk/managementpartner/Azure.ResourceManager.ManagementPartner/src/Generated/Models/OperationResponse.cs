@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     /// <summary> this is the management partner operations response. </summary>
     public partial class OperationResponse
     {
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         internal OperationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         /// <param name="name"> this is the operation response name. </param>
         /// <param name="display"> this is the operation display. </param>
         /// <param name="origin"> the is operation response origin information. </param>

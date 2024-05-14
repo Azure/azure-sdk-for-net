@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -12,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable
+    public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionModernChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionModernChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -24,14 +35,118 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            {
+                writer.WritePropertyName("billingPeriodId"u8);
+                writer.WriteStringValue(BillingPeriodId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageStart))
+            {
+                writer.WritePropertyName("usageStart"u8);
+                writer.WriteStringValue(UsageStart);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
+            {
+                writer.WritePropertyName("usageEnd"u8);
+                writer.WriteStringValue(UsageEnd);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
+            {
+                writer.WritePropertyName("azureCharges"u8);
+                writer.WriteObjectValue(AzureCharges);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            {
+                writer.WritePropertyName("chargesBilledSeparately"u8);
+                writer.WriteObjectValue(ChargesBilledSeparately);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
+            {
+                writer.WritePropertyName("marketplaceCharges"u8);
+                writer.WriteObjectValue(MarketplaceCharges);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            {
+                writer.WritePropertyName("billingAccountId"u8);
+                writer.WriteStringValue(BillingAccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            {
+                writer.WritePropertyName("billingProfileId"u8);
+                writer.WriteStringValue(BillingProfileId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
+            {
+                writer.WritePropertyName("invoiceSectionId"u8);
+                writer.WriteStringValue(InvoiceSectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomerId))
+            {
+                writer.WritePropertyName("customerId"u8);
+                writer.WriteStringValue(CustomerId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsInvoiced))
+            {
+                writer.WritePropertyName("isInvoiced"u8);
+                writer.WriteBooleanValue(IsInvoiced.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element)
+        ConsumptionModernChargeSummary IJsonModel<ConsumptionModernChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionModernChargeSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +168,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> invoiceSectionId = default;
             Optional<string> customerId = default;
             Optional<bool> isInvoiced = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -176,8 +293,44 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData, billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
         }
+
+        BinaryData IPersistableModel<ConsumptionModernChargeSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionModernChargeSummary IPersistableModel<ConsumptionModernChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionModernChargeSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionModernChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

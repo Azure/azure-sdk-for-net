@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on the DPM workload-specific job. </summary>
     public partial class DpmBackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of DpmBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobExtendedInfo"/>. </summary>
         public DpmBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<DpmBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DpmBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobExtendedInfo"/>. </summary>
         /// <param name="tasksList"> List of tasks associated with this job. </param>
         /// <param name="propertyBag"> The job properties. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
