@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
     public class CheckNameAvailabilityTests : SelfHelpManagementTestBase
     {
-        public CheckNameAvailabilityTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public CheckNameAvailabilityTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 

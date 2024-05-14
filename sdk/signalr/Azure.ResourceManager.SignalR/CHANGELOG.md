@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+## 1.1.2 (2024-05-07)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
 ## 1.1.1 (2024-03-23)
 
 ### Features Added
