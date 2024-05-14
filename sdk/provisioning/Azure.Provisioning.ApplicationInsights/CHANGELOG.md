@@ -1,10 +1,12 @@
 # Release History
 
-## 0.2.0 (2024-05-14)
+## 0.2.0-beta.1 (Unreleased)
 
-### Other Changes
+### Features Added
 
-- Updated dependency on Azure.ResourceManager.ApplicationInsights to leverage serialization fix involving property assignments.
+### Breaking Changes
+
+### Bugs Fixed
 
 ## 0.1.0 (2024-04-30)
 
