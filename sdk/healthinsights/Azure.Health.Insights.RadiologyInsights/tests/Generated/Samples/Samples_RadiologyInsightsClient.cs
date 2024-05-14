@@ -145,112 +145,6 @@ system = "<system>",
 version = "<version>",
 code = "<code>",
 display = "<display>",
-id = "<id>",
-extension = new object[]
-{
-new
-{
-url = "<url>",
-valueQuantity = new
-{
-value = 123.45,
-comparator = "<comparator>",
-unit = "<unit>",
-system = "<system>",
-code = "<code>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueCodeableConcept = new
-{
-coding = new object[]
-{
-null
-},
-text = "<text>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueString = "<valueString>",
-valueBoolean = true,
-valueInteger = 1234,
-valueRange = new
-{
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueRatio = new
-{
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueSampledData = new
-{
-period = 123.45,
-factor = 123.45,
-lowerLimit = 123.45,
-upperLimit = 123.45,
-dimensions = 1234,
-data = "<data>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueTime = "01:23:45",
-valueDateTime = "<valueDateTime>",
-valuePeriod = new
-{
-start = "<start>",
-end = "<end>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueReference = new
-{
-reference = "<reference>",
-type = "<type>",
-identifier = new
-{
-use = "<use>",
-system = "<system>",
-value = "<value>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-display = "<display>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-id = "<id>",
-extension = new object[]
-{
-null
-},
-}
-},
 }
 },
 tag = new object[]
@@ -302,7 +196,59 @@ new
 {
 extension = new object[]
 {
+new
+{
+url = "<url>",
+valueQuantity = new
+{
+value = 123.45,
+comparator = "<comparator>",
+unit = "<unit>",
+system = "<system>",
+code = "<code>",
+},
+valueCodeableConcept = new
+{
+coding = new object[]
+{
 null
+},
+text = "<text>",
+},
+valueString = "<valueString>",
+valueBoolean = true,
+valueInteger = 1234,
+valueRange = new {},
+valueRatio = new {},
+valueSampledData = new
+{
+period = 123.45,
+factor = 123.45,
+lowerLimit = 123.45,
+upperLimit = 123.45,
+dimensions = 1234,
+data = "<data>",
+},
+valueTime = "01:23:45",
+valueDateTime = "<valueDateTime>",
+valuePeriod = new
+{
+start = "<start>",
+end = "<end>",
+},
+valueReference = new
+{
+reference = "<reference>",
+type = "<type>",
+identifier = new
+{
+use = "<use>",
+system = "<system>",
+value = "<value>",
+},
+display = "<display>",
+},
+}
 },
 description = "<description>",
 }
@@ -354,14 +300,11 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("display").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueString").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueBoolean").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueInteger").ToString());
@@ -370,45 +313,36 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("period").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("factor").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("lowerLimit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("upperLimit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("dimensions").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("data").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueTime").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueDateTime").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("start").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("end").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("reference").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("use").ToString());
@@ -416,18 +350,12 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("display").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("start").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("end").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("display").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -473,112 +401,6 @@ system = "<system>",
 version = "<version>",
 code = "<code>",
 display = "<display>",
-id = "<id>",
-extension = new object[]
-{
-new
-{
-url = "<url>",
-valueQuantity = new
-{
-value = 123.45,
-comparator = "<comparator>",
-unit = "<unit>",
-system = "<system>",
-code = "<code>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueCodeableConcept = new
-{
-coding = new object[]
-{
-null
-},
-text = "<text>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueString = "<valueString>",
-valueBoolean = true,
-valueInteger = 1234,
-valueRange = new
-{
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueRatio = new
-{
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueSampledData = new
-{
-period = 123.45,
-factor = 123.45,
-lowerLimit = 123.45,
-upperLimit = 123.45,
-dimensions = 1234,
-data = "<data>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueTime = "01:23:45",
-valueDateTime = "<valueDateTime>",
-valuePeriod = new
-{
-start = "<start>",
-end = "<end>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-valueReference = new
-{
-reference = "<reference>",
-type = "<type>",
-identifier = new
-{
-use = "<use>",
-system = "<system>",
-value = "<value>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-display = "<display>",
-id = "<id>",
-extension = new object[]
-{
-null
-},
-},
-id = "<id>",
-extension = new object[]
-{
-null
-},
-}
-},
 }
 },
 tag = new object[]
@@ -630,7 +452,59 @@ new
 {
 extension = new object[]
 {
+new
+{
+url = "<url>",
+valueQuantity = new
+{
+value = 123.45,
+comparator = "<comparator>",
+unit = "<unit>",
+system = "<system>",
+code = "<code>",
+},
+valueCodeableConcept = new
+{
+coding = new object[]
+{
 null
+},
+text = "<text>",
+},
+valueString = "<valueString>",
+valueBoolean = true,
+valueInteger = 1234,
+valueRange = new {},
+valueRatio = new {},
+valueSampledData = new
+{
+period = 123.45,
+factor = 123.45,
+lowerLimit = 123.45,
+upperLimit = 123.45,
+dimensions = 1234,
+data = "<data>",
+},
+valueTime = "01:23:45",
+valueDateTime = "<valueDateTime>",
+valuePeriod = new
+{
+start = "<start>",
+end = "<end>",
+},
+valueReference = new
+{
+reference = "<reference>",
+type = "<type>",
+identifier = new
+{
+use = "<use>",
+system = "<system>",
+value = "<value>",
+},
+display = "<display>",
+},
+}
 },
 description = "<description>",
 }
@@ -682,14 +556,11 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueQuantity").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("display").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("coding")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueCodeableConcept").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueString").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueBoolean").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueInteger").ToString());
@@ -698,45 +569,36 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("low").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("high").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRange").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("numerator").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("denominator").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueRatio").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("comparator").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("unit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("origin").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("period").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("factor").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("lowerLimit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("upperLimit").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("dimensions").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("data").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueSampledData").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueTime").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueDateTime").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("start").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("end").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valuePeriod").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("reference").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("use").ToString());
@@ -744,18 +606,12 @@ value = "<value>",
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("version").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("display").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("coding")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("text").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("type").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("system").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("start").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("end").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("period").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("identifier").GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("display").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("valueReference").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inferences")[0].GetProperty("extension")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
         }
 
@@ -790,83 +646,6 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
-Id = "<id>",
-Extension = {new FhirR4Extension("<url>")
-{
-ValueQuantity = new FhirR4Quantity
-{
-Value = 123.45,
-Comparator = "<comparator>",
-Unit = "<unit>",
-System = "<system>",
-Code = "<code>",
-Id = "<id>",
-Extension = {default},
-},
-ValueCodeableConcept = new FhirR4CodeableConcept
-{
-Coding = {default},
-Text = "<text>",
-Id = "<id>",
-Extension = {default},
-},
-ValueString = "<valueString>",
-ValueBoolean = true,
-ValueInteger = 1234,
-ValueRange = new FhirR4Range
-{
-Low = default,
-High = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueRatio = new FhirR4Ratio
-{
-Numerator = default,
-Denominator = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
-{
-Factor = 123.45,
-LowerLimit = 123.45,
-UpperLimit = 123.45,
-Data = "<data>",
-Id = "<id>",
-Extension = {default},
-},
-ValueTime = TimeSpan.Parse("01:23:45"),
-ValueDateTime = "<valueDateTime>",
-ValuePeriod = new FhirR4Period
-{
-Start = "<start>",
-End = "<end>",
-Id = "<id>",
-Extension = {default},
-},
-ValueReference = new FhirR4Reference
-{
-Reference = "<reference>",
-Type = "<type>",
-Identifier = new FhirR4Identifier
-{
-Use = "<use>",
-Type = default,
-System = "<system>",
-Value = "<value>",
-Period = default,
-Assigner = default,
-Id = "<id>",
-Extension = {default},
-},
-Display = "<display>",
-Id = "<id>",
-Extension = {default},
-},
-Id = "<id>",
-Extension = {default},
-}},
 }},
 Tag = {default},
 },
@@ -898,7 +677,64 @@ AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
 OrderedProcedures = {new OrderedProcedure
 {
-Extension = {default},
+Extension = {new FhirR4Extension("<url>")
+{
+ValueQuantity = new FhirR4Quantity
+{
+Value = 123.45,
+Comparator = "<comparator>",
+Unit = "<unit>",
+System = "<system>",
+Code = "<code>",
+},
+ValueCodeableConcept = new FhirR4CodeableConcept
+{
+Coding = {default},
+Text = "<text>",
+},
+ValueString = "<valueString>",
+ValueBoolean = true,
+ValueInteger = 1234,
+ValueRange = new FhirR4Range
+{
+Low = default,
+High = default,
+},
+ValueRatio = new FhirR4Ratio
+{
+Numerator = default,
+Denominator = default,
+},
+ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+{
+Factor = 123.45,
+LowerLimit = 123.45,
+UpperLimit = 123.45,
+Data = "<data>",
+},
+ValueTime = TimeSpan.Parse("01:23:45"),
+ValueDateTime = "<valueDateTime>",
+ValuePeriod = new FhirR4Period
+{
+Start = "<start>",
+End = "<end>",
+},
+ValueReference = new FhirR4Reference
+{
+Reference = "<reference>",
+Type = "<type>",
+Identifier = new FhirR4Identifier
+{
+Use = "<use>",
+Type = default,
+System = "<system>",
+Value = "<value>",
+Period = default,
+Assigner = default,
+},
+Display = "<display>",
+},
+}},
 Code = default,
 Description = "<description>",
 }},
@@ -964,83 +800,6 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
-Id = "<id>",
-Extension = {new FhirR4Extension("<url>")
-{
-ValueQuantity = new FhirR4Quantity
-{
-Value = 123.45,
-Comparator = "<comparator>",
-Unit = "<unit>",
-System = "<system>",
-Code = "<code>",
-Id = "<id>",
-Extension = {default},
-},
-ValueCodeableConcept = new FhirR4CodeableConcept
-{
-Coding = {default},
-Text = "<text>",
-Id = "<id>",
-Extension = {default},
-},
-ValueString = "<valueString>",
-ValueBoolean = true,
-ValueInteger = 1234,
-ValueRange = new FhirR4Range
-{
-Low = default,
-High = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueRatio = new FhirR4Ratio
-{
-Numerator = default,
-Denominator = default,
-Id = "<id>",
-Extension = {default},
-},
-ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
-{
-Factor = 123.45,
-LowerLimit = 123.45,
-UpperLimit = 123.45,
-Data = "<data>",
-Id = "<id>",
-Extension = {default},
-},
-ValueTime = TimeSpan.Parse("01:23:45"),
-ValueDateTime = "<valueDateTime>",
-ValuePeriod = new FhirR4Period
-{
-Start = "<start>",
-End = "<end>",
-Id = "<id>",
-Extension = {default},
-},
-ValueReference = new FhirR4Reference
-{
-Reference = "<reference>",
-Type = "<type>",
-Identifier = new FhirR4Identifier
-{
-Use = "<use>",
-Type = default,
-System = "<system>",
-Value = "<value>",
-Period = default,
-Assigner = default,
-Id = "<id>",
-Extension = {default},
-},
-Display = "<display>",
-Id = "<id>",
-Extension = {default},
-},
-Id = "<id>",
-Extension = {default},
-}},
 }},
 Tag = {default},
 },
@@ -1072,7 +831,64 @@ AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
 OrderedProcedures = {new OrderedProcedure
 {
-Extension = {default},
+Extension = {new FhirR4Extension("<url>")
+{
+ValueQuantity = new FhirR4Quantity
+{
+Value = 123.45,
+Comparator = "<comparator>",
+Unit = "<unit>",
+System = "<system>",
+Code = "<code>",
+},
+ValueCodeableConcept = new FhirR4CodeableConcept
+{
+Coding = {default},
+Text = "<text>",
+},
+ValueString = "<valueString>",
+ValueBoolean = true,
+ValueInteger = 1234,
+ValueRange = new FhirR4Range
+{
+Low = default,
+High = default,
+},
+ValueRatio = new FhirR4Ratio
+{
+Numerator = default,
+Denominator = default,
+},
+ValueSampledData = new FhirR4SampledData(default, 123.45, 1234)
+{
+Factor = 123.45,
+LowerLimit = 123.45,
+UpperLimit = 123.45,
+Data = "<data>",
+},
+ValueTime = TimeSpan.Parse("01:23:45"),
+ValueDateTime = "<valueDateTime>",
+ValuePeriod = new FhirR4Period
+{
+Start = "<start>",
+End = "<end>",
+},
+ValueReference = new FhirR4Reference
+{
+Reference = "<reference>",
+Type = "<type>",
+Identifier = new FhirR4Identifier
+{
+Use = "<use>",
+Type = default,
+System = "<system>",
+Value = "<value>",
+Period = default,
+Assigner = default,
+},
+Display = "<display>",
+},
+}},
 Code = default,
 Description = "<description>",
 }},
