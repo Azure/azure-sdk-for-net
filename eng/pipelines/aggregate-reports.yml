@@ -177,7 +177,7 @@ stages:
               addSpnToEnvironment: true
               inlineScript: |
                 az --version
-                az account show
+                az account show -o json
                 Write-Host "##vso[task.setvariable variable=ARM_CLIENT_ID;issecret=true]$($env:servicePrincipalId)"
                 Write-Host "##vso[task.setvariable variable=ARM_TENANT_ID;issecret=true]$($env:tenantId)"
                 Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
@@ -203,7 +203,7 @@ stages:
               AzureServicesAuthConnectionString: RunAs=Developer;DeveloperTool=AzureCli
 
           - pwsh: |
-                az account show
+                az account show -o json
                 az logout
                 az account clear
             displayName: Logout of Azure CLI
