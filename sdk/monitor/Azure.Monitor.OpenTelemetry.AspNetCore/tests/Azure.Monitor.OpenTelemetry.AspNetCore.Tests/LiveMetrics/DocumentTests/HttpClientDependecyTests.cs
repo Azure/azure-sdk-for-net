@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ACT
             using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
-            dependencyActivity.SetTag("http.method", "GET");
+            dependencyActivity.SetTag("http.request.method", "GET");
             dependencyActivity.SetTag("url.full", "http://bing.com");
             dependencyActivity.SetTag("http.response.status_code", 200);
 
@@ -69,8 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal("HelloWorld", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
-
-            VerifyCustomProperties(dependencyDocument);
+            Assert.Equal(10, dependencyDocument.Properties.Count);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);

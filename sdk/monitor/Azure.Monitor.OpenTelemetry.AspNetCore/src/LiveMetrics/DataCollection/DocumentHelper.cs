@@ -4,6 +4,7 @@
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Logs;
@@ -16,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
     /// </summary>
     internal static class DocumentHelper
     {
-        private const int MaxPropertiesCount = 10;
+        internal const int MaxPropertiesCount = 10;
 
         // TODO: NEED TO HANDLE UNIQUE MAXLENGTH VALUES FOR DOCUMENT TYPES. SEE SWAGGER FOR MAXLENGTH VALUES.
 
@@ -102,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
         }
         #endregion
 
-        internal static RemoteDependency ConvertToDependencyDocument(Activity activity)
+        internal static RemoteDependency ConvertToOldDependencyDocument(Activity activity)
         {
             // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
             var activityTagsProcessor = new ActivityTagsProcessor();
@@ -166,7 +167,67 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     break;
             }
 
+            activityTagsProcessor.Return();
+
             return remoteDependencyDocumentIngress;
+        }
+
+        internal static RemoteDependency ConvertToDependencyDocument(Activity activity)
+        {
+            RemoteDependency remoteDependencyDocument = new()
+            {
+                DocumentType = DocumentType.RemoteDependency,
+                // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+                Extension_Duration = activity.Duration.TotalMilliseconds,
+            };
+
+            var liveMetricsTagsProcessor = new LiveMetricsTagsProcessor();
+            liveMetricsTagsProcessor.CategorizeTagsAndAddProperties(activity, remoteDependencyDocument);
+
+            switch (liveMetricsTagsProcessor.ActivityType)
+            {
+                case OperationType.Http:
+                    remoteDependencyDocument.Name = activity.DisplayName;
+                    remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeUrlFull)?.ToString();
+                    var httpResponseStatusCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+                    remoteDependencyDocument.ResultCode = httpResponseStatusCode;
+                    remoteDependencyDocument.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
+                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
+                                                                : SchemaConstants.Duration_MaxValue;
+
+                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+                    remoteDependencyDocument.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
+                    break;
+                case OperationType.Db:
+                    // Note: The Exception details are recorded in Activity.Events only if the configuration has opt-ed into this (SqlClientInstrumentationOptions.RecordException).
+
+                    var (_, dbTarget) = liveMetricsTagsProcessor.Tags.GetDbDependencyTargetAndName();
+
+                    remoteDependencyDocument.Name = dbTarget;
+                    remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeDbStatement)?.ToString();
+                    remoteDependencyDocument.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
+
+                    // TODO: remoteDependencyDocumentIngress.ResultCode = "";
+                    // AI SDK reads a Number property from Connection or Command objects.
+                    // As of Feb 2024, OpenTelemetry doesn't record this. This may change in the future when the semantic convention stabalizes.
+
+                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+                    remoteDependencyDocument.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
+                    break;
+                case OperationType.Rpc:
+                    // TODO RPC
+                    break;
+                case OperationType.Messaging:
+                    // TODO MESSAGING
+                    break;
+                default:
+                    // Unknown or Unexpected Dependency Type
+                    remoteDependencyDocument.Name = liveMetricsTagsProcessor.ActivityType.ToString();
+                    break;
+            }
+
+            liveMetricsTagsProcessor.Return();
+            return remoteDependencyDocument;
         }
 
         internal static Request ConvertToRequestDocument(Activity activity)
