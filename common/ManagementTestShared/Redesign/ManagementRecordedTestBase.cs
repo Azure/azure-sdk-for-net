@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.TestFramework
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.TestFramework
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.Authorization\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.TestFramework
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.TestFramework
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 
