@@ -187,6 +187,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetDeleteStatus(string,RequestContext)">
@@ -219,6 +233,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetExportStatusAsync(string,string,RequestContext)">
@@ -232,6 +260,7 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -246,11 +275,26 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetExportStatus(string,string,RequestContext)">
@@ -264,6 +308,7 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 Response response = client.GetExportStatus("<projectName>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -278,11 +323,26 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 Response response = client.GetExportStatus("<projectName>", "<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetImportStatusAsync(string,string,RequestContext)">
@@ -315,6 +375,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetImportStatus(string,string,RequestContext)">
@@ -347,6 +421,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetDeployStatusAsync(string,string,string,RequestContext)">
@@ -379,6 +467,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetDeployStatus(string,string,string,RequestContext)">
@@ -411,6 +513,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="UpdateSynonymsAsync(string,RequestContent,RequestContext)">
@@ -519,6 +635,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetUpdateSourcesStatus(string,string,RequestContext)">
@@ -551,6 +681,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetUpdateQnasStatusAsync(string,string,RequestContext)">
@@ -583,6 +727,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="GetUpdateQnasStatus(string,string,RequestContext)">
@@ -615,6 +773,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="AddFeedbackAsync(string,RequestContent,RequestContext)">
@@ -896,6 +1068,7 @@ await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -928,6 +1101,7 @@ foreach (BinaryData item in client.GetSources("<projectName>"))
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -976,6 +1150,7 @@ await foreach (BinaryData item in client.GetQnasAsync("<projectName>", source: "
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -1024,6 +1199,7 @@ foreach (BinaryData item in client.GetQnas("<projectName>", source: "<source>"))
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -1077,6 +1253,7 @@ Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, 
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1092,11 +1269,26 @@ Operation<BinaryData> operation = await client.ExportAsync(WaitUntil.Completed, 
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="Export(WaitUntil,string,string,string,RequestContext)">
@@ -1111,6 +1303,7 @@ Operation<BinaryData> operation = client.Export(WaitUntil.Completed, "<projectNa
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1126,11 +1319,26 @@ Operation<BinaryData> operation = client.Export(WaitUntil.Completed, "<projectNa
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("resultUrl").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="ImportAsync(WaitUntil,string,RequestContent,string,string,RequestContext)">
@@ -1185,6 +1393,7 @@ using RequestContent content = RequestContent.Create(new
         {
             new
             {
+                sourceDisplayName = "<sourceDisplayName>",
                 id = 1234,
                 answer = "<answer>",
                 source = "<source>",
@@ -1243,6 +1452,7 @@ using RequestContent content = RequestContent.Create(new
                 {
                     null
                 },
+                lastUpdatedDateTime = "2022-05-10T18:57:31.2311892Z",
             }
         },
     },
@@ -1257,6 +1467,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="Import(WaitUntil,string,RequestContent,string,string,RequestContext)">
@@ -1311,6 +1535,7 @@ using RequestContent content = RequestContent.Create(new
         {
             new
             {
+                sourceDisplayName = "<sourceDisplayName>",
                 id = 1234,
                 answer = "<answer>",
                 source = "<source>",
@@ -1369,6 +1594,7 @@ using RequestContent content = RequestContent.Create(new
                 {
                     null
                 },
+                lastUpdatedDateTime = "2022-05-10T18:57:31.2311892Z",
             }
         },
     },
@@ -1383,6 +1609,20 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("jobId").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
 ]]></code></example>
     </member>
     <member name="DeployProjectAsync(WaitUntil,string,string,RequestContext)">
@@ -1488,6 +1728,7 @@ using RequestContent content = RequestContent.Create(new object[]
             sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
+            refresh = true,
         },
     }
 });
@@ -1501,6 +1742,7 @@ await foreach (BinaryData item in operation.Value)
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -1551,6 +1793,7 @@ using RequestContent content = RequestContent.Create(new object[]
             sourceUri = "http://localhost:3000",
             sourceKind = "file",
             contentStructureKind = "unstructured",
+            refresh = true,
         },
     }
 });
@@ -1564,6 +1807,7 @@ foreach (BinaryData item in operation.Value)
     Console.WriteLine(result.GetProperty("sourceUri").ToString());
     Console.WriteLine(result.GetProperty("sourceKind").ToString());
     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -1674,6 +1918,7 @@ await foreach (BinaryData item in operation.Value)
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>
@@ -1784,6 +2029,7 @@ foreach (BinaryData item in operation.Value)
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 }
 ]]></code></example>
     </member>

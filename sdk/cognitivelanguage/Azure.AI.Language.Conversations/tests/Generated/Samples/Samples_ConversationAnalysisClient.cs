@@ -206,6 +206,10 @@ namespace Azure.AI.Language.Conversations.Samples
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
         }
 
         [Test]
@@ -223,6 +227,10 @@ namespace Azure.AI.Language.Conversations.Samples
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
         }
 
         [Test]
@@ -257,6 +265,21 @@ namespace Azure.AI.Language.Conversations.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
         }
 
         [Test]
@@ -291,6 +314,21 @@ namespace Azure.AI.Language.Conversations.Samples
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
         }
 
         [Test]
@@ -340,6 +378,10 @@ kind = "ConversationalSummarizationTask",
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
         }
 
         [Test]
@@ -389,6 +431,10 @@ kind = "ConversationalSummarizationTask",
             Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
         }
 
         [Test]
@@ -438,6 +484,8 @@ summaryAspects = new object[]
 "issue"
 },
 modelVersion = "<modelVersion>",
+sentenceCount = 1234,
+stringIndexType = "Utf16CodeUnit",
 loggingOptOut = true,
 },
 kind = "ConversationalSummarizationTask",
@@ -470,6 +518,21 @@ taskName = "<taskName>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
         }
 
         [Test]
@@ -519,6 +582,8 @@ summaryAspects = new object[]
 "issue"
 },
 modelVersion = "<modelVersion>",
+sentenceCount = 1234,
+stringIndexType = "Utf16CodeUnit",
 loggingOptOut = true,
 },
 kind = "ConversationalSummarizationTask",
@@ -551,6 +616,21 @@ taskName = "<taskName>",
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+            Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
         }
 
         [Test]
