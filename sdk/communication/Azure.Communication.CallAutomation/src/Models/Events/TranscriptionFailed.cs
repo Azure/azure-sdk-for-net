@@ -17,6 +17,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
+        /// <summary>
+        /// Defines the result for TranscriptionUpdate with the current status and the details about the status.
+        /// </summary>
+        public TranscriptionUpdate TranscriptionUpdate { get; }
+
         /// <summary> Initializes a new instance of TranscriptionFailed. </summary>
         /// <param name="internalEvent"> TranscriptionFailedInternal event. </param>
         internal TranscriptionFailed(TranscriptionFailedInternal internalEvent)
@@ -26,6 +31,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
+            TranscriptionUpdate = internalEvent.TranscriptionUpdate;
             ReasonCode = new MediaEventReasonCode(ResultInformation.SubCode.ToString());
         }
 

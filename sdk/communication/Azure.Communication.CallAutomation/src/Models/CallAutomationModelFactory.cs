@@ -260,9 +260,7 @@ namespace Azure.Communication.CallAutomation
             string serverCallId = default,
             string correlationId = default,
             string invitationId = default,
-            CommunicationIdentifier participant = default,
-            string operationContext = default,
-            ResultInformation resultInformation = default)
+            string operationContext = default)
         {
             var internalObject = new CancelAddParticipantSucceededInternal(
                 callConnectionId,
@@ -507,11 +505,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="mediaStreamingUpdateResult"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
+        /// <param name="mediaStreamingUpdate"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
         /// <returns> A new <see cref="CallAutomation.MediaStreamingFailed"/> instance for mocking. </returns>
-        public static MediaStreamingFailed MediaStreamingFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, MediaStreamingUpdate mediaStreamingUpdateResult = null)
+        public static MediaStreamingFailed MediaStreamingFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, MediaStreamingUpdate mediaStreamingUpdate = null)
         {
-            var internalObject = new MediaStreamingFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, mediaStreamingUpdateResult);
+            var internalObject = new MediaStreamingFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, mediaStreamingUpdate);
 
             return new MediaStreamingFailed(internalObject);
         }

@@ -17,6 +17,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
+        /// <summary>
+        /// Defines the result for MediaStreamingUpdate with the current status and the details about the status.
+        /// </summary>
+        public MediaStreamingUpdate MediaStreamingUpdate { get; internal set; }
+
         /// <summary> Initializes a new instance of MediaStreamingFailed. </summary>
         /// <param name="internalEvent"> MediaStreamingFailedInternal event. </param>
         internal MediaStreamingFailed(MediaStreamingFailedInternal internalEvent)
@@ -26,6 +31,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
+            MediaStreamingUpdate = internalEvent.MediaStreamingUpdate;
             ReasonCode = new MediaEventReasonCode(ResultInformation.SubCode.ToString());
         }
 
