@@ -21,7 +21,8 @@ namespace Azure.Communication.CallAutomation
             string sourceDisplayName,
             MediaStreamingSubscription mediaStreamingSubscription,
             TranscriptionSubscription transcriptionSubscription,
-            CommunicationUserIdentifier answeredBy
+            CommunicationUserIdentifier answeredBy,
+            PhoneNumberIdentifier answeredFor
             )
         {
             CallConnectionId = callConnectionId;
@@ -35,6 +36,7 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingSubscription = mediaStreamingSubscription;
             TranscriptionSubscription = transcriptionSubscription;
             AnsweredBy = answeredBy;
+            AnsweredFor = answeredFor;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -63,6 +65,11 @@ namespace Azure.Communication.CallAutomation
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
                 SourceCallerIdNumber = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.SourceCallerIdNumber.Value);
+            }
+
+            if (callConnectionPropertiesDtoInternal.AnsweredFor != null)
+            {
+                AnsweredFor = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.AnsweredFor.Value);
             }
         }
 
@@ -102,5 +109,10 @@ namespace Azure.Communication.CallAutomation
         /// Identity of the answering entity. Only populated when identity is provided in the request.
         /// </summary>
         public CommunicationUserIdentifier AnsweredBy { get; }
+
+        /// <summary>
+        /// Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number.
+        /// </summary>
+        public PhoneNumberIdentifier AnsweredFor { get; }
     }
 }

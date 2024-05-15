@@ -55,6 +55,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="mediaStreamingSubscription">The subscription details for Media Streaming.</param>
         /// <param name="transcriptionSubscription">The subscription details for transcription.</param>
         /// <param name="answeredBy">Identifier that answered the call.</param>
+        /// <param name="answeredFor">Identity of the original Pstn target of an incoming Call.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -67,9 +68,10 @@ namespace Azure.Communication.CallAutomation
             string sourceDisplayName = default,
             CommunicationUserIdentifier answeredBy = default,
             MediaStreamingSubscription mediaStreamingSubscription = default,
-            TranscriptionSubscription transcriptionSubscription = default)
+            TranscriptionSubscription transcriptionSubscription = default,
+            PhoneNumberIdentifier answeredFor = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaStreamingSubscription, transcriptionSubscription, answeredBy);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaStreamingSubscription, transcriptionSubscription, answeredBy, answeredFor);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>

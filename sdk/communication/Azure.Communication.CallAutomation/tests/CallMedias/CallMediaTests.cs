@@ -144,7 +144,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private static readonly HoldOptions _holdOptions = new HoldOptions(new CommunicationUserIdentifier("targetUserId"))
         {
             OperationContext = "operationContext",
-            PlaySourceInfo = _textSource,
+            PlaySource = _textSource,
             OperationCallbackUri = new Uri("https://localhost")
         };
 

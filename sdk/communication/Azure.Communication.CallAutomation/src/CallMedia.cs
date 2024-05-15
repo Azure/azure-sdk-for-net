@@ -666,6 +666,7 @@ namespace Azure.Communication.CallAutomation
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
+                request.PlayPrompts = recognizeOptions.PlayPrompts.Select(t => TranslatePlaySourceToInternal(t)).ToList();
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
                 request.OperationCallbackUri = recognizeOptions.OperationCallbackUri?.AbsoluteUri;
