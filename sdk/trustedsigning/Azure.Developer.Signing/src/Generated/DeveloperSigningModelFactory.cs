@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.Developer.Signing
 {
@@ -23,7 +22,7 @@ namespace Azure.Developer.Signing
         /// <returns> A new <see cref="Signing.OperationStatusSignResultError"/> instance for mocking. </returns>
         public static OperationStatusSignResultError OperationStatusSignResultError(string id = null, OperationState status = default, ResponseError error = null, SignResult result = null)
         {
-            return new OperationStatusSignResultError(id, status, error, result);
+            return new OperationStatusSignResultError(id, status, error, result, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Signing.SignResult"/>. </summary>
@@ -35,7 +34,7 @@ namespace Azure.Developer.Signing
         /// <returns> A new <see cref="Signing.SignResult"/> instance for mocking. </returns>
         public static SignResult SignResult(BinaryData signature = null, BinaryData signingCertificate = null)
         {
-            return new SignResult(signature, signingCertificate);
+            return new SignResult(signature, signingCertificate, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Signing.ExtendedKeyUsage"/>. </summary>
@@ -43,7 +42,21 @@ namespace Azure.Developer.Signing
         /// <returns> A new <see cref="Signing.ExtendedKeyUsage"/> instance for mocking. </returns>
         public static ExtendedKeyUsage ExtendedKeyUsage(string eku = null)
         {
-            return new ExtendedKeyUsage(eku);
+            return new ExtendedKeyUsage(eku, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Signing.SigningPayloadOptions"/>. </summary>
+        /// <param name="signatureAlgorithm"> The supported signature algorithm identifiers. </param>
+        /// <param name="digest"> Content digest to sign. </param>
+        /// <param name="fileHashList"> List of full file digital signatures. </param>
+        /// <param name="authenticodeHashList"> List of authenticode digital signatures. </param>
+        /// <returns> A new <see cref="Signing.SigningPayloadOptions"/> instance for mocking. </returns>
+        public static SigningPayloadOptions SigningPayloadOptions(SignatureAlgorithm signatureAlgorithm = default, BinaryData digest = null, IEnumerable<BinaryData> fileHashList = null, IEnumerable<BinaryData> authenticodeHashList = null)
+        {
+            fileHashList ??= new List<BinaryData>();
+            authenticodeHashList ??= new List<BinaryData>();
+
+            return new SigningPayloadOptions(signatureAlgorithm, digest, fileHashList?.ToList(), authenticodeHashList?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

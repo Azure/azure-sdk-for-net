@@ -7,9 +7,9 @@ To use these samples, you'll first need to set up resources. See [getting starte
 Interaction with the sign root certificate operation requires a `CertificateProfile` client. Certificates can be converted into valid X509 certificates using the `X509Certificate2` class from `System.Security.Cryptography.X509Certificates` namespace.
 
 ```C# Snippet:Azure_Developer_Signing_GetSignRootCertificate
-    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 
-    Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
+Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
 
-    byte[] rootCertificate = response.Value.ToArray();
+byte[] rootCertificate = response.Value.ToArray();
 ```
