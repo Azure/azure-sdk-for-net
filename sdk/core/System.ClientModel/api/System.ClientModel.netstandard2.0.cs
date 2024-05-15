@@ -9,7 +9,7 @@ namespace System.ClientModel
     }
     public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T>
     {
-        protected internal AsyncPageableCollection() { }
+        protected AsyncPageableCollection() { }
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -56,7 +56,7 @@ namespace System.ClientModel
     }
     public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T>
     {
-        protected internal PageableCollection() { }
+        protected PageableCollection() { }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
