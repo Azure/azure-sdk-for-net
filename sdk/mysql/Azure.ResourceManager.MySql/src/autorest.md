@@ -321,7 +321,7 @@ override-operation-name:
   BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
-  - remove-operation: OperationProgress_Get
+#  - remove-operation: OperationProgress_Get
   - from: FlexibleServers.json
     where: $.definitions
     transform: >

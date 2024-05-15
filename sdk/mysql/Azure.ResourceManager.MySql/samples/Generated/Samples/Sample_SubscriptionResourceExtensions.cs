@@ -160,5 +160,59 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 
             Console.WriteLine($"Succeeded: {result}");
         }
+
+        // OperationProgress_Get BackupAndExport
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetOperationProgres_OperationProgressGetBackupAndExport()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2023-12-01-preview/examples/OperationProgress_Get_BackupAndExport.json
+            // this example is just showing the usage of "OperationProgress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation locationName = new AzureLocation("westus");
+            string operationId = "00000000-0000-0000-0000-000000000000";
+            OperationProgressResult result = await subscriptionResource.GetOperationProgresAsync(locationName, operationId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // OperationProgress_Get ImportFromStorage
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetOperationProgres_OperationProgressGetImportFromStorage()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2023-12-01-preview/examples/OperationProgress_Get_ImportFromStorage.json
+            // this example is just showing the usage of "OperationProgress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation locationName = new AzureLocation("westus");
+            string operationId = "00000000-0000-0000-0000-000000000000";
+            OperationProgressResult result = await subscriptionResource.GetOperationProgresAsync(locationName, operationId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
     }
 }
