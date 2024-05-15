@@ -22,3 +22,4 @@ steps:
     displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
     env:
       GH_TOKEN: $(azuresdk-github-pat)
+    condition: and(succeededOrFailed(), ne(variables['Skip.Verify-RestApiSpecLocation'], 'true'))
