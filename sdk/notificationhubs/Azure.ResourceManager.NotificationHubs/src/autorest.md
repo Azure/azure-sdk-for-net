@@ -101,6 +101,10 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+parameter-rename-mapping:
+  NotificationHubs_DebugSend:
+    parameters: anyObject
+
 directive:
 - from: notificationhubs.json
   where: $.definitions
