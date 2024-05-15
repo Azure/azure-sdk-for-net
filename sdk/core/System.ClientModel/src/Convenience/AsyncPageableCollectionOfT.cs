@@ -10,7 +10,7 @@ namespace System.ClientModel;
 #pragma warning disable CS1591 // public XML comments
 
 // TODO: should notnull constraint go on base result collection?
-public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T> where T : notnull
+public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
 {
     protected internal AsyncPageableCollection() : base()
     {

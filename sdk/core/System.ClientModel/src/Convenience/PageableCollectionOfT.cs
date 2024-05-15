@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class PageableCollection<T> : ResultCollection<T> where T : notnull
+public abstract class PageableCollection<T> : ResultCollection<T>
 {
     protected internal PageableCollection() : base()
     {

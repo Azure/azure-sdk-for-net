@@ -7,7 +7,7 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T> where T : notnull
+    public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T>
     {
         protected internal AsyncPageableCollection() { }
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
@@ -54,7 +54,7 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
-    public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T> where T : notnull
+    public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T>
     {
         protected internal PageableCollection() { }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
