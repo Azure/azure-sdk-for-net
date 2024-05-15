@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
 
-public class PageableCollectionTests //: SyncAsyncTestBase
+public class PageableCollectionTests
 {
     private static readonly string[] MockPageContents = { """
             [
@@ -33,18 +33,6 @@ public class PageableCollectionTests //: SyncAsyncTestBase
 
     private static readonly int PageCount = MockPageContents.Length;
     private static readonly int ItemCount = 9;
-
-    //public PageableCollectionTests(bool isAsync) : base(isAsync)
-    //{
-    //}
-
-    // TODO:
-    // Enumerate values - sync and async
-    // Get as pages
-    // Modify page size
-    // Get from middle page
-    // Enumerate forward and backward
-    // Get first and last pages per TypeSpec
 
     [Test]
     public void CanEnumerateValues()
@@ -115,5 +103,104 @@ public class PageableCollectionTests //: SyncAsyncTestBase
 
         Assert.AreEqual(ItemCount, i);
         Assert.AreEqual(1, pageCount);
+    }
+
+    [Test]
+    public void CanSetPageSizeHint()
+    {
+        MockPageableClient client = new();
+        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+        var pages = models.AsPages(pageSizeHint: 10);
+        foreach (var _ in pages)
+        {
+            // page size hint is ignored in this mock
+        }
+
+        Assert.AreEqual(10, client.RequestedPageSize);
+    }
+
+    [Test]
+    public async Task CanEnumerateValuesAsync()
+    {
+        MockPageableClient client = new();
+        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+
+        int i = 0;
+        await foreach (MockJsonModel model in models)
+        {
+            Assert.AreEqual(i, model.IntValue);
+            Assert.AreEqual(i.ToString(), model.StringValue);
+
+            i++;
+        }
+
+        Assert.AreEqual(ItemCount, i);
+    }
+
+    [Test]
+    public async Task CanEnumeratePagesAsync()
+    {
+        MockPageableClient client = new();
+        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+
+        int pageCount = 0;
+        int itemCount = 0;
+        await foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        {
+            foreach (MockJsonModel model in page)
+            {
+                Assert.AreEqual(itemCount, model.IntValue);
+                Assert.AreEqual(itemCount.ToString(), model.StringValue);
+
+                itemCount++;
+            }
+
+            pageCount++;
+        }
+
+        Assert.AreEqual(ItemCount, itemCount);
+        Assert.AreEqual(PageCount, pageCount);
+    }
+
+    [Test]
+    public async Task CanStartPageEnumerationMidwayThroughAsync()
+    {
+        MockPageableClient client = new();
+        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+
+        int pageCount = 0;
+        int i = 6;
+
+        // Request just the last page by starting at the last seen value
+        // on the prior page -- i.e. item 5.
+        await foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
+        {
+            foreach (MockJsonModel model in page)
+            {
+                Assert.AreEqual(i, model.IntValue);
+                Assert.AreEqual(i.ToString(), model.StringValue);
+
+                i++;
+            }
+
+            pageCount++;
+        }
+
+        Assert.AreEqual(ItemCount, i);
+        Assert.AreEqual(1, pageCount);
+    }
+
+    [Test]
+    public async Task CanSetPageSizeHintAsync()
+    {
+        MockPageableClient client = new();
+        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+        var pages = models.AsPages(pageSizeHint: 10);
+        await foreach (var _ in pages)
+        {
+            // page size hint is ignored in this mock
+        }
+
+        Assert.AreEqual(10, client.RequestedPageSize);
     }
 }
