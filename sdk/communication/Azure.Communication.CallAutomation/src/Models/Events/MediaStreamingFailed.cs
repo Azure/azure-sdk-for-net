@@ -10,9 +10,25 @@ namespace Azure.Communication.CallAutomation
     /// The MediaStreamingFailed event.
     /// </summary>
 
-    [CodeGenModel("MediaStreamingFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class MediaStreamingFailed : CallAutomationEventBase
     {
+        /// <summary>
+        /// Reason code.
+        /// </summary>
+        public MediaEventReasonCode ReasonCode { get; internal set; }
+
+        /// <summary> Initializes a new instance of MediaStreamingFailed. </summary>
+        /// <param name="internalEvent"> MediaStreamingFailedInternal event. </param>
+        internal MediaStreamingFailed(MediaStreamingFailedInternal internalEvent)
+        {
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+            ReasonCode = new MediaEventReasonCode(ResultInformation.SubCode.ToString());
+        }
+
         /// <summary>
         /// Deserialize <see cref="MediaStreamingFailed"/> event.
         /// </summary>
@@ -23,7 +39,7 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeMediaStreamingFailed(element);
+            return new MediaStreamingFailed(MediaStreamingFailedInternal.DeserializeMediaStreamingFailedInternal(element));
         }
     }
 }
