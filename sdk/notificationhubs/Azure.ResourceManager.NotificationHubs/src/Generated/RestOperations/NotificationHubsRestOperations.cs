@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        internal RequestUriBuilder CreateDebugSendRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData unknown)
+        internal RequestUriBuilder CreateDebugSendRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData anyObject)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.NotificationHubs
             return uri;
         }
 
-        internal HttpMessage CreateDebugSendRequest(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData unknown)
+        internal HttpMessage CreateDebugSendRequest(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData anyObject)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -585,14 +585,14 @@ namespace Azure.ResourceManager.NotificationHubs
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (unknown != null)
+            if (anyObject != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(unknown);
+				content.JsonWriter.WriteRawValue(anyObject);
 #else
-                using (JsonDocument document = JsonDocument.Parse(unknown))
+                using (JsonDocument document = JsonDocument.Parse(anyObject))
                 {
                     JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                 }
@@ -608,18 +608,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="notificationHubName"> The notification hub name. </param>
-        /// <param name="unknown"> Debug send parameters. </param>
+        /// <param name="anyObject"> Debug send parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="notificationHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData unknown = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData anyObject = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var message = CreateDebugSendRequest(subscriptionId, resourceGroupName, namespaceName, notificationHubName, unknown);
+            using var message = CreateDebugSendRequest(subscriptionId, resourceGroupName, namespaceName, notificationHubName, anyObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -640,18 +640,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="notificationHubName"> The notification hub name. </param>
-        /// <param name="unknown"> Debug send parameters. </param>
+        /// <param name="anyObject"> Debug send parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="notificationHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationHubTestSendResult> DebugSend(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData unknown = null, CancellationToken cancellationToken = default)
+        public Response<NotificationHubTestSendResult> DebugSend(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName, BinaryData anyObject = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var message = CreateDebugSendRequest(subscriptionId, resourceGroupName, namespaceName, notificationHubName, unknown);
+            using var message = CreateDebugSendRequest(subscriptionId, resourceGroupName, namespaceName, notificationHubName, anyObject);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
