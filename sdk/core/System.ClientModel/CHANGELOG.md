@@ -5,8 +5,12 @@
 ### Features Added
 
 - Added `BufferResponse` property to `RequestOptions` so protocol method callers can turn off response buffering if desired.
+- Added `AsyncResultCollection<T>` and `ResultCollection<T>` for clients to return from service methods where the service response contains a collection of values.
+- Added `SetRawResponse` method to `ClientResult` to allow the response held by the result to be changed, for example by derived types that obtain multiple responses from polling the service.
 
 ### Breaking Changes
+
+- `ClientResult.GetRawResponse` will now throw `InvalidOperationException` if called before the result's raw response is set, for example by collection result types that delay sending a request to the service until the collection is enumerated.
 
 ### Bugs Fixed
 

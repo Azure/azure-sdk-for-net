@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             JsonPathSanitizers.Add("$..accountKey");
             JsonPathSanitizers.Add("$..authHeader");
             JsonPathSanitizers.Add("$..httpHeader");
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"\w+@microsoft.com", "foo@contoso.com"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"\w+@microsoft.com") { Value = "foo@contoso.com" });
         }
 
         internal const string DetectionConfigurationId = "78f3a4e7-fe53-4a05-9f4d-d724ab6c23a7";
