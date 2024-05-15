@@ -69,7 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal("HelloWorld", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
-            Assert.Equal(10, dependencyDocument.Properties.Count);
+
+            VerifyCustomProperties(dependencyDocument);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
