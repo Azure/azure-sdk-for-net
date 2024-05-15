@@ -26,12 +26,13 @@ public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
     }
 
     /// <summary>
-    /// Return an enumerable of <see cref="ResultPage{T}"/> that can iterate
-    /// over the collection by pages instead of by individual values. This may
-    /// make multiple service requests.
+    /// Return an enumerable of <see cref="ResultPage{T}"/> that enumerates
+    /// the collection's pages instead of the collection's individual values.
+    /// This may make multiple service requests.
     /// </summary>
-    /// <param name="continuationToken">A token indicating which page of the
-    /// collection to resume or begin the paging operation.</param>
+    /// <param name="continuationToken">A token indicating where the collection
+    /// of results returned from the service should begin. Passing <c>null</c>
+    /// will start the collection at the first page of values.</param>
     /// <param name="pageSizeHint">The number of items to request that the
     /// service return in a <see cref="ResultPage{T}"/>, if the service supports
     /// such requests.</param>
