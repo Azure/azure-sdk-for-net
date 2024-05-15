@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using ClientModel.Tests.Mocks;
@@ -120,6 +121,38 @@ public class PageableCollectionTests
     }
 
     [Test]
+    public void CanGetRawResponses()
+    {
+        MockPageableClient client = new();
+        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+
+        int pageCount = 0;
+        int itemCount = 0;
+        foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        {
+            foreach (MockJsonModel model in page)
+            {
+                Assert.AreEqual(itemCount, model.IntValue);
+                Assert.AreEqual(itemCount.ToString(), model.StringValue);
+
+                itemCount++;
+            }
+
+            PipelineResponse collectionResponse = models.GetRawResponse();
+            PipelineResponse pageResponse = page.GetRawResponse();
+
+            Assert.AreEqual(pageResponse, collectionResponse);
+            Assert.AreEqual(MockPageContents[pageCount], pageResponse.Content.ToString());
+            Assert.AreEqual(MockPageContents[pageCount], collectionResponse.Content.ToString());
+
+            pageCount++;
+        }
+
+        Assert.AreEqual(ItemCount, itemCount);
+        Assert.AreEqual(PageCount, pageCount);
+    }
+
+    [Test]
     public async Task CanEnumerateValuesAsync()
     {
         MockPageableClient client = new();
@@ -202,5 +235,37 @@ public class PageableCollectionTests
         }
 
         Assert.AreEqual(10, client.RequestedPageSize);
+    }
+
+    [Test]
+    public async Task CanGetRawResponsesAsync()
+    {
+        MockPageableClient client = new();
+        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+
+        int pageCount = 0;
+        int itemCount = 0;
+        await foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        {
+            foreach (MockJsonModel model in page)
+            {
+                Assert.AreEqual(itemCount, model.IntValue);
+                Assert.AreEqual(itemCount.ToString(), model.StringValue);
+
+                itemCount++;
+            }
+
+            PipelineResponse collectionResponse = models.GetRawResponse();
+            PipelineResponse pageResponse = page.GetRawResponse();
+
+            Assert.AreEqual(pageResponse, collectionResponse);
+            Assert.AreEqual(MockPageContents[pageCount], pageResponse.Content.ToString());
+            Assert.AreEqual(MockPageContents[pageCount], collectionResponse.Content.ToString());
+
+            pageCount++;
+        }
+
+        Assert.AreEqual(ItemCount, itemCount);
+        Assert.AreEqual(PageCount, pageCount);
     }
 }

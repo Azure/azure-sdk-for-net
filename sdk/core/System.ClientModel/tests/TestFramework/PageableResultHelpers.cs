@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -47,9 +48,10 @@ internal class PageableResultHelpers
             int? pageSize = pageSizeHint ?? _defaultPageSize;
             do
             {
-                ResultPage<T> pageResponse = await pageFunc(continuationToken, pageSize).ConfigureAwait(false);
-                yield return pageResponse;
-                continuationToken = pageResponse.ContinuationToken;
+                ResultPage<T> page = await pageFunc(continuationToken, pageSize).ConfigureAwait(false);
+                SetRawResponse(page.GetRawResponse());
+                yield return page;
+                continuationToken = page.ContinuationToken;
                 pageFunc = _nextPageFunc;
             }
             while (!string.IsNullOrEmpty(continuationToken) && pageFunc != null);
@@ -81,9 +83,10 @@ internal class PageableResultHelpers
             int? pageSize = pageSizeHint ?? _defaultPageSize;
             do
             {
-                ResultPage<T> pageResponse = pageFunc(continuationToken, pageSize);
-                yield return pageResponse;
-                continuationToken = pageResponse.ContinuationToken;
+                ResultPage<T> page = pageFunc(continuationToken, pageSize);
+                SetRawResponse(page.GetRawResponse());
+                yield return page;
+                continuationToken = page.ContinuationToken;
                 pageFunc = _nextPageFunc;
             }
             while (!string.IsNullOrEmpty(continuationToken) && pageFunc != null);
