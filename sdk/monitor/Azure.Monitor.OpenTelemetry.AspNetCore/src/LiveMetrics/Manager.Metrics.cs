@@ -15,7 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
     internal partial class Manager
     {
         internal readonly DoubleBuffer _documentBuffer = new();
-        internal readonly bool _isAzureWebApp;
 
         private readonly int _processorCount = Environment.ProcessorCount;
         private readonly Process _process = Process.GetCurrentProcess();
@@ -31,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 roleName: LiveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
                 machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
                 streamId: _streamId,
-                isWebApp: _isAzureWebApp,
+                isWebApp: false,
                 performanceCollectionSupported: true)
             {
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
