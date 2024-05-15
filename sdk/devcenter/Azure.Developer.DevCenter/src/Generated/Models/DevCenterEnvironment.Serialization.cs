@@ -26,6 +26,11 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExpirationDate))
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpirationDate.Value, "O");
+            }
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -48,6 +53,11 @@ namespace Azure.Developer.DevCenter.Models
 #endif
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W")
             {
@@ -118,7 +128,9 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
+            DateTimeOffset? expirationDate = default;
             IDictionary<string, BinaryData> parameters = default;
+            Uri uri = default;
             string name = default;
             string environmentType = default;
             Guid? user = default;
@@ -131,6 +143,15 @@ namespace Azure.Developer.DevCenter.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("expirationDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expirationDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -150,6 +171,11 @@ namespace Azure.Developer.DevCenter.Models
                         }
                     }
                     parameters = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -215,7 +241,9 @@ namespace Azure.Developer.DevCenter.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterEnvironment(
+                expirationDate,
                 parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                uri,
                 name,
                 environmentType,
                 user,

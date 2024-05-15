@@ -101,7 +101,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets an environment
+        /// [Protocol Method] Gets an environment.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -145,7 +145,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets an environment
+        /// [Protocol Method] Gets an environment.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -223,7 +223,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the specified catalog within the project
+        /// [Protocol Method] Gets the specified catalog within the project.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -265,7 +265,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the specified catalog within the project
+        /// [Protocol Method] Gets the specified catalog within the project.
         /// <list type="bullet">
         /// <item>
         /// <description>

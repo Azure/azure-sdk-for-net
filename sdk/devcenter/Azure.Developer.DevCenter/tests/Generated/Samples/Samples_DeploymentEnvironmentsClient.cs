@@ -28,6 +28,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -45,6 +46,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -84,7 +86,9 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("expirationDate").ToString());
             Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -109,7 +113,9 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("expirationDate").ToString());
             Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -156,6 +162,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetCatalog("<projectName>", "<catalogName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
         }
 
@@ -170,6 +177,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetCatalogAsync("<projectName>", "<catalogName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
         }
 
@@ -206,6 +214,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetCatalog("<projectName>", "<catalogName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
         }
 
@@ -220,6 +229,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetCatalogAsync("<projectName>", "<catalogName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
         }
 
@@ -256,6 +266,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -272,6 +283,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -310,6 +322,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -337,6 +350,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -386,6 +400,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllEnvironments("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -404,6 +419,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -448,7 +464,9 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllEnvironments("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("expirationDate").ToString());
                 Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -474,7 +492,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("expirationDate").ToString());
                 Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -526,6 +546,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironments("<projectName>", "<userId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -544,6 +565,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "<userId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -588,7 +610,9 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironments("<projectName>", "<userId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("expirationDate").ToString());
                 Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -614,7 +638,9 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "<userId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("expirationDate").ToString());
                 Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -666,6 +692,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetCatalogs("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
@@ -681,6 +708,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetCatalogsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
@@ -722,6 +750,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetCatalogs("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
@@ -737,6 +766,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetCatalogsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
@@ -778,6 +808,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -795,6 +826,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -838,6 +870,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -866,6 +899,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -920,6 +954,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -937,6 +972,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -980,6 +1016,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -1008,6 +1045,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -1062,6 +1100,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1079,6 +1118,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentTypesAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
@@ -1122,9 +1162,11 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironmentTypes("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
             }
         }
 
@@ -1139,9 +1181,11 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentTypesAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
             }
         }
 
@@ -1189,6 +1233,7 @@ namespace Azure.Developer.DevCenter.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -1213,6 +1258,7 @@ namespace Azure.Developer.DevCenter.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("catalogName").ToString());
@@ -1229,6 +1275,7 @@ namespace Azure.Developer.DevCenter.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                expirationDate = "2022-05-10T18:57:31.2311892Z",
                 parameters = new
                 {
                     key = new object(),
@@ -1241,7 +1288,9 @@ namespace Azure.Developer.DevCenter.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("expirationDate").ToString());
             Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -1265,6 +1314,7 @@ namespace Azure.Developer.DevCenter.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                expirationDate = "2022-05-10T18:57:31.2311892Z",
                 parameters = new
                 {
                     key = new object(),
@@ -1277,7 +1327,9 @@ namespace Azure.Developer.DevCenter.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("expirationDate").ToString());
             Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());

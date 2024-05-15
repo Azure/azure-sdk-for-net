@@ -26,6 +26,8 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -40,6 +42,11 @@ namespace Azure.Developer.DevCenter.Models
             {
                 writer.WritePropertyName("maxDevBoxesPerUser"u8);
                 writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,13 +86,20 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
+            Uri uri = default;
             string name = default;
             string description = default;
             int? maxDevBoxesPerUser = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -105,13 +119,24 @@ namespace Azure.Developer.DevCenter.Models
                     maxDevBoxesPerUser = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterProject(name, description, maxDevBoxesPerUser, serializedAdditionalRawData);
+            return new DevCenterProject(
+                uri,
+                name,
+                description,
+                maxDevBoxesPerUser,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProject>.Write(ModelReaderWriterOptions options)

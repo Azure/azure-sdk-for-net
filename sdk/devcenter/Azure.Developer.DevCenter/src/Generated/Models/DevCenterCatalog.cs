@@ -46,19 +46,33 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/>. </summary>
-        internal DevCenterCatalog()
+        /// <param name="uri"> The unique URI of the catalog. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        internal DevCenterCatalog(Uri uri)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/>. </summary>
+        /// <param name="uri"> The unique URI of the catalog. </param>
         /// <param name="name"> Name of the catalog. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterCatalog(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterCatalog(Uri uri, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Uri = uri;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/> for deserialization. </summary>
+        internal DevCenterCatalog()
+        {
+        }
+
+        /// <summary> The unique URI of the catalog. </summary>
+        public Uri Uri { get; }
         /// <summary> Name of the catalog. </summary>
         public string Name { get; }
     }

@@ -26,12 +26,19 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("deploymentTargetId"u8);
             writer.WriteStringValue(DeploymentTargetId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,13 +77,20 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
+            Uri uri = default;
             string name = default;
             ResourceIdentifier deploymentTargetId = default;
             EnvironmentTypeStatus status = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -92,13 +106,24 @@ namespace Azure.Developer.DevCenter.Models
                     status = new EnvironmentTypeStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterEnvironmentType(name, deploymentTargetId, status, serializedAdditionalRawData);
+            return new DevCenterEnvironmentType(
+                uri,
+                name,
+                deploymentTargetId,
+                status,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEnvironmentType>.Write(ModelReaderWriterOptions options)

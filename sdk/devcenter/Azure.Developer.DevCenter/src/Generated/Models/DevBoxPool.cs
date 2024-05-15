@@ -47,18 +47,24 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
+        /// <param name="uri"> The unique URI of the pool. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="healthStatus">
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        internal DevBoxPool(AzureLocation location, PoolHealthStatus healthStatus)
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        internal DevBoxPool(Uri uri, AzureLocation location, PoolHealthStatus healthStatus)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            Uri = uri;
             Location = location;
             HealthStatus = healthStatus;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
+        /// <param name="uri"> The unique URI of the pool. </param>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -75,9 +81,11 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
+        /// <param name="displayName"> Display name of the pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxPool(Uri uri, string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Uri = uri;
             Name = name;
             Location = location;
             OSType = osType;
@@ -88,6 +96,7 @@ namespace Azure.Developer.DevCenter.Models
             LocalAdministratorStatus = localAdministratorStatus;
             StopOnDisconnect = stopOnDisconnect;
             HealthStatus = healthStatus;
+            DisplayName = displayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,6 +105,8 @@ namespace Azure.Developer.DevCenter.Models
         {
         }
 
+        /// <summary> The unique URI of the pool. </summary>
+        public Uri Uri { get; }
         /// <summary> Pool name. </summary>
         public string Name { get; }
         /// <summary> Azure region where Dev Boxes in the pool are located. </summary>
@@ -122,5 +133,7 @@ namespace Azure.Developer.DevCenter.Models
         /// available to create Dev Boxes.
         /// </summary>
         public PoolHealthStatus HealthStatus { get; }
+        /// <summary> Display name of the pool. </summary>
+        public string DisplayName { get; }
     }
 }

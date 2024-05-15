@@ -46,26 +46,42 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
-        internal DevCenterProject()
+        /// <param name="uri"> The unique URI of the project. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        internal DevCenterProject(Uri uri)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
+        /// <param name="uri"> The unique URI of the project. </param>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
         /// When specified, indicates the maximum number of Dev Boxes a single user can
         /// create across all pools in the project.
         /// </param>
+        /// <param name="displayName"> Display name of the pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProject(string name, string description, int? maxDevBoxesPerUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterProject(Uri uri, string name, string description, int? maxDevBoxesPerUser, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Uri = uri;
             Name = name;
             Description = description;
             MaxDevBoxesPerUser = maxDevBoxesPerUser;
+            DisplayName = displayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/> for deserialization. </summary>
+        internal DevCenterProject()
+        {
+        }
+
+        /// <summary> The unique URI of the project. </summary>
+        public Uri Uri { get; }
         /// <summary> Name of the project. </summary>
         public string Name { get; }
         /// <summary> Description of the project. </summary>
@@ -75,5 +91,7 @@ namespace Azure.Developer.DevCenter.Models
         /// create across all pools in the project.
         /// </summary>
         public int? MaxDevBoxesPerUser { get; }
+        /// <summary> Display name of the pool. </summary>
+        public string DisplayName { get; }
     }
 }

@@ -46,20 +46,24 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
+        /// <param name="uri"> The unique URI of the environment definition. </param>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="catalogName"/> is null. </exception>
-        internal EnvironmentDefinition(string id, string catalogName)
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="id"/> or <paramref name="catalogName"/> is null. </exception>
+        internal EnvironmentDefinition(Uri uri, string id, string catalogName)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(catalogName, nameof(catalogName));
 
+            Uri = uri;
             Id = id;
             CatalogName = catalogName;
             Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
+        /// <param name="uri"> The unique URI of the environment definition. </param>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -68,8 +72,9 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentDefinition(Uri uri, string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, string parametersSchema, string templatePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Uri = uri;
             Id = id;
             Name = name;
             CatalogName = catalogName;
@@ -85,6 +90,8 @@ namespace Azure.Developer.DevCenter.Models
         {
         }
 
+        /// <summary> The unique URI of the environment definition. </summary>
+        public Uri Uri { get; }
         /// <summary> The ID of the environment definition. </summary>
         public string Id { get; }
         /// <summary> Name of the environment definition. </summary>

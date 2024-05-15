@@ -26,6 +26,8 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(ActionName);
             writer.WritePropertyName("result"u8);
@@ -78,6 +80,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
+            Uri uri = default;
             string name = default;
             DevBoxActionDelayStatus result = default;
             DevBoxAction action = default;
@@ -86,6 +89,11 @@ namespace Azure.Developer.DevCenter.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -120,7 +128,13 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevBoxActionDelayResult(name, result, action, error, serializedAdditionalRawData);
+            return new DevBoxActionDelayResult(
+                uri,
+                name,
+                result,
+                action,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxActionDelayResult>.Write(ModelReaderWriterOptions options)

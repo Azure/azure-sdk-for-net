@@ -26,6 +26,8 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (options.Format != "W")
@@ -98,6 +100,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
+            Uri uri = default;
             string id = default;
             string name = default;
             string catalogName = default;
@@ -109,6 +112,11 @@ namespace Azure.Developer.DevCenter.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -160,6 +168,7 @@ namespace Azure.Developer.DevCenter.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new EnvironmentDefinition(
+                uri,
                 id,
                 name,
                 catalogName,

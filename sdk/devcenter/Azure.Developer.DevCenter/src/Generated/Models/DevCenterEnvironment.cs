@@ -47,7 +47,12 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
+        /// <param name="expirationDate">
+        /// The time the expiration date will be triggered (UTC), after which the
+        /// environment and associated resources will be deleted.
+        /// </param>
         /// <param name="parameters"> Parameters object for the environment. </param>
+        /// <param name="uri"> The unique URI of the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>
         /// <param name="userId"> The AAD object id of the owner of this Environment. </param>
@@ -57,9 +62,11 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironment(IDictionary<string, BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterEnvironment(DateTimeOffset? expirationDate, IDictionary<string, BinaryData> parameters, Uri uri, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ExpirationDate = expirationDate;
             Parameters = parameters;
+            Uri = uri;
             Name = name;
             EnvironmentTypeName = environmentTypeName;
             UserId = userId;
@@ -76,6 +83,11 @@ namespace Azure.Developer.DevCenter.Models
         {
         }
 
+        /// <summary>
+        /// The time the expiration date will be triggered (UTC), after which the
+        /// environment and associated resources will be deleted.
+        /// </summary>
+        public DateTimeOffset? ExpirationDate { get; set; }
         /// <summary>
         /// Parameters object for the environment.
         /// <para>
@@ -107,6 +119,8 @@ namespace Azure.Developer.DevCenter.Models
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
+        /// <summary> The unique URI of the environment. </summary>
+        public Uri Uri { get; }
         /// <summary> Environment name. </summary>
         public string Name { get; }
         /// <summary> Environment type. </summary>

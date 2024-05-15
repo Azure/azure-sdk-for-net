@@ -50,6 +50,7 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 Response response = await client.GetProjectAsync("<projectName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("uri").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 This sample shows how to call GetProjectAsync with all parameters and parse the result.
@@ -61,9 +62,11 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 Response response = await client.GetProjectAsync("<projectName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("uri").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
 ]]></code></example>
     </member>
     <member name="GetProject(string,RequestContext)">
@@ -77,6 +80,7 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 Response response = client.GetProject("<projectName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("uri").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
 This sample shows how to call GetProject with all parameters and parse the result.
@@ -88,9 +92,11 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 Response response = client.GetProject("<projectName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("uri").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
 ]]></code></example>
     </member>
     <member name="GetProjectsAsync(CancellationToken)">
@@ -150,6 +156,7 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 await foreach (BinaryData item in client.GetProjectsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("uri").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
@@ -162,9 +169,11 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 await foreach (BinaryData item in client.GetProjectsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("uri").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
 }
 ]]></code></example>
     </member>
@@ -179,6 +188,7 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 foreach (BinaryData item in client.GetProjects(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("uri").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
@@ -191,9 +201,11 @@ DevCenterClient client = new DevCenterClient(endpoint, credential);
 foreach (BinaryData item in client.GetProjects(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("uri").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
 }
 ]]></code></example>
     </member>

@@ -26,6 +26,8 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -35,6 +37,10 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("sourceId"u8);
             writer.WriteStringValue(SourceId);
+            writer.WritePropertyName("sourceUri"u8);
+            writer.WriteStringValue(SourceUri.AbsoluteUri);
+            writer.WritePropertyName("sourceType"u8);
+            writer.WriteStringValue(SourceType.ToString());
             if (Optional.IsDefined(SuspendedUntil))
             {
                 writer.WritePropertyName("suspendedUntil"u8);
@@ -83,15 +89,23 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
+            Uri uri = default;
             string name = default;
             DevBoxActionType actionType = default;
             string sourceId = default;
+            Uri sourceUri = default;
+            DevBoxActionSourceType sourceType = default;
             DateTimeOffset? suspendedUntil = default;
             DevBoxNextAction next = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -105,6 +119,16 @@ namespace Azure.Developer.DevCenter.Models
                 if (property.NameEquals("sourceId"u8))
                 {
                     sourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceUri"u8))
+                {
+                    sourceUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sourceType"u8))
+                {
+                    sourceType = new DevBoxActionSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("suspendedUntil"u8))
@@ -132,9 +156,12 @@ namespace Azure.Developer.DevCenter.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DevBoxAction(
+                uri,
                 name,
                 actionType,
                 sourceId,
+                sourceUri,
+                sourceType,
                 suspendedUntil,
                 next,
                 serializedAdditionalRawData);

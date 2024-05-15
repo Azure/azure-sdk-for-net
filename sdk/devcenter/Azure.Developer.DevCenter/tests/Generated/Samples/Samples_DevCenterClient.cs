@@ -28,6 +28,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetProject("<projectName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
         }
 
@@ -42,6 +43,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetProjectAsync("<projectName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
         }
 
@@ -78,9 +80,11 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetProject("<projectName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
         }
 
         [Test]
@@ -94,9 +98,11 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetProjectAsync("<projectName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("uri").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+            Console.WriteLine(result.GetProperty("displayName").ToString());
         }
 
         [Test]
@@ -132,6 +138,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetProjects(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
@@ -147,6 +154,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetProjectsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
@@ -188,9 +196,11 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetProjects(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
             }
         }
 
@@ -205,9 +215,11 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetProjectsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("uri").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("description").ToString());
                 Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
+                Console.WriteLine(result.GetProperty("displayName").ToString());
             }
         }
 

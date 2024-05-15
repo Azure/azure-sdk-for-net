@@ -46,29 +46,43 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
+        /// <param name="uri"> The unique URI for the Dev Box action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        internal DevBoxAction(DevBoxActionType actionType, string sourceId)
+        /// <param name="sourceUri"> The URI of the resource which triggered this action. </param>
+        /// <param name="sourceType"> The type of the resource which triggered this action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="sourceId"/> or <paramref name="sourceUri"/> is null. </exception>
+        internal DevBoxAction(Uri uri, DevBoxActionType actionType, string sourceId, Uri sourceUri, DevBoxActionSourceType sourceType)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(sourceId, nameof(sourceId));
+            Argument.AssertNotNull(sourceUri, nameof(sourceUri));
 
+            Uri = uri;
             ActionType = actionType;
             SourceId = sourceId;
+            SourceUri = sourceUri;
+            SourceType = sourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxAction"/>. </summary>
+        /// <param name="uri"> The unique URI for the Dev Box action. </param>
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
+        /// <param name="sourceUri"> The URI of the resource which triggered this action. </param>
+        /// <param name="sourceType"> The type of the resource which triggered this action. </param>
         /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC). </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxAction(Uri uri, string name, DevBoxActionType actionType, string sourceId, Uri sourceUri, DevBoxActionSourceType sourceType, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Uri = uri;
             Name = name;
             ActionType = actionType;
             SourceId = sourceId;
+            SourceUri = sourceUri;
+            SourceType = sourceType;
             SuspendedUntil = suspendedUntil;
             NextAction = nextAction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -79,12 +93,18 @@ namespace Azure.Developer.DevCenter.Models
         {
         }
 
+        /// <summary> The unique URI for the Dev Box action. </summary>
+        public Uri Uri { get; }
         /// <summary> The name of the action. </summary>
         public string Name { get; }
         /// <summary> The action that will be taken. </summary>
         public DevBoxActionType ActionType { get; }
         /// <summary> The id of the resource which triggered this action. </summary>
         public string SourceId { get; }
+        /// <summary> The URI of the resource which triggered this action. </summary>
+        public Uri SourceUri { get; }
+        /// <summary> The type of the resource which triggered this action. </summary>
+        public DevBoxActionSourceType SourceType { get; }
         /// <summary> The earliest time that the action could occur (UTC). </summary>
         public DateTimeOffset? SuspendedUntil { get; }
         /// <summary> Details about the next run of this action. </summary>
