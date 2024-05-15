@@ -7,16 +7,15 @@ To use these samples, you'll first need to set up resources. See [getting starte
 The extended key usages are a piece of data used to describe the purpose of a certificate. This sample demonstrates how to get the available customer extended key usages from a certificate profile.
 
 ```C# Snippet:Azure_Developer_Signing_GetExtendedKeyUsages
-    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 
-    //List of available customer EKUs...
-    List<string> ekus = new();
+List<string> ekus = new();
 
-    foreach (BinaryData item in certificateProfileClient.GetExtendedKeyUsages(accountName, profileName, null))
-    {
-        JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-        string eku = result.GetProperty("eku").ToString();
+foreach (BinaryData item in certificateProfileClient.GetExtendedKeyUsages(accountName, profileName, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    string eku = result.GetProperty("eku").ToString();
 
-        ekus.Add(eku);
-    }
+    ekus.Add(eku);
+}
 ```

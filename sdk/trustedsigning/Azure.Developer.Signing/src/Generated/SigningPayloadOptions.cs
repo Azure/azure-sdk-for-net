@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Developer.Signing
 {
     /// <summary> The artifact request information to be signed by the service. </summary>
     public partial class SigningPayloadOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SigningPayloadOptions"/>. </summary>
         /// <param name="signatureAlgorithm"> The supported signature algorithm identifiers. </param>
         /// <param name="digest"> Content digest to sign. </param>
@@ -33,12 +64,19 @@ namespace Azure.Developer.Signing
         /// <param name="digest"> Content digest to sign. </param>
         /// <param name="fileHashList"> List of full file digital signatures. </param>
         /// <param name="authenticodeHashList"> List of authenticode digital signatures. </param>
-        internal SigningPayloadOptions(SignatureAlgorithm signatureAlgorithm, BinaryData digest, IList<BinaryData> fileHashList, IList<BinaryData> authenticodeHashList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SigningPayloadOptions(SignatureAlgorithm signatureAlgorithm, BinaryData digest, IList<BinaryData> fileHashList, IList<BinaryData> authenticodeHashList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SignatureAlgorithm = signatureAlgorithm;
             Digest = digest;
             FileHashList = fileHashList;
             AuthenticodeHashList = authenticodeHashList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SigningPayloadOptions"/> for deserialization. </summary>
+        internal SigningPayloadOptions()
+        {
         }
 
         /// <summary> The supported signature algorithm identifiers. </summary>

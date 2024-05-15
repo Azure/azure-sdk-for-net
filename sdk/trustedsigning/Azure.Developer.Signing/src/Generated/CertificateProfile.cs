@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -316,7 +315,7 @@ namespace Azure.Developer.Signing
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExtendedKeyUsagesRequest(accountName, certificateProfile, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExtendedKeyUsagesNextPageRequest(nextLink, accountName, certificateProfile, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ExtendedKeyUsage.DeserializeExtendedKeyUsage, ClientDiagnostics, _pipeline, "CertificateProfile.GetExtendedKeyUsages", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExtendedKeyUsage.DeserializeExtendedKeyUsage(e), ClientDiagnostics, _pipeline, "CertificateProfile.GetExtendedKeyUsages", "value", "nextLink", context);
         }
 
         /// <summary> Gets a list of extended key usage object identifiers that are allowed for this account and profile combination. </summary>
@@ -335,7 +334,7 @@ namespace Azure.Developer.Signing
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExtendedKeyUsagesRequest(accountName, certificateProfile, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExtendedKeyUsagesNextPageRequest(nextLink, accountName, certificateProfile, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ExtendedKeyUsage.DeserializeExtendedKeyUsage, ClientDiagnostics, _pipeline, "CertificateProfile.GetExtendedKeyUsages", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExtendedKeyUsage.DeserializeExtendedKeyUsage(e), ClientDiagnostics, _pipeline, "CertificateProfile.GetExtendedKeyUsages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -422,8 +421,8 @@ namespace Azure.Developer.Signing
             Argument.AssertNotNullOrEmpty(certificateProfile, nameof(certificateProfile));
             Argument.AssertNotNull(signingPayloadOptions, nameof(signingPayloadOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = signingPayloadOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await SignAsync(waitUntil, accountName, certificateProfile, content, clientVersion, xCorrelationId, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchSignResultFromOperationStatusSignResultError, ClientDiagnostics, "CertificateProfile.Sign");
         }
@@ -446,8 +445,8 @@ namespace Azure.Developer.Signing
             Argument.AssertNotNullOrEmpty(certificateProfile, nameof(certificateProfile));
             Argument.AssertNotNull(signingPayloadOptions, nameof(signingPayloadOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = signingPayloadOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = Sign(waitUntil, accountName, certificateProfile, content, clientVersion, xCorrelationId, context);
             return ProtocolOperationHelpers.Convert(response, FetchSignResultFromOperationStatusSignResultError, ClientDiagnostics, "CertificateProfile.Sign");
         }

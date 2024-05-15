@@ -6,22 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Developer.Signing
 {
-    public partial class SignResult
+    public partial class SignResult : IUtf8JsonSerializable, IJsonModel<SignResult>
     {
-        internal static SignResult DeserializeSignResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SignResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SignResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SignResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Signature))
+            {
+                writer.WritePropertyName("signature"u8);
+                writer.WriteBase64StringValue(Signature.ToArray(), "D");
+            }
+            if (Optional.IsDefined(SigningCertificate))
+            {
+                writer.WritePropertyName("signingCertificate"u8);
+                writer.WriteBase64StringValue(SigningCertificate.ToArray(), "D");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SignResult IJsonModel<SignResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SignResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignResult(document.RootElement, options);
+        }
+
+        internal static SignResult DeserializeSignResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> signature = default;
-            Optional<BinaryData> signingCertificate = default;
+            BinaryData signature = default;
+            BinaryData signingCertificate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("signature"u8))
@@ -42,9 +98,45 @@ namespace Azure.Developer.Signing
                     signingCertificate = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SignResult(signature.Value, signingCertificate.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SignResult(signature, signingCertificate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SignResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SignResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SignResult IPersistableModel<SignResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSignResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SignResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -52,6 +144,14 @@ namespace Azure.Developer.Signing
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSignResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

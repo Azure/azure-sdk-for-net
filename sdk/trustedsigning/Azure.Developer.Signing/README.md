@@ -48,8 +48,8 @@ This library interacts with the Azure Developer Signing service using two princi
 Since the interaction of the client is at the certificate profile level, the client is designed to interact with this entity. A region must be provided to ensure the request is routed to the specific appropiate environment.
 
 ```C# Snippet:Azure_Developer_Signing_CreateCertificateProfileClient
-    var credential = new DefaultAzureCredential();
-    var certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+var credential = new DefaultAzureCredential();
+CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 ```
 
 ### Thread safety
@@ -76,18 +76,18 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 Sign the digest corresponding to a file using an algorithm.
 
 ```C# Snippet:Azure_Developer_Signing_SigningBytes
-    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 
-    using RequestContent content = RequestContent.Create(new
-    {
-        signatureAlgorithm,
-        digest,
-    });
+using RequestContent content = RequestContent.Create(new
+{
+    signatureAlgorithm,
+    digest,
+});
 
-    Operation<BinaryData> operation = certificateProfileClient.Sign(WaitUntil.Completed, accountName, profileName, content);
-    BinaryData responseData = operation.Value;
+Operation<BinaryData> operation = certificateProfileClient.Sign(WaitUntil.Completed, accountName, profileName, content);
+BinaryData responseData = operation.Value;
 
-    JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 ```
 
 ### List available customer extended key usages (EKUs)
@@ -95,18 +95,17 @@ Sign the digest corresponding to a file using an algorithm.
 Request all the available customer extended key usages from a certificate profile.
 
 ```C# Snippet:Azure_Developer_Signing_GetExtendedKeyUsages
-    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 
-    //List of available customer EKUs...
-    List<string> ekus = new();
+List<string> ekus = new();
 
-    foreach (BinaryData item in certificateProfileClient.GetExtendedKeyUsages(accountName, profileName, null))
-    {
-        JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-        string eku = result.GetProperty("eku").ToString();
+foreach (BinaryData item in certificateProfileClient.GetExtendedKeyUsages(accountName, profileName, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    string eku = result.GetProperty("eku").ToString();
 
-        ekus.Add(eku);
-    }
+    ekus.Add(eku);
+}
 ```
 
 ### Download the root certificate
@@ -114,11 +113,11 @@ Request all the available customer extended key usages from a certificate profil
 Request the sign root certificate from a certificate profile.
 
 ```C# Snippet:Azure_Developer_Signing_GetSignRootCertificate
-    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 
-    Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
+Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
 
-    byte[] rootCertificate = response.Value.ToArray();
+byte[] rootCertificate = response.Value.ToArray();
 ```
 
 ## Troubleshooting
