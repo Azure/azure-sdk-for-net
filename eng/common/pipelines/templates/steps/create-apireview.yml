@@ -7,7 +7,6 @@ parameters:
   ArtifactName: 'packages'
   PackageName: ''
   SourceRootPath: $(Build.SourcesDirectory)
-  WorkingDirectory: $(Pipeline.Workspace)
 
 steps:
   # ideally this should be done as initial step of a job in caller template
@@ -21,7 +20,7 @@ steps:
   - ${{ if or(ne(parameters.GenerateApiReviewForManualOnly, true), eq(variables['Build.Reason'], 'Manual')) }}:
     - task: Powershell@2
       inputs:
-        filePath: ${{parameters.SourceRootPath}}/eng/common/scripts/Create-APIReview.ps1
+        filePath: ./eng/common/scripts/Create-APIReview.ps1
         arguments: >
           -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
           -ArtifactPath ${{parameters.ArtifactPath}}
@@ -35,7 +34,7 @@ steps:
           -RepoName '$(Build.Repository.Name)'    
           -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
         pwsh: true
-        workingDirectory: ${{parameters.WorkingDirectory}}
+        workingDirectory: ${{parameters.SourceRootPath}}
       displayName: Create API Review
       condition: >-
         and(
