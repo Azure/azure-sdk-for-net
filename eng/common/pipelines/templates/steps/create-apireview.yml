@@ -13,7 +13,7 @@ steps:
   # We can remove this step later once it is added in caller
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     parameters:
-      WorkingDirectory: ${{parameters.SourceRootPath}}
+      WorkingDirectory: ${{ parameters.SourceRootPath }}
 
   # Automatic API review is generated for a package when pipeline runs irrespective of how pipeline gets triggered.
   # Below condition ensures that API review is generated only for manual pipeline runs when flag GenerateApiReviewForManualOnly is set to true. 
@@ -34,7 +34,7 @@ steps:
           -RepoName '$(Build.Repository.Name)'    
           -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
         pwsh: true
-        workingDirectory: ${{parameters.SourceRootPath}}
+        workingDirectory: ${{ parameters.SourceRootPath }}
       displayName: Create API Review
       condition: >-
         and(
