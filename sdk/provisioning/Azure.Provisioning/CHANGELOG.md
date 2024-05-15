@@ -1,6 +1,6 @@
 # Release History
 
-## 0.2.0-beta.3 (Unreleased)
+## 0.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.2.0 (2024-04-24)
+
+### Features Added
+
+- Initial non-beta release.
 
 ## 0.2.0-beta.2 (2024-04-09)
 

@@ -106,15 +106,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartRange), out propertyOverride);
-            if (Optional.IsDefined(StartRange) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startRange: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartRange))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startRange: ");
                     if (StartRange.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -128,15 +129,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndRange), out propertyOverride);
-            if (Optional.IsDefined(EndRange) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  endRange: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndRange))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  endRange: ");
                     if (EndRange.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

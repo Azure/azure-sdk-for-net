@@ -3,11 +3,12 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: C:/s/azure-rest-api-specs-pr/specification/network/resource-manager/readme.md
-tag: package-2024-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md
+# tag: package-2023-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -33,14 +34,17 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
+  ConnectionMonitorEndpoint.subscriptionId: -|uuid
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
   PacketCapture: PacketCaptureInput
+  PacketCapture.properties.continuousCapture: IsContinuousCapture
   PacketCaptureResult: PacketCapture
+  PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
   IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
   VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType
   SubResource: NetworkSubResource
@@ -149,7 +153,9 @@ rename-mapping:
   SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
   SlotType: SwapSlotType
   UseHubGateway: HubGatewayUsageFlag
+  VirtualApplianceIPConfigurationProperties.primary: IsPrimary
   VirtualNetworkEncryption.enabled: IsEnabled
+  VirtualNetworkPeering.properties.peerCompleteVnets: AreCompleteVnetsPeered
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
   CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
   CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
@@ -604,4 +610,5 @@ directive:
   #     {
   #         delete $[param];
   #     }
+
 ```

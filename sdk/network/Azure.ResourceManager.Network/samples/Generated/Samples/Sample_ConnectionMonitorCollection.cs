@@ -243,7 +243,7 @@ Address = "172.21.128.0/20",
 },
 },
 LocationDetailsRegion = "eastus",
-SubscriptionId = "9cece3e3-0f7d-47ca-af0e-9772773f90b7",
+SubscriptionId = Guid.Parse("9cece3e3-0f7d-47ca-af0e-9772773f90b7"),
 }
 },
                 TestConfigurations =

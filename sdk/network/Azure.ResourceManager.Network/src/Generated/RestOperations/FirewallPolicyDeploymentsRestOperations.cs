@@ -34,6 +34,21 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeployRequestUri(string subscriptionId, string resourceGroupName, string firewallPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/firewallPolicies/", false);
+            uri.AppendPath(firewallPolicyName, true);
+            uri.AppendPath("/deploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeployRequest(string subscriptionId, string resourceGroupName, string firewallPolicyName)
         {
             var message = _pipeline.CreateMessage();

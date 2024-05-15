@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Represents a single IP configuration properties. </summary>
         internal VirtualApplianceIPConfigurationProperties Properties { get; set; }
         /// <summary> Whether or not this is primary IP configuration of the NIC. </summary>
-        public bool? Primary
+        public bool? IsPrimary
         {
-            get => Properties is null ? default : Properties.Primary;
+            get => Properties is null ? default : Properties.IsPrimary;
             set
             {
                 if (Properties is null)
                     Properties = new VirtualApplianceIPConfigurationProperties();
-                Properties.Primary = value;
+                Properties.IsPrimary = value;
             }
         }
     }
