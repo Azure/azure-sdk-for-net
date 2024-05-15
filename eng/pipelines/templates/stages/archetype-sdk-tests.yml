@@ -55,15 +55,20 @@ parameters:
     default:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        ServiceConnection: azure-sdk-tests
       Preview:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        ServiceConnection: azure-sdk-tests
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'eastus2euap'
+        ServiceConnection: TODO
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
+        ServiceConnection: TODO
       China:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        ServiceConnection: TODO
   - name: MatrixConfigs
     type: object
     default:
@@ -105,6 +110,9 @@ parameters:
   - name: oneESTemplateTag
     type: string
     default: true
+  - name: UseFederatedAuth
+    type: boolean
+    default: true
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -145,6 +153,7 @@ extends:
                       Project: ${{ parameters.Project }}
                       TestSetupSteps: ${{ parameters.TestSetupSteps }}
                       DeployTestResources: ${{ parameters.DeployTestResources }}
+                      UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                     MatrixConfigs:
                       # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
                       - ${{ each config in parameters.MatrixConfigs }}:
@@ -161,7 +170,7 @@ extends:
                       - ${{ parameters.MatrixReplace }}
                     CloudConfig:
                       SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+                      ServiceConnection: ${{ cloud.value.ServiceConnection }}
                       SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
                       Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
                       Cloud: ${{ cloud.key }}
-
