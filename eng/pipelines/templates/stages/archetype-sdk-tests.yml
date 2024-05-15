@@ -62,13 +62,13 @@ parameters:
       Canary:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: 'eastus2euap'
-        ServiceConnection: TODO
+        ServiceConnection: azure-sdk-tests
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
-        ServiceConnection: TODO
+        ServiceConnection: usgov_azure-sdk-tests
       China:
         SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        ServiceConnection: TODO
+        ServiceConnection: china_azure-sdk-tests
   - name: MatrixConfigs
     type: object
     default:
