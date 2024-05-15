@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Get the subpath resource item
             StorageResourceItem resourceItem = resourceContainer.GetStorageResourceReferenceInternal(
                 string.Join("/", pathSegments),
-                default);
+                "ShareFile");
 
             Assert.That(resourceItem, Is.TypeOf(typeof(ShareFileStorageResource)));
             ShareFileStorageResource fileResourceItem = resourceItem as ShareFileStorageResource;
