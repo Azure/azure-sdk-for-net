@@ -1,0 +1,39 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+
+namespace Azure.Communication.CallAutomation
+{
+    /// <summary>
+    /// Options for creating a call.
+    /// </summary>
+    public class ConnectOptions
+    {
+        /// <summary>
+        /// Creates a new instance of ConnectOptions.
+        /// </summary>
+        /// <param name="callLocator"></param>
+        /// <param name="callbackUrl"></param>
+        public ConnectOptions(CallLocator callLocator, string callbackUrl)
+        {
+            CallLocator = callLocator;
+            CallbackUrl = callbackUrl;
+        }
+
+        /// <summary>
+        /// Either a GroupCallLocator or ServerCallLocator or RoomCallLocator for locating the call.
+        /// </summary>
+        public CallLocator CallLocator { get; }
+
+        /// <summary>
+        /// The callback URL.
+        /// </summary>
+        public string CallbackUrl { get; }
+
+        /// <summary>
+        /// AI options for the call.
+        /// </summary>
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+    }
+}

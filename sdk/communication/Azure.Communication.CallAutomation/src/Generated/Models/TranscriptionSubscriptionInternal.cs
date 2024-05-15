@@ -19,9 +19,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionSubscriptionInternal"/>. </summary>
-        /// <param name="id"> Gets or Sets subscription Id. </param>
-        /// <param name="state"> Gets or Sets transcription subscription state. </param>
-        /// <param name="subscribedResultTypes"> Gets or Sets the subscribed transcription result types. </param>
+        /// <param name="id"> Subscription Id. </param>
+        /// <param name="state"> Transcription subscription state. </param>
+        /// <param name="subscribedResultTypes"> Subscribed transcription result types. </param>
         internal TranscriptionSubscriptionInternal(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultType> subscribedResultTypes)
         {
             Id = id;
@@ -29,11 +29,11 @@ namespace Azure.Communication.CallAutomation
             SubscribedResultTypes = subscribedResultTypes;
         }
 
-        /// <summary> Gets or Sets subscription Id. </summary>
+        /// <summary> Subscription Id. </summary>
         public string Id { get; }
-        /// <summary> Gets or Sets transcription subscription state. </summary>
+        /// <summary> Transcription subscription state. </summary>
         public TranscriptionSubscriptionState? State { get; }
-        /// <summary> Gets or Sets the subscribed transcription result types. </summary>
+        /// <summary> Subscribed transcription result types. </summary>
         public IReadOnlyList<TranscriptionResultType> SubscribedResultTypes { get; }
     }
 }

@@ -95,6 +95,10 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult>> AnswerCallAsync(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult>> AnswerCallAsync(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.ConnectResult> Connect(Azure.Communication.CallAutomation.CallLocator callLocator, string callbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.ConnectResult> Connect(Azure.Communication.CallAutomation.ConnectOptions connectOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.ConnectResult>> ConnectAsync(Azure.Communication.CallAutomation.CallLocator callLocator, string callbackUrl, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.ConnectResult>> ConnectAsync(Azure.Communication.CallAutomation.ConnectOptions connectOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(Azure.Communication.CallAutomation.CallInvite callInvite, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(Azure.Communication.CallAutomation.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateCallAsync(Azure.Communication.CallAutomation.CallInvite callInvite, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -526,6 +530,33 @@ namespace Azure.Communication.CallAutomation
         public string Label { get { throw null; } }
         public string RecognizedPhrase { get { throw null; } }
         public override Azure.Communication.CallAutomation.RecognizeResultType ResultType { get { throw null; } }
+    }
+    public partial class ConnectEventResult
+    {
+        internal ConnectEventResult() { }
+        public Azure.Communication.CallAutomation.ConnectFailed FailureResult { get { throw null; } }
+        public bool IsSuccess { get { throw null; } }
+    }
+    public partial class ConnectFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal ConnectFailed() { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ConnectFailed Deserialize(string content) { throw null; }
+    }
+    public partial class ConnectOptions
+    {
+        public ConnectOptions(Azure.Communication.CallAutomation.CallLocator callLocator, string callbackUrl) { }
+        public string CallbackUrl { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.CallLocator CallLocator { get { throw null; } }
+    }
+    public partial class ConnectResult
+    {
+        internal ConnectResult() { }
+        public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
+        public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
+        public Azure.Communication.CallAutomation.ConnectEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.ConnectEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallAutomation.ContentTransferOptions>
@@ -1216,6 +1247,13 @@ namespace Azure.Communication.CallAutomation
     {
         Intermediate = 0,
         Final = 1,
+    }
+    public partial class RoomCallLocator : Azure.Communication.CallAutomation.CallLocator
+    {
+        public RoomCallLocator(string id) { }
+        public override bool Equals(Azure.Communication.CallAutomation.CallLocator other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SendDtmfTonesCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {

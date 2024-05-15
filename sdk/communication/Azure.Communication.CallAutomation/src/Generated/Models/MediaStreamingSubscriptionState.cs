@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Gets or Sets media streaming subscription state. </summary>
+    /// <summary> Media streaming subscription state. </summary>
     public readonly partial struct MediaStreamingSubscriptionState : IEquatable<MediaStreamingSubscriptionState>
     {
         private readonly string _value;
