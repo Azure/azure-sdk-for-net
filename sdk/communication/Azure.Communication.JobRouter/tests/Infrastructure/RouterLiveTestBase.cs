@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             JsonPathSanitizers.Add("$..functionKey");
             JsonPathSanitizers.Add("$..appKey");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.comminication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.comminication.azure.com" });
         }
 
         [SetUp]
