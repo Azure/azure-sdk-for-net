@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Correct casing of SkuName when using the ArmSearchModelFactory
+- Correct casing of SkuName when using the ArmSearchModelFactory.
 
 ## 1.3.0-beta.2 (2024-04-29)
 
