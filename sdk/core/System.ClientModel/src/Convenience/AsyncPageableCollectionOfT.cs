@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
+
+// TODO: should notnull constraint go on base result collection?
 public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T> where T : notnull
 {
     protected internal AsyncPageableCollection() : base()
@@ -17,11 +19,11 @@ public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T> wher
     // Note: we don't have a constructor that takes response because
     // pageables delay the first request so they don't need to be disposed.
 
-    public abstract IAsyncEnumerable<ClientPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
+    public abstract IAsyncEnumerable<ResultPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
 
     public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        await foreach (ClientPage<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (ResultPage<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
         {
             foreach (T value in page)
             {

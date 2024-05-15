@@ -73,7 +73,7 @@ public class PageableCollectionTests //: SyncAsyncTestBase
 
         int pageCount = 0;
         int itemCount = 0;
-        foreach (ClientPage<MockJsonModel> page in models.AsPages())
+        foreach (ResultPage<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page)
             {
@@ -98,7 +98,7 @@ public class PageableCollectionTests //: SyncAsyncTestBase
 
         int pageCount = 0;
         int i = 6;
-        foreach (ClientPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
+        foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
         {
             foreach (MockJsonModel model in page)
             {

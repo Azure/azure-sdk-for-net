@@ -10,7 +10,7 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T> where T : notnull
     {
         protected internal AsyncPageableCollection() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
@@ -29,11 +29,6 @@ namespace System.ClientModel
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public abstract partial class ClientPage<T> : System.ClientModel.ResultCollection<T>
-    {
-        public string? ContinuationToken;
-        public ClientPage(System.ClientModel.Primitives.PipelineResponse response) { }
     }
     public partial class ClientResult
     {
@@ -62,7 +57,7 @@ namespace System.ClientModel
     public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T> where T : notnull
     {
         protected internal PageableCollection() { }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
@@ -71,6 +66,12 @@ namespace System.ClientModel
         protected internal ResultCollection(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public abstract partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
+    {
+        protected ResultPage(System.ClientModel.Primitives.PipelineResponse response) { }
+        public string? ContinuationToken { get { throw null; } protected set { } }
+        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
