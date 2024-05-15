@@ -91,7 +91,7 @@ public class PageableCollectionTests //: SyncAsyncTestBase
     }
 
     [Test]
-    public void CanStartPageEnumerationMidway()
+    public void CanStartPageEnumerationMidwayThrough()
     {
         MockPageableClient client = new();
         PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);

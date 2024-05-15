@@ -67,11 +67,11 @@ namespace System.ClientModel
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
+    public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
     {
-        protected ResultPage(System.ClientModel.Primitives.PipelineResponse response) { }
-        public string? ContinuationToken { get { throw null; } protected set { } }
-        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public ResultPage(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        public string? ContinuationToken { get { throw null; } }
+        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
