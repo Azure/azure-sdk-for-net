@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _verifierWorkspaceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VerifierWorkspaceResource>(Response.FromValue(new VerifierWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _verifierWorkspaceRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<VerifierWorkspaceResource>(Response.FromValue(new VerifierWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +137,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _verifierWorkspaceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken);
-                var operation = new NetworkArmOperation<VerifierWorkspaceResource>(Response.FromValue(new VerifierWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _verifierWorkspaceRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<VerifierWorkspaceResource>(Response.FromValue(new VerifierWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

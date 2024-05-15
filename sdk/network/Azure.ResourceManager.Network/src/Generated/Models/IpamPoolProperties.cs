@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets the parent pool name. </summary>
         public string ParentPoolName { get; set; }
         /// <summary> Gets the address prefixes. </summary>
-        public IList<string> AddressPrefixes { get; set; }
+        public IList<string> AddressPrefixes { get; }
         /// <summary> The current provisioning state. </summary>
         public NetworkProvisioningState? ProvisioningState { get; set; }
     }
