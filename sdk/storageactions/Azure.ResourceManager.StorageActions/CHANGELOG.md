@@ -1,6 +1,10 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2024-05-17)
+
+### Features Added
+
+This is the first beta release of Azure Storage Actions client library.
 
 ### General New Features
 
