@@ -98,5 +98,64 @@ namespace Azure.ResourceManager.MySql.Tests
             Assert.AreEqual("Succeeded", resultBackupAndExport.Status.ToString());
             Assert.AreEqual("100", resultBackupAndExport.PercentComplete.ToString());
         }
+
+        [TestCase]
+        public async Task CreateBackupAndExportPolling()
+        {
+            // Create a server
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastUS);
+            var storageAccount = await CreateStorageAccount(rg);
+            var blobContainer = await CreateBlobContainer(storageAccount, rg);
+            MySqlFlexibleServerCollection serverCollection = rg.GetMySqlFlexibleServers();
+            string serverName = Recording.GenerateAssetName("mysqlflexserver");
+            var serverData = new MySqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new MySqlFlexibleServerSku("Standard_B1ms", MySqlFlexibleServerSkuTier.Burstable),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = "5.7",
+                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 512 },
+                CreateMode = MySqlFlexibleServerCreateMode.Default,
+                Backup = new MySqlFlexibleServerBackupProperties()
+                {
+                    BackupRetentionDays = 7
+                },
+                Network = new MySqlFlexibleServerNetwork(),
+                HighAvailability = new MySqlFlexibleServerHighAvailability() { Mode = MySqlFlexibleServerHighAvailabilityMode.Disabled },
+            };
+            var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
+            MySqlFlexibleServerResource server1 = lro.Value;
+            Assert.AreEqual(serverName, server1.Data.Name);
+
+            //create backup
+            List<string> list1 = new List<string>();
+            var aSascontent = new AccountSasContent(StorageAccountSasSignedService.B, StorageAccountSasSignedResourceType.O, "rwd", Recording.UtcNow.AddHours(1));
+            var sas = (await storageAccount.GetAccountSasAsync(aSascontent)).Value.AccountSasToken;
+            list1.Add($"https://{storageAccount.Data.Name}.blob.core.windows.net/{blobContainer.Data.Name}?{sas}");
+            MySqlFlexibleServerBackupAndExportContent backupAndExportContent = new MySqlFlexibleServerBackupAndExportContent
+            (
+                new MySqlFlexibleServerBackupSettings("customer-backup-sdktest-1"),
+                new MySqlFlexibleServerFullBackupStoreDetails(list1)
+            );
+
+            var lroBackupAndExport = await server1.CreateBackupAndExportAsync(Azure.WaitUntil.Started, backupAndExportContent);
+            while (!lroBackupAndExport.HasCompleted)
+            {
+                Response statusResponse = await lroBackupAndExport.UpdateStatusAsync().ConfigureAwait(false);
+                if (statusResponse.Status == 202 || statusResponse.Status == 200)
+                {
+                    // Get progress status
+                    var operationProgress = await lroBackupAndExport.GetDetailedStatusAsync();
+                    // Do something with the operation progress validation here
+                }
+                else
+                {
+                    // exception
+                }
+            }
+            MySqlFlexibleServerBackupAndExportResult resultBackupAndExport = lroBackupAndExport.Value;
+            Assert.AreEqual("Succeeded", resultBackupAndExport.Status.ToString());
+            Assert.AreEqual("100", resultBackupAndExport.PercentComplete.ToString());
+        }
     }
 }

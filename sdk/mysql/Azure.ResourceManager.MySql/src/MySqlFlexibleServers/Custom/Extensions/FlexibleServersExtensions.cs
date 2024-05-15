@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
+    /// <summary> A class to add extension methods to Azure.ResourceManager.MySql.FlexibleServers. </summary>
     public static partial class FlexibleServersExtensions
     {
         /// <summary>
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Argument.AssertNotNull(operation, nameof(operation));
             Argument.AssertNotNullOrEmpty(operation.Id, nameof(operation.Id));
 
-            if (operation is not FlexibleServersArmOperation2<T>)
-            {
-                throw new ArgumentException($"Operation {typeof(ArmOperation<T>)} doesn't support get operation detailed status.");
-            }
+            //if (operation is not FlexibleServersArmOperation2<T>)
+            //{
+            //    throw new ArgumentException($"Operation {typeof(ArmOperation<T>)} doesn't support get operation detailed status.");
+            //}
 
-            FlexibleServersArmOperation2<T> flexibleServersArmOperation = operation as FlexibleServersArmOperation2<T>;
+            FlexibleServersArmOperation2<T> flexibleServersArmOperation = (FlexibleServersArmOperation2<T>)operation;
             if (flexibleServersArmOperation.Pipeline is null)
             {
                 throw new ArgumentException($"Operation {typeof(ArmOperation<T>)} doesn't support get operation detailed status.");
