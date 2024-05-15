@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.StorageActions.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskProperties"/>. </summary>
         /// <param name="taskVersion"> Storage task version. </param>
-        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
         /// <param name="action"> The storage task action that is executed. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
         /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
         /// <returns> A new <see cref="Models.StorageTaskProperties"/> instance for mocking. </returns>
-        public static StorageTaskProperties StorageTaskProperties(long? taskVersion = null, bool enabled = default, string description = null, StorageTaskAction action = null, StorageTaskProvisioningState? provisioningState = null, DateTimeOffset? creationTimeInUtc = null)
+        public static StorageTaskProperties StorageTaskProperties(long? taskVersion = null, bool isEnabled = default, string description = null, StorageTaskAction action = null, StorageTaskProvisioningState? provisioningState = null, DateTimeOffset? creationTimeInUtc = null)
         {
             return new StorageTaskProperties(
                 taskVersion,
-                enabled,
+                isEnabled,
                 description,
                 action,
                 provisioningState,

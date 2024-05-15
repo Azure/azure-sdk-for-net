@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 writer.WriteNumberValue(TaskVersion.Value);
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("action"u8);

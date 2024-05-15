@@ -30,6 +30,7 @@ rename-mapping:
   ProvisioningState: StorageTaskProvisioningState
   RunResult: StorageTaskRunResult
   RunStatusEnum: StorageTaskRunStatus
+  StorageTaskProperties.enabled: IsEnabled
 
 override-operation-name:
   StorageTasks_PreviewActions: PreviewActions

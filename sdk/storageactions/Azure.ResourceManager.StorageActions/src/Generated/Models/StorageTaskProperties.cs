@@ -46,32 +46,32 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskProperties"/>. </summary>
-        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
         /// <param name="action"> The storage task action that is executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="action"/> is null. </exception>
-        public StorageTaskProperties(bool enabled, string description, StorageTaskAction action)
+        public StorageTaskProperties(bool isEnabled, string description, StorageTaskAction action)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(action, nameof(action));
 
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Description = description;
             Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskProperties"/>. </summary>
         /// <param name="taskVersion"> Storage task version. </param>
-        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
         /// <param name="action"> The storage task action that is executed. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
         /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskProperties(long? taskVersion, bool enabled, string description, StorageTaskAction action, StorageTaskProvisioningState? provisioningState, DateTimeOffset? creationTimeInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskProperties(long? taskVersion, bool isEnabled, string description, StorageTaskAction action, StorageTaskProvisioningState? provisioningState, DateTimeOffset? creationTimeInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskVersion = taskVersion;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Description = description;
             Action = action;
             ProvisioningState = provisioningState;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Storage task version. </summary>
         public long? TaskVersion { get; }
         /// <summary> Storage Task is enabled when set to true and disabled when set to false. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
         /// <summary> Text that describes the purpose of the storage task. </summary>
         public string Description { get; set; }
         /// <summary> The storage task action that is executed. </summary>
