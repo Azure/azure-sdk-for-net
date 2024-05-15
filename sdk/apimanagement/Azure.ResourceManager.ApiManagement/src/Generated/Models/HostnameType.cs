@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string ManagementValue = "Management";
         private const string ScmValue = "Scm";
         private const string DeveloperPortalValue = "DeveloperPortal";
+        private const string ConfigurationApiValue = "ConfigurationApi";
 
         /// <summary> Proxy. </summary>
         public static HostnameType Proxy { get; } = new HostnameType(ProxyValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static HostnameType Scm { get; } = new HostnameType(ScmValue);
         /// <summary> DeveloperPortal. </summary>
         public static HostnameType DeveloperPortal { get; } = new HostnameType(DeveloperPortalValue);
+        /// <summary> ConfigurationApi. </summary>
+        public static HostnameType ConfigurationApi { get; } = new HostnameType(ConfigurationApiValue);
         /// <summary> Determines if two <see cref="HostnameType"/> values are the same. </summary>
         public static bool operator ==(HostnameType left, HostnameType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HostnameType"/> values are not the same. </summary>

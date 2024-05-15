@@ -56,14 +56,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="metadataEndpoint"> Metadata endpoint URI. </param>
         /// <param name="clientId"> Client ID of developer console which is the client application. </param>
         /// <param name="clientSecret"> Client Secret of developer console which is the client application. </param>
+        /// <param name="useInTestConsole"> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </param>
+        /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementOpenIdConnectProviderPatch(string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementOpenIdConnectProviderPatch(string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, bool? useInTestConsole, bool? useInApiDocumentation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
             MetadataEndpoint = metadataEndpoint;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            UseInTestConsole = useInTestConsole;
+            UseInApiDocumentation = useInApiDocumentation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +81,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string ClientId { get; set; }
         /// <summary> Client Secret of developer console which is the client application. </summary>
         public string ClientSecret { get; set; }
+        /// <summary> If true, the Open ID Connect provider may be used in the developer portal test console. True by default if no value is provided. </summary>
+        public bool? UseInTestConsole { get; set; }
+        /// <summary> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </summary>
+        public bool? UseInApiDocumentation { get; set; }
     }
 }

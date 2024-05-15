@@ -67,14 +67,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
         /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             IsSecret = isSecret;
             DisplayName = displayName;
             Value = value;
             KeyVaultDetails = keyVaultDetails;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,5 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string Value { get; set; }
         /// <summary> KeyVault location details of the namedValue. </summary>
         public KeyVaultContractProperties KeyVaultDetails { get; set; }
+        /// <summary> The provisioning state. </summary>
+        public string ProvisioningState { get; }
     }
 }

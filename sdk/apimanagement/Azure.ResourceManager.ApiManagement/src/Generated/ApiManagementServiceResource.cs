@@ -38,8 +38,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementServiceClientDiagnostics;
         private readonly ApiManagementServiceRestOperations _apiManagementServiceRestClient;
-        private readonly ClientDiagnostics _apiClientDiagnostics;
-        private readonly ApiRestOperations _apiRestClient;
+        private readonly ClientDiagnostics _allPoliciesClientDiagnostics;
+        private readonly AllPoliciesRestOperations _allPoliciesRestClient;
+        private readonly ClientDiagnostics _serviceApiApiClientDiagnostics;
+        private readonly ApiRestOperations _serviceApiApiRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ApiManagementRestOperations _defaultRestClient;
         private readonly ClientDiagnostics _contentTypeClientDiagnostics;
@@ -54,10 +56,12 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OutboundNetworkDependenciesEndpointsRestOperations _outboundNetworkDependenciesEndpointsRestClient;
         private readonly ClientDiagnostics _policyDescriptionClientDiagnostics;
         private readonly PolicyDescriptionRestOperations _policyDescriptionRestClient;
+        private readonly ClientDiagnostics _policyRestrictionValidationsClientDiagnostics;
+        private readonly PolicyRestrictionValidationsRestOperations _policyRestrictionValidationsRestClient;
         private readonly ClientDiagnostics _apiManagementServicePortalSettingsClientDiagnostics;
         private readonly PortalSettingsRestOperations _apiManagementServicePortalSettingsRestClient;
-        private readonly ClientDiagnostics _apiManagementProductProductClientDiagnostics;
-        private readonly ProductRestOperations _apiManagementProductProductRestClient;
+        private readonly ClientDiagnostics _serviceProductProductClientDiagnostics;
+        private readonly ProductRestOperations _serviceProductProductRestClient;
         private readonly ClientDiagnostics _quotaByCounterKeysClientDiagnostics;
         private readonly QuotaByCounterKeysRestOperations _quotaByCounterKeysRestClient;
         private readonly ClientDiagnostics _quotaByPeriodKeysClientDiagnostics;
@@ -97,9 +101,11 @@ namespace Azure.ResourceManager.ApiManagement
             _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServiceApiVersion);
             _apiManagementServiceRestClient = new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion);
-            _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiResource.ResourceType, out string apiApiVersion);
-            _apiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion);
+            _allPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _allPoliciesRestClient = new AllPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _serviceApiApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceApiResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceApiResource.ResourceType, out string serviceApiApiApiVersion);
+            _serviceApiApiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceApiApiApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ApiManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _contentTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -114,12 +120,14 @@ namespace Azure.ResourceManager.ApiManagement
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _policyDescriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _policyDescriptionRestClient = new PolicyDescriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _policyRestrictionValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _policyRestrictionValidationsRestClient = new PolicyRestrictionValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _apiManagementServicePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServicePortalSettingsApiVersion);
             _apiManagementServicePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServicePortalSettingsApiVersion);
-            _apiManagementProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementProductResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementProductResource.ResourceType, out string apiManagementProductProductApiVersion);
-            _apiManagementProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductProductApiVersion);
+            _serviceProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceProductResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceProductResource.ResourceType, out string serviceProductProductApiVersion);
+            _serviceProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceProductProductApiVersion);
             _quotaByCounterKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _quotaByCounterKeysRestClient = new QuotaByCounterKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _quotaByPeriodKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -158,11 +166,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApiResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiResources and their operations over a ApiResource. </returns>
-        public virtual ApiCollection GetApis()
+        /// <summary> Gets a collection of ServiceApiResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceApiResources and their operations over a ServiceApiResource. </returns>
+        public virtual ServiceApiCollection GetServiceApis()
         {
-            return GetCachedClient(client => new ApiCollection(client, Id));
+            return GetCachedClient(client => new ServiceApiCollection(client, Id));
         }
 
         /// <summary>
@@ -178,11 +186,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiResource"/></description>
+        /// <description><see cref="ServiceApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,9 +199,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiResource>> GetApiAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceApiResource>> GetServiceApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            return await GetApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -209,11 +217,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiResource"/></description>
+        /// <description><see cref="ServiceApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,9 +230,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiResource> GetApi(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceApiResource> GetServiceApi(string apiId, CancellationToken cancellationToken = default)
         {
-            return GetApis().Get(apiId, cancellationToken);
+            return GetServiceApis().Get(apiId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementPolicyResources in the ApiManagementService. </summary>
@@ -247,7 +255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -277,7 +285,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -345,7 +353,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -383,7 +391,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +460,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -501,11 +509,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementIssues().Get(issueId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiVersionSetResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiVersionSetResources and their operations over a ApiVersionSetResource. </returns>
-        public virtual ApiVersionSetCollection GetApiVersionSets()
+        /// <summary> Gets a collection of ServiceApiVersionSetResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceApiVersionSetResources and their operations over a ServiceApiVersionSetResource. </returns>
+        public virtual ServiceApiVersionSetCollection GetServiceApiVersionSets()
         {
-            return GetCachedClient(client => new ApiVersionSetCollection(client, Id));
+            return GetCachedClient(client => new ServiceApiVersionSetCollection(client, Id));
         }
 
         /// <summary>
@@ -521,11 +529,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiVersionSetResource"/></description>
+        /// <description><see cref="ServiceApiVersionSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,9 +542,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiVersionSetResource>> GetApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceApiVersionSetResource>> GetServiceApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
-            return await GetApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -552,11 +560,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiVersionSetResource"/></description>
+        /// <description><see cref="ServiceApiVersionSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -565,9 +573,78 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiVersionSetResource> GetApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceApiVersionSetResource> GetServiceApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
         {
-            return GetApiVersionSets().Get(versionSetId, cancellationToken);
+            return GetServiceApiVersionSets().Get(versionSetId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AuthorizationProviderContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of AuthorizationProviderContractResources and their operations over a AuthorizationProviderContractResource. </returns>
+        public virtual AuthorizationProviderContractCollection GetAuthorizationProviderContracts()
+        {
+            return GetCachedClient(client => new AuthorizationProviderContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization provider specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationProvider_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AuthorizationProviderContractResource>> GetAuthorizationProviderContractAsync(string authorizationProviderId, CancellationToken cancellationToken = default)
+        {
+            return await GetAuthorizationProviderContracts().GetAsync(authorizationProviderId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the authorization provider specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthorizationProvider_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationProviderId"> Identifier of the authorization provider. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AuthorizationProviderContractResource> GetAuthorizationProviderContract(string authorizationProviderId, CancellationToken cancellationToken = default)
+        {
+            return GetAuthorizationProviderContracts().Get(authorizationProviderId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementAuthorizationServerResources in the ApiManagementService. </summary>
@@ -590,7 +667,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -621,7 +698,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -659,7 +736,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -690,7 +767,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,7 +805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -759,7 +836,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -797,7 +874,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -828,7 +905,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -844,6 +921,75 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiManagementCertificateResource> GetApiManagementCertificate(string certificateId, CancellationToken cancellationToken = default)
         {
             return GetApiManagementCertificates().Get(certificateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DocumentationContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of DocumentationContractResources and their operations over a DocumentationContractResource. </returns>
+        public virtual DocumentationContractCollection GetDocumentationContracts()
+        {
+            return GetCachedClient(client => new DocumentationContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the Documentation specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/documentations/{documentationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Documentation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DocumentationContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="documentationId"> Documentation identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="documentationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="documentationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DocumentationContractResource>> GetDocumentationContractAsync(string documentationId, CancellationToken cancellationToken = default)
+        {
+            return await GetDocumentationContracts().GetAsync(documentationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Documentation specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/documentations/{documentationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Documentation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DocumentationContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="documentationId"> Documentation identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="documentationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="documentationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DocumentationContractResource> GetDocumentationContract(string documentationId, CancellationToken cancellationToken = default)
+        {
+            return GetDocumentationContracts().Get(documentationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementEmailTemplateResources in the ApiManagementService. </summary>
@@ -866,7 +1012,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -895,7 +1041,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -931,7 +1077,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -962,7 +1108,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -980,11 +1126,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementGateways().Get(gatewayId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementGroupResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementGroupResources and their operations over a ApiManagementGroupResource. </returns>
-        public virtual ApiManagementGroupCollection GetApiManagementGroups()
+        /// <summary> Gets a collection of ServiceGroupResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceGroupResources and their operations over a ServiceGroupResource. </returns>
+        public virtual ServiceGroupCollection GetServiceGroups()
         {
-            return GetCachedClient(client => new ApiManagementGroupCollection(client, Id));
+            return GetCachedClient(client => new ServiceGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -1000,11 +1146,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// <description><see cref="ServiceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,9 +1159,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementGroupResource>> GetApiManagementGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceGroupResource>> GetServiceGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1031,11 +1177,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// <description><see cref="ServiceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1044,9 +1190,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementGroupResource> GetApiManagementGroup(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceGroupResource> GetServiceGroup(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementGroups().Get(groupId, cancellationToken);
+            return GetServiceGroups().Get(groupId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementIdentityProviderResources in the ApiManagementService. </summary>
@@ -1069,7 +1215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1098,7 +1244,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1134,7 +1280,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1165,7 +1311,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1183,11 +1329,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementLoggers().Get(loggerId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementNamedValueResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementNamedValueResources and their operations over a ApiManagementNamedValueResource. </returns>
-        public virtual ApiManagementNamedValueCollection GetApiManagementNamedValues()
+        /// <summary> Gets a collection of ServiceNamedValueResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceNamedValueResources and their operations over a ServiceNamedValueResource. </returns>
+        public virtual ServiceNamedValueCollection GetServiceNamedValues()
         {
-            return GetCachedClient(client => new ApiManagementNamedValueCollection(client, Id));
+            return GetCachedClient(client => new ServiceNamedValueCollection(client, Id));
         }
 
         /// <summary>
@@ -1203,11 +1349,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementNamedValueResource"/></description>
+        /// <description><see cref="ServiceNamedValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1216,9 +1362,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementNamedValueResource>> GetApiManagementNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNamedValueResource>> GetServiceNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1234,11 +1380,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementNamedValueResource"/></description>
+        /// <description><see cref="ServiceNamedValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1247,45 +1393,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementNamedValueResource> GetApiManagementNamedValue(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceNamedValueResource> GetServiceNamedValue(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementNamedValues().Get(namedValueId, cancellationToken);
+            return GetServiceNamedValues().Get(namedValueId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementNotificationResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementNotificationResources and their operations over a ApiManagementNotificationResource. </returns>
-        public virtual ApiManagementNotificationCollection GetApiManagementNotifications()
+        /// <summary> Gets a collection of ServiceNotificationResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceNotificationResources and their operations over a ServiceNotificationResource. </returns>
+        public virtual ServiceNotificationCollection GetServiceNotifications()
         {
-            return GetCachedClient(client => new ApiManagementNotificationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the Notification specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Notification_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementNotificationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="notificationName"> Notification Name Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementNotificationResource>> GetApiManagementNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceNotificationCollection(client, Id));
         }
 
         /// <summary>
@@ -1301,20 +1418,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementNotificationResource"/></description>
+        /// <description><see cref="ServiceNotificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementNotificationResource> GetApiManagementNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNotificationResource>> GetServiceNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementNotifications().Get(notificationName, cancellationToken);
+            return await GetServiceNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Notification specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Notification_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceNotificationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationName"> Notification Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceNotificationResource> GetServiceNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceNotifications().Get(notificationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementOpenIdConnectProviderResources in the ApiManagementService. </summary>
@@ -1337,7 +1483,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1368,7 +1514,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1384,6 +1530,215 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(string openId, CancellationToken cancellationToken = default)
         {
             return GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServicePolicyFragmentResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServicePolicyFragmentResources and their operations over a ServicePolicyFragmentResource. </returns>
+        public virtual ServicePolicyFragmentCollection GetServicePolicyFragments()
+        {
+            return GetCachedClient(client => new ServicePolicyFragmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyFragment_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="format"> Policy fragment content format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServicePolicyFragmentResource>> GetServicePolicyFragmentAsync(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            return await GetServicePolicyFragments().GetAsync(id, format, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a policy fragment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyFragment_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> A resource identifier. </param>
+        /// <param name="format"> Policy fragment content format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServicePolicyFragmentResource> GetServicePolicyFragment(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            return GetServicePolicyFragments().Get(id, format, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PolicyRestrictionContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of PolicyRestrictionContractResources and their operations over a PolicyRestrictionContractResource. </returns>
+        public virtual PolicyRestrictionContractCollection GetPolicyRestrictionContracts()
+        {
+            return GetCachedClient(client => new PolicyRestrictionContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the policy restriction of the Api Management service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyRestriction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyRestrictionContractResource>> GetPolicyRestrictionContractAsync(string policyRestrictionId, CancellationToken cancellationToken = default)
+        {
+            return await GetPolicyRestrictionContracts().GetAsync(policyRestrictionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the policy restriction of the Api Management service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyRestriction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRestrictionContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyRestrictionContractResource> GetPolicyRestrictionContract(string policyRestrictionId, CancellationToken cancellationToken = default)
+        {
+            return GetPolicyRestrictionContracts().Get(policyRestrictionId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PortalConfigContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of PortalConfigContractResources and their operations over a PortalConfigContractResource. </returns>
+        public virtual PortalConfigContractCollection GetPortalConfigContracts()
+        {
+            return GetCachedClient(client => new PortalConfigContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalConfig_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PortalConfigContractResource>> GetPortalConfigContractAsync(string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            return await GetPortalConfigContracts().GetAsync(portalConfigId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the developer portal configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PortalConfig_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portalConfigId"> Portal configuration identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PortalConfigContractResource> GetPortalConfigContract(string portalConfigId, CancellationToken cancellationToken = default)
+        {
+            return GetPortalConfigContracts().Get(portalConfigId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementPortalRevisionResources in the ApiManagementService. </summary>
@@ -1406,7 +1761,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1437,7 +1792,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1496,7 +1851,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1527,7 +1882,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1565,7 +1920,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1596,7 +1951,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1614,11 +1969,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementPrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementProductResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementProductResources and their operations over a ApiManagementProductResource. </returns>
-        public virtual ApiManagementProductCollection GetApiManagementProducts()
+        /// <summary> Gets a collection of ServiceProductResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceProductResources and their operations over a ServiceProductResource. </returns>
+        public virtual ServiceProductCollection GetServiceProducts()
         {
-            return GetCachedClient(client => new ApiManagementProductCollection(client, Id));
+            return GetCachedClient(client => new ServiceProductCollection(client, Id));
         }
 
         /// <summary>
@@ -1634,11 +1989,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementProductResource"/></description>
+        /// <description><see cref="ServiceProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1647,9 +2002,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementProductResource>> GetApiManagementProductAsync(string productId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceProductResource>> GetServiceProductAsync(string productId, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1665,11 +2020,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementProductResource"/></description>
+        /// <description><see cref="ServiceProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1678,47 +2033,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementProductResource> GetApiManagementProduct(string productId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceProductResource> GetServiceProduct(string productId, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementProducts().Get(productId, cancellationToken);
+            return GetServiceProducts().Get(productId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementGlobalSchemaResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementGlobalSchemaResources and their operations over a ApiManagementGlobalSchemaResource. </returns>
-        public virtual ApiManagementGlobalSchemaCollection GetApiManagementGlobalSchemas()
+        /// <summary> Gets a collection of ServiceSchemaResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ServiceSchemaResources and their operations over a ServiceSchemaResource. </returns>
+        public virtual ServiceSchemaCollection GetServiceSchemas()
         {
-            return GetCachedClient(client => new ApiManagementGlobalSchemaCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the Schema specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalSchema_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementGlobalSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementGlobalSchemaResource>> GetApiManagementGlobalSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
-        {
-            return await GetApiManagementGlobalSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ServiceSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -1734,11 +2058,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementGlobalSchemaResource"/></description>
+        /// <description><see cref="ServiceSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1747,9 +2071,40 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchema(string schemaId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceSchemaResource>> GetServiceSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementGlobalSchemas().Get(schemaId, cancellationToken);
+            return await GetServiceSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Schema specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchema_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceSchemaResource> GetServiceSchema(string schemaId, CancellationToken cancellationToken = default)
+        {
+            return GetServiceSchemas().Get(schemaId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementTenantSettingResources in the ApiManagementService. </summary>
@@ -1772,7 +2127,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1801,7 +2156,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1837,7 +2192,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1868,7 +2223,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1906,7 +2261,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1935,7 +2290,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1971,7 +2326,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2002,7 +2357,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2020,6 +2375,75 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementUsers().Get(userId, cancellationToken);
         }
 
+        /// <summary> Gets a collection of WorkspaceContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of WorkspaceContractResources and their operations over a WorkspaceContractResource. </returns>
+        public virtual WorkspaceContractCollection GetWorkspaceContracts()
+        {
+            return GetCachedClient(client => new WorkspaceContractCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the workspace specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkspaceContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkspaceContractResource>> GetWorkspaceContractAsync(string workspaceId, CancellationToken cancellationToken = default)
+        {
+            return await GetWorkspaceContracts().GetAsync(workspaceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the workspace specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkspaceContractResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkspaceContractResource> GetWorkspaceContract(string workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetWorkspaceContracts().Get(workspaceId, cancellationToken);
+        }
+
         /// <summary>
         /// Gets an API Management service resource description.
         /// <list type="bullet">
@@ -2033,7 +2457,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2073,7 +2497,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2113,7 +2537,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2155,7 +2579,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2197,7 +2621,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2243,7 +2667,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2277,37 +2701,55 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists a collection of apis associated with tags.
+        /// Status of all policies of API Management services.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Api_ListByTags</description>
+        /// <description>AllPolicies_ListByService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiResource"/></description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AllPoliciesContract> GetAllPoliciesByServiceAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Status of all policies of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AllPolicies_ListByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AllPoliciesContract> GetAllPoliciesByService(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2323,11 +2765,45 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiResource"/></description>
+        /// <description><see cref="ServiceApiResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceApiApiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceApiApiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceApiApiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a collection of apis associated with tags.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Api_ListByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2339,9 +2815,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceApiApiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceApiApiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceApiApiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2357,7 +2833,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2399,7 +2875,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2441,7 +2917,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2467,7 +2943,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2493,7 +2969,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2532,7 +3008,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2571,24 +3047,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="apiManagementContentType"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="apiManagementContentType"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNull(apiManagementContentType, nameof(apiManagementContentType));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
             scope.Start();
             try
             {
-                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _contentTypeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, apiManagementContentType, ifMatch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2611,24 +3089,26 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="apiManagementContentType"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="apiManagementContentType"/> is null. </exception>
+        public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ApiManagementContentType apiManagementContentType, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNull(apiManagementContentType, nameof(apiManagementContentType));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
             scope.Start();
             try
             {
-                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, ifMatch, cancellationToken);
+                var response = _contentTypeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, apiManagementContentType, ifMatch, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2651,7 +3131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2691,7 +3171,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2731,7 +3211,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2762,7 +3242,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2793,7 +3273,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2834,7 +3314,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2875,7 +3355,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2916,7 +3396,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2957,26 +3437,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="apiManagementContentItem"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/>, <paramref name="contentItemId"/> or <paramref name="apiManagementContentItem"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+            Argument.AssertNotNull(apiManagementContentItem, nameof(apiManagementContentItem));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
             scope.Start();
             try
             {
-                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _contentItemRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, apiManagementContentItem, ifMatch, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2999,26 +3481,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentTypeId"> Content type identifier. </param>
         /// <param name="contentItemId"> Content item identifier. </param>
+        /// <param name="apiManagementContentItem"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
-        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/>, <paramref name="contentItemId"/> or <paramref name="apiManagementContentItem"/> is null. </exception>
+        public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ApiManagementContentItem apiManagementContentItem, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
             Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
+            Argument.AssertNotNull(apiManagementContentItem, nameof(apiManagementContentItem));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
             scope.Start();
             try
             {
-                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, ifMatch, cancellationToken);
+                var response = _contentItemRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId, contentItemId, apiManagementContentItem, ifMatch, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -3041,7 +3525,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3083,7 +3567,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3125,7 +3609,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3151,7 +3635,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3177,7 +3661,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3223,7 +3707,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3269,7 +3753,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3315,7 +3799,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3349,6 +3833,92 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Upgrades an API Management service to the Stv2 platform. For details refer to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is long running operation and could take several minutes to complete.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/migrateToStv2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_MigrateToStv2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="migrateToStv2Contract"> Optional parameters supplied to migrate service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> MigrateToStv2Async(WaitUntil waitUntil, MigrateToStv2Contract migrateToStv2Contract = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.MigrateToStv2");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementServiceRestClient.MigrateToStv2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrateToStv2Contract, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateMigrateToStv2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrateToStv2Contract).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrades an API Management service to the Stv2 platform. For details refer to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is long running operation and could take several minutes to complete.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/migrateToStv2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiManagementService_MigrateToStv2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="migrateToStv2Contract"> Optional parameters supplied to migrate service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<ApiManagementServiceResource> MigrateToStv2(WaitUntil waitUntil, MigrateToStv2Contract migrateToStv2Contract = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.MigrateToStv2");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementServiceRestClient.MigrateToStv2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrateToStv2Contract, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateMigrateToStv2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrateToStv2Contract).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the Single-Sign-On token for the API Management Service which is valid for 5 Minutes.
         /// <list type="bullet">
         /// <item>
@@ -3361,7 +3931,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3399,7 +3969,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3437,7 +4007,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3480,7 +4050,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3523,7 +4093,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3548,7 +4118,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3573,7 +4143,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3608,7 +4178,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3643,7 +4213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3668,7 +4238,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3693,7 +4263,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3719,7 +4289,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3730,6 +4300,82 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(e), _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validate all policies of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyRestrictionValidations_ByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> ByServicePolicyRestrictionValidationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
+            scope.Start();
+            try
+            {
+                var response = await _policyRestrictionValidationsRestClient.ByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate all policies of API Management services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyRestrictionValidations_ByService</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<GitOperationResultContractData> ByServicePolicyRestrictionValidation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
+            scope.Start();
+            try
+            {
+                var response = _policyRestrictionValidationsRestClient.ByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -3745,7 +4391,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3774,7 +4420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3803,11 +4449,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementProductResource"/></description>
+        /// <description><see cref="ServiceProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3819,9 +4465,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3837,11 +4483,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ApiManagementProductResource"/></description>
+        /// <description><see cref="ServiceProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3853,9 +4499,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetProductsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3871,7 +4517,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3901,7 +4547,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3931,7 +4577,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3963,7 +4609,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3995,7 +4641,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4036,7 +4682,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4077,7 +4723,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4120,7 +4766,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4163,7 +4809,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4189,7 +4835,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4215,7 +4861,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4248,7 +4894,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4281,7 +4927,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4314,7 +4960,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4347,7 +4993,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4380,7 +5026,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4413,7 +5059,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4446,7 +5092,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4479,7 +5125,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4511,7 +5157,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4543,7 +5189,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4576,7 +5222,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4609,7 +5255,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4643,7 +5289,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4677,7 +5323,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4708,7 +5354,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4739,7 +5385,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4768,7 +5414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4797,7 +5443,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4840,7 +5486,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4883,7 +5529,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4926,7 +5572,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4969,7 +5615,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5012,7 +5658,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5055,7 +5701,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5090,7 +5736,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5125,7 +5771,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5187,7 +5833,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5249,7 +5895,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5306,7 +5952,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5363,7 +6009,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5423,7 +6069,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

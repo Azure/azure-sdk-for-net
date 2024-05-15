@@ -36,6 +36,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("openid"u8);
                 writer.WriteObjectValue(OpenId, options);
             }
+            if (Optional.IsCollectionDefined(OAuth2AuthenticationSettings))
+            {
+                writer.WritePropertyName("oAuth2AuthenticationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in OAuth2AuthenticationSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OpenidAuthenticationSettings))
+            {
+                writer.WritePropertyName("openidAuthenticationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in OpenidAuthenticationSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,6 +96,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             OAuth2AuthenticationSettingsContract oAuth2 = default;
             OpenIdAuthenticationSettingsContract openid = default;
+            IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = default;
+            IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,13 +120,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("oAuth2AuthenticationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OAuth2AuthenticationSettingsContract> array = new List<OAuth2AuthenticationSettingsContract>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(item, options));
+                    }
+                    oAuth2AuthenticationSettings = array;
+                    continue;
+                }
+                if (property.NameEquals("openidAuthenticationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OpenIdAuthenticationSettingsContract> array = new List<OpenIdAuthenticationSettingsContract>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(item, options));
+                    }
+                    openidAuthenticationSettings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthenticationSettingsContract(oAuth2, openid, serializedAdditionalRawData);
+            return new AuthenticationSettingsContract(oAuth2, openid, oAuth2AuthenticationSettings ?? new ChangeTrackingList<OAuth2AuthenticationSettingsContract>(), openidAuthenticationSettings ?? new ChangeTrackingList<OpenIdAuthenticationSettingsContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)

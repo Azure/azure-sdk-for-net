@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
         /// <param name="createdOn"> Portal's revision creation date and time. </param>
         /// <param name="updatedOn"> Last updated date and time. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             StatusDetails = statusDetails;
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
             IsCurrent = isCurrent;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last updated date and time. </summary>
         public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> The provisioning state. </summary>
+        public string ProvisioningState { get; }
     }
 }

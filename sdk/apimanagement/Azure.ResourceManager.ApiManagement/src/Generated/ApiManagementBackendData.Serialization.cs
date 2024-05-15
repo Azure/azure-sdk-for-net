@@ -85,6 +85,21 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls, options);
             }
+            if (Optional.IsDefined(CircuitBreaker))
+            {
+                writer.WritePropertyName("circuitBreaker"u8);
+                writer.WriteObjectValue(CircuitBreaker, options);
+            }
+            if (Optional.IsDefined(Pool))
+            {
+                writer.WritePropertyName("pool"u8);
+                writer.WriteObjectValue(Pool, options);
+            }
+            if (Optional.IsDefined(TypePropertiesType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+            }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
@@ -145,6 +160,9 @@ namespace Azure.ResourceManager.ApiManagement
             BackendCredentialsContract credentials = default;
             BackendProxyContract proxy = default;
             BackendTlsProperties tls = default;
+            BackendCircuitBreaker circuitBreaker = default;
+            BackendBaseParametersPool pool = default;
+            BackendType? type0 = default;
             Uri uri = default;
             BackendProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -239,6 +257,33 @@ namespace Azure.ResourceManager.ApiManagement
                             tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("circuitBreaker"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            circuitBreaker = BackendCircuitBreaker.DeserializeBackendCircuitBreaker(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("pool"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pool = BackendBaseParametersPool.DeserializeBackendBaseParametersPool(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type0 = new BackendType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("url"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -278,6 +323,9 @@ namespace Azure.ResourceManager.ApiManagement
                 credentials,
                 proxy,
                 tls,
+                circuitBreaker,
+                pool,
+                type0,
                 uri,
                 protocol,
                 serializedAdditionalRawData);

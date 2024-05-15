@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("updatedDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
             bool? isCurrent = default;
             DateTimeOffset? createdDateTime = default;
             DateTimeOffset? updatedDateTime = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,6 +218,11 @@ namespace Azure.ResourceManager.ApiManagement
                             updatedDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -232,6 +243,7 @@ namespace Azure.ResourceManager.ApiManagement
                 isCurrent,
                 createdDateTime,
                 updatedDateTime,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

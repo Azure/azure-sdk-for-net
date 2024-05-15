@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -53,15 +54,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
-        /// <param name="proxy"> Backend Proxy Contract Properties. </param>
+        /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
+        /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
+        /// <param name="pool"></param>
+        /// <param name="backendType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? backendType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
@@ -70,6 +74,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Credentials = credentials;
             Proxy = proxy;
             Tls = tls;
+            CircuitBreaker = circuitBreaker;
+            Pool = pool;
+            BackendType = backendType;
             Uri = uri;
             Protocol = protocol;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -79,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Title { get; set; }
         /// <summary> Backend Description. </summary>
         public string Description { get; set; }
-        /// <summary> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
         public Uri ResourceUri { get; set; }
         /// <summary> Backend Properties contract. </summary>
         internal BackendProperties Properties { get; set; }
@@ -97,10 +104,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Backend Credentials Contract Properties. </summary>
         public BackendCredentialsContract Credentials { get; set; }
-        /// <summary> Backend Proxy Contract Properties. </summary>
+        /// <summary> Backend gateway Contract Properties. </summary>
         public BackendProxyContract Proxy { get; set; }
         /// <summary> Backend TLS Properties. </summary>
         public BackendTlsProperties Tls { get; set; }
+        /// <summary> Backend Circuit Breaker Configuration. </summary>
+        internal BackendCircuitBreaker CircuitBreaker { get; set; }
+        /// <summary> The rules for tripping the backend. </summary>
+        public IList<CircuitBreakerRule> CircuitBreakerRules
+        {
+            get
+            {
+                if (CircuitBreaker is null)
+                    CircuitBreaker = new BackendCircuitBreaker();
+                return CircuitBreaker.Rules;
+            }
+        }
+
+        /// <summary> Gets or sets the pool. </summary>
+        internal BackendBaseParametersPool Pool { get; set; }
+        /// <summary> The list of backend entities belonging to a pool. </summary>
+        public IList<WritableSubResource> PoolServices
+        {
+            get
+            {
+                if (Pool is null)
+                    Pool = new BackendBaseParametersPool();
+                return Pool.Services;
+            }
+        }
+
+        /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        public BackendType? BackendType { get; set; }
         /// <summary> Runtime Url of the Backend. </summary>
         public Uri Uri { get; set; }
         /// <summary> Backend communication protocol. </summary>

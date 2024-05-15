@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(result.Data.Frontend.Response.Headers.FirstOrDefault(), "Content-type");
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.GreaterOrEqual(list.Count, 1);
+            Assert.GreaterOrEqual(list.Length, 1);
 
             result = await collection.GetAsync("applicationinsights");
             Assert.NotNull(result.Data);

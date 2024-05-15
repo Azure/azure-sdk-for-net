@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="description"> Free-form schema entity description. </param>
         /// <param name="value"> Json-encoded string for non json-based schema. </param>
         /// <param name="document"> Global Schema document object for json-based schema formats(e.g. json schema). </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SchemaType = schemaType;
             Description = description;
             Value = value;
             Document = document;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -141,5 +143,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </para>
         /// </summary>
         public BinaryData Document { get; set; }
+        /// <summary> The provisioning state. </summary>
+        public string ProvisioningState { get; }
     }
 }
