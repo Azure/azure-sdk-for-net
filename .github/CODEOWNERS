@@ -202,6 +202,9 @@
 # ServiceOwners:                                                   @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # PRLabel: %Cognitive - Face
+/sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
+
+# PRLabel: %Cognitive - Face
 /sdk/face/                                                         @JinyuID @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # ServiceLabel: %Cognitive - Face
