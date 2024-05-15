@@ -31,8 +31,7 @@ public class PageableCollectionTests //: SyncAsyncTestBase
             """,
         };
 
-    // Page enumeration stops on an empty page, so we add one to the count
-    private static readonly int PageCount = MockPageContents.Length + 1;
+    private static readonly int PageCount = MockPageContents.Length;
     private static readonly int ItemCount = 9;
 
     //public PageableCollectionTests(bool isAsync) : base(isAsync)
@@ -98,6 +97,9 @@ public class PageableCollectionTests //: SyncAsyncTestBase
 
         int pageCount = 0;
         int i = 6;
+
+        // Request just the last page by starting at the last seen value
+        // on the prior page -- i.e. item 5.
         foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
         {
             foreach (MockJsonModel model in page)
@@ -112,7 +114,6 @@ public class PageableCollectionTests //: SyncAsyncTestBase
         }
 
         Assert.AreEqual(ItemCount, i);
-        // Two pages - the last one with items 6-8 in it, and the final empty one.
-        Assert.AreEqual(2, pageCount);
+        Assert.AreEqual(1, pageCount);
     }
 }

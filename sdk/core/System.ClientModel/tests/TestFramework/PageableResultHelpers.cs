@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -89,22 +88,5 @@ internal class PageableResultHelpers
             }
             while (!string.IsNullOrEmpty(continuationToken) && pageFunc != null);
         }
-    }
-
-    private class EnumerablePage<T> : ResultPage<T>
-    {
-        private readonly IEnumerable<T> _items;
-
-        public EnumerablePage(IEnumerable<T> items,
-            string? continuationToken,
-            PipelineResponse response)
-            : base(response)
-        {
-            _items = items;
-            ContinuationToken = continuationToken;
-        }
-
-        public override IEnumerator<T> GetEnumerator()
-            => _items.GetEnumerator();
     }
 }
