@@ -59,13 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
             }
         }
 
-        private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception _) => eventSourceEvent.Format();
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             if (_loggerFactory != null)
             {
-                _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e, s), EventLevel.Verbose);
+                _listener ??= new AzureEventSourceListener(LogEvent, EventLevel.Verbose);
             }
 
             return Task.CompletedTask;
