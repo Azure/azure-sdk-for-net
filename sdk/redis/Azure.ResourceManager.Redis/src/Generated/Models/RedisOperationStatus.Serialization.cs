@@ -52,34 +52,37 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status);
-            if (Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime"u8);
+                writer.WritePropertyName("startOn"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime"u8);
+                writer.WritePropertyName("endOn"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Operations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -142,8 +145,8 @@ namespace Azure.ResourceManager.Redis.Models
             string name = default;
             string status = default;
             float? percentComplete = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             IReadOnlyList<OperationStatusResult> operations = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,22 +202,22 @@ namespace Azure.ResourceManager.Redis.Models
                     percentComplete = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (property.NameEquals("startOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"u8))
+                if (property.NameEquals("endOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("operations"u8))
@@ -258,8 +261,8 @@ namespace Azure.ResourceManager.Redis.Models
                 name,
                 status,
                 percentComplete,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 operations ?? new ChangeTrackingList<OperationStatusResult>(),
                 error,
                 properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -385,14 +388,14 @@ namespace Azure.ResourceManager.Redis.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  startTime: ");
+                builder.Append("  startOn: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
                 if (Optional.IsDefined(StartOn))
                 {
-                    builder.Append("  startTime: ");
+                    builder.Append("  startOn: ");
                     var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
@@ -401,14 +404,14 @@ namespace Azure.ResourceManager.Redis.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  endTime: ");
+                builder.Append("  endOn: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
                 if (Optional.IsDefined(EndOn))
                 {
-                    builder.Append("  endTime: ");
+                    builder.Append("  endOn: ");
                     var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
