@@ -49,7 +49,7 @@ public class StructuredMessageDecodingRetriableStreamTests
     }
 
     [Test]
-    public async ValueTask OneInterrupt_DataIntact()
+    public async ValueTask Interrupt_DataIntact([Values(true, false)] bool multipleInterrupts)
     {
         const int segments = 4;
         const int segmentLen = Constants.KB;
@@ -63,19 +63,34 @@ public class StructuredMessageDecodingRetriableStreamTests
         // Mock a decoded data for the mocked StructuredMessageDecodingStream
         StructuredMessageDecodingStream.DecodedData initialDecodedData = new();
         initialDecodedData.SetStreamHeaderData(segments, data.Length, StructuredMessage.Flags.StorageCrc64);
-        // By the time of interrupt, there will be one segment reported
+        // for test purposes, initialize a DecodedData, since we are not actively decoding in this test
         initialDecodedData.ReportSegmentCrc(r.NextBytesInline(StructuredMessage.Crc64Length), 1, segmentLen);
+
+        (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData) Factory(long offset, bool faulty)
+        {
+            Stream stream = new MemoryStream(data, (int)offset, data.Length - (int)offset);
+            if (faulty)
+            {
+                stream = new FaultyStream(stream, interruptPos, 1, new Exception(), () => { });
+            }
+            // Mock a decoded data for the mocked StructuredMessageDecodingStream
+            StructuredMessageDecodingStream.DecodedData decodedData = new();
+            decodedData.SetStreamHeaderData(segments, data.Length, StructuredMessage.Flags.StorageCrc64);
+            // for test purposes, initialize a DecodedData, since we are not actively decoding in this test
+            decodedData.ReportSegmentCrc(r.NextBytesInline(StructuredMessage.Crc64Length), 1, segmentLen);
+            return (stream, decodedData);
+        }
 
         // mock with a simple MemoryStream rather than an actual StructuredMessageDecodingStream
         using (Stream src = new MemoryStream(data))
-        using (Stream faultySrc = new FaultyStream(src, interruptPos, 1, new Exception(), default))
+        using (Stream faultySrc = new FaultyStream(src, interruptPos, 1, new Exception(), () => { }))
         using (Stream retriableSrc = new StructuredMessageDecodingRetriableStream(
             faultySrc,
             initialDecodedData,
-            offset => (new MemoryStream(data, (int)offset, data.Length - (int)offset), new()),
-            offset => new(Task.FromResult(((Stream)new MemoryStream(data, (int)offset, data.Length - (int)offset), new StructuredMessageDecodingStream.DecodedData()))),
+            offset => Factory(offset, multipleInterrupts),
+            offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
             AllExceptionsRetry().Object,
-            1))
+            int.MaxValue))
         using (Stream dst = new MemoryStream(dest))
         {
             await retriableSrc.CopyToInternal(dst, readLen, Async, default);

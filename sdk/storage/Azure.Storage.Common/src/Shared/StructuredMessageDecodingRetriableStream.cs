@@ -39,7 +39,7 @@ internal class StructuredMessageDecodingRetriableStream : Stream
 
     private Stream StreamFactory(long _)
     {
-        long offset = _decodedDatas.LastOrDefault()?.SegmentCrcs?.LastOrDefault().SegmentEnd ?? 0;
+        long offset = _decodedDatas.Select(d => d.SegmentCrcs?.LastOrDefault().SegmentEnd ?? 0).Sum();
         (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = _decodingStreamFactory(offset);
         _decodedDatas.Add(decodedData);
         FastForwardInternal(decodingStream, _decodedBytesRead - offset, false).EnsureCompleted();
@@ -48,7 +48,7 @@ internal class StructuredMessageDecodingRetriableStream : Stream
 
     private async ValueTask<Stream> StreamFactoryAsync(long _)
     {
-        long offset = _decodedDatas.LastOrDefault()?.SegmentCrcs?.LastOrDefault().SegmentEnd ?? 0;
+        long offset = _decodedDatas.Select(d => d.SegmentCrcs?.LastOrDefault().SegmentEnd ?? 0).Sum();
         (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = await _decodingAsyncStreamFactory(offset).ConfigureAwait(false);
         _decodedDatas.Add(decodedData);
         await FastForwardInternal(decodingStream, _decodedBytesRead - offset, true).ConfigureAwait(false);
