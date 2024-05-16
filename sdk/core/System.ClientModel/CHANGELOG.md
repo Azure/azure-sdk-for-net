@@ -6,6 +6,7 @@
 
 - Added `BufferResponse` property to `RequestOptions` so protocol method callers can turn off response buffering if desired.
 - Added `AsyncResultCollection<T>` and `ResultCollection<T>` for clients to return from service methods where the service response contains a collection of values.
+- Added `AsyncPageableCollection<T>`, `PageableCollection<T>` and `ResultPage<T>` for clients to return from service methods where collection values are delivered to the client over one or more service responses.
 - Added `SetRawResponse` method to `ClientResult` to allow the response held by the result to be changed, for example by derived types that obtain multiple responses from polling the service.
 
 ### Breaking Changes
