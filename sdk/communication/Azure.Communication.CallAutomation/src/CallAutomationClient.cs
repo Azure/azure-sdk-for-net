@@ -593,6 +593,7 @@ namespace Azure.Communication.CallAutomation
                 CallLocatorInternal callLocatorInternal = CallLocatorSerializer.Serialize(connectOptions.CallLocator);
 
                 ConnectRequestInternal connectRequest = new ConnectRequestInternal(callLocatorInternal, connectOptions.CallbackUrl);
+                connectRequest.OperationContext = connectOptions.OperationContext;
 
                 if (connectOptions.CallIntelligenceOptions != null && connectOptions.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
                 {
@@ -655,6 +656,7 @@ namespace Azure.Communication.CallAutomation
                 CallLocatorInternal callLocatorInternal = CallLocatorSerializer.Serialize(connectOptions.CallLocator);
 
                 ConnectRequestInternal connectRequest = new ConnectRequestInternal(callLocatorInternal, connectOptions.CallbackUrl);
+                connectRequest.OperationContext = connectOptions.OperationContext;
 
                 if (connectOptions.CallIntelligenceOptions != null && connectOptions.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
                 {

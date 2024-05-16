@@ -28,11 +28,13 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions)
+        internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions)
         {
             CallLocator = callLocator;
             CallbackUri = callbackUri;
+            OperationContext = operationContext;
             CallIntelligenceOptions = callIntelligenceOptions;
         }
 
@@ -40,6 +42,8 @@ namespace Azure.Communication.CallAutomation
         public CallLocatorInternal CallLocator { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
+        /// <summary> Used by customers to correlate the request to the response event. </summary>
+        public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
     }

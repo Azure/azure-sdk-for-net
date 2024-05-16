@@ -32,6 +32,11 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUrl { get; }
 
         /// <summary>
+        /// Used by customers to correlate the request to the response event.
+        /// </summary>
+        public string OperationContext { get; set; }
+
+        /// <summary>
         /// AI options for the call.
         /// </summary>
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }

@@ -339,7 +339,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="connectRequest"> The create connection request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectRequest"/> is null. </exception>
-        /// <remarks> Create a connection to a CallLocator and return connectionId. </remarks>
+        /// <remarks> Create a connection to a CallLocator. </remarks>
         public async Task<Response<CallConnectionPropertiesInternal>> ConnectAsync(ConnectRequestInternal connectRequest, CancellationToken cancellationToken = default)
         {
             if (connectRequest == null)
@@ -367,7 +367,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="connectRequest"> The create connection request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectRequest"/> is null. </exception>
-        /// <remarks> Create a connection to a CallLocator and return connectionId. </remarks>
+        /// <remarks> Create a connection to a CallLocator. </remarks>
         public Response<CallConnectionPropertiesInternal> Connect(ConnectRequestInternal connectRequest, CancellationToken cancellationToken = default)
         {
             if (connectRequest == null)

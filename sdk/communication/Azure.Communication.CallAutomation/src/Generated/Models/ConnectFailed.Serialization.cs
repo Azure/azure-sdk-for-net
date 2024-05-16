@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ConnectFailedInternal
+    public partial class ConnectFailed
     {
-        internal static ConnectFailedInternal DeserializeConnectFailedInternal(JsonElement element)
+        internal static ConnectFailed DeserializeConnectFailed(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ConnectFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ConnectFailedInternal FromResponse(Response response)
+        internal static ConnectFailed FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeConnectFailedInternal(document.RootElement);
+            return DeserializeConnectFailed(document.RootElement);
         }
     }
 }

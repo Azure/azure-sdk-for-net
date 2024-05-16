@@ -9,25 +9,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Connect Failed event.
     /// </summary>
+    [CodeGenModel("ConnectFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class ConnectFailed : CallAutomationEventBase
     {
-        /// <summary>
-        /// Reason code.
-        /// </summary>
-        public MediaEventReasonCode ReasonCode { get; internal set; }
-
-        /// <summary> Initializes a new instance of ConnectFailed. </summary>
-        /// <param name="internalEvent"> ConnectFailedInternal event. </param>
-        internal ConnectFailed(ConnectFailedInternal internalEvent)
-        {
-            CallConnectionId = internalEvent.CallConnectionId;
-            ServerCallId = internalEvent.ServerCallId;
-            CorrelationId = internalEvent.CorrelationId;
-            OperationContext = internalEvent.OperationContext;
-            ResultInformation = internalEvent.ResultInformation;
-            ReasonCode = new MediaEventReasonCode(ResultInformation.SubCode.ToString());
-        }
-
         /// <summary>
         /// Deserialize <see cref="ConnectFailed"/> event.
         /// </summary>
@@ -38,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return new ConnectFailed(ConnectFailedInternal.DeserializeConnectFailedInternal(element));
+            return DeserializeConnectFailed(element);
         }
     }
 }

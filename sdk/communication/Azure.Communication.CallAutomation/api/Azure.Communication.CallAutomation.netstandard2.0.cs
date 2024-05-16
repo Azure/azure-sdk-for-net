@@ -556,7 +556,6 @@ namespace Azure.Communication.CallAutomation
     public partial class ConnectFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal ConnectFailed() { }
-        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.ConnectFailed Deserialize(string content) { throw null; }
     }
     public partial class ConnectOptions
@@ -565,6 +564,7 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUrl { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallLocator CallLocator { get { throw null; } }
+        public string OperationContext { get { throw null; } set { } }
     }
     public partial class ConnectResult
     {
