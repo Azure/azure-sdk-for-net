@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Tests
             InstrumentClient(new DevCenterClient(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new DevCenterClientOptions())));
+                InstrumentClientOptions(new DevCenterClientOptions(DevCenterClientOptions.ServiceVersion.V2023_04_01))));
 
         public DevCenterClientTests(bool isAsync) : base(isAsync)
         {
