@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Location = AzureLocation.EastUS2;
+            Location = AzureLocation.WestCentralUS;
             ResourceGroupPrefix = "Default-Nginx-";
             NginxDeploymentResourceType = "NGINX.NGINXPLUS/nginxDeployments";
             Client = GetArmClient();
