@@ -49,7 +49,7 @@ public class StructuredMessageDecodingRetriableStreamTests
     }
 
     [Test]
-    public async ValueTask Interrupt_DataIntact([Values(true, false)] bool multipleInterrupts)
+    public async Task Interrupt_DataIntact([Values(true, false)] bool multipleInterrupts)
     {
         const int segments = 4;
         const int segmentLen = Constants.KB;
@@ -100,7 +100,7 @@ public class StructuredMessageDecodingRetriableStreamTests
     }
 
     [Test]
-    public async ValueTask OneInterrupt_AppropriateRewind()
+    public async Task Interrupt_AppropriateRewind()
     {
         const int segments = 2;
         const int segmentLen = Constants.KB;
@@ -183,5 +183,44 @@ public class StructuredMessageDecodingRetriableStreamTests
 
         // Asserts we read exactly the data length, excluding the fastforward of the inner stream
         Assert.That(totalRead, Is.EqualTo(dataLen));
+    }
+
+    [Test]
+    public async Task Interrupt_ProperDecode([Values(true, false)] bool multipleInterrupts)
+    {
+        // decoding stream inserts a buffered layer of 4 KB. use larger sizes to avoid interference from it.
+        const int segments = 4;
+        const int segmentLen = 128 * Constants.KB;
+        const int readLen = 8 * Constants.KB;
+        const int interruptPos = segmentLen + (3 * readLen) + 10;
+
+        Random r = new();
+        byte[] data = r.NextBytesInline(segments * Constants.KB).ToArray();
+        byte[] dest = new byte[data.Length];
+
+        (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData) Factory(long offset, bool faulty)
+        {
+            Stream stream = new MemoryStream(data, (int)offset, data.Length - (int)offset);
+            stream = new StructuredMessageEncodingStream(stream, segmentLen, StructuredMessage.Flags.StorageCrc64);
+            if (faulty)
+            {
+                stream  = new FaultyStream(stream, interruptPos, 1, new Exception(), () => { });
+            }
+            return StructuredMessageDecodingStream.WrapStream(stream);
+        }
+
+        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = Factory(0, true);
+        using Stream retriableSrc = new StructuredMessageDecodingRetriableStream(
+            decodingStream,
+            decodedData,
+            offset => Factory(offset, multipleInterrupts),
+            offset => new ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>(Factory(offset, multipleInterrupts)),
+            AllExceptionsRetry().Object,
+            int.MaxValue);
+        using Stream dst = new MemoryStream(dest);
+
+        await retriableSrc.CopyToInternal(dst, readLen, Async, default);
+
+        Assert.AreEqual(data, dest);
     }
 }
