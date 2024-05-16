@@ -12,6 +12,19 @@
 
 ### Other Changes
 
+
+## 1.0.1 (2024-05-17)
+
+### Features Added
+
+- Added AutoScaling and AutoUpgrade
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0 (2024-01-04)
 
 ### Features Added
