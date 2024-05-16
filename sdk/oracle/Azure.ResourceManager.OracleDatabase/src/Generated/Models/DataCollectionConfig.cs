@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> DataCollectionOptions resource properties. </summary>
-    public partial class DataCollectionOptions
+    /// <summary> DataCollectionConfig resource properties. </summary>
+    public partial class DataCollectionConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionOptions"/>. </summary>
-        public DataCollectionOptions()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionConfig"/>. </summary>
+        public DataCollectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionConfig"/>. </summary>
         /// <param name="isDiagnosticsEventsEnabled"> Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="isHealthMonitoringEnabled"> Indicates whether health monitoring is enabled for the VM cluster / Cloud VM cluster / VMBM DBCS. </param>
         /// <param name="isIncidentLogsEnabled"> Indicates whether incident logs and trace collection are enabled for the VM cluster / Cloud VM cluster / VMBM DBCS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionOptions(bool? isDiagnosticsEventsEnabled, bool? isHealthMonitoringEnabled, bool? isIncidentLogsEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataCollectionConfig(bool? isDiagnosticsEventsEnabled, bool? isHealthMonitoringEnabled, bool? isIncidentLogsEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDiagnosticsEventsEnabled = isDiagnosticsEventsEnabled;
             IsHealthMonitoringEnabled = isHealthMonitoringEnabled;

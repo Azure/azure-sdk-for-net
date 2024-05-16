@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("licenseModel"u8);
                 writer.WriteStringValue(LicenseModel.Value.ToString());
             }
-            if (Optional.IsDefined(DataCollectionOptions))
+            if (Optional.IsDefined(DataCollectionConfig))
             {
-                writer.WritePropertyName("dataCollectionOptions"u8);
-                writer.WriteObjectValue(DataCollectionOptions, options);
+                writer.WritePropertyName("dataCollectionConfig"u8);
+                writer.WriteObjectValue(DataCollectionConfig, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             float? ocpuCount = default;
             IList<string> sshPublicKeys = default;
             LicenseModel? licenseModel = default;
-            DataCollectionOptions dataCollectionOptions = default;
+            DataCollectionConfig dataCollectionConfig = default;
             string displayName = default;
             IList<string> computeNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -259,13 +259,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                             licenseModel = new LicenseModel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataCollectionOptions"u8))
+                        if (property0.NameEquals("dataCollectionConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            dataCollectionOptions = DataCollectionOptions.DeserializeDataCollectionOptions(property0.Value, options);
+                            dataCollectionConfig = DataCollectionConfig.DeserializeDataCollectionConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 ocpuCount,
                 sshPublicKeys ?? new ChangeTrackingList<string>(),
                 licenseModel,
-                dataCollectionOptions,
+                dataCollectionConfig,
                 displayName,
                 computeNodes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

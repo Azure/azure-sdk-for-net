@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    public partial class DataCollectionOptions : IUtf8JsonSerializable, IJsonModel<DataCollectionOptions>
+    public partial class DataCollectionConfig : IUtf8JsonSerializable, IJsonModel<DataCollectionConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataCollectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataCollectionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             writer.WriteEndObject();
         }
 
-        DataCollectionOptions IJsonModel<DataCollectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataCollectionConfig IJsonModel<DataCollectionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataCollectionOptions(document.RootElement, options);
+            return DeserializeDataCollectionConfig(document.RootElement, options);
         }
 
-        internal static DataCollectionOptions DeserializeDataCollectionOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataCollectionConfig DeserializeDataCollectionConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollectionOptions(isDiagnosticsEventsEnabled, isHealthMonitoringEnabled, isIncidentLogsEnabled, serializedAdditionalRawData);
+            return new DataCollectionConfig(isDiagnosticsEventsEnabled, isHealthMonitoringEnabled, isIncidentLogsEnabled, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataCollectionOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataCollectionConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataCollectionOptions IPersistableModel<DataCollectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataCollectionConfig IPersistableModel<DataCollectionConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataCollectionOptions(document.RootElement, options);
+                        return DeserializeDataCollectionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataCollectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataCollectionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

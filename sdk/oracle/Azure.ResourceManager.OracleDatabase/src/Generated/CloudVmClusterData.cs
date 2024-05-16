@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="subnetId"> Client subnet. </param>
         /// <param name="backupSubnetCidr"> Client OCI backup subnet CIDR, default is 192.168.252.0/22. </param>
         /// <param name="nsgCidrs"> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </param>
-        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
+        /// <param name="dataCollectionConfig"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="iormConfigCache"> iormConfigCache details for cloud VM cluster. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="compartmentId"> Cluster compartmentId. </param>
         /// <param name="subnetOcid"> Cluster subnet ocid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? timeCreated, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int? cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, LicenseModel? licenseModel, DiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, AzureResourceProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<NSGCidr> nsgCidrs, DataCollectionOptions dataCollectionOptions, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CloudVmClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string ocid, long? listenerPort, int? nodeCount, int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, DateTimeOffset? timeCreated, string lifecycleDetails, string timeZone, string zoneId, string hostname, string domain, int? cpuCoreCount, float? ocpuCount, string clusterName, int? dataStoragePercentage, bool? isLocalBackupEnabled, ResourceIdentifier cloudExadataInfrastructureId, bool? isSparseDiskgroupEnabled, string systemVersion, IList<string> sshPublicKeys, LicenseModel? licenseModel, DiskRedundancy? diskRedundancy, IReadOnlyList<string> scanIPIds, IReadOnlyList<string> vipIds, string scanDnsName, int? scanListenerPortTcp, int? scanListenerPortTcpSsl, string scanDnsRecordId, string shape, AzureResourceProvisioningState? provisioningState, CloudVmClusterLifecycleState? lifecycleState, ResourceIdentifier vnetId, string giVersion, Uri ociUri, Uri nsgUri, ResourceIdentifier subnetId, string backupSubnetCidr, IList<NSGCidr> nsgCidrs, DataCollectionConfig dataCollectionConfig, string displayName, IList<string> computeNodes, ExadataIormConfig iormConfigCache, string lastUpdateHistoryEntryId, IList<string> dbServers, string compartmentId, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Ocid = ocid;
             ListenerPort = listenerPort;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OracleDatabase
             SubnetId = subnetId;
             BackupSubnetCidr = backupSubnetCidr;
             NsgCidrs = nsgCidrs;
-            DataCollectionOptions = dataCollectionOptions;
+            DataCollectionConfig = dataCollectionConfig;
             DisplayName = displayName;
             ComputeNodes = computeNodes;
             IormConfigCache = iormConfigCache;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> CIDR blocks for additional NSG ingress rules. The VNET CIDRs used to provision the VM Cluster will be added by default. </summary>
         public IList<NSGCidr> NsgCidrs { get; }
         /// <summary> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </summary>
-        public DataCollectionOptions DataCollectionOptions { get; set; }
+        public DataCollectionConfig DataCollectionConfig { get; set; }
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
