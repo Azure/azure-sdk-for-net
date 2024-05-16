@@ -14,11 +14,11 @@ namespace Azure.Communication.CallAutomation
         /// Creates a new instance of ConnectOptions.
         /// </summary>
         /// <param name="callLocator"></param>
-        /// <param name="callbackUrl"></param>
-        public ConnectOptions(CallLocator callLocator, string callbackUrl)
+        /// <param name="callbackUri"></param>
+        public ConnectOptions(CallLocator callLocator, Uri callbackUri)
         {
             CallLocator = callLocator;
-            CallbackUrl = callbackUrl;
+            CallbackUri = callbackUri;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callback URL.
         /// </summary>
-        public string CallbackUrl { get; }
+        public Uri CallbackUri { get; }
 
         /// <summary>
         /// Used by customers to correlate the request to the response event.
