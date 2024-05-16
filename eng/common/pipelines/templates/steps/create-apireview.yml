@@ -20,7 +20,7 @@ steps:
   - ${{ if or(ne(parameters.GenerateApiReviewForManualOnly, true), eq(variables['Build.Reason'], 'Manual')) }}:
     - task: Powershell@2
       inputs:
-        filePath: ./eng/common/scripts/Create-APIReview.ps1
+        filePath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
         arguments: >
           -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
           -ArtifactPath ${{parameters.ArtifactPath}}
