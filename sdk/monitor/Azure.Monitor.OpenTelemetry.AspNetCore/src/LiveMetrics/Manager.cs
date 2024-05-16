@@ -30,8 +30,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
             if (options.EnableLiveMetrics)
             {
-                _isAzureWebApp = InitializeIsWebAppRunningInAzure(platform);
-
                 InitializeState();
             }
         }
@@ -80,14 +78,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             }
 
             return new LiveMetricsRestAPIsForClientSDKsRestClient(new ClientDiagnostics(options), pipeline, connectionVars: connectionVars);
-        }
-
-        /// <summary>
-        /// Searches for the environment variable specific to Azure App Service.
-        /// </summary>
-        internal static bool InitializeIsWebAppRunningInAzure(IPlatform platform)
-        {
-            return !string.IsNullOrEmpty(platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME));
         }
 
         public void Dispose()
