@@ -1,5 +1,5 @@
-repo: Han-msft/azure-rest-api-specs
+repo: Azure/azure-rest-api-specs
 directory: specification/ai/Face
 additionalDirectories: []
-commit: 6ffa8a73bb4e80dcabe14a496cf2550ca177a82f
+commit: 88f9ba778e8611066336aa8713e3205788153913
 
