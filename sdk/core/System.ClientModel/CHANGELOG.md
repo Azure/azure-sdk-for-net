@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.4 (2024-05-16)
 
 ### Features Added
 
@@ -12,10 +12,6 @@
 ### Breaking Changes
 
 - `ClientResult.GetRawResponse` will now throw `InvalidOperationException` if called before the result's raw response is set, for example by collection result types that delay sending a request to the service until the collection is enumerated.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.3 (2024-04-04)
 
