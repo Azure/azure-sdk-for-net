@@ -308,4 +308,4 @@ foreach (var personId in personIds.Values)
 }
 ```
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.Face#getting-started

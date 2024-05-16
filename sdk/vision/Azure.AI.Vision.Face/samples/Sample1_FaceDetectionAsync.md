@@ -106,5 +106,5 @@ foreach (var detectedFace in detectedFaces)
 }
 ```
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.Face#getting-started
 [face_detection]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-face-detection

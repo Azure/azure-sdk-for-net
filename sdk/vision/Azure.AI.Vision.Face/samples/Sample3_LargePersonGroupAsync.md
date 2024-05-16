@@ -82,4 +82,4 @@ When you no longer need the large person group, you can delete it by calling `De
 await administrationClient.DeleteLargePersonGroupAsync(groupId);
 ```
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.Face#getting-started

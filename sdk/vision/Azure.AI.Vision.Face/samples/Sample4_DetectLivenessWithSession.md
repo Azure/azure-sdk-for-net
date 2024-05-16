@@ -132,6 +132,6 @@ Session can be revoked by sending delete request to the service. Corresponding a
 sessionClient.DeleteLivenessSession(sessionId);
 ```
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.Face#getting-started
 [face_liveness]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
 [orchestrate_the_liveness_solution]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#orchestrate-the-liveness-solution
