@@ -56,5 +56,132 @@ namespace Azure.Compute.Batch.Tests.Integration
                 await client.DeletePoolAsync(poolID);
             }
         }
+
+        [RecordedTest]
+        public async Task BatchNodeUser()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "BatchNodeUser", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+            var userName = "User1";
+            var userPassWord = "Password1";
+            var updatedPassWord = "Password2";
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
+
+                string batchNodeID = "";
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    batchNodeID = item.Id;
+                }
+                Assert.IsNotEmpty(batchNodeID);
+
+                // create new user
+                BatchNodeUserCreateContent user = new BatchNodeUserCreateContent(userName)
+                {
+                    Password = userPassWord
+                };
+                Response response = await client.CreateNodeUserAsync(poolID, batchNodeID, user);
+                Assert.IsFalse(response.IsError);
+
+                // update users password
+                BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent()
+                {
+                    Password = updatedPassWord
+                };
+                response = await client.ReplaceNodeUserAsync(poolID, batchNodeID, userName, content);
+                Assert.IsFalse(response.IsError);
+
+                // delete uswer
+                response = await client.DeleteNodeUserAsync(poolID, batchNodeID, userName);
+                Assert.IsFalse(response.IsError);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task RebootBatchNode()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "RebootBatchNode", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
+
+                string batchNodeID = "";
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    batchNodeID = item.Id;
+                }
+                Assert.IsNotEmpty(batchNodeID);
+
+                // reboot node
+                Response response = await client.RebootNodeAsync(poolID, batchNodeID);
+                Assert.IsFalse(response.IsError);
+                await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task BatchNodeExtension()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "BatchNodeExtension", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                VMExtension vMExtension = new VMExtension("CustomExtension", "Microsoft.Azure.Geneva", "GenevaMonitoring")
+                {
+                    TypeHandlerVersion = "2.16",
+                    AutoUpgradeMinorVersion = true,
+                    EnableAutomaticUpgrade = true,
+                    ProtectedSettings = {},
+                    Settings = {},
+                };
+                batchPoolCreateOptions.VirtualMachineConfiguration.Extensions.Add(vMExtension);
+                Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+
+                BatchPool pool = await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
+
+                string batchNodeID = "";
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    batchNodeID = item.Id;
+                }
+                Assert.IsNotEmpty(batchNodeID);
+
+                BatchNodeVMExtension batchNodeVMExtension1 = await client.GetNodeExtensionAsync(poolID, batchNodeID, "CustomExtension");
+
+                // reboot node
+                await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync(poolID, batchNodeID))
+                {
+                    Assert.NotNull(item);
+                    Assert.IsNotEmpty(item.VmExtension.Name);
+
+                    BatchNodeVMExtension batchNodeVMExtension = await client.GetNodeExtensionAsync(poolID, batchNodeID, item.VmExtension.Name);
+                    Assert.NotNull(batchNodeVMExtension);
+                }
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
     }
 }
