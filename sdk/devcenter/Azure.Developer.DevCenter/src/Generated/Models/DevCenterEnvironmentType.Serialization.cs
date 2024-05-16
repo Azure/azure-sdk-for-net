@@ -26,8 +26,11 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("deploymentTargetId"u8);
             writer.WriteStringValue(DeploymentTargetId);
             writer.WritePropertyName("status"u8);
