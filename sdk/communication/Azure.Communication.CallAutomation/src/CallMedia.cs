@@ -105,6 +105,41 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Plays audio to specified participant(s) async.
+        /// </summary>
+        /// <param name="playSources"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="playTo"></param>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
+        public virtual async Task<Response<PlayResult>> PlayAsync(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
+            scope.Start();
+            try
+            {
+                var playOptions = new PlayOptions(playSources, playTo)
+                {
+                    Loop = false,
+                    OperationContext = null
+                };
+
+                PlayRequestInternal request = CreatePlayRequest(playOptions);
+
+                var response = await CallMediaRestClient.PlayAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+
+                var result = new PlayResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Plays audio to specified participant(s).
         /// </summary>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
@@ -146,6 +181,41 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var playOptions = new PlayOptions(playSource, playTo)
+                {
+                    Loop = false,
+                    OperationContext = null
+                };
+
+                PlayRequestInternal request = CreatePlayRequest(playOptions);
+
+                var response = CallMediaRestClient.Play(CallConnectionId, request, cancellationToken);
+
+                var result = new PlayResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Plays a file.
+        /// </summary>
+        /// <param name="playSources"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="playTo"></param>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
+        public virtual Response<PlayResult> Play(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Play)}");
+            scope.Start();
+            try
+            {
+                var playOptions = new PlayOptions(playSources, playTo)
                 {
                     Loop = false,
                     OperationContext = null
@@ -237,6 +307,27 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Play to all participants async.
+        /// </summary>
+        /// <param name="playSources"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
+        public virtual async Task<Response<PlayResult>> PlayToAllAsync(IEnumerable<PlaySource> playSources, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
+            scope.Start();
+            try
+            {
+                return await PlayAsync(playSources, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Play audio to all participants.
         /// </summary>
         /// <param name="options">An optional object containing play options and configurations.</param>
@@ -274,6 +365,27 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 return Play(playSource, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Play to all participants.
+        /// </summary>
+        /// <param name="playSources"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Returns <see cref="PlayResult"/>, which can be used to wait for Play's related events.</returns>
+        public virtual Response<PlayResult> PlayToAll(IEnumerable<PlaySource> playSources, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(PlayToAll)}");
+            scope.Start();
+            try
+            {
+                return Play(playSources, Enumerable.Empty<CommunicationIdentifier>(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -404,8 +516,60 @@ namespace Azure.Communication.CallAutomation
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource),
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                };
+
+                return await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant from the call.
+        /// </summary>
+        /// <param name="targetParticipant">The targetParticipant.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> HoldAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(HoldAsync)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(targetParticipant));
+
+                return await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant from the call.
+        /// </summary>
+        /// <param name="targetParticipant">The targetParticipant.</param>
+        /// <param name="playSource">The playsource.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> HoldAsync(CommunicationIdentifier targetParticipant, PlaySource playSource, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(HoldAsync)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    PlaySourceInfo = TranslatePlaySourceToInternal(playSource),
                 };
 
                 return await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -433,8 +597,60 @@ namespace Azure.Communication.CallAutomation
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource),
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                };
+
+                return CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant from the call.
+        /// </summary>
+        /// <param name="targetParticipant">The targetParticipant.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Hold(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Hold)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(targetParticipant));
+
+                return CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Hold participant from the call.
+        /// </summary>
+        /// <param name="targetParticipant">The targetParticipant.</param>
+        /// <param name="playSource">The playsource.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Hold(CommunicationIdentifier targetParticipant, PlaySource playSource, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Hold)}");
+            scope.Start();
+            try
+            {
+                var request = new HoldRequestInternal(
+                    CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    PlaySourceInfo = TranslatePlaySourceToInternal(playSource),
                 };
 
                 return CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
@@ -472,6 +688,29 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Remove hold from participant.
         /// </summary>
+        /// <param name="targetParticipant">The targetParticipant.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> UnholdAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UnholdAsync)}");
+            scope.Start();
+            try
+            {
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+
+                return await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove hold from participant.
+        /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -482,6 +721,29 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+
+                return CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove hold from participant.
+        /// </summary>
+        /// <param name="targetParticipant">The targetParticipant.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Unhold(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Unhold)}");
+            scope.Start();
+            try
+            {
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
                 return CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
             }
@@ -516,6 +778,8 @@ namespace Azure.Communication.CallAutomation
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeDtmfOptions.Prompt);
+                if (recognizeOptions.PlayPrompts != null && recognizeOptions.PlayPrompts.Any())
+                    request.PlayPrompts = recognizeOptions.PlayPrompts.Select(t => TranslatePlaySourceToInternal(t)).ToList();
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
                 request.OperationCallbackUri = recognizeOptions.OperationCallbackUri?.AbsoluteUri;
@@ -546,6 +810,8 @@ namespace Azure.Communication.CallAutomation
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeChoiceOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeChoiceOptions.Prompt);
+                if (recognizeOptions.PlayPrompts != null && recognizeOptions.PlayPrompts.Any())
+                    request.PlayPrompts = recognizeOptions.PlayPrompts.Select(t => TranslatePlaySourceToInternal(t)).ToList();
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
                 request.OperationCallbackUri = recognizeOptions.OperationCallbackUri?.AbsoluteUri;
@@ -579,6 +845,8 @@ namespace Azure.Communication.CallAutomation
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOptions.Prompt);
+                if (recognizeOptions.PlayPrompts != null && recognizeOptions.PlayPrompts.Any())
+                    request.PlayPrompts = recognizeOptions.PlayPrompts.Select(t => TranslatePlaySourceToInternal(t)).ToList();
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
                 request.OperationCallbackUri = recognizeOptions.OperationCallbackUri?.AbsoluteUri;
@@ -620,6 +888,8 @@ namespace Azure.Communication.CallAutomation
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeSpeechOrDtmfOptions.InputType, recognizeConfigurationsInternal);
 
                 request.PlayPrompt = TranslatePlaySourceToInternal(recognizeSpeechOrDtmfOptions.Prompt);
+                if (recognizeOptions.PlayPrompts != null && recognizeOptions.PlayPrompts.Any())
+                    request.PlayPrompts = recognizeOptions.PlayPrompts.Select(t => TranslatePlaySourceToInternal(t)).ToList();
                 request.InterruptCallMediaOperation = recognizeOptions.InterruptCallMediaOperation;
                 request.OperationContext = recognizeOptions.OperationContext == default ? Guid.NewGuid().ToString() : recognizeOptions.OperationContext;
                 request.OperationCallbackUri = recognizeOptions.OperationCallbackUri?.AbsoluteUri;
@@ -1123,6 +1393,106 @@ namespace Azure.Communication.CallAutomation
             {
                 UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing start media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StartMediaStreaming(StartMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StartMediaStreamingRequestInternal()
+                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl, OperationContext = options.OperationContext };
+
+                return CallMediaRestClient.StartMediaStreaming(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing start media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StartMediaStreamingAsync(StartMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreamingAsync)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StartMediaStreamingRequestInternal()
+                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl, OperationContext = options.OperationContext };
+
+                return await CallMediaRestClient.StartMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing stop media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StopMediaStreaming(StopMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StopMediaStreamingRequestInternal()
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl };
+
+                return CallMediaRestClient.StopMediaStreaming(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing stop media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StopMediaStreamingAsync(StopMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreamingAsync)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StopMediaStreamingRequestInternal()
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl };
+
+                return await CallMediaRestClient.StopMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

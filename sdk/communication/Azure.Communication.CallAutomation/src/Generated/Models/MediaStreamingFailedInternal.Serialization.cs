@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class MediaStreamingFailed
+    internal partial class MediaStreamingFailedInternal
     {
-        internal static MediaStreamingFailed DeserializeMediaStreamingFailed(JsonElement element)
+        internal static MediaStreamingFailedInternal DeserializeMediaStreamingFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
-            MediaStreamingUpdate mediaStreamingUpdateResult = default;
+            MediaStreamingUpdate mediaStreamingUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -54,31 +54,31 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mediaStreamingUpdateResult"u8))
+                if (property.NameEquals("mediaStreamingUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mediaStreamingUpdateResult = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
+                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
                     continue;
                 }
             }
-            return new MediaStreamingFailed(
+            return new MediaStreamingFailedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
-                mediaStreamingUpdateResult);
+                mediaStreamingUpdate);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MediaStreamingFailed FromResponse(Response response)
+        internal static MediaStreamingFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMediaStreamingFailed(document.RootElement);
+            return DeserializeMediaStreamingFailedInternal(document.RootElement);
         }
     }
 }
