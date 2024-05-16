@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core;
@@ -205,63 +204,7 @@ new HttpHeaderConfiguration("Authorization","******")
 
             // invoke the operation
             string contentTypeId = "page";
-            ApiManagementContentType apiManagementContentType = new ApiManagementContentType()
-            {
-                ContentTypeName = "Page",
-                Description = "A regular page",
-                Schema = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["additionalProperties"] = "false",
-                    ["properties"] = new Dictionary<string, object>()
-                    {
-                        ["en_us"] = new Dictionary<string, object>()
-                        {
-                            ["type"] = "object",
-                            ["additionalProperties"] = "false",
-                            ["properties"] = new Dictionary<string, object>()
-                            {
-                                ["description"] = new Dictionary<string, object>()
-                                {
-                                    ["type"] = "string",
-                                    ["description"] = "Page description. This property gets included in SEO attributes.",
-                                    ["indexed"] = "true",
-                                    ["title"] = "Description"
-                                },
-                                ["documentId"] = new Dictionary<string, object>()
-                                {
-                                    ["type"] = "string",
-                                    ["description"] = "Reference to page content document.",
-                                    ["title"] = "Document ID"
-                                },
-                                ["keywords"] = new Dictionary<string, object>()
-                                {
-                                    ["type"] = "string",
-                                    ["description"] = "Page keywords. This property gets included in SEO attributes.",
-                                    ["indexed"] = "true",
-                                    ["title"] = "Keywords"
-                                },
-                                ["permalink"] = new Dictionary<string, object>()
-                                {
-                                    ["type"] = "string",
-                                    ["description"] = "Page permalink, e.g. '/about'.",
-                                    ["indexed"] = "true",
-                                    ["title"] = "Permalink"
-                                },
-                                ["title"] = new Dictionary<string, object>()
-                                {
-                                    ["type"] = "string",
-                                    ["description"] = "Page title. This property gets included in SEO attributes.",
-                                    ["indexed"] = "true",
-                                    ["title"] = "Title"
-                                }
-                            },
-                            ["required"] = new object[] { "title", "permalink", "documentId" }
-                        }
-                    }
-                }),
-                Version = "1.0.0",
-            };
-            ApiManagementContentType result = await apiManagementService.CreateOrUpdateContentTypeAsync(contentTypeId, apiManagementContentType);
+            ApiManagementContentType result = await apiManagementService.CreateOrUpdateContentTypeAsync(contentTypeId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -408,20 +351,7 @@ new HttpHeaderConfiguration("Authorization","******")
             // invoke the operation
             string contentTypeId = "page";
             string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
-            ApiManagementContentItem apiManagementContentItem = new ApiManagementContentItem()
-            {
-                Properties =
-{
-["en_us"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["description"] = "Short story about the company.",
-["documentId"] = "contentTypes/document/contentItems/4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8",
-["keywords"] = "company, about",
-["permalink"] = "/about",
-["title"] = "About"}),
-},
-            };
-            ApiManagementContentItem result = await apiManagementService.CreateOrUpdateContentItemAsync(contentTypeId, contentItemId, apiManagementContentItem);
+            ApiManagementContentItem result = await apiManagementService.CreateOrUpdateContentItemAsync(contentTypeId, contentItemId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

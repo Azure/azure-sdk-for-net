@@ -556,9 +556,57 @@ directive:
               }
           ]
         }
-    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
+    # reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy'
-
+  - from: apimcontenttypes.json
+    where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}'].put
+    transform: >
+                $['parameters']=[
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+                      }
+                ]
+  - from: apimcontenttypes.json
+    where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'].put
+    transform: >
+                $['parameters']=[      
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentItemIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+                      }
+                ]
 ```
