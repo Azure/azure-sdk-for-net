@@ -1,15 +1,18 @@
 # Release History
 
-## 12.18.0-beta.3 (Unreleased)
+## 12.19.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where `QueueClient` did not throw an exception on empty/null queue names when constructing a client.
 
 ### Other Changes
+
+## 12.18.0 (2024-05-13)
+- Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
+- Fixed bug where `QueueClient` did not throw an exception on empty/null queue names when constructing a client.
 
 ## 12.18.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.

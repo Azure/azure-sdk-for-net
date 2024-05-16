@@ -8,12 +8,12 @@ namespace Azure.Storage
     /// <summary>
     /// Options for applying HTTP header <c>Expect: 100-continue</c> to PUT operations.
     /// </summary>
-    public class ExpectContinueOptions
+    public class Request100ContinueOptions
     {
         /// <summary>
         /// Mode for these options.
         /// </summary>
-        public ExpectContinueMode Mode { get; set; }
+        public Request100ContinueMode Mode { get; set; }
 
         /// <summary>
         /// The minimum value of HTTP request Content-Length for applying expect-continue.
@@ -21,9 +21,9 @@ namespace Azure.Storage
         public long? ContentLengthThreshold { get; set; }
 
         /// <summary>
-        /// In mode <see cref="ExpectContinueMode.ApplyOnThrottle"/>, the time interval to apply the header
+        /// In mode <see cref="Request100ContinueMode.Auto"/>, the time interval to apply the header
         /// after recieving a triggering error. The default time is one minute.
         /// </summary>
-        public TimeSpan ThrottleInterval { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan AutoInterval { get; set; } = TimeSpan.FromMinutes(1);
     }
 }
