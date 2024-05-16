@@ -1,14 +1,9 @@
 # Release History
 
 ## 12.19.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2024-08-04.
+- This package will now respect the QueueClientOptions.ServiceVersion specified by the customer, or default to the latest version.
+- Added more detailed messaging for authorization failure cases.
 
 ## 12.18.0 (2024-05-13)
 - Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
