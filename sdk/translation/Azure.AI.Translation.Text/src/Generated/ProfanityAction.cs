@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Text
         NoAction,
         /// <summary> Profanity is marked. </summary>
         Marked,
-        /// <summary> Profanity is deteled from the translated text. </summary>
+        /// <summary> Profanity is deleted from the translated text. </summary>
         Deleted
     }
 }

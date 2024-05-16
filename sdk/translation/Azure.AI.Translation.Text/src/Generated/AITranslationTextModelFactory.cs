@@ -49,17 +49,6 @@ namespace Azure.AI.Translation.Text
             return new TransliterationLanguage(name, nativeName, scripts?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.LanguageScript"/>. </summary>
-        /// <param name="code"> Code identifying the script. </param>
-        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
-        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
-        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default)
-        {
-            return new LanguageScript(code, name, nativeName, directionality, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Text.TransliterableScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
@@ -80,15 +69,15 @@ namespace Azure.AI.Translation.Text
                 toScripts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.CommonScriptModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.LanguageScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <returns> A new <see cref="Text.CommonScriptModel"/> instance for mocking. </returns>
-        public static CommonScriptModel CommonScriptModel(string code = null, string name = null, string nativeName = null, string dir = null)
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
+        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default)
         {
-            return new CommonScriptModel(code, name, nativeName, dir, serializedAdditionalRawData: null);
+            return new LanguageScript(code, name, nativeName, directionality, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SourceDictionaryLanguage"/>. </summary>
