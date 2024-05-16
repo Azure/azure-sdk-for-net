@@ -15,8 +15,15 @@ public class ResultPage<T> : ResultCollection<T>
 {
     private readonly IEnumerable<T> _values;
 
+    private ResultPage(IEnumerable<T> values, string? continuationToken, PipelineResponse response)
+        : base(response)
+    {
+        _values = values;
+        ContinuationToken = continuationToken;
+    }
+
     /// <summary>
-    /// Create a new instance of <see cref="ResultPage{T}"/>.
+    /// Creates a new <see cref="ResultPage{T}"/>.
     /// </summary>
     /// <param name="values">The values contained in <paramref name="response"/>.
     /// </param>
@@ -25,12 +32,11 @@ public class ResultPage<T> : ResultCollection<T>
     /// holds the final subset of values.</param>
     /// <param name="response">The <see cref="PipelineResponse"/> holding the
     /// collection values returned by the service.</param>
-    public ResultPage(IEnumerable<T> values, string? continuationToken, PipelineResponse response)
-        : base(response)
-    {
-        _values = values;
-        ContinuationToken = continuationToken;
-    }
+    /// <returns>An instance of <see cref="ResultPage{T}"/> holding the provided
+    /// values.</returns>
+    public static ResultPage<T> Create(IEnumerable<T> values, string? continuationToken, PipelineResponse response)
+        => new(values, continuationToken, response);
+
     /// <summary>
     /// Gets the continuation token used to request the next
     /// <see cref="ResultPage{T}"/>.  May be <c>null</c> or empty when no values

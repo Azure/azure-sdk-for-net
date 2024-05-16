@@ -69,8 +69,9 @@ namespace System.ClientModel
     }
     public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
     {
-        public ResultPage(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { }
+        internal ResultPage() { }
         public string? ContinuationToken { get { throw null; } }
+        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
 }
