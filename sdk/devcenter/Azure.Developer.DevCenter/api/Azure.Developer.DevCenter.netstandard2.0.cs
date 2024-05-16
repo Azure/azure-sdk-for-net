@@ -141,10 +141,12 @@ namespace Azure.Developer.DevCenter
     }
     public partial class DevCenterClientOptions : Azure.Core.ClientOptions
     {
-        public DevCenterClientOptions(Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion version = Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion.V2023_04_01) { }
+        public DevCenterClientOptions(Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion version = Azure.Developer.DevCenter.DevCenterClientOptions.ServiceVersion.V2024_05_01_Preview) { }
         public enum ServiceVersion
         {
             V2023_04_01 = 1,
+            V2024_02_01 = 2,
+            V2024_05_01_Preview = 3,
         }
     }
 }
