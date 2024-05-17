@@ -50,5 +50,4 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Monitor.OpenTelemetry.Exporter
-      ExpectedAOTWarningsFilepath: None
-
+      ExpectedAOTWarningsFilepath: /Azure.Monitor.OpenTelemetry.Exporter/tests/aotcompatibility/ExpectedAotWarnings.txt
