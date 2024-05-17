@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -641,26 +640,6 @@ namespace Azure.ResourceManager.Confluent.Models
         public static ApiKeyOwnerEntity ApiKeyOwnerEntity(string id = null, string related = null, string resourceName = null, string kind = null)
         {
             return new ApiKeyOwnerEntity(id, related, resourceName, kind, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="createdOn"> The creation time of the resource. </param>
-        /// <param name="provisioningState"> Provision states for confluent RP. </param>
-        /// <param name="organizationId"> Id of the Confluent organization. </param>
-        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
-        /// <param name="offerDetail"> Confluent offer detail. </param>
-        /// <param name="userDetail"> Subscriber detail. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Confluent.ConfluentOrganizationData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail)
-        {
-            return ConfluentOrganizationData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, createdOn: createdOn, provisioningState: provisioningState, organizationId: organizationId, ssoUri: ssoUri, offerDetail: offerDetail, userDetail: userDetail, linkOrganizationToken: default);
         }
     }
 }
