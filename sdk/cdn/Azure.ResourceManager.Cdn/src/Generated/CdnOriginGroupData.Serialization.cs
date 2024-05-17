@@ -53,15 +53,8 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbeSettings))
             {
-                if (HealthProbeSettings != null)
-                {
-                    writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("healthProbeSettings");
-                }
+                writer.WritePropertyName("healthProbeSettings"u8);
+                writer.WriteObjectValue(HealthProbeSettings, options);
             }
             if (Optional.IsCollectionDefined(Origins))
             {
@@ -87,15 +80,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
-                if (ResponseBasedOriginErrorDetectionSettings != null)
-                {
-                    writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("responseBasedOriginErrorDetectionSettings");
-                }
+                writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
+                writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -197,7 +183,6 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                healthProbeSettings = null;
                                 continue;
                             }
                             healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
@@ -231,7 +216,6 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
                             responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value, options);

@@ -68,15 +68,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
-                if (PreValidatedCustomDomainResource != null)
-                {
-                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
-                }
-                else
-                {
-                    writer.WriteNull("preValidatedCustomDomainResourceId");
-                }
+                writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
+                writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -231,7 +224,6 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
                             preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);

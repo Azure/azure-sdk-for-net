@@ -35,15 +35,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(Secret))
             {
-                if (Secret != null)
-                {
-                    writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue(Secret, options);
-                }
-                else
-                {
-                    writer.WriteNull("secret");
-                }
+                writer.WritePropertyName("secret"u8);
+                writer.WriteObjectValue(Secret, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +101,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secret = null;
                         continue;
                     }
                     secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value, options);

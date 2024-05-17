@@ -107,15 +107,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(SharedPrivateLinkResource))
             {
-                if (SharedPrivateLinkResource != null)
-                {
-                    writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource, options);
-                }
-                else
-                {
-                    writer.WriteNull("sharedPrivateLinkResource");
-                }
+                writer.WritePropertyName("sharedPrivateLinkResource"u8);
+                writer.WriteObjectValue(SharedPrivateLinkResource, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -296,7 +289,6 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                sharedPrivateLinkResource = null;
                                 continue;
                             }
                             sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value, options);
