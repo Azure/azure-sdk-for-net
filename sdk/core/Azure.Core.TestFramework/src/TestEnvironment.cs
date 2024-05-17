@@ -202,9 +202,14 @@ namespace Azure.Core.TestFramework
         public string MsiClientId => GetOptionalVariable("MSI_CLIENT_ID");
 
         /// <summary>
-        ///   The client id of the Azure Active Directory project specific service principal to use during Live tests. Recorded.
+        ///   The client id of the Azure Active Directory project specific service principal to use during Live tests. Not Recorded.
         /// </summary>
-        public string SmsClientId => GetRecordedOptionalVariable("APP_CLIENT_ID");
+        public string AppClientId => GetOptionalVariable("APP_CLIENT_ID");
+
+        /// <summary>
+        ///   The tenant id of the Azure Active Directory project specific service principal to use during Live tests. Not Recorded.
+        /// </summary>
+        public string AppTenantId => GetOptionalVariable("APP_TENANT_ID");
 
         public virtual TokenCredential Credential
         {
@@ -221,20 +226,14 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    var clientSecret = GetOptionalVariable("CLIENT_SECRET");
-                    var msiClientId = GetOptionalVariable("MSI_CLIENT_ID");
-                    var smsClientId = GetOptionalVariable("APP_CLIENT_ID");
-                    var audience = GetOptionalVariable("AUDIENCE");
-                    var tenantId = GetVariable("TENANT_ID");
-
-                    if (!string.IsNullOrWhiteSpace(msiClientId) && !string.IsNullOrWhiteSpace(smsClientId) && !string.IsNullOrWhiteSpace(audience) && !string.IsNullOrWhiteSpace(tenantId))
+                    if (!string.IsNullOrWhiteSpace(MsiClientId) && !string.IsNullOrWhiteSpace(AppClientId) && !string.IsNullOrWhiteSpace(Audience) && !string.IsNullOrWhiteSpace(AppTenantId))
                     {
                         _credential = new ClientAssertionCredential(
-                        tenantId,
-                        smsClientId,
-                        async (token) => await GetManagedIdentityToken(msiClientId, audience));
+                        AppTenantId,
+                        AppClientId,
+                        async (token) => await GetManagedIdentityToken(MsiClientId, Audience));
                     }
-                    else if (string.IsNullOrWhiteSpace(clientSecret))
+                    else if (string.IsNullOrWhiteSpace(ClientSecret))
                     {
                         _credential = new DefaultAzureCredential(
                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
@@ -250,14 +249,14 @@ namespace Azure.Core.TestFramework
                             return new ClientSecretCredential(
                                 GetVariable("TENANT_ID"),
                                 GetVariable("CLIENT_ID"),
-                                clientSecret,
+                                ClientSecret,
                                 new ClientSecretCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
                         }
 
                         _credential = new ClientSecretCredential(
                             TenantId,
                             ClientId,
-                            clientSecret,
+                            ClientSecret,
                             new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
                     }
                 }
