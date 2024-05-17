@@ -202,7 +202,7 @@ namespace Azure.Core.TestFramework
         public string MsiClientId => GetOptionalVariable("MSI_CLIENT_ID");
 
         /// <summary>
-        ///   The client id of the Azure Active Directory SMS project service principal to use during Live tests. Recorded.
+        ///   The client id of the Azure Active Directory project specific service principal to use during Live tests. Recorded.
         /// </summary>
         public string SmsClientId => GetRecordedOptionalVariable("APP_CLIENT_ID");
 
