@@ -59,15 +59,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
-                if (StatusMessage != null)
-                {
-                    writer.WritePropertyName("statusMessage"u8);
-                    writer.WriteObjectValue(StatusMessage, options);
-                }
-                else
-                {
-                    writer.WriteNull("statusMessage");
-                }
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteObjectValue(StatusMessage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetResource))
             {
@@ -182,7 +175,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        statusMessage = null;
                         continue;
                     }
                     statusMessage = StatusMessage.DeserializeStatusMessage(property.Value, options);
