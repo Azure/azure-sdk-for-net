@@ -105,15 +105,8 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (Optional.IsDefined(ManagedResourceGroup))
             {
-                if (ManagedResourceGroup != null)
-                {
-                    writer.WritePropertyName("managedResourceGroup"u8);
-                    writer.WriteObjectValue(ManagedResourceGroup, options);
-                }
-                else
-                {
-                    writer.WriteNull("managedResourceGroup");
-                }
+                writer.WritePropertyName("managedResourceGroup"u8);
+                writer.WriteObjectValue(ManagedResourceGroup, options);
             }
             if (Optional.IsDefined(MlFlowRegistryUri))
             {
@@ -332,7 +325,6 @@ namespace Azure.ResourceManager.MachineLearning
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                managedResourceGroup = null;
                                 continue;
                             }
                             managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value, options);

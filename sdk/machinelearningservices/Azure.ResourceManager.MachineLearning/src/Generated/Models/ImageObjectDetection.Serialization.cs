@@ -33,15 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ModelSettings))
             {
-                if (ModelSettings != null)
-                {
-                    writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("modelSettings");
-                }
+                writer.WritePropertyName("modelSettings"u8);
+                writer.WriteObjectValue(ModelSettings, options);
             }
             if (Optional.IsCollectionDefined(SearchSpace))
             {
@@ -64,27 +57,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(LimitSettings, options);
             if (Optional.IsDefined(SweepSettings))
             {
-                if (SweepSettings != null)
-                {
-                    writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sweepSettings");
-                }
+                writer.WritePropertyName("sweepSettings"u8);
+                writer.WriteObjectValue(SweepSettings, options);
             }
             if (Optional.IsDefined(ValidationData))
             {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
+                writer.WritePropertyName("validationData"u8);
+                writer.WriteObjectValue(ValidationData, options);
             }
             if (Optional.IsDefined(ValidationDataSize))
             {
@@ -185,7 +164,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modelSettings = null;
                         continue;
                     }
                     modelSettings = ImageModelSettingsObjectDetection.DeserializeImageModelSettingsObjectDetection(property.Value, options);
@@ -215,7 +193,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sweepSettings = null;
                         continue;
                     }
                     sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value, options);
@@ -225,7 +202,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        validationData = null;
                         continue;
                     }
                     validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);

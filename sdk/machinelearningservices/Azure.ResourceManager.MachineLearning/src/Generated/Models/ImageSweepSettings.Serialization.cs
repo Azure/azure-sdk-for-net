@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EarlyTermination))
             {
-                if (EarlyTermination != null)
-                {
-                    writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue(EarlyTermination, options);
-                }
-                else
-                {
-                    writer.WriteNull("earlyTermination");
-                }
+                writer.WritePropertyName("earlyTermination"u8);
+                writer.WriteObjectValue(EarlyTermination, options);
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
             writer.WriteStringValue(SamplingAlgorithm.ToString());
@@ -88,7 +81,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        earlyTermination = null;
                         continue;
                     }
                     earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value, options);

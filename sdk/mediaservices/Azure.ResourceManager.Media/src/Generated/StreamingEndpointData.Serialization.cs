@@ -85,15 +85,8 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(AccessControl))
             {
-                if (AccessControl != null)
-                {
-                    writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl, options);
-                }
-                else
-                {
-                    writer.WriteNull("accessControl");
-                }
+                writer.WritePropertyName("accessControl"u8);
+                writer.WriteObjectValue(AccessControl, options);
             }
             if (Optional.IsDefined(MaxCacheAge))
             {
@@ -149,15 +142,8 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
-                if (CrossSiteAccessPolicies != null)
-                {
-                    writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                    writer.WriteObjectValue(CrossSiteAccessPolicies, options);
-                }
-                else
-                {
-                    writer.WriteNull("crossSiteAccessPolicies");
-                }
+                writer.WritePropertyName("crossSiteAccessPolicies"u8);
+                writer.WriteObjectValue(CrossSiteAccessPolicies, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FreeTrialEndOn))
             {
@@ -324,7 +310,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                accessControl = null;
                                 continue;
                             }
                             accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value, options);
@@ -396,7 +381,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                crossSiteAccessPolicies = null;
                                 continue;
                             }
                             crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value, options);

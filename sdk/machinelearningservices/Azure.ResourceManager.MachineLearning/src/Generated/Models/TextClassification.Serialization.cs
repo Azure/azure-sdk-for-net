@@ -33,39 +33,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(FeaturizationSettings))
             {
-                if (FeaturizationSettings != null)
-                {
-                    writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featurizationSettings");
-                }
+                writer.WritePropertyName("featurizationSettings"u8);
+                writer.WriteObjectValue(FeaturizationSettings, options);
             }
             if (Optional.IsDefined(FixedParameters))
             {
-                if (FixedParameters != null)
-                {
-                    writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters, options);
-                }
-                else
-                {
-                    writer.WriteNull("fixedParameters");
-                }
+                writer.WritePropertyName("fixedParameters"u8);
+                writer.WriteObjectValue(FixedParameters, options);
             }
             if (Optional.IsDefined(LimitSettings))
             {
-                if (LimitSettings != null)
-                {
-                    writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("limitSettings");
-                }
+                writer.WritePropertyName("limitSettings"u8);
+                writer.WriteObjectValue(LimitSettings, options);
             }
             if (Optional.IsCollectionDefined(SearchSpace))
             {
@@ -86,27 +65,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(SweepSettings))
             {
-                if (SweepSettings != null)
-                {
-                    writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sweepSettings");
-                }
+                writer.WritePropertyName("sweepSettings"u8);
+                writer.WriteObjectValue(SweepSettings, options);
             }
             if (Optional.IsDefined(ValidationData))
             {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
+                writer.WritePropertyName("validationData"u8);
+                writer.WriteObjectValue(ValidationData, options);
             }
             if (Optional.IsDefined(LogVerbosity))
             {
@@ -195,7 +160,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        featurizationSettings = null;
                         continue;
                     }
                     featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
@@ -205,7 +169,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fixedParameters = null;
                         continue;
                     }
                     fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value, options);
@@ -215,7 +178,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        limitSettings = null;
                         continue;
                     }
                     limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
@@ -240,7 +202,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sweepSettings = null;
                         continue;
                     }
                     sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value, options);
@@ -250,7 +211,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        validationData = null;
                         continue;
                     }
                     validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);

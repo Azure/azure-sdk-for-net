@@ -64,15 +64,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Nodes))
             {
-                if (Nodes != null)
-                {
-                    writer.WritePropertyName("nodes"u8);
-                    writer.WriteObjectValue(Nodes, options);
-                }
-                else
-                {
-                    writer.WriteNull("nodes");
-                }
+                writer.WritePropertyName("nodes"u8);
+                writer.WriteObjectValue(Nodes, options);
             }
             if (Optional.IsDefined(Port))
             {
@@ -199,7 +192,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nodes = null;
                         continue;
                     }
                     nodes = JobNodes.DeserializeJobNodes(property.Value, options);

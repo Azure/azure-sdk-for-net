@@ -33,15 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Subnet))
             {
-                if (Subnet != null)
-                {
-                    writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet, options);
-                }
-                else
-                {
-                    writer.WriteNull("subnet");
-                }
+                writer.WritePropertyName("subnet"u8);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(ApplicationSharingPolicy))
             {
@@ -50,27 +43,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(AutologgerSettings))
             {
-                if (AutologgerSettings != null)
-                {
-                    writer.WritePropertyName("autologgerSettings"u8);
-                    writer.WriteObjectValue(AutologgerSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("autologgerSettings");
-                }
+                writer.WritePropertyName("autologgerSettings"u8);
+                writer.WriteObjectValue(AutologgerSettings, options);
             }
             if (Optional.IsDefined(SshSettings))
             {
-                if (SshSettings != null)
-                {
-                    writer.WritePropertyName("sshSettings"u8);
-                    writer.WriteObjectValue(SshSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sshSettings");
-                }
+                writer.WritePropertyName("sshSettings"u8);
+                writer.WriteObjectValue(SshSettings, options);
             }
             if (Optional.IsCollectionDefined(CustomServices))
             {
@@ -143,51 +122,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
-                if (PersonalComputeInstanceSettings != null)
-                {
-                    writer.WritePropertyName("personalComputeInstanceSettings"u8);
-                    writer.WriteObjectValue(PersonalComputeInstanceSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("personalComputeInstanceSettings");
-                }
+                writer.WritePropertyName("personalComputeInstanceSettings"u8);
+                writer.WriteObjectValue(PersonalComputeInstanceSettings, options);
             }
             if (Optional.IsDefined(SetupScriptsSettings))
             {
-                if (SetupScriptsSettings != null)
-                {
-                    writer.WritePropertyName("setupScripts"u8);
-                    writer.WriteObjectValue(SetupScriptsSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("setupScripts");
-                }
+                writer.WritePropertyName("setupScripts"u8);
+                writer.WriteObjectValue(SetupScriptsSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
-                if (LastOperation != null)
-                {
-                    writer.WritePropertyName("lastOperation"u8);
-                    writer.WriteObjectValue(LastOperation, options);
-                }
-                else
-                {
-                    writer.WriteNull("lastOperation");
-                }
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (Optional.IsDefined(Schedules))
             {
-                if (Schedules != null)
-                {
-                    writer.WritePropertyName("schedules"u8);
-                    writer.WriteObjectValue(Schedules, options);
-                }
-                else
-                {
-                    writer.WriteNull("schedules");
-                }
+                writer.WritePropertyName("schedules"u8);
+                writer.WriteObjectValue(Schedules, options);
             }
             if (Optional.IsDefined(IdleTimeBeforeShutdown))
             {
@@ -336,7 +287,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        subnet = null;
                         continue;
                     }
                     subnet = ResourceId.DeserializeResourceId(property.Value, options);
@@ -355,7 +305,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        autologgerSettings = null;
                         continue;
                     }
                     autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value, options);
@@ -365,7 +314,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sshSettings = null;
                         continue;
                     }
                     sshSettings = MachineLearningComputeInstanceSshSettings.DeserializeMachineLearningComputeInstanceSshSettings(property.Value, options);
@@ -464,7 +412,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        personalComputeInstanceSettings = null;
                         continue;
                     }
                     personalComputeInstanceSettings = PersonalComputeInstanceSettings.DeserializePersonalComputeInstanceSettings(property.Value, options);
@@ -474,7 +421,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        setupScripts = null;
                         continue;
                     }
                     setupScripts = SetupScripts.DeserializeSetupScripts(property.Value, options);
@@ -484,7 +430,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lastOperation = null;
                         continue;
                     }
                     lastOperation = MachineLearningComputeInstanceLastOperation.DeserializeMachineLearningComputeInstanceLastOperation(property.Value, options);
@@ -494,7 +439,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        schedules = null;
                         continue;
                     }
                     schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value, options);

@@ -68,15 +68,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -87,15 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(NotificationSetting))
             {
-                if (NotificationSetting != null)
-                {
-                    writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("notificationSetting");
-                }
+                writer.WritePropertyName("notificationSetting"u8);
+                writer.WriteObjectValue(NotificationSetting, options);
             }
             if (Optional.IsCollectionDefined(SecretsConfiguration))
             {

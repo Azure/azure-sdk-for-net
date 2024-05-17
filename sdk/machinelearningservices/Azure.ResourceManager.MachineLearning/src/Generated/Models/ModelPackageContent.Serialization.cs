@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseEnvironmentSource))
             {
-                if (BaseEnvironmentSource != null)
-                {
-                    writer.WritePropertyName("baseEnvironmentSource"u8);
-                    writer.WriteObjectValue(BaseEnvironmentSource, options);
-                }
-                else
-                {
-                    writer.WriteNull("baseEnvironmentSource");
-                }
+                writer.WritePropertyName("baseEnvironmentSource"u8);
+                writer.WriteObjectValue(BaseEnvironmentSource, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -77,15 +70,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ModelConfiguration))
             {
-                if (ModelConfiguration != null)
-                {
-                    writer.WritePropertyName("modelConfiguration"u8);
-                    writer.WriteObjectValue(ModelConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("modelConfiguration");
-                }
+                writer.WritePropertyName("modelConfiguration"u8);
+                writer.WriteObjectValue(ModelConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -160,7 +146,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        baseEnvironmentSource = null;
                         continue;
                     }
                     baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value, options);
@@ -205,7 +190,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modelConfiguration = null;
                         continue;
                     }
                     modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value, options);

@@ -148,15 +148,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(CheckpointModel))
             {
-                if (CheckpointModel != null)
-                {
-                    writer.WritePropertyName("checkpointModel"u8);
-                    writer.WriteObjectValue(CheckpointModel, options);
-                }
-                else
-                {
-                    writer.WriteNull("checkpointModel");
-                }
+                writer.WritePropertyName("checkpointModel"u8);
+                writer.WriteObjectValue(CheckpointModel, options);
             }
             if (Optional.IsDefined(CheckpointRunId))
             {
@@ -626,7 +619,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        checkpointModel = null;
                         continue;
                     }
                     checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value, options);

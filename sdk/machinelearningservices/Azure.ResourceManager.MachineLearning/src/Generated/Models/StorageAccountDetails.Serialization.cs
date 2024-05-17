@@ -28,27 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SystemCreatedStorageAccount))
             {
-                if (SystemCreatedStorageAccount != null)
-                {
-                    writer.WritePropertyName("systemCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedStorageAccount, options);
-                }
-                else
-                {
-                    writer.WriteNull("systemCreatedStorageAccount");
-                }
+                writer.WritePropertyName("systemCreatedStorageAccount"u8);
+                writer.WriteObjectValue(SystemCreatedStorageAccount, options);
             }
             if (Optional.IsDefined(UserCreatedStorageAccount))
             {
-                if (UserCreatedStorageAccount != null)
-                {
-                    writer.WritePropertyName("userCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(UserCreatedStorageAccount, options);
-                }
-                else
-                {
-                    writer.WriteNull("userCreatedStorageAccount");
-                }
+                writer.WritePropertyName("userCreatedStorageAccount"u8);
+                writer.WriteObjectValue(UserCreatedStorageAccount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +84,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        systemCreatedStorageAccount = null;
                         continue;
                     }
                     systemCreatedStorageAccount = SystemCreatedStorageAccount.DeserializeSystemCreatedStorageAccount(property.Value, options);
@@ -108,7 +93,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userCreatedStorageAccount = null;
                         continue;
                     }
                     userCreatedStorageAccount = UserCreatedStorageAccount.DeserializeUserCreatedStorageAccount(property.Value, options);

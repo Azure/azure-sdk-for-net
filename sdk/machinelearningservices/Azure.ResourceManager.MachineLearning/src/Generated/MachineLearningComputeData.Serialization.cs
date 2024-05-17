@@ -36,15 +36,8 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (Optional.IsDefined(Sku))
             {
-                if (Sku != null)
-                {
-                    writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku, options);
-                }
-                else
-                {
-                    writer.WriteNull("sku");
-                }
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -149,7 +142,6 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sku = null;
                         continue;
                     }
                     sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);

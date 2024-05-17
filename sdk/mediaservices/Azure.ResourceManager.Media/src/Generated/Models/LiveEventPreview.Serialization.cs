@@ -38,15 +38,8 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(AccessControl))
             {
-                if (AccessControl != null)
-                {
-                    writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl, options);
-                }
-                else
-                {
-                    writer.WriteNull("accessControl");
-                }
+                writer.WritePropertyName("accessControl"u8);
+                writer.WriteObjectValue(AccessControl, options);
             }
             if (Optional.IsDefined(PreviewLocator))
             {
@@ -128,7 +121,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        accessControl = null;
                         continue;
                     }
                     accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value, options);

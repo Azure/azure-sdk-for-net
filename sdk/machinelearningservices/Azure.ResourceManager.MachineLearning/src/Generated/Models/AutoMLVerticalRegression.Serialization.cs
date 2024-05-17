@@ -33,15 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(TrainingSettings))
             {
-                if (TrainingSettings != null)
-                {
-                    writer.WritePropertyName("trainingSettings"u8);
-                    writer.WriteObjectValue(TrainingSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("trainingSettings");
-                }
+                writer.WritePropertyName("trainingSettings"u8);
+                writer.WriteObjectValue(TrainingSettings, options);
             }
             if (Optional.IsCollectionDefined(CvSplitColumnNames))
             {
@@ -62,51 +55,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(FeaturizationSettings))
             {
-                if (FeaturizationSettings != null)
-                {
-                    writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featurizationSettings");
-                }
+                writer.WritePropertyName("featurizationSettings"u8);
+                writer.WriteObjectValue(FeaturizationSettings, options);
             }
             if (Optional.IsDefined(FixedParameters))
             {
-                if (FixedParameters != null)
-                {
-                    writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters, options);
-                }
-                else
-                {
-                    writer.WriteNull("fixedParameters");
-                }
+                writer.WritePropertyName("fixedParameters"u8);
+                writer.WriteObjectValue(FixedParameters, options);
             }
             if (Optional.IsDefined(LimitSettings))
             {
-                if (LimitSettings != null)
-                {
-                    writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("limitSettings");
-                }
+                writer.WritePropertyName("limitSettings"u8);
+                writer.WriteObjectValue(LimitSettings, options);
             }
             if (Optional.IsDefined(NCrossValidations))
             {
-                if (NCrossValidations != null)
-                {
-                    writer.WritePropertyName("nCrossValidations"u8);
-                    writer.WriteObjectValue(NCrossValidations, options);
-                }
-                else
-                {
-                    writer.WriteNull("nCrossValidations");
-                }
+                writer.WritePropertyName("nCrossValidations"u8);
+                writer.WriteObjectValue(NCrossValidations, options);
             }
             if (Optional.IsCollectionDefined(SearchSpace))
             {
@@ -127,27 +92,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(SweepSettings))
             {
-                if (SweepSettings != null)
-                {
-                    writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sweepSettings");
-                }
+                writer.WritePropertyName("sweepSettings"u8);
+                writer.WriteObjectValue(SweepSettings, options);
             }
             if (Optional.IsDefined(TestData))
             {
-                if (TestData != null)
-                {
-                    writer.WritePropertyName("testData"u8);
-                    writer.WriteObjectValue(TestData, options);
-                }
-                else
-                {
-                    writer.WriteNull("testData");
-                }
+                writer.WritePropertyName("testData"u8);
+                writer.WriteObjectValue(TestData, options);
             }
             if (Optional.IsDefined(TestDataSize))
             {
@@ -163,15 +114,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ValidationData))
             {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
+                writer.WritePropertyName("validationData"u8);
+                writer.WriteObjectValue(ValidationData, options);
             }
             if (Optional.IsDefined(ValidationDataSize))
             {
@@ -291,7 +235,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        trainingSettings = null;
                         continue;
                     }
                     trainingSettings = RegressionTrainingSettings.DeserializeRegressionTrainingSettings(property.Value, options);
@@ -316,7 +259,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        featurizationSettings = null;
                         continue;
                     }
                     featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value, options);
@@ -326,7 +268,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        fixedParameters = null;
                         continue;
                     }
                     fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value, options);
@@ -336,7 +277,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        limitSettings = null;
                         continue;
                     }
                     limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value, options);
@@ -346,7 +286,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nCrossValidations = null;
                         continue;
                     }
                     nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value, options);
@@ -371,7 +310,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sweepSettings = null;
                         continue;
                     }
                     sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value, options);
@@ -381,7 +319,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        testData = null;
                         continue;
                     }
                     testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
@@ -401,7 +338,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        validationData = null;
                         continue;
                     }
                     validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);

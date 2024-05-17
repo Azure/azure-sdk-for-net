@@ -58,39 +58,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(LivenessRoute))
             {
-                if (LivenessRoute != null)
-                {
-                    writer.WritePropertyName("livenessRoute"u8);
-                    writer.WriteObjectValue(LivenessRoute, options);
-                }
-                else
-                {
-                    writer.WriteNull("livenessRoute");
-                }
+                writer.WritePropertyName("livenessRoute"u8);
+                writer.WriteObjectValue(LivenessRoute, options);
             }
             if (Optional.IsDefined(ReadinessRoute))
             {
-                if (ReadinessRoute != null)
-                {
-                    writer.WritePropertyName("readinessRoute"u8);
-                    writer.WriteObjectValue(ReadinessRoute, options);
-                }
-                else
-                {
-                    writer.WriteNull("readinessRoute");
-                }
+                writer.WritePropertyName("readinessRoute"u8);
+                writer.WriteObjectValue(ReadinessRoute, options);
             }
             if (Optional.IsDefined(ScoringRoute))
             {
-                if (ScoringRoute != null)
-                {
-                    writer.WritePropertyName("scoringRoute"u8);
-                    writer.WriteObjectValue(ScoringRoute, options);
-                }
-                else
-                {
-                    writer.WriteNull("scoringRoute");
-                }
+                writer.WritePropertyName("scoringRoute"u8);
+                writer.WriteObjectValue(ScoringRoute, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -168,7 +147,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        livenessRoute = null;
                         continue;
                     }
                     livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
@@ -178,7 +156,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        readinessRoute = null;
                         continue;
                     }
                     readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
@@ -188,7 +165,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scoringRoute = null;
                         continue;
                     }
                     scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);

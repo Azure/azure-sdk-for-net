@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CodeConfiguration))
             {
-                if (CodeConfiguration != null)
-                {
-                    writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("codeConfiguration");
-                }
+                writer.WritePropertyName("codeConfiguration"u8);
+                writer.WriteObjectValue(CodeConfiguration, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -149,7 +142,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        codeConfiguration = null;
                         continue;
                     }
                     codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);

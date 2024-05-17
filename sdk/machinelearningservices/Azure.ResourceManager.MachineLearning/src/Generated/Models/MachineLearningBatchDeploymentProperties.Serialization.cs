@@ -40,15 +40,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(DeploymentConfiguration))
             {
-                if (DeploymentConfiguration != null)
-                {
-                    writer.WritePropertyName("deploymentConfiguration"u8);
-                    writer.WriteObjectValue(DeploymentConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("deploymentConfiguration");
-                }
+                writer.WritePropertyName("deploymentConfiguration"u8);
+                writer.WriteObjectValue(DeploymentConfiguration, options);
             }
             if (Optional.IsDefined(ErrorThreshold))
             {
@@ -72,15 +65,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Model))
             {
-                if (Model != null)
-                {
-                    writer.WritePropertyName("model"u8);
-                    writer.WriteObjectValue(Model, options);
-                }
-                else
-                {
-                    writer.WriteNull("model");
-                }
+                writer.WritePropertyName("model"u8);
+                writer.WriteObjectValue(Model, options);
             }
             if (Optional.IsDefined(OutputAction))
             {
@@ -99,39 +85,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                if (Resources != null)
-                {
-                    writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue(Resources, options);
-                }
-                else
-                {
-                    writer.WriteNull("resources");
-                }
+                writer.WritePropertyName("resources"u8);
+                writer.WriteObjectValue(Resources, options);
             }
             if (Optional.IsDefined(RetrySettings))
             {
-                if (RetrySettings != null)
-                {
-                    writer.WritePropertyName("retrySettings"u8);
-                    writer.WriteObjectValue(RetrySettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("retrySettings");
-                }
+                writer.WritePropertyName("retrySettings"u8);
+                writer.WriteObjectValue(RetrySettings, options);
             }
             if (Optional.IsDefined(CodeConfiguration))
             {
-                if (CodeConfiguration != null)
-                {
-                    writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("codeConfiguration");
-                }
+                writer.WritePropertyName("codeConfiguration"u8);
+                writer.WriteObjectValue(CodeConfiguration, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -266,7 +231,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        deploymentConfiguration = null;
                         continue;
                     }
                     deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value, options);
@@ -312,7 +276,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        model = null;
                         continue;
                     }
                     model = MachineLearningAssetReferenceBase.DeserializeMachineLearningAssetReferenceBase(property.Value, options);
@@ -345,7 +308,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resources = null;
                         continue;
                     }
                     resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value, options);
@@ -355,7 +317,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        retrySettings = null;
                         continue;
                     }
                     retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value, options);
@@ -365,7 +326,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        codeConfiguration = null;
                         continue;
                     }
                     codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);

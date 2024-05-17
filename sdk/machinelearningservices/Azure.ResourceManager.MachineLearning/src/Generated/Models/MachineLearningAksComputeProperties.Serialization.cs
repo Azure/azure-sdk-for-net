@@ -86,27 +86,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(SslConfiguration))
             {
-                if (SslConfiguration != null)
-                {
-                    writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue(SslConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("sslConfiguration");
-                }
+                writer.WritePropertyName("sslConfiguration"u8);
+                writer.WriteObjectValue(SslConfiguration, options);
             }
             if (Optional.IsDefined(AksNetworkingConfiguration))
             {
-                if (AksNetworkingConfiguration != null)
-                {
-                    writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue(AksNetworkingConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("aksNetworkingConfiguration");
-                }
+                writer.WritePropertyName("aksNetworkingConfiguration"u8);
+                writer.WriteObjectValue(AksNetworkingConfiguration, options);
             }
             if (Optional.IsDefined(LoadBalancerType))
             {
@@ -234,7 +220,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sslConfiguration = null;
                         continue;
                     }
                     sslConfiguration = MachineLearningSslConfiguration.DeserializeMachineLearningSslConfiguration(property.Value, options);
@@ -244,7 +229,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        aksNetworkingConfiguration = null;
                         continue;
                     }
                     aksNetworkingConfiguration = MachineLearningAksNetworkingConfiguration.DeserializeMachineLearningAksNetworkingConfiguration(property.Value, options);

@@ -46,15 +46,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Features))
             {
-                if (Features != null)
-                {
-                    writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features, options);
-                }
-                else
-                {
-                    writer.WriteNull("features");
-                }
+                writer.WritePropertyName("features"u8);
+                writer.WriteObjectValue(Features, options);
             }
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
@@ -161,7 +154,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        features = null;
                         continue;
                     }
                     features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);

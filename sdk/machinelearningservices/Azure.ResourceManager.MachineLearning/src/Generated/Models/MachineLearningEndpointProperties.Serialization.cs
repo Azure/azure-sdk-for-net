@@ -42,15 +42,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Keys))
             {
-                if (Keys != null)
-                {
-                    writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys, options);
-                }
-                else
-                {
-                    writer.WriteNull("keys");
-                }
+                writer.WritePropertyName("keys"u8);
+                writer.WriteObjectValue(Keys, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -161,7 +154,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keys = null;
                         continue;
                     }
                     keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);
