@@ -8,8 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/vision/ci.face.yml
-    - sdk/vision/Azure.AI.Vision.Face
+    - sdk/face
+    - sdk/face/ci.yml
+    - sdk/face/Azure.AI.Vision.Face
 
 pr:
   branches:
@@ -20,13 +21,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/vision/ci.face.yml
-    - sdk/vision/Azure.AI.Vision.Face
+    - sdk/face
+    - sdk/face/ci.yml
+    - sdk/face/Azure.AI.Vision.Face
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: vision
+    ServiceDirectory: face
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.Vision.Face

@@ -20,10 +20,10 @@ var client = new FaceClient(endpoint, credential);
 
 To detect faces in an image, you need to provide the image as a stream. You also need to specify the detection model and the recognition model when calling detect face. Face attributes and landmark are optional feature for detection call.
 
-```C# Snippet:DetectFaces
+```C# Snippet:DetectFacesAsync
 using var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
 
-var detectResponse = client.Detect(
+var detectResponse = await client.DetectAsync(
     BinaryData.FromStream(stream),
     FaceDetectionModel.Detection03,
     FaceRecognitionModel.Recognition04,
@@ -78,8 +78,8 @@ foreach (var detectedFace in detectedFaces)
 
 You can also detect faces from an image URL. The following code demonstrates how to detect faces from an image URL.
 
-```C# Snippet:DetectFacesFromUrl
-var detectResponse = client.DetectFromUrl(
+```C# Snippet:DetectFacesFromUrlAsync
+var detectResponse = await client.DetectFromUrlAsync(
     imageUri,
     FaceDetectionModel.Detection01,
     FaceRecognitionModel.Recognition04,
@@ -106,5 +106,5 @@ foreach (var detectedFace in detectedFaces)
 }
 ```
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.Face#getting-started
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
 [face_detection]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-face-detection

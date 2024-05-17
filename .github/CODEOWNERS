@@ -207,6 +207,9 @@
 # PRLabel: %Cognitive - Face
 /sdk/vision/Azure.AI.Vision.Face/                                  @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
+# PRLabel: %Cognitive - Face
+/sdk/face/                                                         @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
+
 # ServiceLabel: %Cognitive - Face
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
