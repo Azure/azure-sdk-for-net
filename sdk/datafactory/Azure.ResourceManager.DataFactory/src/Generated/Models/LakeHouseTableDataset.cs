@@ -11,20 +11,20 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse Table. </summary>
-    public partial class LakeHouseTableDataset : DataFactoryDatasetProperties
+    /// <summary> Microsoft Fabric Lakehouse Table. </summary>
+    public partial class LakehouseTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakehouseTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public LakeHouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public LakehouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            DatasetType = "LakeHouseTable";
+            DatasetType = "LakehouseTable";
         }
 
-        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakehouseTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="table"> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </param>
-        internal LakeHouseTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="table"> The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </param>
+        internal LakehouseTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Table = table;
-            DatasetType = datasetType ?? "LakeHouseTable";
+            DatasetType = datasetType ?? "LakehouseTable";
         }
 
-        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/> for deserialization. </summary>
-        internal LakeHouseTableDataset()
+        /// <summary> Initializes a new instance of <see cref="LakehouseTableDataset"/> for deserialization. </summary>
+        internal LakehouseTableDataset()
         {
         }
 
-        /// <summary> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Table { get; set; }
     }
 }
