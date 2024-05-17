@@ -4018,6 +4018,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task GetAccountInfoAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Act
+            Response<AccountInfo> response = await test.Container.GetAccountInfoAsync();
+
+            // Assert
+            Assert.AreEqual(SkuName.StandardRagrs, response.Value.SkuName);
+            Assert.AreEqual(AccountKind.StorageV2, response.Value.AccountKind);
+            Assert.IsFalse(response.Value.IsHierarchicalNamespaceEnabled);
+        }
+
+        [RecordedTest]
+        public async Task GetAccountInfoAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = InstrumentClient(
+                new BlobServiceClient(
+                    BlobsClientBuilder.GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            BlobContainerClient containerClient = service.GetBlobContainerClient(GetNewContainerName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                containerClient.GetAccountInfoAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.
