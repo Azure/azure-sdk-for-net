@@ -3,18 +3,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Identity;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -191,6 +191,21 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public string ClientSecret => GetOptionalVariable("CLIENT_SECRET");
 
+        /// <summary>
+        ///   The audience of the federated identity credential to use during Live tests. Not recorded.
+        /// </summary>
+        public string Audience => GetOptionalVariable("AUDIENCE");
+
+        /// <summary>
+        ///   The object ID of the managed identity principal to use during Live tests. Not recorded.
+        /// </summary>
+        public string MsiClientId => GetOptionalVariable("MSI_CLIENT_ID");
+
+        /// <summary>
+        ///   The client id of the Azure Active Directory SMS project service principal to use during Live tests. Recorded.
+        /// </summary>
+        public string SmsClientId => GetRecordedOptionalVariable("APP_CLIENT_ID");
+
         public virtual TokenCredential Credential
         {
             get
@@ -207,7 +222,19 @@ namespace Azure.Core.TestFramework
                 else
                 {
                     var clientSecret = GetOptionalVariable("CLIENT_SECRET");
-                    if (string.IsNullOrWhiteSpace(clientSecret))
+                    var msiClientId = GetOptionalVariable("MSI_CLIENT_ID");
+                    var smsClientId = GetOptionalVariable("APP_CLIENT_ID");
+                    var audience = GetOptionalVariable("AUDIENCE");
+                    var tenantId = GetVariable("TENANT_ID");
+
+                    if (!string.IsNullOrWhiteSpace(msiClientId) && !string.IsNullOrWhiteSpace(smsClientId) && !string.IsNullOrWhiteSpace(audience) && !string.IsNullOrWhiteSpace(tenantId))
+                    {
+                        _credential = new ClientAssertionCredential(
+                        tenantId,
+                        smsClientId,
+                        async (token) => await GetManagedIdentityToken(msiClientId, audience));
+                    }
+                    else if (string.IsNullOrWhiteSpace(clientSecret))
                     {
                         _credential = new DefaultAzureCredential(
                             new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
@@ -609,7 +636,7 @@ namespace Azure.Core.TestFramework
             {
                 string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
 
-                return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
+                return switchString.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
@@ -675,6 +702,18 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        /// <summary>
+        /// Retrieves a token using Managed Identity for the specified client ID and audience.
+        /// </summary>
+        /// <param name="msiClientId">The client ID of the Managed Identity.</param>
+        /// <param name="audience">The audience for the token.</param>
+        /// <returns>The access token.</returns>
+        private static async Task<string> GetManagedIdentityToken(string msiClientId, string audience)
+        {
+            var miCredential = new ManagedIdentityCredential(msiClientId);
+            return (await miCredential.GetTokenAsync(new Azure.Core.TokenRequestContext(new[] { $"{audience}/.default" })).ConfigureAwait(false)).Token;
+        }
+
         private void BootStrapTestResources()
         {
             lock (s_syncLock)
@@ -699,9 +738,9 @@ namespace Azure.Core.TestFramework
                         "scripts",
                         $"New-TestResources-Bootstrapper.ps1 {_serviceName}");
 
-                        var processInfo = new ProcessStartInfo(
-                        @"pwsh.exe",
-                        path)
+                    var processInfo = new ProcessStartInfo(
+                    @"pwsh.exe",
+                    path)
                     {
                         UseShellExecute = true
                     };
