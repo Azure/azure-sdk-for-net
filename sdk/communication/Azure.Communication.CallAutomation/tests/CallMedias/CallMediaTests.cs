@@ -89,6 +89,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new FileSource(new Uri("https://localhost"))
         };
 
+        private static readonly CallMediaRecognizeOptions _dmtfRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
+        {
+            InterruptCallMediaOperation = true,
+            InterToneTimeout = TimeSpan.FromSeconds(10),
+            StopTones = new DtmfTone[] { DtmfTone.Pound },
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
+        };
+
         private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
         {
             InterruptCallMediaOperation = true,
@@ -103,6 +114,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             },
             SpeechLanguage = "en-US",
             SpeechModelEndpointId = "customModelEndpointId"
+        };
+
+        private static CallMediaRecognizeOptions _choiceRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceKind = VoiceKind.Female,
+                VoiceName = "LULU"
+            },
+            SpeechLanguage = "en-US",
+            SpeechModelEndpointId = "customModelEndpointId",
+            PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
         };
 
         private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
@@ -122,6 +150,24 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            EndSilenceTimeout = TimeSpan.FromMilliseconds(500),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceKind = VoiceKind.Female,
+                VoiceName = "LULU"
+            },
+            SpeechLanguage = "en-US",
+            SpeechModelEndpointId = "customModelEndpointId",
+            PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
+        };
+
         private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
         {
             InterruptCallMediaOperation = true,
@@ -137,6 +183,24 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             },
             SpeechLanguage= "en-US",
             SpeechModelEndpointId = "customModelEndpointId"
+        };
+
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            EndSilenceTimeout = TimeSpan.FromMilliseconds(500),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceKind = VoiceKind.Female,
+                VoiceName = "LULU"
+            },
+            SpeechLanguage = "en-US",
+            SpeechModelEndpointId = "customModelEndpointId",
+            PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
         };
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
@@ -702,7 +766,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
+                   callMedia => callMedia.StartRecognizingAsync(_dmtfRecognizeOptionsWithMultiplePlaySources)
+                },
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
+                {
                    callMedia => callMedia.StartRecognizingAsync(_choiceRecognizeOptions)
+                },
+                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_choiceRecognizeOptionsWithMultiplePlaySources)
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
@@ -710,7 +782,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
+                   callMedia => callMedia.StartRecognizingAsync(_speechRecognizeOptionsWithMultiplePlaySources)
+                },
+                new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
+                {
                    callMedia => callMedia.StartRecognizingAsync(_speechOrDtmfRecognizeOptions)
+                },
+                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_speechOrDtmfRecognizeOptionsWithMultiplePlaySources)
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
