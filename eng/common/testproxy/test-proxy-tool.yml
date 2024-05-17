@@ -63,7 +63,7 @@ steps:
 
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
-        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy &>$(Build.SourcesDirectory)/test-proxy.log &
+        nohup $(Build.BinariesDirectory)/test-proxy/test-proxy &>${{ parameters.rootFolder }}/test-proxy.log &
 
         echo $! > $(Build.SourcesDirectory)/test-proxy.pid
         echo "##vso[task.setvariable variable=PROXY_PID]$(cat $(Build.SourcesDirectory)/test-proxy.pid)"
