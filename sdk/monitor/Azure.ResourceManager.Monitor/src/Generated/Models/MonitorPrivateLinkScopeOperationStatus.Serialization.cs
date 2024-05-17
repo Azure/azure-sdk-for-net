@@ -67,15 +67,8 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Error))
             {
-                if (Error != null)
-                {
-                    writer.WritePropertyName("error"u8);
-                    JsonSerializer.Serialize(writer, Error);
-                }
-                else
-                {
-                    writer.WriteNull("error");
-                }
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -164,7 +157,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        error = null;
                         continue;
                     }
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
