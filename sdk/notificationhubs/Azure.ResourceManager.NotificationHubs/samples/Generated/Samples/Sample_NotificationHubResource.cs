@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubResource notificationHub = client.GetNotificationHubResource(notificationHubResourceId);
 
             // invoke the operation
-            BinaryData anyObject = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+            BinaryData unknown = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             {
                 ["data"] = new Dictionary<string, object>()
                 {
                     ["message"] = "Hello"
                 }
             });
-            NotificationHubTestSendResult result = await notificationHub.DebugSendAsync(anyObject: anyObject);
+            NotificationHubTestSendResult result = await notificationHub.DebugSendAsync(unknown: unknown);
 
             Console.WriteLine($"Succeeded: {result}");
         }

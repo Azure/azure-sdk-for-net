@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error detail of the operation if any. </param>
         /// <returns> A new <see cref="Models.MonitorPrivateLinkScopeOperationStatus"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopeOperationStatus MonitorPrivateLinkScopeOperationStatus(string id = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, ResponseError error = null)
+        public static MonitorPrivateLinkScopeOperationStatus MonitorPrivateLinkScopeOperationStatus(string id = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, Models.CommonErrorDetail error = (Models.CommonErrorDetail)null)
         {
             return new MonitorPrivateLinkScopeOperationStatus(
                 id,

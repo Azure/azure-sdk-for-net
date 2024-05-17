@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error detail of the operation if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, Models.CommonErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The status of the operation. </summary>
         public string Status { get; }
         /// <summary> The error detail of the operation if any. </summary>
-        public ResponseError Error { get; }
+        public Models.CommonErrorDetail Error { get; }
     }
 }
