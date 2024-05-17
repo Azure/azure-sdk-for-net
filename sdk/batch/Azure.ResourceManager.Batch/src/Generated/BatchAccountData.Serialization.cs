@@ -110,15 +110,8 @@ namespace Azure.ResourceManager.Batch
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                if (NetworkProfile != null)
-                {
-                    writer.WritePropertyName("networkProfile"u8);
-                    writer.WriteObjectValue(NetworkProfile, options);
-                }
-                else
-                {
-                    writer.WriteNull("networkProfile");
-                }
+                writer.WritePropertyName("networkProfile"u8);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -403,7 +396,6 @@ namespace Azure.ResourceManager.Batch
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                networkProfile = null;
                                 continue;
                             }
                             networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);

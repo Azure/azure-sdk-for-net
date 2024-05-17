@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RawContent))
             {
-                if (RawContent != null)
-                {
-                    writer.WritePropertyName("rawContent"u8);
-                    writer.WriteObjectValue(RawContent, options);
-                }
-                else
-                {
-                    writer.WriteNull("rawContent");
-                }
+                writer.WritePropertyName("rawContent"u8);
+                writer.WriteObjectValue(RawContent, options);
             }
             if (Optional.IsDefined(GraphRunbookJson))
             {
@@ -98,7 +91,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rawContent = null;
                         continue;
                     }
                     rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value, options);
