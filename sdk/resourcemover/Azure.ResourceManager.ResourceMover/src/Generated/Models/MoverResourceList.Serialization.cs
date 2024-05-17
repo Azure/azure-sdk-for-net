@@ -43,15 +43,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(SummaryCollection))
             {
-                if (SummaryCollection != null)
-                {
-                    writer.WritePropertyName("summaryCollection"u8);
-                    writer.WriteObjectValue(SummaryCollection, options);
-                }
-                else
-                {
-                    writer.WriteNull("summaryCollection");
-                }
+                writer.WritePropertyName("summaryCollection"u8);
+                writer.WriteObjectValue(SummaryCollection, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
@@ -127,7 +120,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        summaryCollection = null;
                         continue;
                     }
                     summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);

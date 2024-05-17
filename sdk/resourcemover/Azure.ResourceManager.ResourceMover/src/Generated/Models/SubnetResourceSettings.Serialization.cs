@@ -38,15 +38,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
-                if (NetworkSecurityGroup != null)
-                {
-                    writer.WritePropertyName("networkSecurityGroup"u8);
-                    writer.WriteObjectValue(NetworkSecurityGroup, options);
-                }
-                else
-                {
-                    writer.WriteNull("networkSecurityGroup");
-                }
+                writer.WritePropertyName("networkSecurityGroup"u8);
+                writer.WriteObjectValue(NetworkSecurityGroup, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +100,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        networkSecurityGroup = null;
                         continue;
                     }
                     networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value, options);

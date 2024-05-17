@@ -172,15 +172,8 @@ namespace Azure.ResourceManager.Redis
             }
             if (options.Format != "W" && Optional.IsDefined(AccessKeys))
             {
-                if (AccessKeys != null)
-                {
-                    writer.WritePropertyName("accessKeys"u8);
-                    writer.WriteObjectValue(AccessKeys, options);
-                }
-                else
-                {
-                    writer.WriteNull("accessKeys");
-                }
+                writer.WritePropertyName("accessKeys"u8);
+                writer.WriteObjectValue(AccessKeys, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(LinkedServers))
             {
@@ -509,7 +502,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                accessKeys = null;
                                 continue;
                             }
                             accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value, options);
