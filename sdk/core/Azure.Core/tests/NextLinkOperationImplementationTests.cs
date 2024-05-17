@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void WithValidNextRequestUri()
+        public void CreateWithValidNextRequestUri()
         {
             var operationId = Guid.NewGuid().ToString();
             var pipeline = CreateMockHttpPipelineWithHeaders(HttpStatusCode.Accepted, operationId, out var mockResponse);
