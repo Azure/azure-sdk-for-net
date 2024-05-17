@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -1345,70 +1344,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 certificateAuthority,
                 subjectAlternativeNames?.ToList(),
                 thumbprint);
-        }
-
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
-        /// <param name="dnsZoneId"> Resource reference to the Azure DNS zone. </param>
-        /// <param name="preValidatedCustomDomainResourceId"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
-        /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
-        /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
-        /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.FrontDoorCustomDomainData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties)
-        {
-            return FrontDoorCustomDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, profileName: profileName, tlsSettings: tlsSettings, dnsZoneId: dnsZoneId, preValidatedCustomDomainResourceId: preValidatedCustomDomainResourceId, provisioningState: provisioningState, deploymentStatus: deploymentStatus, domainValidationState: domainValidationState, hostName: hostName, extendedProperties: default, validationProperties: validationProperties);
-        }
-
-        /// <summary> Initializes a new instance of ProfileData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
-        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
-        /// <param name="resourceState"> Resource status of the profile. </param>
-        /// <param name="provisioningState"> Provisioning status of the profile. </param>
-        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.ProfileData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
-        {
-            return ProfileData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: skuName, kind: kind, identity: default, resourceState: resourceState, provisioningState: provisioningState, extendedProperties: default, frontDoorId: frontDoorId, originResponseTimeoutSeconds: originResponseTimeoutSeconds, logScrubbing: default);
-        }
-
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="skuName"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
-        /// <param name="policySettings"> Describes  policySettings for policy. </param>
-        /// <param name="rateLimitRules"> Describes rate limit rules inside the policy. </param>
-        /// <param name="customRules"> Describes custom rules inside the policy. </param>
-        /// <param name="managedRuleSets"> Describes managed rules inside the policy. </param>
-        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
-        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
-        /// <param name="resourceState"> Resource status of the policy. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
-        {
-            return CdnWebApplicationFirewallPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, skuName: skuName, policySettings: policySettings, rateLimitRules: rateLimitRules, customRules: customRules, managedRuleSets: managedRuleSets, endpointLinks: endpointLinks, extendedProperties: default, provisioningState: provisioningState, resourceState: resourceState);
         }
     }
 }
