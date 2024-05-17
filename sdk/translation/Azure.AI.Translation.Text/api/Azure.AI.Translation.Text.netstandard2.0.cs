@@ -18,8 +18,8 @@ namespace Azure.AI.Translation.Text
         public static Azure.AI.Translation.Text.TranslatedTextAlignment TranslatedTextAlignment(string projections = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslatedTextItem TranslatedTextItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationText> translations = null, Azure.AI.Translation.Text.SourceText sourceText = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
-        public static Azure.AI.Translation.Text.TranslationText TranslationText(string to = null, string text = null, Azure.AI.Translation.Text.TransliteratedText transliteration = null, Azure.AI.Translation.Text.TranslatedTextAlignment alignment = null, Azure.AI.Translation.Text.SentenceBoundaries sentenceBoundaries = null) { throw null; }
-        public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> toScripts = null) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationText TranslationText(string targetLanguage = null, string text = null, Azure.AI.Translation.Text.TransliteratedText transliteration = null, Azure.AI.Translation.Text.TranslatedTextAlignment alignment = null, Azure.AI.Translation.Text.SentenceBoundaries sentenceBoundaries = null) { throw null; }
+        public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> targetLanguageScripts = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliteratedText TransliteratedText(string text = null, string script = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliterationLanguage TransliterationLanguage(string name = null, string nativeName = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TransliterableScript> scripts = null) { throw null; }
     }
@@ -363,8 +363,8 @@ namespace Azure.AI.Translation.Text
         internal TranslationText() { }
         public Azure.AI.Translation.Text.TranslatedTextAlignment Alignment { get { throw null; } }
         public Azure.AI.Translation.Text.SentenceBoundaries SentenceBoundaries { get { throw null; } }
+        public string TargetLanguage { get { throw null; } }
         public string Text { get { throw null; } }
-        public string To { get { throw null; } }
         public Azure.AI.Translation.Text.TransliteratedText Transliteration { get { throw null; } }
         Azure.AI.Translation.Text.TranslationText System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationText>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationText>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -375,7 +375,7 @@ namespace Azure.AI.Translation.Text
     public partial class TransliterableScript : Azure.AI.Translation.Text.LanguageScript, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TransliterableScript>
     {
         internal TransliterableScript() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.LanguageScript> ToScripts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.LanguageScript> TargetLanguageScripts { get { throw null; } }
         Azure.AI.Translation.Text.TransliterableScript System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Text.TransliterableScript System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TransliterableScript>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -6,14 +6,14 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Translate text from known source language to target language.
 
-```C# Snippet:GetTextTranslationBySource
+```C# Snippet:GetTextTranslationBySourceAsync
 try
 {
     string from = "en";
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText, sourceLanguage: from);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText, sourceLanguage: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -34,13 +34,13 @@ You can ommit source languge of the input text. In this case, API will try to au
 > Note that you must provide the source language rather than autodetection when using the dynamic dictionary feature.
 > Note you can use `suggestedFrom` paramter that specifies a fallback language if the language of the input text can't be identified. Language autodetection is applied when the from parameter is omitted. If detection fails, the suggestedFrom language will be assumed.
 
-```C# Snippet:GetTextTranslationAutoDetect
+```C# Snippet:GetTextTranslationAutoDetectAsync
 try
 {
     string targetLanguage = "cs";
     string inputText = "This is a test.";
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguage, inputText);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguage, inputText).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -58,7 +58,7 @@ catch (RequestFailedException exception)
 
 You can combine both Translation and Transliteration in one Translate call. Your source Text can be in non-standard Script of a language as well as you can ask for non-standard Script of a target language.
 
-```C# Snippet:GetTranslationTextTransliterated
+```C# Snippet:GetTranslationTextTransliteratedAsync
 try
 {
     string fromScript = "Latn";
@@ -70,7 +70,7 @@ try
         "hudha akhtabar."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -87,7 +87,7 @@ catch (RequestFailedException exception)
 
 A convenience overload of Translate is provided using a single TextTranslationTranslateOptions parameter.  This sample demonstrates Translation and Transliteration in a single call using the options parameter.
 
-```C# Snippet:GetTranslationTextTransliteratedOptions
+```C# Snippet:GetTranslationTextTransliteratedOptionsAsync
 try
 {
     TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
@@ -99,7 +99,7 @@ try
         ToScript = "Latn"
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(options).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -118,7 +118,7 @@ catch (RequestFailedException exception)
 
 You can translate multiple text elements. Each input element can be in different language (source language parameter needs to be omitted and language auto-detection is used). Refer to [Request limits for Translator](https://learn.microsoft.com/azure/cognitive-services/translator/request-limits) for current limits.
 
-```C# Snippet:GetMultipleTextTranslationsOptions
+```C# Snippet:GetMultipleTextTranslationsOptionsAsync
 try
 {
     TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
@@ -131,7 +131,7 @@ try
         }
     );
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(options).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)
@@ -151,7 +151,7 @@ catch (RequestFailedException exception)
 
 You can provide multiple target languages which results in each input element being translated to all target languages.
 
-```C# Snippet:GetTextTranslationMatrix
+```C# Snippet:GetTextTranslationMatrixAsync
 try
 {
     IEnumerable<string> tarGetSupportedLanguages = new[] { "cs", "es", "de" };
@@ -160,7 +160,7 @@ try
         "This is a test."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
     foreach (TranslatedTextItem translation in translations)
@@ -181,7 +181,7 @@ catch (RequestFailedException exception)
 
 You can select whether the translated text is plain text or HTML text. Any HTML needs to be a well-formed, complete element. Possible values are: plain (default) or html.
 
-```C# Snippet:GetTextTranslationFormat
+```C# Snippet:GetTextTranslationFormatAsync
 try
 {
     IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
@@ -190,7 +190,7 @@ try
         "<html><body>This <b>is</b> a test.</body></html>"
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -208,7 +208,7 @@ catch (RequestFailedException exception)
 
 It's sometimes useful to exclude specific content from translation. You can use the attribute class=notranslate to specify content that should remain in its original language. In the following example, the content inside the first div element won't be translated, while the content in the second div element will be translated.
 
-```C# Snippet:GetTextTranslationFilter
+```C# Snippet:GetTextTranslationFilterAsync
 try
 {
     string from = "en";
@@ -218,7 +218,7 @@ try
         "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -238,7 +238,7 @@ If you already know the translation you want to apply to a word or a phrase, you
 
 > Note You must include the From parameter in your API translation request instead of using the autodetect feature.
 
-```C# Snippet:GetTextTranslationMarkup
+```C# Snippet:GetTextTranslationMarkupAsync
 try
 {
     string from = "en";
@@ -248,7 +248,7 @@ try
         "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
 };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: from);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, sourceLanguage: from).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -268,7 +268,7 @@ catch (RequestFailedException exception)
 
 If you want to avoid getting profanity in the translation, regardless of the presence of profanity in the source text, you can use the profanity filtering option. The option allows you to choose whether you want to see profanity deleted, whether you want to mark profanities with appropriate tags (giving you the option to add your own post-processing), or you want no action taken. The accepted values of `ProfanityAction` are `Deleted`, `Marked` and `NoAction` (default).
 
-```C# Snippet:GetTextTranslationProfanity
+```C# Snippet:GetTextTranslationProfanityAsync
 try
 {
     ProfanityAction profanityAction = ProfanityAction.Marked;
@@ -280,7 +280,7 @@ try
         "This is ***."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -298,7 +298,7 @@ catch (RequestFailedException exception)
 
 You can ask translation service to include alignment projection from source text to translated text.
 
-```C# Snippet:GetTextTranslationAlignment
+```C# Snippet:GetTextTranslationAlignmentAsync
 try
 {
     bool includeAlignment = true;
@@ -309,7 +309,7 @@ try
         "The answer lies in machine translation."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, includeAlignment: includeAlignment);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -328,7 +328,7 @@ catch (RequestFailedException exception)
 
 You can ask translator service to include sentence boundaries for the input text and the translated text.
 
-```C# Snippet:GetTextTranslationSentences
+```C# Snippet:GetTextTranslationSentencesAsync
 try
 {
     bool includeSentenceLength = true;
@@ -339,7 +339,7 @@ try
         "The answer lies in machine translation. This is a test."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, includeSentenceLength: includeSentenceLength);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -363,7 +363,7 @@ It is possible to set `allowFalback` paramter. It specifies that the service is 
 
 `allowFallback=false` specifies that the translation should only use systems trained for the category specified by the request. If a translation for language X to language Y requires chaining through a pivot language E, then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category. If no system is found with the specific category, the request will return a 400 status code. `allowFallback=true` specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
 
-```C# Snippet:GetTextTranslationFallback
+```C# Snippet:GetTextTranslationFallbackAsync
 try
 {
     string category = "<<Category ID>>";
@@ -373,7 +373,7 @@ try
         "This is a test."
     };
 
-    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, category: category);
+    Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, category: category).ConfigureAwait(false);
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
