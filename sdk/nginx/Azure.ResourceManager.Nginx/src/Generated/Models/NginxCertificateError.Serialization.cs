@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxCertificateErrorResponseBody : IUtf8JsonSerializable, IJsonModel<NginxCertificateErrorResponseBody>
+    public partial class NginxCertificateError : IUtf8JsonSerializable, IJsonModel<NginxCertificateError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxCertificateErrorResponseBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxCertificateError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NginxCertificateErrorResponseBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxCertificateError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateErrorResponseBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxCertificateErrorResponseBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteEndObject();
         }
 
-        NginxCertificateErrorResponseBody IJsonModel<NginxCertificateErrorResponseBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NginxCertificateError IJsonModel<NginxCertificateError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateErrorResponseBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxCertificateErrorResponseBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNginxCertificateErrorResponseBody(document.RootElement, options);
+            return DeserializeNginxCertificateError(document.RootElement, options);
         }
 
-        internal static NginxCertificateErrorResponseBody DeserializeNginxCertificateErrorResponseBody(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NginxCertificateError DeserializeNginxCertificateError(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxCertificateErrorResponseBody(code, message, serializedAdditionalRawData);
+            return new NginxCertificateError(code, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NginxCertificateErrorResponseBody>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NginxCertificateError>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateErrorResponseBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxCertificateErrorResponseBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateError)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NginxCertificateErrorResponseBody IPersistableModel<NginxCertificateErrorResponseBody>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NginxCertificateError IPersistableModel<NginxCertificateError>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateErrorResponseBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNginxCertificateErrorResponseBody(document.RootElement, options);
+                        return DeserializeNginxCertificateError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxCertificateErrorResponseBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateError)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NginxCertificateErrorResponseBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxCertificateError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

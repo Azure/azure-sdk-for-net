@@ -27,10 +27,17 @@ rename-mapping:
   NginxNetworkInterfaceConfiguration.subnetId: -|arm-id
   NginxPrivateIPAddress.privateIPAddress: -|ip-address
   NginxPrivateIPAddress.subnetId: -|arm-id
+  AnalysisCreate : NginxAnalysisContent
+  AnalysisCreateConfig: NginxAnalysisConfig
+  NginxCertificateErrorResponseBody: NginxCertificateError
 
 prepend-rp-prefix:
   - ProvisioningState
   - ResourceSku
+  - AnalysisDiagnostic
+  - AnalysisResult
+  - ScaleProfile
+  - ScaleProfileCapacity
 
 format-by-name-rules:
   'tenantId': 'uuid'

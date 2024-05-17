@@ -366,15 +366,15 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The NGINX configuration to analyze. </param>
+        /// <param name="content"> The NGINX configuration to analyze. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalysisResult>> AnalysisAsync(AnalysisCreate body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NginxAnalysisResult>> AnalysisAsync(NginxAnalysisContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Analysis");
             scope.Start();
             try
             {
-                var response = await _nginxConfigurationConfigurationsRestClient.AnalysisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _nginxConfigurationConfigurationsRestClient.AnalysisAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -405,15 +405,15 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The NGINX configuration to analyze. </param>
+        /// <param name="content"> The NGINX configuration to analyze. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalysisResult> Analysis(AnalysisCreate body = null, CancellationToken cancellationToken = default)
+        public virtual Response<NginxAnalysisResult> Analysis(NginxAnalysisContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _nginxConfigurationConfigurationsClientDiagnostics.CreateScope("NginxConfigurationResource.Analysis");
             scope.Start();
             try
             {
-                var response = _nginxConfigurationConfigurationsRestClient.Analysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                var response = _nginxConfigurationConfigurationsRestClient.Analysis(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
         internal AnalysisResultData()
         {
-            Errors = new ChangeTrackingList<AnalysisDiagnostic>();
+            Errors = new ChangeTrackingList<NginxAnalysisDiagnostic>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
         /// <param name="errors"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResultData(IReadOnlyList<AnalysisDiagnostic> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalysisResultData(IReadOnlyList<NginxAnalysisDiagnostic> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the errors. </summary>
-        public IReadOnlyList<AnalysisDiagnostic> Errors { get; }
+        public IReadOnlyList<NginxAnalysisDiagnostic> Errors { get; }
     }
 }

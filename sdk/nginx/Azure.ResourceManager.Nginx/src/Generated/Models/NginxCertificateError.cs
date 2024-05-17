@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The autoscale profile. </summary>
-    public partial class ScaleProfile
+    /// <summary> The NginxCertificateError. </summary>
+    public partial class NginxCertificateError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +45,25 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScaleProfile"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="capacity"> The capacity parameters of the profile. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="capacity"/> is null. </exception>
-        public ScaleProfile(string name, ScaleProfileCapacity capacity)
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateError"/>. </summary>
+        public NginxCertificateError()
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(capacity, nameof(capacity));
-
-            Name = name;
-            Capacity = capacity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleProfile"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="capacity"> The capacity parameters of the profile. </param>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateError"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleProfile(string name, ScaleProfileCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxCertificateError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Capacity = capacity;
+            Code = code;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleProfile"/> for deserialization. </summary>
-        internal ScaleProfile()
-        {
-        }
-
-        /// <summary> Gets or sets the name. </summary>
-        public string Name { get; set; }
-        /// <summary> The capacity parameters of the profile. </summary>
-        public ScaleProfileCapacity Capacity { get; set; }
+        /// <summary> Gets or sets the code. </summary>
+        public string Code { get; set; }
+        /// <summary> Gets or sets the message. </summary>
+        public string Message { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxCertificateErrorResponseBody. </summary>
-    public partial class NginxCertificateErrorResponseBody
+    /// <summary> The autoscale profile. </summary>
+    public partial class NginxScaleProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,38 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxCertificateErrorResponseBody"/>. </summary>
-        public NginxCertificateErrorResponseBody()
+        /// <summary> Initializes a new instance of <see cref="NginxScaleProfile"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="capacity"> The capacity parameters of the profile. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="capacity"/> is null. </exception>
+        public NginxScaleProfile(string name, NginxScaleProfileCapacity capacity)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(capacity, nameof(capacity));
+
+            Name = name;
+            Capacity = capacity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxCertificateErrorResponseBody"/>. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
+        /// <summary> Initializes a new instance of <see cref="NginxScaleProfile"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="capacity"> The capacity parameters of the profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxCertificateErrorResponseBody(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxScaleProfile(string name, NginxScaleProfileCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Code = code;
-            Message = message;
+            Name = name;
+            Capacity = capacity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the code. </summary>
-        public string Code { get; set; }
-        /// <summary> Gets or sets the message. </summary>
-        public string Message { get; set; }
+        /// <summary> Initializes a new instance of <see cref="NginxScaleProfile"/> for deserialization. </summary>
+        internal NginxScaleProfile()
+        {
+        }
+
+        /// <summary> Gets or sets the name. </summary>
+        public string Name { get; set; }
+        /// <summary> The capacity parameters of the profile. </summary>
+        public NginxScaleProfileCapacity Capacity { get; set; }
     }
 }

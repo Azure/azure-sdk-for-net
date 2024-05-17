@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             int? capacity = default;
-            IList<ScaleProfile> profiles = default;
+            IList<NginxScaleProfile> profiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Nginx.Models
                             {
                                 continue;
                             }
-                            List<ScaleProfile> array = new List<ScaleProfile>();
+                            List<NginxScaleProfile> array = new List<NginxScaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScaleProfile.DeserializeScaleProfile(item, options));
+                                array.Add(NginxScaleProfile.DeserializeNginxScaleProfile(item, options));
                             }
                             profiles = array;
                             continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxDeploymentScalingProperties(capacity, profiles ?? new ChangeTrackingList<ScaleProfile>(), serializedAdditionalRawData);
+            return new NginxDeploymentScalingProperties(capacity, profiles ?? new ChangeTrackingList<NginxScaleProfile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentScalingProperties>.Write(ModelReaderWriterOptions options)

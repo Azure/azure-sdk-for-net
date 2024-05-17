@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Nginx.Models
             string sha1Thumbprint = default;
             string keyVaultSecretVersion = default;
             DateTimeOffset? keyVaultSecretCreated = default;
-            NginxCertificateErrorResponseBody certificateError = default;
+            NginxCertificateError certificateError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    certificateError = NginxCertificateErrorResponseBody.DeserializeNginxCertificateErrorResponseBody(property.Value, options);
+                    certificateError = NginxCertificateError.DeserializeNginxCertificateError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

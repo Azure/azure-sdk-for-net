@@ -150,7 +150,7 @@ VirtualPath = "/etc/nginx/nginx.conf",
             NginxConfigurationResource nginxConfiguration = client.GetNginxConfigurationResource(nginxConfigurationResourceId);
 
             // invoke the operation
-            AnalysisCreate body = new AnalysisCreate(new AnalysisCreateConfig()
+            NginxAnalysisContent content = new NginxAnalysisContent(new NginxAnalysisConfig()
             {
                 RootFile = "/etc/nginx/nginx.conf",
                 Files =
@@ -166,7 +166,7 @@ VirtualPath = "/etc/nginx/nginx.conf",
                     Data = null,
                 },
             });
-            AnalysisResult result = await nginxConfiguration.AnalysisAsync(body: body);
+            NginxAnalysisResult result = await nginxConfiguration.AnalysisAsync(content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

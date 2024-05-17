@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             NginxDeploymentPatch deploymentPatch = new NginxDeploymentPatch();
-            var nginxScaleProfiles = new List<ScaleProfile>();
-            var nginxScaleProfileCapacity = new ScaleProfileCapacity(20, 30);
-            var nginxScaleProfile = new ScaleProfile("default", nginxScaleProfileCapacity);
+            var nginxScaleProfiles = new List<NginxScaleProfile>();
+            var nginxScaleProfileCapacity = new NginxScaleProfileCapacity(20, 30);
+            var nginxScaleProfile = new NginxScaleProfile("default", nginxScaleProfileCapacity);
             nginxScaleProfiles.Add(nginxScaleProfile);
             var testScalingProp = new NginxDeploymentScalingProperties(null, nginxScaleProfiles, null);
             deploymentPatch.Properties = new NginxDeploymentUpdateProperties();

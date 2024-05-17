@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The capacity parameters of the profile. </summary>
-    public partial class ScaleProfileCapacity
+    public partial class NginxScaleProfileCapacity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,28 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScaleProfileCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxScaleProfileCapacity"/>. </summary>
         /// <param name="min"> The minimum number of NCUs the deployment can be autoscaled to. </param>
         /// <param name="max"> The maximum number of NCUs the deployment can be autoscaled to. </param>
-        public ScaleProfileCapacity(int min, int max)
+        public NginxScaleProfileCapacity(int min, int max)
         {
             Min = min;
             Max = max;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleProfileCapacity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxScaleProfileCapacity"/>. </summary>
         /// <param name="min"> The minimum number of NCUs the deployment can be autoscaled to. </param>
         /// <param name="max"> The maximum number of NCUs the deployment can be autoscaled to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleProfileCapacity(int min, int max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxScaleProfileCapacity(int min, int max, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Min = min;
             Max = max;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScaleProfileCapacity"/> for deserialization. </summary>
-        internal ScaleProfileCapacity()
+        /// <summary> Initializes a new instance of <see cref="NginxScaleProfileCapacity"/> for deserialization. </summary>
+        internal NginxScaleProfileCapacity()
         {
         }
 

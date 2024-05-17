@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The response body for an analysis request. Contains the status of the analysis and any errors. </summary>
-    public partial class AnalysisResult
+    public partial class NginxAnalysisResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxAnalysisResult"/>. </summary>
         /// <param name="status"> The status of the analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
-        internal AnalysisResult(string status)
+        internal NginxAnalysisResult(string status)
         {
             Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxAnalysisResult"/>. </summary>
         /// <param name="status"> The status of the analysis. </param>
         /// <param name="data"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResult(string status, AnalysisResultData data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxAnalysisResult(string status, AnalysisResultData data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Data = data;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResult"/> for deserialization. </summary>
-        internal AnalysisResult()
+        /// <summary> Initializes a new instance of <see cref="NginxAnalysisResult"/> for deserialization. </summary>
+        internal NginxAnalysisResult()
         {
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Gets the data. </summary>
         internal AnalysisResultData Data { get; }
         /// <summary> Gets the data errors. </summary>
-        public IReadOnlyList<AnalysisDiagnostic> DataErrors
+        public IReadOnlyList<NginxAnalysisDiagnostic> DataErrors
         {
             get => Data?.Errors;
         }

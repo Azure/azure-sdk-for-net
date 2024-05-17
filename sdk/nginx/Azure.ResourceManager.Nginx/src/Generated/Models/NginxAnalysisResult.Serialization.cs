@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class AnalysisResult : IUtf8JsonSerializable, IJsonModel<AnalysisResult>
+    public partial class NginxAnalysisResult : IUtf8JsonSerializable, IJsonModel<NginxAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxAnalysisResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteEndObject();
         }
 
-        AnalysisResult IJsonModel<AnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NginxAnalysisResult IJsonModel<NginxAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxAnalysisResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalysisResult(document.RootElement, options);
+            return DeserializeNginxAnalysisResult(document.RootElement, options);
         }
 
-        internal static AnalysisResult DeserializeAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NginxAnalysisResult DeserializeNginxAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalysisResult(status, data, serializedAdditionalRawData);
+            return new NginxAnalysisResult(status, data, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AnalysisResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NginxAnalysisResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxAnalysisResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AnalysisResult IPersistableModel<AnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NginxAnalysisResult IPersistableModel<NginxAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAnalysisResult(document.RootElement, options);
+                        return DeserializeNginxAnalysisResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxAnalysisResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

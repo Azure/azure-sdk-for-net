@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="keyVaultSecretCreated"></param>
         /// <param name="certificateError"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, string sha1Thumbprint, string keyVaultSecretVersion, DateTimeOffset? keyVaultSecretCreated, NginxCertificateErrorResponseBody certificateError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, string sha1Thumbprint, string keyVaultSecretVersion, DateTimeOffset? keyVaultSecretCreated, NginxCertificateError certificateError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             KeyVirtualPath = keyVirtualPath;
@@ -88,6 +88,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Gets the key vault secret created. </summary>
         public DateTimeOffset? KeyVaultSecretCreated { get; }
         /// <summary> Gets or sets the certificate error. </summary>
-        public NginxCertificateErrorResponseBody CertificateError { get; set; }
+        public NginxCertificateError CertificateError { get; set; }
     }
 }

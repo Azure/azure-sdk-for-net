@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="keyVaultSecretCreated"></param>
         /// <param name="certificateError"></param>
         /// <returns> A new <see cref="Models.NginxCertificateProperties"/> instance for mocking. </returns>
-        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null, string sha1Thumbprint = null, string keyVaultSecretVersion = null, DateTimeOffset? keyVaultSecretCreated = null, NginxCertificateErrorResponseBody certificateError = null)
+        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState = null, string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null, string sha1Thumbprint = null, string keyVaultSecretVersion = null, DateTimeOffset? keyVaultSecretCreated = null, NginxCertificateError certificateError = null)
         {
             return new NginxCertificateProperties(
                 provisioningState,
@@ -101,18 +101,18 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxAnalysisResult"/>. </summary>
         /// <param name="status"> The status of the analysis. </param>
         /// <param name="dataErrors"></param>
-        /// <returns> A new <see cref="Models.AnalysisResult"/> instance for mocking. </returns>
-        public static AnalysisResult AnalysisResult(string status = null, IEnumerable<AnalysisDiagnostic> dataErrors = null)
+        /// <returns> A new <see cref="Models.NginxAnalysisResult"/> instance for mocking. </returns>
+        public static NginxAnalysisResult NginxAnalysisResult(string status = null, IEnumerable<NginxAnalysisDiagnostic> dataErrors = null)
         {
-            dataErrors ??= new List<AnalysisDiagnostic>();
+            dataErrors ??= new List<NginxAnalysisDiagnostic>();
 
-            return new AnalysisResult(status, dataErrors != null ? new AnalysisResultData(dataErrors?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new NginxAnalysisResult(status, dataErrors != null ? new AnalysisResultData(dataErrors?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnalysisDiagnostic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxAnalysisDiagnostic"/>. </summary>
         /// <param name="id"> Unique identifier for the error. </param>
         /// <param name="directive"></param>
         /// <param name="description"></param>
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="line"></param>
         /// <param name="message"></param>
         /// <param name="rule"></param>
-        /// <returns> A new <see cref="Models.AnalysisDiagnostic"/> instance for mocking. </returns>
-        public static AnalysisDiagnostic AnalysisDiagnostic(string id = null, string directive = null, string description = null, string file = null, float line = default, string message = null, string rule = null)
+        /// <returns> A new <see cref="Models.NginxAnalysisDiagnostic"/> instance for mocking. </returns>
+        public static NginxAnalysisDiagnostic NginxAnalysisDiagnostic(string id = null, string directive = null, string description = null, string file = null, float line = default, string message = null, string rule = null)
         {
-            return new AnalysisDiagnostic(
+            return new NginxAnalysisDiagnostic(
                 id,
                 directive,
                 description,

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class AnalysisDiagnostic : IUtf8JsonSerializable, IJsonModel<AnalysisDiagnostic>
+    public partial class NginxAnalysisDiagnostic : IUtf8JsonSerializable, IJsonModel<NginxAnalysisDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDiagnostic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxAnalysisDiagnostic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AnalysisDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxAnalysisDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisDiagnostic)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxAnalysisDiagnostic)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteEndObject();
         }
 
-        AnalysisDiagnostic IJsonModel<AnalysisDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NginxAnalysisDiagnostic IJsonModel<NginxAnalysisDiagnostic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisDiagnostic)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxAnalysisDiagnostic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalysisDiagnostic(document.RootElement, options);
+            return DeserializeNginxAnalysisDiagnostic(document.RootElement, options);
         }
 
-        internal static AnalysisDiagnostic DeserializeAnalysisDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NginxAnalysisDiagnostic DeserializeNginxAnalysisDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalysisDiagnostic(
+            return new NginxAnalysisDiagnostic(
                 id,
                 directive,
                 description,
@@ -144,35 +144,35 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AnalysisDiagnostic>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NginxAnalysisDiagnostic>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisDiagnostic)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxAnalysisDiagnostic)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AnalysisDiagnostic IPersistableModel<AnalysisDiagnostic>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NginxAnalysisDiagnostic IPersistableModel<NginxAnalysisDiagnostic>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxAnalysisDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAnalysisDiagnostic(document.RootElement, options);
+                        return DeserializeNginxAnalysisDiagnostic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisDiagnostic)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxAnalysisDiagnostic)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AnalysisDiagnostic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxAnalysisDiagnostic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

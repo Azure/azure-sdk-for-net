@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class ScaleProfileCapacity : IUtf8JsonSerializable, IJsonModel<ScaleProfileCapacity>
+    public partial class NginxScaleProfileCapacity : IUtf8JsonSerializable, IJsonModel<NginxScaleProfileCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScaleProfileCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxScaleProfileCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScaleProfileCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxScaleProfileCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleProfileCapacity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxScaleProfileCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteEndObject();
         }
 
-        ScaleProfileCapacity IJsonModel<ScaleProfileCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NginxScaleProfileCapacity IJsonModel<NginxScaleProfileCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScaleProfileCapacity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxScaleProfileCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScaleProfileCapacity(document.RootElement, options);
+            return DeserializeNginxScaleProfileCapacity(document.RootElement, options);
         }
 
-        internal static ScaleProfileCapacity DeserializeScaleProfileCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NginxScaleProfileCapacity DeserializeNginxScaleProfileCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScaleProfileCapacity(min, max, serializedAdditionalRawData);
+            return new NginxScaleProfileCapacity(min, max, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ScaleProfileCapacity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NginxScaleProfileCapacity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScaleProfileCapacity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxScaleProfileCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScaleProfileCapacity IPersistableModel<ScaleProfileCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NginxScaleProfileCapacity IPersistableModel<NginxScaleProfileCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxScaleProfileCapacity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeScaleProfileCapacity(document.RootElement, options);
+                        return DeserializeNginxScaleProfileCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScaleProfileCapacity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxScaleProfileCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScaleProfileCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxScaleProfileCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

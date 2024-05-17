@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The AnalysisCreateConfig. </summary>
-    public partial class AnalysisCreateConfig
+    /// <summary> The request body for creating an analysis for an NGINX configuration. </summary>
+    public partial class NginxAnalysisContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,31 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisCreateConfig"/>. </summary>
-        public AnalysisCreateConfig()
+        /// <summary> Initializes a new instance of <see cref="NginxAnalysisContent"/>. </summary>
+        /// <param name="config"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="config"/> is null. </exception>
+        public NginxAnalysisContent(NginxAnalysisConfig config)
         {
-            Files = new ChangeTrackingList<NginxConfigurationFile>();
-            ProtectedFiles = new ChangeTrackingList<NginxConfigurationFile>();
+            Argument.AssertNotNull(config, nameof(config));
+
+            Config = config;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisCreateConfig"/>. </summary>
-        /// <param name="rootFile"> The root file of the NGINX config file(s). It must match one of the files' filepath. </param>
-        /// <param name="files"></param>
-        /// <param name="protectedFiles"></param>
-        /// <param name="package"></param>
+        /// <summary> Initializes a new instance of <see cref="NginxAnalysisContent"/>. </summary>
+        /// <param name="config"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisCreateConfig(string rootFile, IList<NginxConfigurationFile> files, IList<NginxConfigurationFile> protectedFiles, NginxConfigurationPackage package, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxAnalysisContent(NginxAnalysisConfig config, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RootFile = rootFile;
-            Files = files;
-            ProtectedFiles = protectedFiles;
-            Package = package;
+            Config = config;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The root file of the NGINX config file(s). It must match one of the files' filepath. </summary>
-        public string RootFile { get; set; }
-        /// <summary> Gets the files. </summary>
-        public IList<NginxConfigurationFile> Files { get; }
-        /// <summary> Gets the protected files. </summary>
-        public IList<NginxConfigurationFile> ProtectedFiles { get; }
-        /// <summary> Gets or sets the package. </summary>
-        public NginxConfigurationPackage Package { get; set; }
+        /// <summary> Initializes a new instance of <see cref="NginxAnalysisContent"/> for deserialization. </summary>
+        internal NginxAnalysisContent()
+        {
+        }
+
+        /// <summary> Gets the config. </summary>
+        public NginxAnalysisConfig Config { get; }
     }
 }

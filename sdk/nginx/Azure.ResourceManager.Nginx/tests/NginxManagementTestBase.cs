@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Nginx.Tests
                 NetworkInterfaceSubnetId = subnetId
             };
 
-            NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, new List<ScaleProfile>(), null);
+            NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, new List<NginxScaleProfile>(), null);
 
             AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile();
             autoUpgradeProfile.UpgradeChannel = "preview";
