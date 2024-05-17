@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -307,36 +306,6 @@ namespace Azure.ResourceManager.Purview.Models
         public static PurviewQuotaName PurviewQuotaName(string localizedValue = null, string value = null)
         {
             return new PurviewQuotaName(localizedValue, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Purview.PurviewAccountData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> Gets or sets the Sku. </param>
-        /// <param name="cloudConnectorsAwsExternalId">
-        /// Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.
-        /// </param>
-        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
-        /// <param name="createdBy"> Gets the creator of the entity. </param>
-        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
-        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
-        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
-        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
-        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
-        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
-        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
-        /// <param name="identity"> Identity Info on the tracked resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Purview.PurviewAccountData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, string cloudConnectorsAwsExternalId, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity)
-        {
-            return PurviewAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, accountStatus: default, cloudConnectorsAwsExternalId: cloudConnectorsAwsExternalId, createdOn: createdOn, createdBy: createdBy, createdByObjectId: createdByObjectId, endpoints: endpoints, friendlyName: friendlyName, ingestionStorage: default, managedEventHubState: default, managedResourceGroupName: managedResourceGroupName, managedResources: managedResources, managedResourcesPublicNetworkAccess: default, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, publicNetworkAccess: publicNetworkAccess, identity: identity);
         }
     }
 }
