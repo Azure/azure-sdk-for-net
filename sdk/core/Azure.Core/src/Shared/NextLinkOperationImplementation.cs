@@ -172,10 +172,7 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
-            if (operationId is not null)
-            {
-                OperationId = operationId;
-            }
+            OperationId = operationId ?? ParseOperationId(startRequestUri, nextRequestUri);
         }
 
         private string ParseOperationId(Uri startRequestUri, string nextRequestUri)
