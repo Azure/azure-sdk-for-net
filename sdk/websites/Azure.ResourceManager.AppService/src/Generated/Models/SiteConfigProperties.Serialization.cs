@@ -297,15 +297,8 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (options.Format != "W" && Optional.IsDefined(MachineKey))
             {
-                if (MachineKey != null)
-                {
-                    writer.WritePropertyName("machineKey"u8);
-                    writer.WriteObjectValue(MachineKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("machineKey");
-                }
+                writer.WritePropertyName("machineKey"u8);
+                writer.WriteObjectValue(MachineKey, options);
             }
             if (Optional.IsCollectionDefined(HandlerMappings))
             {
@@ -475,27 +468,13 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(Experiments))
             {
-                if (Experiments != null)
-                {
-                    writer.WritePropertyName("experiments"u8);
-                    writer.WriteObjectValue(Experiments, options);
-                }
-                else
-                {
-                    writer.WriteNull("experiments");
-                }
+                writer.WritePropertyName("experiments"u8);
+                writer.WriteObjectValue(Experiments, options);
             }
             if (Optional.IsDefined(Limits))
             {
-                if (Limits != null)
-                {
-                    writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits, options);
-                }
-                else
-                {
-                    writer.WriteNull("limits");
-                }
+                writer.WritePropertyName("limits"u8);
+                writer.WriteObjectValue(Limits, options);
             }
             if (Optional.IsDefined(IsAutoHealEnabled))
             {
@@ -511,15 +490,8 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(AutoHealRules))
             {
-                if (AutoHealRules != null)
-                {
-                    writer.WritePropertyName("autoHealRules"u8);
-                    writer.WriteObjectValue(AutoHealRules, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoHealRules");
-                }
+                writer.WritePropertyName("autoHealRules"u8);
+                writer.WriteObjectValue(AutoHealRules, options);
             }
             if (Optional.IsDefined(TracingOptions))
             {
@@ -571,51 +543,23 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(Cors))
             {
-                if (Cors != null)
-                {
-                    writer.WritePropertyName("cors"u8);
-                    writer.WriteObjectValue(Cors, options);
-                }
-                else
-                {
-                    writer.WriteNull("cors");
-                }
+                writer.WritePropertyName("cors"u8);
+                writer.WriteObjectValue(Cors, options);
             }
             if (Optional.IsDefined(Push))
             {
-                if (Push != null)
-                {
-                    writer.WritePropertyName("push"u8);
-                    writer.WriteObjectValue(Push, options);
-                }
-                else
-                {
-                    writer.WriteNull("push");
-                }
+                writer.WritePropertyName("push"u8);
+                writer.WriteObjectValue(Push, options);
             }
             if (Optional.IsDefined(ApiDefinition))
             {
-                if (ApiDefinition != null)
-                {
-                    writer.WritePropertyName("apiDefinition"u8);
-                    writer.WriteObjectValue(ApiDefinition, options);
-                }
-                else
-                {
-                    writer.WriteNull("apiDefinition");
-                }
+                writer.WritePropertyName("apiDefinition"u8);
+                writer.WriteObjectValue(ApiDefinition, options);
             }
             if (Optional.IsDefined(ApiManagementConfig))
             {
-                if (ApiManagementConfig != null)
-                {
-                    writer.WritePropertyName("apiManagementConfig"u8);
-                    writer.WriteObjectValue(ApiManagementConfig, options);
-                }
-                else
-                {
-                    writer.WriteNull("apiManagementConfig");
-                }
+                writer.WritePropertyName("apiManagementConfig"u8);
+                writer.WriteObjectValue(ApiManagementConfig, options);
             }
             if (Optional.IsDefined(AutoSwapSlotName))
             {
@@ -1211,7 +1155,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        machineKey = null;
                         continue;
                     }
                     machineKey = SiteMachineKey.DeserializeSiteMachineKey(property.Value, options);
@@ -1361,7 +1304,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        experiments = null;
                         continue;
                     }
                     experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property.Value, options);
@@ -1371,7 +1313,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        limits = null;
                         continue;
                     }
                     limits = SiteLimits.DeserializeSiteLimits(property.Value, options);
@@ -1391,7 +1332,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        autoHealRules = null;
                         continue;
                     }
                     autoHealRules = AutoHealRules.DeserializeAutoHealRules(property.Value, options);
@@ -1441,7 +1381,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cors = null;
                         continue;
                     }
                     cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property.Value, options);
@@ -1451,7 +1390,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        push = null;
                         continue;
                     }
                     push = WebAppPushSettings.DeserializeWebAppPushSettings(property.Value, options);
@@ -1461,7 +1399,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        apiDefinition = null;
                         continue;
                     }
                     apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property.Value, options);
@@ -1471,7 +1408,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        apiManagementConfig = null;
                         continue;
                     }
                     apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property.Value, options);

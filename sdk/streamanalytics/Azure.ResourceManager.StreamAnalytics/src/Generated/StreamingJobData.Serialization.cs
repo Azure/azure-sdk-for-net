@@ -186,15 +186,8 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(JobStorageAccount))
             {
-                if (JobStorageAccount != null)
-                {
-                    writer.WritePropertyName("jobStorageAccount"u8);
-                    writer.WriteObjectValue(JobStorageAccount, options);
-                }
-                else
-                {
-                    writer.WriteNull("jobStorageAccount");
-                }
+                writer.WritePropertyName("jobStorageAccount"u8);
+                writer.WriteObjectValue(JobStorageAccount, options);
             }
             if (Optional.IsDefined(ContentStoragePolicy))
             {
@@ -208,15 +201,8 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
             if (Optional.IsDefined(Cluster))
             {
-                if (Cluster != null)
-                {
-                    writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster, options);
-                }
-                else
-                {
-                    writer.WriteNull("cluster");
-                }
+                writer.WritePropertyName("cluster"u8);
+                writer.WriteObjectValue(Cluster, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -545,7 +531,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                jobStorageAccount = null;
                                 continue;
                             }
                             jobStorageAccount = StreamingJobStorageAccount.DeserializeStreamingJobStorageAccount(property0.Value, options);
@@ -573,7 +558,6 @@ namespace Azure.ResourceManager.StreamAnalytics
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                cluster = null;
                                 continue;
                             }
                             cluster = ClusterInfo.DeserializeClusterInfo(property0.Value, options);

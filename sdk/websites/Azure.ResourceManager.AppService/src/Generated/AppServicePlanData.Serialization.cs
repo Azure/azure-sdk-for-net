@@ -98,15 +98,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                if (HostingEnvironmentProfile != null)
-                {
-                    writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
-                }
-                else
-                {
-                    writer.WriteNull("hostingEnvironmentProfile");
-                }
+                writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
             {
@@ -204,15 +197,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
-                if (KubeEnvironmentProfile != null)
-                {
-                    writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                    writer.WriteObjectValue(KubeEnvironmentProfile, options);
-                }
-                else
-                {
-                    writer.WriteNull("kubeEnvironmentProfile");
-                }
+                writer.WritePropertyName("kubeEnvironmentProfile"u8);
+                writer.WriteObjectValue(KubeEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -391,7 +377,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                hostingEnvironmentProfile = null;
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
@@ -539,7 +524,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                kubeEnvironmentProfile = null;
                                 continue;
                             }
                             kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);

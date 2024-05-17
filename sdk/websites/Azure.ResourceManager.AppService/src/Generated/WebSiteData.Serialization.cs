@@ -195,15 +195,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
-                if (HostingEnvironmentProfile != null)
-                {
-                    writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
-                }
-                else
-                {
-                    writer.WriteNull("hostingEnvironmentProfile");
-                }
+                writer.WritePropertyName("hostingEnvironmentProfile"u8);
+                writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsClientAffinityEnabled))
             {
@@ -281,15 +274,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(CloningInfo))
             {
-                if (CloningInfo != null)
-                {
-                    writer.WritePropertyName("cloningInfo"u8);
-                    writer.WriteObjectValue(CloningInfo, options);
-                }
-                else
-                {
-                    writer.WriteNull("cloningInfo");
-                }
+                writer.WritePropertyName("cloningInfo"u8);
+                writer.WriteObjectValue(CloningInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -308,15 +294,8 @@ namespace Azure.ResourceManager.AppService
             }
             if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
             {
-                if (SlotSwapStatus != null)
-                {
-                    writer.WritePropertyName("slotSwapStatus"u8);
-                    writer.WriteObjectValue(SlotSwapStatus, options);
-                }
-                else
-                {
-                    writer.WriteNull("slotSwapStatus");
-                }
+                writer.WritePropertyName("slotSwapStatus"u8);
+                writer.WriteObjectValue(SlotSwapStatus, options);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
@@ -689,7 +668,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                hostingEnvironmentProfile = null;
                                 continue;
                             }
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
@@ -793,7 +771,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                cloningInfo = null;
                                 continue;
                             }
                             cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value, options);
@@ -822,7 +799,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                slotSwapStatus = null;
                                 continue;
                             }
                             slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value, options);
