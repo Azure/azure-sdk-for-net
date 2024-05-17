@@ -1,15 +1,30 @@
 # Release History
 
-## 5.12.0-beta.1 (Unreleased)
+## 5.12.0-beta.1 (2015-05-17)
 
 ### Features Added
 
+- Preview support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- ### Major
 
-### Other Changes
+  The type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API.  The default value for any offset-related data has been changed from `long.MinValue` to `null`.
 
+  Impacted properties:
+    - EventData.Offset
+    - CheckpointPosition.Offset
+    - LastEnqueuedEventProperties.Offset
+    - PartitionProperties.LastEnqueuedOffset
+    
+  Impacted methods:
+    - CheckpointPosition constructor
+    - EventPosition.FromOffset
+    - EventHubsModelFactory.EventData
+    - BlobCheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
+    - EventProcessorClient.UpdateCheckpointAsync _(deprecated overload)_
+    
 ## 5.11.3 (2024-05-15)
 
 ### Bugs Fixed
