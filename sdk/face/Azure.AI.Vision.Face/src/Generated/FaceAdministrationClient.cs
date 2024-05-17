@@ -633,12 +633,12 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Add a face to a specified Face List, up to 1,000 faces. </summary>
         /// <param name="faceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List Face" or "Delete Face List" is called.
@@ -655,12 +655,12 @@ namespace Azure.AI.Vision.Face
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddFaceListFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddFaceListFaceFromUrlAsync(string faceListId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddFaceResult>> AddFaceListFaceFromUrlAsync(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceListFaceFromUrlRequest addFaceListFaceFromUrlRequest = new AddFaceListFaceFromUrlRequest(url, null);
+            AddFaceListFaceFromUrlRequest addFaceListFaceFromUrlRequest = new AddFaceListFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddFaceListFaceFromUrlAsync(faceListId, addFaceListFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -668,12 +668,12 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Add a face to a specified Face List, up to 1,000 faces. </summary>
         /// <param name="faceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List Face" or "Delete Face List" is called.
@@ -690,12 +690,12 @@ namespace Azure.AI.Vision.Face
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddFaceListFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddFaceListFaceFromUrl(string faceListId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual Response<AddFaceResult> AddFaceListFaceFromUrl(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceListFaceFromUrlRequest addFaceListFaceFromUrlRequest = new AddFaceListFaceFromUrlRequest(url, null);
+            AddFaceListFaceFromUrlRequest addFaceListFaceFromUrlRequest = new AddFaceListFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddFaceListFaceFromUrl(faceListId, addFaceListFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -1709,12 +1709,12 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Add a face to a specified Large Face List, up to 1,000,000 faces. </summary>
         /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Face List Face" or "Delete Large Face List" is called.
@@ -1737,12 +1737,12 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * S0-tier subscription quota: 1,000,000 faces per Large Face List.
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargeFaceListFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddLargeFaceListFaceFromUrlAsync(string largeFaceListId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddFaceResult>> AddLargeFaceListFaceFromUrlAsync(string largeFaceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddLargeFaceListFaceFromUrlRequest addLargeFaceListFaceFromUrlRequest = new AddLargeFaceListFaceFromUrlRequest(url, null);
+            AddLargeFaceListFaceFromUrlRequest addLargeFaceListFaceFromUrlRequest = new AddLargeFaceListFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddLargeFaceListFaceFromUrlAsync(largeFaceListId, addLargeFaceListFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -1750,12 +1750,12 @@ namespace Azure.AI.Vision.Face
 
         /// <summary> Add a face to a specified Large Face List, up to 1,000,000 faces. </summary>
         /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largeFaceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Face List Face" or "Delete Large Face List" is called.
@@ -1778,12 +1778,12 @@ namespace Azure.AI.Vision.Face
         /// &gt;   * S0-tier subscription quota: 1,000,000 faces per Large Face List.
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargeFaceListFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddLargeFaceListFaceFromUrl(string largeFaceListId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual Response<AddFaceResult> AddLargeFaceListFaceFromUrl(string largeFaceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largeFaceListId, nameof(largeFaceListId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddLargeFaceListFaceFromUrlRequest addLargeFaceListFaceFromUrlRequest = new AddLargeFaceListFaceFromUrlRequest(url, null);
+            AddLargeFaceListFaceFromUrlRequest addLargeFaceListFaceFromUrlRequest = new AddLargeFaceListFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddLargeFaceListFaceFromUrl(largeFaceListId, addLargeFaceListFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -3722,12 +3722,12 @@ namespace Azure.AI.Vision.Face
         /// <summary> Add a face to a person into a Person Group for face identification or verification. </summary>
         /// <param name="personGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Person Group Person Face", "Delete Person Group Person" or "Delete Person Group" is called.
@@ -3744,12 +3744,12 @@ namespace Azure.AI.Vision.Face
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonGroupPersonFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddPersonGroupPersonFaceFromUrlAsync(string personGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddFaceResult>> AddPersonGroupPersonFaceFromUrlAsync(string personGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddPersonGroupPersonFaceFromUrlRequest addPersonGroupPersonFaceFromUrlRequest = new AddPersonGroupPersonFaceFromUrlRequest(url, null);
+            AddPersonGroupPersonFaceFromUrlRequest addPersonGroupPersonFaceFromUrlRequest = new AddPersonGroupPersonFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddPersonGroupPersonFaceFromUrlAsync(personGroupId, personId, addPersonGroupPersonFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -3758,12 +3758,12 @@ namespace Azure.AI.Vision.Face
         /// <summary> Add a face to a person into a Person Group for face identification or verification. </summary>
         /// <param name="personGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="personGroupId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="personGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Person Group Person Face", "Delete Person Group Person" or "Delete Person Group" is called.
@@ -3780,12 +3780,12 @@ namespace Azure.AI.Vision.Face
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonGroupPersonFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddPersonGroupPersonFaceFromUrl(string personGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual Response<AddFaceResult> AddPersonGroupPersonFaceFromUrl(string personGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(personGroupId, nameof(personGroupId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddPersonGroupPersonFaceFromUrlRequest addPersonGroupPersonFaceFromUrlRequest = new AddPersonGroupPersonFaceFromUrlRequest(url, null);
+            AddPersonGroupPersonFaceFromUrlRequest addPersonGroupPersonFaceFromUrlRequest = new AddPersonGroupPersonFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddPersonGroupPersonFaceFromUrl(personGroupId, personId, addPersonGroupPersonFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -5564,12 +5564,12 @@ namespace Azure.AI.Vision.Face
         /// <summary> Add a face to a person into a Large Person Group for face identification or verification. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Person Group Person Face", "Delete Large Person Group Person" or "Delete Large Person Group" is called.
@@ -5586,12 +5586,12 @@ namespace Azure.AI.Vision.Face
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargePersonGroupPersonFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddLargePersonGroupPersonFaceFromUrlAsync(string largePersonGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddFaceResult>> AddLargePersonGroupPersonFaceFromUrlAsync(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddLargePersonGroupPersonFaceFromUrlRequest addLargePersonGroupPersonFaceFromUrlRequest = new AddLargePersonGroupPersonFaceFromUrlRequest(url, null);
+            AddLargePersonGroupPersonFaceFromUrlRequest addLargePersonGroupPersonFaceFromUrlRequest = new AddLargePersonGroupPersonFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddLargePersonGroupPersonFaceFromUrlAsync(largePersonGroupId, personId, addLargePersonGroupPersonFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -5600,12 +5600,12 @@ namespace Azure.AI.Vision.Face
         /// <summary> Add a face to a person into a Large Person Group for face identification or verification. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Person Group Person Face", "Delete Large Person Group Person" or "Delete Large Person Group" is called.
@@ -5622,12 +5622,12 @@ namespace Azure.AI.Vision.Face
         ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargePersonGroupPersonFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddLargePersonGroupPersonFaceFromUrl(string largePersonGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual Response<AddFaceResult> AddLargePersonGroupPersonFaceFromUrl(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddLargePersonGroupPersonFaceFromUrlRequest addLargePersonGroupPersonFaceFromUrlRequest = new AddLargePersonGroupPersonFaceFromUrlRequest(url, null);
+            AddLargePersonGroupPersonFaceFromUrlRequest addLargePersonGroupPersonFaceFromUrlRequest = new AddLargePersonGroupPersonFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddLargePersonGroupPersonFaceFromUrl(largePersonGroupId, personId, addLargePersonGroupPersonFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
@@ -7911,12 +7911,12 @@ namespace Azure.AI.Vision.Face
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="personId"> Person ID of the person. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with faces. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until Person Directory "Delete Person Face" or "Delete Person" is called.
         ///
@@ -7935,11 +7935,11 @@ namespace Azure.AI.Vision.Face
         ///   * This is a long running operation. Use Response Header "Operation-Location" to determine when the AddFace operation has successfully propagated for future requests to "Identify". For further information about Operation-Locations see "Get Face Operation Status".
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonFaceFromUrlAsync(WaitUntil,Guid,FaceRecognitionModel,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Operation<PersonDirectoryFace>> AddPersonFaceFromUrlAsync(WaitUntil waitUntil, Guid personId, FaceRecognitionModel recognitionModel, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<PersonDirectoryFace>> AddPersonFaceFromUrlAsync(WaitUntil waitUntil, Guid personId, FaceRecognitionModel recognitionModel, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddPersonFaceFromUrlRequest addPersonFaceFromUrlRequest = new AddPersonFaceFromUrlRequest(url, null);
+            AddPersonFaceFromUrlRequest addPersonFaceFromUrlRequest = new AddPersonFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await AddPersonFaceFromUrlAsync(waitUntil, personId, recognitionModel.ToString(), addPersonFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, PersonDirectoryFace.FromResponse, ClientDiagnostics, "FaceAdministrationClient.AddPersonFaceFromUrl");
@@ -7949,12 +7949,12 @@ namespace Azure.AI.Vision.Face
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="personId"> Person ID of the person. </param>
         /// <param name="recognitionModel"> The 'recognitionModel' associated with faces. </param>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="targetFace"> A face rectangle to specify the target face to be added to a person, in the format of 'targetFace=left,top,width,height'. </param>
         /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
         /// <param name="userData"> User-provided data attached to the face. The size limit is 1K. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         /// <remarks>
         /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until Person Directory "Delete Person Face" or "Delete Person" is called.
         ///
@@ -7973,11 +7973,11 @@ namespace Azure.AI.Vision.Face
         ///   * This is a long running operation. Use Response Header "Operation-Location" to determine when the AddFace operation has successfully propagated for future requests to "Identify". For further information about Operation-Locations see "Get Face Operation Status".
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonFaceFromUrl(WaitUntil,Guid,FaceRecognitionModel,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Operation<PersonDirectoryFace> AddPersonFaceFromUrl(WaitUntil waitUntil, Guid personId, FaceRecognitionModel recognitionModel, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        public virtual Operation<PersonDirectoryFace> AddPersonFaceFromUrl(WaitUntil waitUntil, Guid personId, FaceRecognitionModel recognitionModel, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            AddPersonFaceFromUrlRequest addPersonFaceFromUrlRequest = new AddPersonFaceFromUrlRequest(url, null);
+            AddPersonFaceFromUrlRequest addPersonFaceFromUrlRequest = new AddPersonFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = AddPersonFaceFromUrl(waitUntil, personId, recognitionModel.ToString(), addPersonFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return ProtocolOperationHelpers.Convert(response, PersonDirectoryFace.FromResponse, ClientDiagnostics, "FaceAdministrationClient.AddPersonFaceFromUrl");

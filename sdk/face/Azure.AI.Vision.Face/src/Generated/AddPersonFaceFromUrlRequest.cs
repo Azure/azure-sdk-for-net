@@ -46,21 +46,21 @@ namespace Azure.AI.Vision.Face
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AddPersonFaceFromUrlRequest"/>. </summary>
-        /// <param name="url"> URL of input image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public AddPersonFaceFromUrlRequest(Uri url)
+        /// <param name="uri"> URL of input image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public AddPersonFaceFromUrlRequest(Uri uri)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            Url = url;
+            Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="AddPersonFaceFromUrlRequest"/>. </summary>
-        /// <param name="url"> URL of input image. </param>
+        /// <param name="uri"> URL of input image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddPersonFaceFromUrlRequest(Uri url, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AddPersonFaceFromUrlRequest(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Url = url;
+            Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,6 +70,6 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> URL of input image. </summary>
-        public Uri Url { get; }
+        public Uri Uri { get; }
     }
 }
