@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text
 
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
-            writer.WriteStringValue(To);
+            writer.WriteStringValue(TargetLanguage);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             if (Optional.IsDefined(Transliteration))

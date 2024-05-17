@@ -54,11 +54,11 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="toScripts"> List of scripts available to convert text to. </param>
+        /// <param name="targetLanguageScripts"> List of scripts available to convert text to. </param>
         /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> toScripts = null)
+        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> targetLanguageScripts = null)
         {
-            toScripts ??= new List<LanguageScript>();
+            targetLanguageScripts ??= new List<LanguageScript>();
 
             return new TransliterableScript(
                 code,
@@ -66,7 +66,7 @@ namespace Azure.AI.Translation.Text
                 nativeName,
                 directionality,
                 serializedAdditionalRawData: null,
-                toScripts?.ToList());
+                targetLanguageScripts?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.LanguageScript"/>. </summary>
@@ -137,16 +137,16 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslationText"/>. </summary>
-        /// <param name="to"> A string representing the language code of the target language. </param>
+        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
         /// <param name="alignment"> Alignment information. </param>
         /// <param name="sentenceBoundaries"> Sentence boundaries in the input and output texts. </param>
         /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
-        public static TranslationText TranslationText(string to = null, string text = null, TransliteratedText transliteration = null, TranslatedTextAlignment alignment = null, SentenceBoundaries sentenceBoundaries = null)
+        public static TranslationText TranslationText(string targetLanguage = null, string text = null, TransliteratedText transliteration = null, TranslatedTextAlignment alignment = null, SentenceBoundaries sentenceBoundaries = null)
         {
             return new TranslationText(
-                to,
+                targetLanguage,
                 text,
                 transliteration,
                 alignment,

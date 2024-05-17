@@ -70,13 +70,13 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.NotNull(transliterationLanguage.Scripts[0].Directionality);
             Assert.NotNull(transliterationLanguage.Scripts[0].Name);
             Assert.NotNull(transliterationLanguage.Scripts[0].NativeName);
-            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts);
+            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts);
 
-            Assert.Greater(transliterationLanguage.Scripts[0].ToScripts.Count, 0);
-            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Code);
-            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Directionality);
-            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].Name);
-            Assert.NotNull(transliterationLanguage.Scripts[0].ToScripts[0].NativeName);
+            Assert.Greater(transliterationLanguage.Scripts[0].TargetLanguageScripts.Count, 0);
+            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].Code);
+            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].Directionality);
+            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].Name);
+            Assert.NotNull(transliterationLanguage.Scripts[0].TargetLanguageScripts[0].NativeName);
         }
 
         [RecordedTest]
@@ -94,8 +94,8 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.NotNull(transliterationLanguage.Scripts);
 
             Assert.Greater(transliterationLanguage.Scripts.Count, 1);
-            Assert.Greater(transliterationLanguage.Scripts[0].ToScripts.Count, 1);
-            Assert.Greater(transliterationLanguage.Scripts[1].ToScripts.Count, 1);
+            Assert.Greater(transliterationLanguage.Scripts[0].TargetLanguageScripts.Count, 1);
+            Assert.Greater(transliterationLanguage.Scripts[1].TargetLanguageScripts.Count, 1);
         }
 
         [RecordedTest]

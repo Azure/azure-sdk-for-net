@@ -19,16 +19,16 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="toScripts"> List of scripts available to convert text to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="toScripts"/> is null. </exception>
-        internal TransliterableScript(string code, string name, string nativeName, LanguageDirectionality directionality, IEnumerable<LanguageScript> toScripts) : base(code, name, nativeName, directionality)
+        /// <param name="targetLanguageScripts"> List of scripts available to convert text to. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="targetLanguageScripts"/> is null. </exception>
+        internal TransliterableScript(string code, string name, string nativeName, LanguageDirectionality directionality, IEnumerable<LanguageScript> targetLanguageScripts) : base(code, name, nativeName, directionality)
         {
             Argument.AssertNotNull(code, nameof(code));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(nativeName, nameof(nativeName));
-            Argument.AssertNotNull(toScripts, nameof(toScripts));
+            Argument.AssertNotNull(targetLanguageScripts, nameof(targetLanguageScripts));
 
-            ToScripts = toScripts.ToList();
+            TargetLanguageScripts = targetLanguageScripts.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="TransliterableScript"/>. </summary>
@@ -37,10 +37,10 @@ namespace Azure.AI.Translation.Text
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="toScripts"> List of scripts available to convert text to. </param>
-        internal TransliterableScript(string code, string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<LanguageScript> toScripts) : base(code, name, nativeName, directionality, serializedAdditionalRawData)
+        /// <param name="targetLanguageScripts"> List of scripts available to convert text to. </param>
+        internal TransliterableScript(string code, string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<LanguageScript> targetLanguageScripts) : base(code, name, nativeName, directionality, serializedAdditionalRawData)
         {
-            ToScripts = toScripts;
+            TargetLanguageScripts = targetLanguageScripts;
         }
 
         /// <summary> Initializes a new instance of <see cref="TransliterableScript"/> for deserialization. </summary>
@@ -49,6 +49,6 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> List of scripts available to convert text to. </summary>
-        public IReadOnlyList<LanguageScript> ToScripts { get; }
+        public IReadOnlyList<LanguageScript> TargetLanguageScripts { get; }
     }
 }

@@ -46,28 +46,28 @@ namespace Azure.AI.Translation.Text
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
-        /// <param name="to"> A string representing the language code of the target language. </param>
+        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="text"/> is null. </exception>
-        internal TranslationText(string to, string text)
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="text"/> is null. </exception>
+        internal TranslationText(string targetLanguage, string text)
         {
-            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(text, nameof(text));
 
-            To = to;
+            TargetLanguage = targetLanguage;
             Text = text;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslationText"/>. </summary>
-        /// <param name="to"> A string representing the language code of the target language. </param>
+        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
         /// <param name="alignment"> Alignment information. </param>
         /// <param name="sentenceBoundaries"> Sentence boundaries in the input and output texts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationText(string to, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceBoundaries sentenceBoundaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationText(string targetLanguage, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceBoundaries sentenceBoundaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            To = to;
+            TargetLanguage = targetLanguage;
             Text = text;
             Transliteration = transliteration;
             Alignment = alignment;
@@ -81,7 +81,7 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> A string representing the language code of the target language. </summary>
-        public string To { get; }
+        public string TargetLanguage { get; }
         /// <summary> A string giving the translated text. </summary>
         public string Text { get; }
         /// <summary> An object giving the translated text in the script specified by the toScript parameter. </summary>

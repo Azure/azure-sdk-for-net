@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartObject();
             writer.WritePropertyName("toScripts"u8);
             writer.WriteStartArray();
-            foreach (var item in ToScripts)
+            foreach (var item in TargetLanguageScripts)
             {
                 writer.WriteObjectValue(item, options);
             }
