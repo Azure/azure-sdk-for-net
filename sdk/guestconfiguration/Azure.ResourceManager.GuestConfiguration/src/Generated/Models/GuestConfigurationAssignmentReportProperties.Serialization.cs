@@ -58,15 +58,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsDefined(Details))
             {
-                if (Details != null)
-                {
-                    writer.WritePropertyName("details"u8);
-                    writer.WriteObjectValue(Details, options);
-                }
-                else
-                {
-                    writer.WriteNull("details");
-                }
+                writer.WritePropertyName("details"u8);
+                writer.WriteObjectValue(Details, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmssResourceId))
             {
@@ -181,7 +174,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        details = null;
                         continue;
                     }
                     details = GuestConfigurationAssignmentReportDetails.DeserializeGuestConfigurationAssignmentReportDetails(property.Value, options);

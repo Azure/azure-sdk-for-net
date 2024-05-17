@@ -116,15 +116,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationSetting))
             {
-                if (ConfigurationSetting != null)
-                {
-                    writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("configurationSetting");
-                }
+                writer.WritePropertyName("configurationSetting"u8);
+                writer.WriteObjectValue(ConfigurationSetting, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -275,7 +268,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        configurationSetting = null;
                         continue;
                     }
                     configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value, options);

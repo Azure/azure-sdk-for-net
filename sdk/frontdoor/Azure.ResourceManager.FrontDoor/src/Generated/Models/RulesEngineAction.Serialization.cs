@@ -48,15 +48,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(RouteConfigurationOverride))
             {
-                if (RouteConfigurationOverride != null)
-                {
-                    writer.WritePropertyName("routeConfigurationOverride"u8);
-                    writer.WriteObjectValue(RouteConfigurationOverride, options);
-                }
-                else
-                {
-                    writer.WriteNull("routeConfigurationOverride");
-                }
+                writer.WritePropertyName("routeConfigurationOverride"u8);
+                writer.WriteObjectValue(RouteConfigurationOverride, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -135,7 +128,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        routeConfigurationOverride = null;
                         continue;
                     }
                     routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value, options);
