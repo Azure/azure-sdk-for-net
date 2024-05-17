@@ -303,7 +303,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="defaultValue"> Default value of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string).
+        /// boolean, string)
         /// </param>
         /// <param name="readOnly">
         /// Whether or not this parameter is read-only.  If true, default should have a
