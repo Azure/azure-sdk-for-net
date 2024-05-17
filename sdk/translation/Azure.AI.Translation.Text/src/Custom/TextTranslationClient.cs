@@ -156,6 +156,23 @@ namespace Azure.AI.Translation.Text
             this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="tokenScope">Token Scopes</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, Uri endpoint, string resourceId, string region = DEFAULT_REGION, string tokenScope = DEFAULT_TOKEN_SCOPE, TextTranslationClientOptions options = default) : this(endpoint, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, tokenScope, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+        }
+
         /// <summary> Translate Text. </summary>
         /// <param name="targetLanguages">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
