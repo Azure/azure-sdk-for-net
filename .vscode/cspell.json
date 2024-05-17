@@ -1176,6 +1176,12 @@
       ]
     },
     {
+      "filename": "**/sdk/storageactions/**/*.cs",
+      "words": [
+        "undelete"
+      ]
+    },
+    {
       "filename": "**/sdk/storagecache/**/*.cs",
       "words": [
         "Clfs"

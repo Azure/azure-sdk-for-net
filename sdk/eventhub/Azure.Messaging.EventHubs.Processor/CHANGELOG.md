@@ -10,7 +10,17 @@
 
 ### Other Changes
 
-- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+## 5.11.3 (2024-05-15)
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Removed the restriction that endpoints used with the development emulator had to resolve to a `localhost` variant.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains several bug fixes, including for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
 
 ## 5.11.2 (2024-04-10)
 
