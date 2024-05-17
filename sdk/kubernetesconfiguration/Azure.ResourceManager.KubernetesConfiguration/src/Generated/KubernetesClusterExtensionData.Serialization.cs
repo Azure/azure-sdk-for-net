@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (ErrorInfo != null)
                 {
                     writer.WritePropertyName("errorInfo"u8);
-                    JsonSerializer.Serialize(writer, ErrorInfo);
+                    writer.WriteObjectValue<Models.ErrorDetail>(ErrorInfo, options);
                 }
                 else
                 {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             string currentVersion = default;
             KubernetesConfigurationProvisioningState? provisioningState = default;
             IList<KubernetesClusterExtensionStatus> statuses = default;
-            ResponseError errorInfo = default;
+            Models.ErrorDetail errorInfo = default;
             IReadOnlyDictionary<string, string> customLocationSettings = default;
             Uri packageUri = default;
             ManagedServiceIdentity aksAssignedIdentity = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 errorInfo = null;
                                 continue;
                             }
-                            errorInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            errorInfo = JsonSerializer.Deserialize<Models.ErrorDetail>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("customLocationSettings"u8))
