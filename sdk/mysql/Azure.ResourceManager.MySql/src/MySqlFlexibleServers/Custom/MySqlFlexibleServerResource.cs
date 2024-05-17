@@ -50,13 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _backupAndExportRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation2<MySqlFlexibleServerBackupAndExportResult>(new MySqlFlexibleServerBackupAndExportResultOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location)
-                {
-                    ResourceId = Id,
-                    Endpoint = Endpoint,
-                    Diagnostics = Diagnostics,
-                    Pipeline = Pipeline
-                };
+                var operation = new FlexibleServersArmOperation2<MySqlFlexibleServerBackupAndExportResult>(new MySqlFlexibleServerBackupAndExportResultOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,13 +92,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _backupAndExportRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new FlexibleServersArmOperation2<MySqlFlexibleServerBackupAndExportResult>(new MySqlFlexibleServerBackupAndExportResultOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location)
-                {
-                    ResourceId = Id,
-                    Endpoint = Endpoint,
-                    Diagnostics = Diagnostics,
-                    Pipeline = Pipeline
-                };
+                var operation = new FlexibleServersArmOperation2<MySqlFlexibleServerBackupAndExportResult>(new MySqlFlexibleServerBackupAndExportResultOperationSource(), _backupAndExportClientDiagnostics, Pipeline, _backupAndExportRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

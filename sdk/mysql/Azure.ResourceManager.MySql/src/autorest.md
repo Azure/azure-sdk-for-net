@@ -313,6 +313,8 @@ rename-mapping:
   MaintenanceProvisioningState: MySqlFlexibleServerMaintenanceProvisioningState
   BackupType: MySqlFlexibleServerBackupType
   ProvisioningState: MySqlFlexibleServerBackupProvisioningState
+  ObjectType.BackupAndExportResponse: MySqlFlexibleServerBackupAndExportResult
+  ObjectType.ImportFromStorageResponse: MySqlFlexibleServerImportFromStorageResult
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
@@ -321,7 +323,7 @@ override-operation-name:
   BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
-#  - remove-operation: OperationProgress_Get
+  - remove-operation: OperationProgress_Get
   - from: FlexibleServers.json
     where: $.definitions
     transform: >

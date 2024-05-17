@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -132,26 +133,20 @@ namespace Azure.ResourceManager.MySql.Tests
             var aSascontent = new AccountSasContent(StorageAccountSasSignedService.B, StorageAccountSasSignedResourceType.O, "rwd", Recording.UtcNow.AddHours(1));
             var sas = (await storageAccount.GetAccountSasAsync(aSascontent)).Value.AccountSasToken;
             list1.Add($"https://{storageAccount.Data.Name}.blob.core.windows.net/{blobContainer.Data.Name}?{sas}");
+            string backupName = Recording.GenerateAssetName("customer-backup-sdktest");
             MySqlFlexibleServerBackupAndExportContent backupAndExportContent = new MySqlFlexibleServerBackupAndExportContent
             (
-                new MySqlFlexibleServerBackupSettings("customer-backup-sdktest-1"),
+                new MySqlFlexibleServerBackupSettings(backupName),
                 new MySqlFlexibleServerFullBackupStoreDetails(list1)
             );
 
             var lroBackupAndExport = await server1.CreateBackupAndExportAsync(Azure.WaitUntil.Started, backupAndExportContent);
             while (!lroBackupAndExport.HasCompleted)
             {
-                Response statusResponse = await lroBackupAndExport.UpdateStatusAsync().ConfigureAwait(false);
-                if (statusResponse.Status == 202 || statusResponse.Status == 200)
-                {
-                    // Get progress status
-                    var operationProgress = await lroBackupAndExport.GetDetailedStatusAsync();
-                    // Do something with the operation progress validation here
-                }
-                else
-                {
-                    // exception
-                }
+                var statusResult = await lroBackupAndExport.GetDetailedStatusAsync().ConfigureAwait(false);
+                if (statusResult.Value.PercentComplete is not null)
+                    Assert.IsTrue(statusResult.Value.PercentComplete >= 0);
+                await Delay(5000);
             }
             MySqlFlexibleServerBackupAndExportResult resultBackupAndExport = lroBackupAndExport.Value;
             Assert.AreEqual("Succeeded", resultBackupAndExport.Status.ToString());
