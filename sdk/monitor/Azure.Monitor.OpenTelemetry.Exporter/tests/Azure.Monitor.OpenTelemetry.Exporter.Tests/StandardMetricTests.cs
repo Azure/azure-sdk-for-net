@@ -170,6 +170,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
+        [InlineData("", false)]
+        [InlineData(null, false)]
+        [InlineData("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0", false)]
+        [InlineData("AlwaysOn/1.0", true)]
+        [InlineData("ALWAYSON/1.0", true)]
+        [InlineData("alwayson/1.0", true)]
+        public void ValidateSyntheticRequest(string? userAgent, bool expectedIsSynthetic)
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateSyntheticRequest));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            var traceServiceName = new KeyValuePair<string, object>("service.name", "trace.service");
+            var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName };
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
+                .AddSource(nameof(StandardMetricTests.ValidateSyntheticRequest))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Consumer))
+            {
+                activity?.SetTag(SemanticConventions.AttributeUserAgentOriginal, userAgent);
+                activity?.SetStatus(ActivityStatusCode.Ok);
+            }
+
+            tracerProvider?.ForceFlush();
+
+            WaitForActivityExport(traceTelemetryItems);
+
+            standardMetricCustomProcessor._meterProvider?.ForceFlush();
+
+            Assert.Single(metricTelemetryItems);
+
+            var metricTelemetry = metricTelemetryItems.Last()!;
+            Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
+            var metricData = (MetricsData)metricTelemetry.Data.BaseData;
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsSyntheticKey, out var isSynthetic));
+            Assert.Equal(expectedIsSynthetic, Convert.ToBoolean(isSynthetic));
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void ValidateDependencyDurationMetric(bool isAzureSDK)
