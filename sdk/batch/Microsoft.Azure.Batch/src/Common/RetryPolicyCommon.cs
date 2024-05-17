@@ -23,6 +23,7 @@
                         && statusCode != 429 // Too many reqeuests
                         )
                         || statusCode == 501 // Not Implemented
+                        || statusCode == 503 // ServiceUnavailable
                         || statusCode == 505 // Version Not Supported
                         )
                     {

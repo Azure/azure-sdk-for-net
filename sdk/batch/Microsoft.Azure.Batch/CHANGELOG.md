@@ -1,14 +1,9 @@
 # Release History
 
-## 16.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 16.3.0 (2024-05-16)
 
 ### Bugs Fixed
-
-### Other Changes
+ - Added check for ServiceUnaviable in our retry logic
 
 ## 16.2.0 (2024-02-29)
 
