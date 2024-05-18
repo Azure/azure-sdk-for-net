@@ -432,15 +432,15 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="unknown"> Debug send parameters. </param>
+        /// <param name="anyObject"> Debug send parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(BinaryData unknown = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(BinaryData anyObject = null, CancellationToken cancellationToken = default)
         {
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.DebugSendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unknown, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubRestClient.DebugSendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, anyObject, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -471,15 +471,15 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="unknown"> Debug send parameters. </param>
+        /// <param name="anyObject"> Debug send parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationHubTestSendResult> DebugSend(BinaryData unknown = null, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubTestSendResult> DebugSend(BinaryData anyObject = null, CancellationToken cancellationToken = default)
         {
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.DebugSend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, unknown, cancellationToken);
+                var response = _notificationHubRestClient.DebugSend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, anyObject, cancellationToken);
                 return response;
             }
             catch (Exception e)
