@@ -57,7 +57,7 @@ namespace Azure.Core
             {
                 apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
             }
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri, out var isNextRequestPolling);
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out string nextRequestUri, out bool isNextRequestPolling);
             if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
             {
                 return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
@@ -209,7 +209,7 @@ namespace Azure.Core
             AssertNotNull(response, nameof(response));
             AssertNotNull(finalStateVia, nameof(finalStateVia));
 
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, null, out var nextRequestUri, out var isNextRequestPolling);
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, null, out string nextRequestUri, out bool isNextRequestPolling);
             string? lastKnownLocation;
             if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
             {
@@ -589,9 +589,10 @@ namespace Azure.Core
         private static bool ShouldIgnoreHeader(RequestMethod method, Response response)
             => method.Method == RequestMethod.Patch.Method && response.Status == 200;
 
-        private static HeaderSource GetHeaderSource(RequestMethod requestMethod, Uri requestUri, Response response, string? apiVersion, out string nextRequestUri, out bool IsNextRequestPolling)
+        // Since this method is static, we can't manipulate the instance property OperationId of the class. We need to return isRequestPolling to update the OperationId after creaing the instance.
+        private static HeaderSource GetHeaderSource(RequestMethod requestMethod, Uri requestUri, Response response, string? apiVersion, out string nextRequestUri, out bool isNextRequestPolling)
         {
-            IsNextRequestPolling = false;
+            isNextRequestPolling = false;
             if (ShouldIgnoreHeader(requestMethod, response))
             {
                 nextRequestUri = requestUri.AbsoluteUri;
@@ -602,21 +603,21 @@ namespace Azure.Core
             if (headers.TryGetValue("Operation-Location", out var operationLocationUri))
             {
                 nextRequestUri = AppendOrReplaceApiVersion(operationLocationUri, apiVersion);
-                IsNextRequestPolling = true;
+                isNextRequestPolling = true;
                 return HeaderSource.OperationLocation;
             }
 
             if (headers.TryGetValue("Azure-AsyncOperation", out var azureAsyncOperationUri))
             {
                 nextRequestUri = AppendOrReplaceApiVersion(azureAsyncOperationUri, apiVersion);
-                IsNextRequestPolling = true;
+                isNextRequestPolling = true;
                 return HeaderSource.AzureAsyncOperation;
             }
 
             if (headers.TryGetValue("Location", out var locationUri))
             {
                 nextRequestUri = AppendOrReplaceApiVersion(locationUri, apiVersion);
-                IsNextRequestPolling = true;
+                isNextRequestPolling = true;
                 return HeaderSource.Location;
             }
 
