@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 if (Error != null)
                 {
                     writer.WritePropertyName("error"u8);
-                    JsonSerializer.Serialize(writer, Error);
+                    writer.WriteObjectValue<Models.CommonErrorDetail>(Error, options);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             string status = default;
-            ResponseError error = default;
+            Models.CommonErrorDetail error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         error = null;
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = JsonSerializer.Deserialize<Models.CommonErrorDetail>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
