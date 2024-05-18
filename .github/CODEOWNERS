@@ -202,10 +202,10 @@
 # ServiceOwners:                                                   @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # PRLabel: %Cognitive - Face
-/sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
+/sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @lulululululu
 
 # ServiceLabel: %Cognitive - Face
-# ServiceOwners:                                                   @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
+# ServiceOwners:                                                   @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @lulululululu
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/documentintelligence/                                         @kinelski @pallavit @joseharriaga
@@ -711,12 +711,6 @@
 # ServiceLabel: %Network - Private Link
 # ServiceOwners:                                                   @privlinksuppgithub
 
-# PRLabel: %Nginx
-/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
-
-# ServiceLabel: %Nginx
-# ServiceOwners:                                                   @spencerofwiti @bangbingsyb
-
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
@@ -955,6 +949,13 @@
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Nginx
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
+
+# ServiceLabel: %Nginx %Mgmt
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
+
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil

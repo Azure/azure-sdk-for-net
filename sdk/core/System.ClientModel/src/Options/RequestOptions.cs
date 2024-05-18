@@ -16,14 +16,13 @@ public class RequestOptions
 
     private CancellationToken _cancellationToken = CancellationToken.None;
     private ClientErrorBehaviors _errorOptions = ClientErrorBehaviors.Default;
+    private bool _bufferResponse = true;
 
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
     private List<HeadersUpdate>? _headersUpdates;
-
-    private bool? _bufferResponse;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestOptions"/> class
@@ -64,15 +63,14 @@ public class RequestOptions
 
     /// <summary>
     /// Gets or sets a value indicating whether the response content should be
-    /// buffered in-memory by the pipeline. If specified, this value will
-    /// override any client default.
+    /// buffered in-memory by the pipeline. This value defaults to <c>true</c>.
     /// </summary>
     /// <remarks>Please note that setting this value to <c>false</c> will result
     /// in the <see cref="PipelineResponse.ContentStream"/> obtained from
     /// <see cref="ClientResult.GetRawResponse"/> holding a live network stream.
     /// It is the responsibility of the caller to ensure the stream is disposed.
     /// </remarks>
-    public bool? BufferResponse
+    public bool BufferResponse
     {
         get => _bufferResponse;
         set
@@ -174,11 +172,8 @@ public class RequestOptions
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
 
-        // Override any BufferResponse value set on the message.
-        if (BufferResponse.HasValue)
-        {
-            message.BufferResponse = BufferResponse.Value;
-        }
+        // Tell transport whether or not to buffer response content.
+        message.BufferResponse = BufferResponse;
 
         // Apply adds and sets to request headers if applicable.
         if (_headersUpdates is not null)
