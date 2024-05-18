@@ -21,8 +21,15 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStringValue(Source);
             if (Optional.IsDefined(Data))
             {
-                writer.WritePropertyName("data"u8);
-                Data.WriteTo(writer);
+                if (Data != null)
+                {
+                    writer.WritePropertyName("data"u8);
+                    Data.WriteTo(writer);
+                }
+                else
+                {
+                    writer.WriteNull("data");
+                }
             }
             if (Optional.IsDefined(DataBase64))
             {
