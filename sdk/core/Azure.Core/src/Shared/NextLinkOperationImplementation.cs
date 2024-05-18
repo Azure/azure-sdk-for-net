@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -98,7 +99,9 @@ namespace Azure.Core
             AssertNotNull(pipeline, nameof(pipeline));
 
             // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
+            // We are sure that data is a valid JsonObject as we are serializing RehydrationToken
+            var lroDetails = (JsonObject)JsonNode.Parse(data)!;
 
             var initialUri = GetContentFromRehydrationToken(lroDetails, "initialUri");
             if (!Uri.TryCreate(initialUri, UriKind.Absolute, out var startRequestUri))
@@ -136,14 +139,14 @@ namespace Azure.Core
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
         }
 
-        private static string GetContentFromRehydrationToken(Dictionary<string, string> lroDetails, string key)
+        private static string GetContentFromRehydrationToken(JsonObject lroDetails, string key)
         {
-            if (!lroDetails.TryGetValue(key, out var nextRequestUri))
+            if (!lroDetails.TryGetPropertyValue(key, out var value) || value is null)
             {
                 throw new ArgumentException($"\"{key}\" is missing from rehydrationToken");
             }
 
-            return nextRequestUri;
+            return value.GetValue<string>();
         }
 
         private NextLinkOperationImplementation(
@@ -222,7 +225,8 @@ namespace Azure.Core
             string finalStateVia,
             string? operationId = null)
         {
-            var data = new BinaryData(new { version = RehydrationTokenVersion, id = operationId, requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            var json = $"{{\"verion\":{RehydrationTokenVersion},\"id\":{operationId},\"requestMethod\":{requestMethod},\"initialUri\":{startRequestUri.AbsoluteUri},\"nextRequestUri\":{nextRequestUri},\"headerSource\":{headerSource},\"finalStateVia \":{finalStateVia}";
+            var data = BinaryData.FromString(json);
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
