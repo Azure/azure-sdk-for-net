@@ -106,8 +106,12 @@ namespace Azure.ResourceManager.TestFramework
             var parameters = method.GetParameters();
             var extendedType = parameters[0].ParameterType;
 
+            if (extendedType.Name.StartsWith("ArmOperation") || extendedType.Name.StartsWith("Operation"))
+            {
+                // Skip extensions of ArmOperation or Operation
+                return;
+            }
             var mockingExtensionTypeName = GetMockableResourceTypeName(rpNamespace, rpName, extendedType.Name);
-
             var mockingExtensionType = assembly.GetType(mockingExtensionTypeName);
             Assert.IsNotNull(mockingExtensionType, $"The mocking extension class {mockingExtensionTypeName} must exist");
             Assert.IsTrue(mockingExtensionType.IsPublic, $"The mocking extension class {mockingExtensionType} must be public");

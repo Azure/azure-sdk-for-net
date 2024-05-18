@@ -3,12 +3,12 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
-using System;
-using System.ClientModel.Primitives;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
