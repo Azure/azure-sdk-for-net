@@ -99,7 +99,7 @@ namespace Azure.Core
             AssertNotNull(pipeline, nameof(pipeline));
 
             // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
-            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToString();
             // We are sure that data is a valid JsonObject as we are serializing RehydrationToken
             var lroDetails = (JsonObject)JsonNode.Parse(data)!;
 
