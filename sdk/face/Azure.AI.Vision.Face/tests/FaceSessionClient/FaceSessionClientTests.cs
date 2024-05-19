@@ -26,13 +26,12 @@ namespace Azure.AI.Vision.Face.Tests
         private List<(SessionType, string)> _createdSessions = new();
         public FaceSessionClientTests(bool isAsync) : base(isAsync)
         {
-            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
         public FaceSessionClient CreateSessionClient(bool nonRecordingClient = false)
         {
             var endpoint = TestEnvironment.GetUrlVariable("FACE_ENDPOINT");
-            var credential = TestEnvironment.GetKeyVariable("FACE_KEY");
+            var credential = TestEnvironment.Credential;
 
             if (nonRecordingClient)
             {
@@ -153,7 +152,7 @@ namespace Azure.AI.Vision.Face.Tests
         }
 
         [PlaybackOnly("Requiring other components to send underlying liveness request.")]
-        [TestCase("4c0e611b-0ccb-4a0a-bec1-25008a329651")]
+        [TestCase("4aeb437b-d9a1-4408-9731-15f79c2e4862")]
         public async Task TestGetSessionResult(string sessionId)
         {
             var client = CreateSessionClient();
@@ -173,7 +172,7 @@ namespace Azure.AI.Vision.Face.Tests
         }
 
         [PlaybackOnly("Requiring other components to send underlying liveness request.")]
-        [TestCase("4c0e611b-0ccb-4a0a-bec1-25008a329651")]
+        [TestCase("4aeb437b-d9a1-4408-9731-15f79c2e4862")]
         public async Task TestGetSessionAuditEntries(string sessionId)
         {
             var client = CreateSessionClient();
@@ -287,7 +286,7 @@ namespace Azure.AI.Vision.Face.Tests
         }
 
         [PlaybackOnly("Requiring other components to send underlying liveness request.")]
-        [TestCase("f643ad07-eb1e-44af-946f-87d44b7304be")]
+        [TestCase("56d976a9-130a-44e2-bb25-e84410f05b05")]
         public async Task TestGetLivenessWithVerifySessionResult(string sessionId)
         {
             var client = CreateSessionClient();
@@ -308,7 +307,7 @@ namespace Azure.AI.Vision.Face.Tests
         }
 
         [PlaybackOnly("Requiring other components to send underlying liveness request.")]
-        [TestCase("f643ad07-eb1e-44af-946f-87d44b7304be")]
+        [TestCase("56d976a9-130a-44e2-bb25-e84410f05b05")]
         public async Task TestGetLivenessWithVerifySessionAuditEntries(string sessionId)
         {
             var client = CreateSessionClient();

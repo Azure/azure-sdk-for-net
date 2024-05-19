@@ -4,9 +4,3 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: face
-    CloudConfig:
-      Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'eastus'
-    SupportedClouds: 'Public'
-
