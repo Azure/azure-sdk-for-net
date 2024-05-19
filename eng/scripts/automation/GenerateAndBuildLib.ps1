@@ -743,6 +743,8 @@ function GeneratePackage()
     Write-Host "Start to generate sdk $projectFolder"
     $srcPath = Join-Path $projectFolder 'src'
     if (!$skipGenerate) {
+        # verify the existence of tsp-location.yaml and autorest.md
+        
         if($specRepoRoot -eq "") {
             dotnet build /t:GenerateCode $srcPath
         } else {
@@ -883,4 +885,31 @@ function UpdateExistingSDKByInputFiles()
         GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
 
+}
+
+function GetSDKProjectFolder()
+{
+    param(
+        [string]$typespecConfigurationFile,
+        [string]$sdkRepoRoot
+    )
+    $tspConfigYaml = Get-Content -Path $typespecConfigurationFile -Raw
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    $yml = ConvertFrom-YAML $tspConfigYaml
+    $service = ""
+    $packageDir = ""
+    if ($yml) {
+        if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
+            $service = $yml["parameters"]["service-dir"]["default"];
+        }
+        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"] -And $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]) {
+            $packageDir = $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]
+        }
+    }
+    if (!$service || !$packageDir) {
+        throw "Not provide service name or packageDir."
+    }
+    $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
+    return $projectFolder
 }

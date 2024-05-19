@@ -22,7 +22,7 @@ please refer to eng/scripts/automation/unified-pipeline-test.md for more test sc
 
 #>
 param (
-  [string]$inputJsonFile,
+  [string]$inputJsonFile="c:/project/azure-sdk-for-net/eng/scripts/input.json",
   [string]$outputJsonFile
 )
 
@@ -117,7 +117,19 @@ if ($relatedTypeSpecProjectFolder) {
         $sdkProjectFolders = Get-ChildItem -Path (Join-Path $sdkPath "sdk") -Depth 1 -Directory | Select-Object -ExpandProperty FullName
 
         # Invoke Process script. SkipSyncAndGenerate only when it's not a new SDK project
-        $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
+        # $sdkProjectFolder = & $processScript $typespecFolder $commitid $repoHttpsUrl -SkipSyncAndGenerate
+        $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
+        # $tspclientCommand = "npx tsp-client init --tsp-config $tspConfigFile --output-dir $sdkProjectFolder"
+        $repo = $repoHttpsUrl -replace "https://github.com/", ""
+        $tspclientCommand = "npx tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        Write-Host $tspclientCommand
+        Invoke-Expression $tspclientCommand
+
+        # $sdkAutorestConfigFile = Resolve-Path(Join-path $sdkProjectFolder "src" "autorest.md"))
+        # if (Test-Path -Path $sdkAutorestConfigFile) {
+        #     Write-Host "remove autorest.md for sdk from typespec."
+        #     Remove-Item -Path $sdkAutorestConfigFile
+        # }
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
           $generatedSDKPackages.Add(@{
@@ -125,6 +137,12 @@ if ($relatedTypeSpecProjectFolder) {
             path=@("");
           })
         } else {
+            $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
+            $sdkAutorestConfigFile = Resolve-Path(Join-path $sdkProjectFolder "src" "autorest.md")
+            if (Test-Path -Path $sdkAutorestConfigFile) {
+                Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
+                Remove-Item -Path $sdkAutorestConfigFile
+            }
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             if ($sdkProjectFolders -contains $sdkProjectFolder) {
               # Existed SDK project case, needs to generate code
