@@ -99,7 +99,7 @@ namespace Azure.Core
             AssertNotNull(pipeline, nameof(pipeline));
 
             // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
-            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToString();
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
             // We are sure that data is a valid JsonObject as we are serializing RehydrationToken
             var lroDetails = (JsonObject)JsonNode.Parse(data)!;
 
@@ -109,12 +109,13 @@ namespace Azure.Core
                 throw new ArgumentException($"\"initialUri\" property on \"rehydrationToken\" is an invalid Uri", nameof(rehydrationToken));
             }
 
-            string nextRequestUri = GetContentFromRehydrationToken(lroDetails, "nextRequestUri");
-            string requestMethodStr = GetContentFromRehydrationToken(lroDetails, "requestMethod");
+            // We are sure that these non-nullable properties are present in the rehydrationToken as we are serializing RehydrationToken
+            string nextRequestUri = GetContentFromRehydrationToken(lroDetails, "nextRequestUri")!;
+            string requestMethodStr = GetContentFromRehydrationToken(lroDetails, "requestMethod")!;
             RequestMethod requestMethod = new RequestMethod(requestMethodStr);
-            string lastKnownLocation = GetContentFromRehydrationToken(lroDetails, "lastKnownLocation");
+            string? lastKnownLocation = GetContentFromRehydrationToken(lroDetails, "lastKnownLocation");
 
-            string finalStateViaStr = GetContentFromRehydrationToken(lroDetails, "finalStateVia");
+            string finalStateViaStr = GetContentFromRehydrationToken(lroDetails, "finalStateVia")!;
             OperationFinalStateVia finalStateVia;
             if (Enum.IsDefined(typeof(OperationFinalStateVia), finalStateViaStr))
             {
@@ -125,7 +126,7 @@ namespace Azure.Core
                 finalStateVia = OperationFinalStateVia.Location;
             }
 
-            string headerSourceStr = GetContentFromRehydrationToken(lroDetails, "headerSource");
+            string headerSourceStr = GetContentFromRehydrationToken(lroDetails, "headerSource")!;
             HeaderSource headerSource;
             if (Enum.IsDefined(typeof(HeaderSource), headerSourceStr))
             {
@@ -139,14 +140,14 @@ namespace Azure.Core
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
         }
 
-        private static string GetContentFromRehydrationToken(JsonObject lroDetails, string key)
+        private static string? GetContentFromRehydrationToken(JsonObject lroDetails, string key)
         {
-            if (!lroDetails.TryGetPropertyValue(key, out var value) || value is null)
+            if (!lroDetails.TryGetPropertyValue(key, out var value))
             {
                 throw new ArgumentException($"\"{key}\" is missing from rehydrationToken");
             }
 
-            return value.GetValue<string>();
+            return value?.GetValue<string>();
         }
 
         private NextLinkOperationImplementation(
@@ -213,7 +214,7 @@ namespace Azure.Core
             {
                 lastKnownLocation = null;
             }
-            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), null);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), NotSet);
         }
 
         public static RehydrationToken GetRehydrationToken(
@@ -223,12 +224,14 @@ namespace Azure.Core
             string headerSource,
             string? lastKnownLocation,
             string finalStateVia,
-            string? operationId = null)
+            string operationId)
         {
-            var json = $"{{\"verion\":{RehydrationTokenVersion},\"id\":{operationId},\"requestMethod\":{requestMethod},\"initialUri\":{startRequestUri.AbsoluteUri},\"nextRequestUri\":{nextRequestUri},\"headerSource\":{headerSource},\"finalStateVia \":{finalStateVia}";
+            var json = $"{{\"version\":\"{RehydrationTokenVersion}\",\"id\":\"{operationId}\",\"requestMethod\":\"{requestMethod}\",\"initialUri\":\"{startRequestUri.AbsoluteUri}\",\"nextRequestUri\":\"{nextRequestUri}\",\"headerSource\":\"{headerSource}\",\"finalStateVia\":\"{finalStateVia}\",\"lastKnownLocation\":{ConstructStringValue(lastKnownLocation)}}}";
             var data = BinaryData.FromString(json);
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
+
+        private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
