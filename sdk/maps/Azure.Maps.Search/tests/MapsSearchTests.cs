@@ -103,7 +103,7 @@ namespace Azure.Maps.Search.Tests
         public async Task GetReverseGeocodingTest()
         {
             var client = CreateClient();
-            IList<double> coordinates = new[] { -122.34255, 47.600000000000001 };
+            IList<double> coordinates = new[] { -122.34255, 47.65555 };
             var response = await client.GetReverseGeocodingAsync(coordinates);
             Assert.AreEqual("Seattle", response.Value.Features[0].Properties.Address.Locality);
         }
@@ -127,11 +127,11 @@ namespace Azure.Maps.Search.Tests
                     {
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { -122.34255, 47.600000000000001 }
+                            Coordinates = new[] { -122.34255, 47.65555 }
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { -122.34255, 47.600000000000001 }
+                            Coordinates = new[] { -122.34255, 47.65555 }
                         },
                     };
             ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);
@@ -148,11 +148,11 @@ namespace Azure.Maps.Search.Tests
                     {
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { -122.34255, 47.600000000000001 }
+                            Coordinates = new[] { -122.34255, 47.65555 }
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { -122.34255, 47.600000000000001 }
+                            Coordinates = new[] { -122.34255, 47.65555 }
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
