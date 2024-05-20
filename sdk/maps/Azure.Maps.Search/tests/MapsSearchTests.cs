@@ -156,7 +156,7 @@ namespace Azure.Maps.Search.Tests
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { 2.294911, 148.858561 }
+                            Coordinates = new[] { 2.0, 148.0 }
                         },
                     };
             ReverseGeocodingBatchRequestBody body = new ReverseGeocodingBatchRequestBody(items);
