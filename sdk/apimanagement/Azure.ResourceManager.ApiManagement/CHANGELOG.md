@@ -7,8 +7,9 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-
+- fix bugs caused by applying to the lastest 'require url' for opeartion_Id_:ContentType_CreateOrUpdate and ContentItem_CreateOrUpdate in apimcontenttypes.json
 ### Other Changes
+- Bump API version to 2022-08-01.
 
 ## 1.2.0-beta.1 (2024-04-22)
 
