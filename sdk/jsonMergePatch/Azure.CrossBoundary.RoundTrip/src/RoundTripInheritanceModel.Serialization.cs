@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.SameBoundary.RoundTrip
+namespace Azure.CrossBoundary.RoundTrip
 {
     public partial class RoundTripInheritanceModel : IUtf8JsonSerializable, IJsonModel<RoundTripInheritanceModel>
     {
@@ -264,14 +264,14 @@ namespace Azure.SameBoundary.RoundTrip
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RoundTripInheritanceModel FromResponse(Response response)
+        internal static RoundTripInheritanceModel FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRoundTripInheritanceModel(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal override RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue<RoundTripInheritanceModel>(this, new ModelReaderWriterOptions("W"));

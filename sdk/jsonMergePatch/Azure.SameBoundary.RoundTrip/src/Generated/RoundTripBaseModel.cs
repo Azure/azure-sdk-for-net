@@ -58,7 +58,7 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="baseProperty2"></param>
         /// <param name="baseProperty3"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoundTripBaseModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        protected RoundTripBaseModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _baseProperty1 = baseProperty1;
             _baseProperty2 = baseProperty2;
@@ -67,7 +67,7 @@ namespace Azure.SameBoundary.RoundTrip
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripBaseModel"/> for deserialization. </summary>
-        internal RoundTripBaseModel()
+        protected RoundTripBaseModel()
         {
         }
 
@@ -105,9 +105,13 @@ namespace Azure.SameBoundary.RoundTrip
 
         // [Patch] This is to ensure "reading whether the model is changed" is an atomic operation.
         private bool _isChanged = false;
-        internal virtual bool IsChanged => _isChanged;
+        // [Patch] Cross boundary cases => public; Same boundary => internal
+        /// <summary> Placeholder. </summary>
+        public virtual bool IsChanged => _isChanged;
         // [Patch] `virtual`: so that we can override this method in the derived class.
-        internal virtual bool IsKeyChanged(string name)
+        // [Patch] Cross boundary cases => protected; Same boundary => private protected
+        /// <summary> Placeholder. </summary>
+        protected virtual bool IsPropertyChanged(string name)
         {
             switch (name)
             {
@@ -119,6 +123,18 @@ namespace Azure.SameBoundary.RoundTrip
                     return false;
                 default:
                     return false;
+            }
+        }
+
+        /// <summary> Placeholder. </summary>
+        public IReadOnlyList<string> GetChangedKeys(string name)
+        {
+            switch (name)
+            {
+                case nameof(BaseProperty3):
+                    return ((ChangeTrackingDictionary<string, string>)BaseProperty3).ChangedKeys;
+                default:
+                    throw new NotSupportedException();
             }
         }
     }

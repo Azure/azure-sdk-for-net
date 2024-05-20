@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.SameBoundary.RoundTrip
+namespace Azure.CrossBoundary.RoundTrip
 {
     /// <summary> The RoundTripInheritanceModel. </summary>
-    public partial class RoundTripInheritanceModel : RoundTripBaseModel
+    public partial class RoundTripInheritanceModel : Azure.SameBoundary.RoundTrip.RoundTripBaseModel
     {
         /// <summary> Initializes a new instance of <see cref="RoundTripInheritanceModel"/>. </summary>
         /// <param name="baseProperty2"></param>
@@ -52,6 +52,7 @@ namespace Azure.SameBoundary.RoundTrip
         private bool _isChanged = false;
         /// <summary> Placeholder. </summary>
         public override bool IsChanged => _isChanged || base.IsChanged;
+
         /// <summary> Placeholder. </summary>
         protected override bool IsPropertyChanged(string name)
         {
