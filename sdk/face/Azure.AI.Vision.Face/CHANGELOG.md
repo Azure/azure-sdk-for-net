@@ -10,8 +10,7 @@ This package's [documentation](https://github.com/Azure/azure-sdk-for-net/tree/m
 - This library supports only the Azure AI Face v1.1-preview.1 API.
 - The namespace/package name for Azure AI Face has changed from `Microsoft.Azure.CognitiveServices.Vision.Face` to `Azure.AI.Vision.Face`.
 - Three client design:
-  - `FaceClient` to perform core Face functions such as face detection, recognition(identification and verification), finding similar faces and grouping faces.
-  - `FaceAdministrationClient` to managed the following data structures that hold data on faces and persons for Face recognition.
+  - `FaceClient` to perform core Face functions such as face detection, verification, finding similar faces and grouping faces.
   - `FaceSessionClient` to interact with sessions which is used for Liveness detection.
 
 ### Features Added

@@ -278,7 +278,7 @@ For example, if you submit a image with an invalid `Uri`, a `400` error is retur
 ```C# Snippet:DetectFacesInvalidUrl
 var invalidUri = new Uri("http://invalid.uri");
 try {
-    var detectResponse = client.DetectFromUrl(
+    var detectResponse = client.Detect(
         invalidUri,
         FaceDetectionModel.Detection01,
         FaceRecognitionModel.Recognition04,
@@ -373,8 +373,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [face_sample_detection]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample1_FaceDetection.md
 [liveness_tutorial]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
 [integrate_liveness_into_mobile_application]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#integrate-liveness-into-mobile-application
-[face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample3_DetectLivenessWithSession.md
-[face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample4_DetectLivenessWithVerifyWithSession.md
+[face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample2_DetectLivenessWithSession.md
+[face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample3_DetectLivenessWithVerifyWithSession.md
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 

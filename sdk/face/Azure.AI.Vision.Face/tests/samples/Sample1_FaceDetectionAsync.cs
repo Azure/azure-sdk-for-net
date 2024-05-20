@@ -81,7 +81,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:DetectFacesFromUrlAsync
 
-            var detectResponse = await client.DetectFromUrlAsync(
+            var detectResponse = await client.DetectAsync(
                 imageUri,
                 FaceDetectionModel.Detection01,
                 FaceRecognitionModel.Recognition04,
