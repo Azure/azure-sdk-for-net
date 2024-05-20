@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Common properties of language script. </summary>
-    public partial class CommonScriptModel
+    public partial class LanguageScript
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,42 +45,41 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="dir"/> is null. </exception>
-        internal CommonScriptModel(string code, string name, string nativeName, string dir)
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/> or <paramref name="nativeName"/> is null. </exception>
+        internal LanguageScript(string code, string name, string nativeName, LanguageDirectionality directionality)
         {
             Argument.AssertNotNull(code, nameof(code));
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(nativeName, nameof(nativeName));
-            Argument.AssertNotNull(dir, nameof(dir));
 
             Code = code;
             Name = name;
             NativeName = nativeName;
-            Dir = dir;
+            Directionality = directionality;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonScriptModel(string code, string name, string nativeName, string dir, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LanguageScript(string code, string name, string nativeName, LanguageDirectionality directionality, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Name = name;
             NativeName = nativeName;
-            Dir = dir;
+            Directionality = directionality;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/> for deserialization. </summary>
-        internal CommonScriptModel()
+        /// <summary> Initializes a new instance of <see cref="LanguageScript"/> for deserialization. </summary>
+        internal LanguageScript()
         {
         }
 
@@ -91,6 +90,6 @@ namespace Azure.AI.Translation.Text
         /// <summary> Display name of the language in the locale native for the language. </summary>
         public string NativeName { get; }
         /// <summary> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </summary>
-        public string Dir { get; }
+        public LanguageDirectionality Directionality { get; }
     }
 }

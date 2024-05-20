@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class CommonScriptModel : IUtf8JsonSerializable, IJsonModel<CommonScriptModel>
+    public partial class LanguageScript : IUtf8JsonSerializable, IJsonModel<LanguageScript>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonScriptModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LanguageScript>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CommonScriptModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LanguageScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonScriptModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LanguageScript>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonScriptModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LanguageScript)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.AI.Translation.Text
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Dir);
+            writer.WriteStringValue(Directionality.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,19 +52,19 @@ namespace Azure.AI.Translation.Text
             writer.WriteEndObject();
         }
 
-        CommonScriptModel IJsonModel<CommonScriptModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LanguageScript IJsonModel<LanguageScript>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonScriptModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LanguageScript>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonScriptModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LanguageScript)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommonScriptModel(document.RootElement, options);
+            return DeserializeLanguageScript(document.RootElement, options);
         }
 
-        internal static CommonScriptModel DeserializeCommonScriptModel(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LanguageScript DeserializeLanguageScript(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,7 +75,7 @@ namespace Azure.AI.Translation.Text
             string code = default;
             string name = default;
             string nativeName = default;
-            string dir = default;
+            LanguageDirectionality dir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = property.Value.GetString();
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,46 +106,46 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CommonScriptModel(code, name, nativeName, dir, serializedAdditionalRawData);
+            return new LanguageScript(code, name, nativeName, dir, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CommonScriptModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LanguageScript>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonScriptModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LanguageScript>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonScriptModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LanguageScript)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CommonScriptModel IPersistableModel<CommonScriptModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LanguageScript IPersistableModel<LanguageScript>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommonScriptModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LanguageScript>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCommonScriptModel(document.RootElement, options);
+                        return DeserializeLanguageScript(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonScriptModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LanguageScript)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CommonScriptModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LanguageScript>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CommonScriptModel FromResponse(Response response)
+        internal static LanguageScript FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCommonScriptModel(document.RootElement);
+            return DeserializeLanguageScript(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

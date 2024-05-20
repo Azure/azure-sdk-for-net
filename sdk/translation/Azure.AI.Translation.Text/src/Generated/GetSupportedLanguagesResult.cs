@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Response for the languages API. </summary>
-    public partial class GetLanguagesResult
+    public partial class GetSupportedLanguagesResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.AI.Translation.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetLanguagesResult"/>. </summary>
-        internal GetLanguagesResult()
+        /// <summary> Initializes a new instance of <see cref="GetSupportedLanguagesResult"/>. </summary>
+        internal GetSupportedLanguagesResult()
         {
             Translation = new ChangeTrackingDictionary<string, TranslationLanguage>();
             Transliteration = new ChangeTrackingDictionary<string, TransliterationLanguage>();
             Dictionary = new ChangeTrackingDictionary<string, SourceDictionaryLanguage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetLanguagesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSupportedLanguagesResult"/>. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="dictionary"> Languages that support dictionary API. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation, IReadOnlyDictionary<string, TransliterationLanguage> transliteration, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Translation = translation;
             Transliteration = transliteration;

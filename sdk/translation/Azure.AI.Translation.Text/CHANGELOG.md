@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 - Add support for using AAD authentication.
 
 ### Breaking Changes
+
+- Changed the method `GetLanguages` to `GetSupportedLanguages`.
+- Changed the name of `Score` property to `Confidence` in `DetectedLanguage`.
+- Changed the name of `Dir` property to `Directionality` in `Languages` models. Changed the type from `string` to `Azure.AI.Translation.Text.LanguageDirectionality`.
+- Changed the name of `Azure.AI.Translation.Text.Translation` to `Azure.AI.Translation.Text.TranslationText`.
+- Changed the name of `SentLen` property to `SentencesLengths` in `BreakSentenceItem`.
+- Changed type name from `SentenceLength` to `SentenceBoundaries`.
+- Changed the name of `Proj` property to `Projections` in `TranslatedTextAlignment` type.
 
 ### Bugs Fixed
 
