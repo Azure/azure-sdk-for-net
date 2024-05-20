@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Play started event. </summary>
-    public partial class PlayStarted
+    internal partial class PlayStarted
     {
         /// <summary> Initializes a new instance of <see cref="PlayStarted"/>. </summary>
         internal PlayStarted()
@@ -29,5 +29,16 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             ResultInformation = resultInformation;
         }
+
+        /// <summary> Gets or sets call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Gets or sets server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Gets or sets correlation ID for event to call correlation. </summary>
+        public string CorrelationId { get; }
+        /// <summary> Gets or sets used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Gets or sets contains the resulting SIP code, sub-code and message. </summary>
+        public ResultInformation ResultInformation { get; }
     }
 }

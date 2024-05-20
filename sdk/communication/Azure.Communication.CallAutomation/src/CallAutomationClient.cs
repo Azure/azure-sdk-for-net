@@ -208,8 +208,6 @@ namespace Azure.Communication.CallAutomation
                 };
             }
 
-            request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
-            request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
 
@@ -705,8 +703,6 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
-            request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
-            request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
 
             return request;
         }
@@ -735,9 +731,6 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
-            request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
-            request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
-
             return request;
         }
 
@@ -751,21 +744,6 @@ namespace Azure.Communication.CallAutomation
                 return false;
             var uriString = uri.AbsoluteUri;
             return Uri.IsWellFormedUriString(uriString, UriKind.Absolute) && new Uri(uriString).Scheme == Uri.UriSchemeHttps;
-        }
-
-        private static MediaStreamingOptionsInternal CreateMediaStreamingOptionsInternal(MediaStreamingOptions configuration)
-        {
-            return configuration == default
-                ? default
-                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
-                configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming);
-        }
-        private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
-        {
-            return configuration == default
-                ? default
-                : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
-                configuration.StartTranscription);
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

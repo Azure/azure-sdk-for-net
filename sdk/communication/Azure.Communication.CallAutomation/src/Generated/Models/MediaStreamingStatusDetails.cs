@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The MediaStreamingStatusDetails. </summary>
-    public readonly partial struct MediaStreamingStatusDetails : IEquatable<MediaStreamingStatusDetails>
+    internal readonly partial struct MediaStreamingStatusDetails : IEquatable<MediaStreamingStatusDetails>
     {
         private readonly string _value;
 

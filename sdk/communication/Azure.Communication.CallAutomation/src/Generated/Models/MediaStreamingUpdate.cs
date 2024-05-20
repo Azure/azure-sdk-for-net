@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The MediaStreamingUpdate. </summary>
-    public partial class MediaStreamingUpdate
+    internal partial class MediaStreamingUpdate
     {
         /// <summary> Initializes a new instance of <see cref="MediaStreamingUpdate"/>. </summary>
         internal MediaStreamingUpdate()

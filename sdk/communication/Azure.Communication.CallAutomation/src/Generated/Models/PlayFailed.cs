@@ -7,22 +7,22 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The RecognizeFailed. </summary>
-    internal partial class RecognizeFailedInternal
+    /// <summary> The PlayFailed. </summary>
+    public partial class PlayFailed
     {
-        /// <summary> Initializes a new instance of <see cref="RecognizeFailedInternal"/>. </summary>
-        internal RecognizeFailedInternal()
+        /// <summary> Initializes a new instance of <see cref="PlayFailed"/>. </summary>
+        internal PlayFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecognizeFailedInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="failedPlaySourceIndex"> Contains the index of the failed play source. </param>
-        internal RecognizeFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, int? failedPlaySourceIndex)
+        internal PlayFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, int? failedPlaySourceIndex)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;

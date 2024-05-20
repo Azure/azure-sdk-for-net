@@ -8,21 +8,21 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TranscriptionFailed. </summary>
-    internal partial class TranscriptionFailedInternal
+    internal partial class TranscriptionFailed
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptionFailedInternal"/>. </summary>
-        internal TranscriptionFailedInternal()
+        /// <summary> Initializes a new instance of <see cref="TranscriptionFailed"/>. </summary>
+        internal TranscriptionFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionFailedInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionFailed"/>. </summary>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal TranscriptionFailedInternal(string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdate, string callConnectionId, string serverCallId, string correlationId)
+        internal TranscriptionFailed(string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdate, string callConnectionId, string serverCallId, string correlationId)
         {
             OperationContext = operationContext;
             ResultInformation = resultInformation;
@@ -31,7 +31,18 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
         }
+
+        /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
+        public ResultInformation ResultInformation { get; }
         /// <summary> Defines the result for TranscriptionUpdate with the current status and the details about the status. </summary>
         public TranscriptionUpdate TranscriptionUpdate { get; }
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
     }
 }

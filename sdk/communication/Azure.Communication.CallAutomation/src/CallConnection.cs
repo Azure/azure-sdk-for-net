@@ -281,8 +281,7 @@ namespace Azure.Communication.CallAutomation
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
-                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
-                SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber)
+                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
             };
 
             return request;

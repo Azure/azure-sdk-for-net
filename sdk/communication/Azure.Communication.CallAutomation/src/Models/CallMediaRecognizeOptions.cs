@@ -45,11 +45,6 @@ namespace Azure.Communication.CallAutomation
         public PlaySource Prompt { get; set; }
 
         /// <summary>
-        /// PlaySource objects representing the sources to play.
-        /// </summary>
-        public IReadOnlyList<PlaySource> PlayPrompts { get; }
-
-        /// <summary>
         /// Determines if we interrupt the prompt and start recognizing.
         /// </summary>
         public bool InterruptPrompt { get; set; }

@@ -8,21 +8,21 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The MediaStreamingFailed. </summary>
-    internal partial class MediaStreamingFailedInternal
+    internal partial class MediaStreamingFailed
     {
-        /// <summary> Initializes a new instance of <see cref="MediaStreamingFailedInternal"/>. </summary>
-        internal MediaStreamingFailedInternal()
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingFailed"/>. </summary>
+        internal MediaStreamingFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaStreamingFailedInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="mediaStreamingUpdate"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
-        internal MediaStreamingFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, MediaStreamingUpdate mediaStreamingUpdate)
+        internal MediaStreamingFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, MediaStreamingUpdate mediaStreamingUpdate)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -31,6 +31,17 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
             MediaStreamingUpdate = mediaStreamingUpdate;
         }
+
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
+        /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
+        public string OperationContext { get; }
+        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
+        public ResultInformation ResultInformation { get; }
         /// <summary> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </summary>
         public MediaStreamingUpdate MediaStreamingUpdate { get; }
     }

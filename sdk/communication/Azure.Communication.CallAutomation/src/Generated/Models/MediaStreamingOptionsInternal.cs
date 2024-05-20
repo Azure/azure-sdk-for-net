@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="contentType"> Content type to stream, eg. audio. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
-        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
+        public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransportType transportType, MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType)
         {
             Argument.AssertNotNull(transportUrl, nameof(transportUrl));
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="contentType"> Content type to stream, eg. audio. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <param name="startMediaStreaming"> Determines if the media streaming should be started immediately after call is answered or not. </param>
-        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming)
+        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransportType transportType, MediaStreamingContentType contentType, MediaStreamingAudioChannelType audioChannelType, bool? startMediaStreaming)
         {
             TransportUrl = transportUrl;
             TransportType = transportType;
@@ -46,11 +46,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transport URL for media streaming. </summary>
         public string TransportUrl { get; }
         /// <summary> The type of transport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransport TransportType { get; }
+        public MediaStreamingTransportType TransportType { get; }
         /// <summary> Content type to stream, eg. audio. </summary>
-        public MediaStreamingContent ContentType { get; }
+        public MediaStreamingContentType ContentType { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannel AudioChannelType { get; }
+        public MediaStreamingAudioChannelType AudioChannelType { get; }
         /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
         public bool? StartMediaStreaming { get; set; }
     }

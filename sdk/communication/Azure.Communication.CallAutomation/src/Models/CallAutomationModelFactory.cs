@@ -20,7 +20,6 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("RecordingStateChanged", typeof(string), typeof(RecordingState), typeof(DateTimeOffset?), typeof(RecordingKind?), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
-    [CodeGenSuppress("HoldFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
@@ -52,10 +51,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
-        /// <param name="mediaStreamingSubscription">The subscription details for Media Streaming.</param>
-        /// <param name="transcriptionSubscription">The subscription details for transcription.</param>
         /// <param name="answeredBy">Identifier that answered the call.</param>
-        /// <param name="answeredFor">Identity of the original Pstn target of an incoming Call.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -66,22 +62,18 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
-            CommunicationUserIdentifier answeredBy = default,
-            MediaStreamingSubscription mediaStreamingSubscription = default,
-            TranscriptionSubscription transcriptionSubscription = default,
-            PhoneNumberIdentifier answeredFor = default)
+            CommunicationUserIdentifier answeredBy = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaStreamingSubscription, transcriptionSubscription, answeredBy, answeredFor);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, answeredBy);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        /// <param name="isOnHold"> Is participant on hold. </param>
         /// <returns> A new <see cref="CallAutomation.CallParticipant"/> instance for mocking. </returns>
-        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default, bool isOnHold = default)
+        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default)
         {
-            return new CallParticipant(identifier, isMuted, isOnHold);
+            return new CallParticipant(identifier, isMuted);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -391,9 +383,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayFailed"/> instance for mocking. </returns>
         public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, int? failedPlaySourceIndex = null)
         {
-            var internalObject = new PlayFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
-
-            return new PlayFailed(internalObject);
+            return new PlayFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
@@ -424,13 +414,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="failedPlaySourceIndex"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
-        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, int? failedPlaySourceIndex = null)
+        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            var internalObject = new RecognizeFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
-
-            return new RecognizeFailed(internalObject);
+            return new RecognizeFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
@@ -483,50 +470,6 @@ namespace Azure.Communication.CallAutomation
             var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
             return new SendDtmfTonesFailed(internalObject);
-        }
-
-        /// <summary> Initializes a new instance of HoldFailed. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
-        public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            var internalObject = new HoldFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-
-            return new HoldFailed(internalObject);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingFailed"/>. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="mediaStreamingUpdate"> Defines the result for MediaStreamingUpdate with the current status and the details about the status. </param>
-        /// <returns> A new <see cref="CallAutomation.MediaStreamingFailed"/> instance for mocking. </returns>
-        public static MediaStreamingFailed MediaStreamingFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, MediaStreamingUpdate mediaStreamingUpdate = null)
-        {
-            var internalObject = new MediaStreamingFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, mediaStreamingUpdate);
-
-            return new MediaStreamingFailed(internalObject);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
-        public static TranscriptionFailed TranscriptionFailed(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
-        {
-            var internalObject = new TranscriptionFailedInternal(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
-
-            return new TranscriptionFailed(internalObject);
         }
     }
 }

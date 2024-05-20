@@ -9,45 +9,22 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class TranscriptionStarted
+    public partial class PlayFailed
     {
-        internal static TranscriptionStarted DeserializeTranscriptionStarted(JsonElement element)
+        internal static PlayFailed DeserializePlayFailed(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string operationContext = default;
-            ResultInformation resultInformation = default;
-            TranscriptionUpdate transcriptionUpdate = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            int? failedPlaySourceIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("transcriptionUpdate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transcriptionUpdate = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -63,22 +40,45 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("failedPlaySourceIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failedPlaySourceIndex = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new TranscriptionStarted(
-                operationContext,
-                resultInformation,
-                transcriptionUpdate,
+            return new PlayFailed(
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                operationContext,
+                resultInformation,
+                failedPlaySourceIndex);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranscriptionStarted FromResponse(Response response)
+        internal static PlayFailed FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTranscriptionStarted(document.RootElement);
+            return DeserializePlayFailed(document.RootElement);
         }
     }
 }
