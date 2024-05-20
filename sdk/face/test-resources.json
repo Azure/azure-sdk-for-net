@@ -52,7 +52,7 @@
             "apiVersion": "[variables('faceApiVersion')]",
             "name": "[variables('faceAccountName')]",
             "location": "[parameters('location')]",
-            "kind": "Face",
+            "kind": "CognitiveServices",
             "tags": {
                 "Owner": "[resourceGroup().name]"
             },
@@ -72,10 +72,6 @@
         "FACE_ENDPOINT": {
             "type": "string",
             "value": "[variables('azureFaceUrl')]"
-        },
-        "FACE_KEY": {
-            "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('faceAccountName')), variables('faceApiVersion')).key1]"
         }
     }
 }
