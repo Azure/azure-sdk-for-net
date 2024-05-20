@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class SqlVmData : IUtf8JsonSerializable, IJsonModel<SqlVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
-                writer.WriteObjectValue<WindowsServerFailoverClusterDomainCredentials>(WindowsServerFailoverClusterDomainCredentials, options);
+                writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials, options);
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
             {
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AutoPatchingSettings))
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
-                writer.WriteObjectValue<SqlVmAutoPatchingSettings>(AutoPatchingSettings, options);
+                writer.WriteObjectValue(AutoPatchingSettings, options);
             }
             if (Optional.IsDefined(AutoBackupSettings))
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
-                writer.WriteObjectValue<SqlVmAutoBackupSettings>(AutoBackupSettings, options);
+                writer.WriteObjectValue(AutoBackupSettings, options);
             }
             if (Optional.IsDefined(KeyVaultCredentialSettings))
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
-                writer.WriteObjectValue<SqlVmKeyVaultCredentialSettings>(KeyVaultCredentialSettings, options);
+                writer.WriteObjectValue(KeyVaultCredentialSettings, options);
             }
             if (Optional.IsDefined(ServerConfigurationsManagementSettings))
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
-                writer.WriteObjectValue<SqlServerConfigurationsManagementSettings>(ServerConfigurationsManagementSettings, options);
+                writer.WriteObjectValue(ServerConfigurationsManagementSettings, options);
             }
             if (Optional.IsDefined(StorageConfigurationSettings))
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
-                writer.WriteObjectValue<SqlVmStorageConfigurationSettings>(StorageConfigurationSettings, options);
+                writer.WriteObjectValue(StorageConfigurationSettings, options);
             }
             if (Optional.IsDefined(AssessmentSettings))
             {
                 writer.WritePropertyName("assessmentSettings"u8);
-                writer.WriteObjectValue<SqlVmAssessmentSettings>(AssessmentSettings, options);
+                writer.WriteObjectValue(AssessmentSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static SqlVmData DeserializeSqlVmData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             SqlVmStorageConfigurationSettings storageConfigurationSettings = default;
             SqlVmAssessmentSettings assessmentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -402,10 +402,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlVmData(
                 id,
                 name,

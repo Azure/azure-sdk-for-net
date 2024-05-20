@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
-                writer.WriteObjectValue<HealthcareEntityAssertion>(Assertion);
+                writer.WriteObjectValue(Assertion);
             }
             if (Optional.IsDefined(Name))
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue<EntityDataSource>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -140,6 +140,22 @@ namespace Azure.AI.TextAnalytics.Models
                 assertion,
                 name,
                 links ?? new ChangeTrackingList<EntityDataSource>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareEntityInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

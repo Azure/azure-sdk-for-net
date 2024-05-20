@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.ManagementPartner
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string partnerId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ManagementPartner/partners/", false);
+            uri.AppendPath(partnerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string partnerId)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +115,16 @@ namespace Azure.ResourceManager.ManagementPartner
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string partnerId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ManagementPartner/partners/", false);
+            uri.AppendPath(partnerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string partnerId)
         {
             var message = _pipeline.CreateMessage();
@@ -171,6 +191,16 @@ namespace Azure.ResourceManager.ManagementPartner
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string partnerId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ManagementPartner/partners/", false);
+            uri.AppendPath(partnerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string partnerId)
         {
             var message = _pipeline.CreateMessage();
@@ -235,6 +265,16 @@ namespace Azure.ResourceManager.ManagementPartner
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string partnerId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ManagementPartner/partners/", false);
+            uri.AppendPath(partnerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string partnerId)

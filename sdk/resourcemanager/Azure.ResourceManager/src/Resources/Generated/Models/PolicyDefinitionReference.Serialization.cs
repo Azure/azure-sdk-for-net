@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PolicyDefinitionReference : IUtf8JsonSerializable, IJsonModel<PolicyDefinitionReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyDefinitionReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyDefinitionReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyDefinitionReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ArmPolicyParameterValue>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PolicyDefinitionReference DeserializePolicyDefinitionReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Models
             string policyDefinitionReferenceId = default;
             IList<string> groupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"u8))
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyDefinitionReference(policyDefinitionId, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(), policyDefinitionReferenceId, groupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -161,15 +161,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
-            if (Optional.IsDefined(PolicyDefinitionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  policyDefinitionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyDefinitionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  policyDefinitionId: ");
                     if (PolicyDefinitionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -183,17 +184,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
-            if (Optional.IsCollectionDefined(Parameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Parameters.Any() || hasPropertyOverride)
+                builder.Append("  parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Parameters))
                 {
-                    builder.Append("  parameters: ");
-                    if (hasPropertyOverride)
+                    if (Parameters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  parameters: ");
                         builder.AppendLine("{");
                         foreach (var item in Parameters)
                         {
@@ -206,15 +208,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionReferenceId), out propertyOverride);
-            if (Optional.IsDefined(PolicyDefinitionReferenceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  policyDefinitionReferenceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyDefinitionReferenceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  policyDefinitionReferenceId: ");
                     if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -228,17 +231,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(GroupNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (GroupNames.Any() || hasPropertyOverride)
+                builder.Append("  groupNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(GroupNames))
                 {
-                    builder.Append("  groupNames: ");
-                    if (hasPropertyOverride)
+                    if (GroupNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  groupNames: ");
                         builder.AppendLine("[");
                         foreach (var item in GroupNames)
                         {

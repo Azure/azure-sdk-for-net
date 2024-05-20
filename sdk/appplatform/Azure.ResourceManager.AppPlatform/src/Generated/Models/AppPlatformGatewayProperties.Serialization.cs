@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformGatewayProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformGatewayProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformGatewayProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
-                writer.WriteObjectValue<AppPlatformSsoProperties>(SsoProperties, options);
+                writer.WriteObjectValue(SsoProperties, options);
             }
             if (Optional.IsDefined(ApiMetadataProperties))
             {
                 writer.WritePropertyName("apiMetadataProperties"u8);
-                writer.WriteObjectValue<AppPlatformGatewayApiMetadataProperties>(ApiMetadataProperties, options);
+                writer.WriteObjectValue(ApiMetadataProperties, options);
             }
             if (Optional.IsDefined(CorsProperties))
             {
                 writer.WritePropertyName("corsProperties"u8);
-                writer.WriteObjectValue<AppPlatformGatewayCorsProperties>(CorsProperties, options);
+                writer.WriteObjectValue(CorsProperties, options);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue<AppPlatformGatewayResourceRequirements>(ResourceRequests, options);
+                writer.WriteObjectValue(ResourceRequests, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue<AppPlatformGatewayInstance>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(OperatorProperties))
             {
                 writer.WritePropertyName("operatorProperties"u8);
-                writer.WriteObjectValue<AppPlatformGatewayOperatorProperties>(OperatorProperties, options);
+                writer.WriteObjectValue(OperatorProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayProperties DeserializeAppPlatformGatewayProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             IReadOnlyList<AppPlatformGatewayInstance> instances = default;
             AppPlatformGatewayOperatorProperties operatorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformGatewayProperties(
                 provisioningState,
                 @public,

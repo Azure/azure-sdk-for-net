@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmPolicyParameter : IUtf8JsonSerializable, IJsonModel<ArmPolicyParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmPolicyParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmPolicyParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmPolicyParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<ParameterDefinitionsValueMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmPolicyParameter DeserializeArmPolicyParameter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources.Models
             BinaryData defaultValue = default;
             ParameterDefinitionsValueMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ArmPolicyParameter(type, allowedValues ?? new ChangeTrackingList<BinaryData>(), defaultValue, metadata, serializedAdditionalRawData);
         }
 
@@ -187,31 +187,33 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParameterType), out propertyOverride);
-            if (Optional.IsDefined(ParameterType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ParameterType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{ParameterType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedValues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedValues.Any() || hasPropertyOverride)
+                builder.Append("  allowedValues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedValues))
                 {
-                    builder.Append("  allowedValues: ");
-                    if (hasPropertyOverride)
+                    if (AllowedValues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedValues: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedValues)
                         {
@@ -228,29 +230,31 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultValue), out propertyOverride);
-            if (Optional.IsDefined(DefaultValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultValue: ");
                     builder.AppendLine($"'{DefaultValue.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  metadata: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  metadata: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
                 }
             }

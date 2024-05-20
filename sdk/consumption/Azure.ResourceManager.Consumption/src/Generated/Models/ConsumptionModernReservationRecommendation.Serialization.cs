@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionModernReservationRecommendation : IUtf8JsonSerializable, IJsonModel<ConsumptionModernReservationRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernReservationRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernReservationRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionModernReservationRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(CostWithNoReservedInstances))
             {
                 writer.WritePropertyName("costWithNoReservedInstances"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(CostWithNoReservedInstances, options);
+                writer.WriteObjectValue(CostWithNoReservedInstances, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
             {
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(TotalCostWithReservedInstances))
             {
                 writer.WritePropertyName("totalCostWithReservedInstances"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(TotalCostWithReservedInstances, options);
+                writer.WriteObjectValue(TotalCostWithReservedInstances, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NetSavings))
             {
                 writer.WritePropertyName("netSavings"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(NetSavings, options);
+                writer.WriteObjectValue(NetSavings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FirstUsageOn))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue<ConsumptionSkuProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionModernReservationRecommendation DeserializeConsumptionModernReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Consumption.Models
             IReadOnlyList<ConsumptionSkuProperty> skuProperties = default;
             string skuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -435,10 +435,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionModernReservationRecommendation(
                 id,
                 name,

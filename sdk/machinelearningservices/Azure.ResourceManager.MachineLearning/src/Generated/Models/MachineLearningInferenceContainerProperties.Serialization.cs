@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningInferenceContainerProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningInferenceContainerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningInferenceContainerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningInferenceContainerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningInferenceContainerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(LivenessRoute))
             {
                 writer.WritePropertyName("livenessRoute"u8);
-                writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(LivenessRoute, options);
+                writer.WriteObjectValue(LivenessRoute, options);
             }
             if (Optional.IsDefined(ReadinessRoute))
             {
                 writer.WritePropertyName("readinessRoute"u8);
-                writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ReadinessRoute, options);
+                writer.WriteObjectValue(ReadinessRoute, options);
             }
             if (Optional.IsDefined(ScoringRoute))
             {
                 writer.WritePropertyName("scoringRoute"u8);
-                writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ScoringRoute, options);
+                writer.WriteObjectValue(ScoringRoute, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningInferenceContainerRoute readinessRoute = default;
             MachineLearningInferenceContainerRoute scoringRoute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livenessRoute"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningInferenceContainerProperties(livenessRoute, readinessRoute, scoringRoute, serializedAdditionalRawData);
         }
 

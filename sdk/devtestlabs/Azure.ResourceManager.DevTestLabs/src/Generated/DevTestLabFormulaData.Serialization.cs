@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabFormulaData : IUtf8JsonSerializable, IJsonModel<DevTestLabFormulaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabFormulaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabFormulaData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabFormulaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
-                writer.WriteObjectValue<DevTestLabVmCreationContent>(FormulaContent, options);
+                writer.WriteObjectValue(FormulaContent, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue<FormulaPropertiesFromVm>(Vm, options);
+                writer.WriteObjectValue(Vm, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabFormulaData DeserializeDevTestLabFormulaData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string provisioningState = default;
             Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -273,10 +273,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabFormulaData(
                 id,
                 name,

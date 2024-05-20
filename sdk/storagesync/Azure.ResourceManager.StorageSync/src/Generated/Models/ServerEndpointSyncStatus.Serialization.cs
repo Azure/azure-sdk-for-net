@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class ServerEndpointSyncStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerEndpointSyncStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
-                writer.WriteObjectValue<ServerEndpointSyncSessionStatus>(UploadStatus, options);
+                writer.WriteObjectValue(UploadStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue<ServerEndpointSyncSessionStatus>(DownloadStatus, options);
+                writer.WriteObjectValue(DownloadStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UploadActivity))
             {
                 writer.WritePropertyName("uploadActivity"u8);
-                writer.WriteObjectValue<ServerEndpointSyncActivityStatus>(UploadActivity, options);
+                writer.WriteObjectValue(UploadActivity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
             {
                 writer.WritePropertyName("downloadActivity"u8);
-                writer.WriteObjectValue<ServerEndpointSyncActivityStatus>(DownloadActivity, options);
+                writer.WriteObjectValue(DownloadActivity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
-                writer.WriteObjectValue<ServerEndpointBackgroundDataDownloadActivity>(BackgroundDataDownloadActivity, options);
+                writer.WriteObjectValue(BackgroundDataDownloadActivity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             ServerEndpointOfflineDataTransferState? offlineDataTransferStatus = default;
             ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("downloadHealth"u8))
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServerEndpointSyncStatus(
                 downloadHealth,
                 uploadHealth,

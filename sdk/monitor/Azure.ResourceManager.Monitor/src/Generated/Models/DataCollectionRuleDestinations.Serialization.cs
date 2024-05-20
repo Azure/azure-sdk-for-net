@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class DataCollectionRuleDestinations : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleDestinations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleDestinations>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleDestinations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionRuleDestinations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
-                    writer.WriteObjectValue<LogAnalyticsDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoringAccounts)
                 {
-                    writer.WriteObjectValue<MonitoringAccountDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
-                writer.WriteObjectValue<DestinationsSpecAzureMonitorMetrics>(AzureMonitorMetrics, options);
+                writer.WriteObjectValue(AzureMonitorMetrics, options);
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue<DataCollectionRuleEventHubDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubsDirect)
                 {
-                    writer.WriteObjectValue<DataCollectionRuleEventHubDirectDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageBlobsDirect)
                 {
-                    writer.WriteObjectValue<DataCollectionRuleStorageBlobDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageTablesDirect)
                 {
-                    writer.WriteObjectValue<DataCollectionRuleStorageTableDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue<DataCollectionRuleStorageBlobDestination>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionRuleDestinations DeserializeDataCollectionRuleDestinations(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<DataCollectionRuleStorageTableDestination> storageTablesDirect = default;
             IList<DataCollectionRuleStorageBlobDestination> storageAccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataCollectionRuleDestinations(
                 logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
                 monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),

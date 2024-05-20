@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent DeserializeTrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             string name = default;
             Uri idProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent(name, idProvider, serializedAdditionalRawData);
         }
 

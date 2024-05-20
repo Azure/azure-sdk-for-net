@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ManagedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<ManagedIntegrationRuntimeStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIntegrationRuntimeStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIntegrationRuntimeStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedIntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue<ManagedIntegrationRuntimeNode>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherErrors)
                 {
-                    writer.WriteObjectValue<ManagedIntegrationRuntimeError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue<ManagedIntegrationRuntimeOperationResult>(LastOperation, options);
+                writer.WriteObjectValue(LastOperation, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedIntegrationRuntimeStatus DeserializeManagedIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

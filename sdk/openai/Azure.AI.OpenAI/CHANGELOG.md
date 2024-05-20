@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.16 (Unreleased)
+## 1.0.0-beta.18 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,64 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.17 (2024-05-03)
+
+### Features Added
+
+- Image input support for `gpt-4-turbo` chat completions now works with image data in addition to internet URLs.
+  Images may be now be used as `gpt-4-turbo` message content items via one of three constructors:
+  - `ChatMessageImageContent(Uri)` -- the existing constructor, used for URL-based image references
+  - `ChatMessageImageContent(Stream,string)` -- (new) used with a stream and known MIME type (like `image/png`)
+  - `ChatMessageImageContent(BinaryData,string)` -- (new) used with a BinaryData instance and known MIME type
+  Please see the [readme example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md#chat-with-images-using-gpt-4-turbo) for more details.
+
+### Breaking Changes
+
+- Public visibility of the `ChatMessageImageUrl` type is removed to promote more flexible use of data sources in
+  `ChatMessageImageContent`. Code that previously created a `ChatMessageImageUrl` using a `Uri` should simply provide
+  the `Uri` to the `ChatMessageImageContent` constructor directly.
+
+## 1.0.0-beta.16 (2024-04-11)
+
+### Features Added
+
+**Audio**
+
+- `GetAudioTranscription()` now supports word-level timestamp granularities via `AudioTranscriptionOptions`:
+  - The `Verbose` option for `ResponseFormat` must be used for any timing information to be populated
+  - `TimestampGranularityFlags` accepts a combination of the `.Word` and `.Segment` granularity values in
+    `AudioTimestampGranularity`, joined when needed via the single-pipe `|` operator
+    - For example, `TimestampGranularityFlags = AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment`
+      will request that both word-level and segment-level timestamps are provided on the transcription result
+  - If not otherwise specified, `Verbose` format will default to using segment-level timestamp information
+  - Corresponding word-level information is found on the `.Words` collection of `AudioTranscription`, peer to the
+    existing `.Segments` collection
+  - Note that word-level timing information incurs a small amount of additional processingly latency; segment-level
+    timestamps do not encounter this behavior
+- `GenerateSpeechFromText()` can now use `Wav` and `Pcm` values from `SpeechGenerationResponseFormat`, these new
+  options providing alternative uncompressed formats to `Flac`
+
+**Chat**
+
+- `ChatCompletions` and `StreamingChatCompletionsUpdate` now include the reported `Model` value from the response
+- Log probability information is now included in `StreamingChatCompletionsUpdate` when `logprobs` are requested on
+  `GetChatCompletionsStreaming()`
+- [AOAI] Custom Blocklist information in content filter results is now represented in a more structured
+  `ContentFilterDetailedResults` type
+- [AOAI] A new `IndirectAttack` content filter entry is now present on content filter results for prompts
+
+### Breaking Changes
+
+- [AOAI] `AzureChatExtensionMessageContext`'s `RequestContentFilterResults`  now uses the new
+  `ContentFilterDetailedResults` type, changed from the previous `IReadOnlyList<ContentFilterBlockListIdResult>`. The
+  previous list is now present on `CustomBlockLists.Details`, supplemented with a new `CustomBlockLists.Filtered`
+  property.
+
+### Bugs Fixed
+
+- [AOAI] An issue that sometimes caused `StreamingChatCompletionUpdates` from Azure OpenAI to inappropriately exclude
+  top-level information like `Id` and `CreatedAt` has been addressed
 
 ## 1.0.0-beta.15 (2024-03-20)
 

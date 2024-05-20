@@ -85,17 +85,20 @@
     "hnsw",
     "ienumerable",
     "illumos",
+    "imds",
     "interventional",
     "ints",
     "kubernetes",
     "kusto",
     "lucene",
     "mgmt",
+    "miscs",
     "msal",
     "Mtls",
     "northcentralus",
     "nunit",
     "odata",
+    "oidc",
     "onco",
     "opinsights",
     "otel",
@@ -124,6 +127,7 @@
     "uninstrumented",
     "vcpus",
     "Vectorizable",
+    "Vectorize",
     "Vectorizer",
     "Vectorizers",
     "vhdx",
@@ -133,8 +137,7 @@
     "vnet",
     "westcentralus",
     "westus",
-    "xunit",
-    "miscs"
+    "xunit"
   ],
   "overrides": [
     {
@@ -171,6 +174,12 @@
       "words": [
         "dynatrace",
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/astronomer/**/*.cs",
+      "words": [
+        "astro"
       ]
     },
     {
@@ -246,7 +255,8 @@
         "ssdzrs",
         "dscp",
         "vmguest",
-        "vhdx"
+        "vhdx",
+        "Nvme"
       ]
     },
     {
@@ -443,7 +453,7 @@
         "Twilio",
         "Vertica",
         "Xero",
-		    "Soql"
+        "Soql"
       ]
     },
     {
@@ -625,6 +635,15 @@
         "Hhmm",
         "Hhmmss",
         "Hhmms"
+      ]
+    },
+    {
+      "filename": "**/sdk/migrationdiscoverysap/**/*.cs",
+      "words": [
+        "Hana",
+        "Informix",
+        "Ascs",
+        "Webdisp"
       ]
     },
     {
@@ -853,15 +872,15 @@
     {
       "filename": "**/sdk/paloaltonetworks/**/*",
       "words": [
-      	"armid",
-      	"cpus",
-      	"eastus",
-      	"cloudngfw",
-      	"fqdnlists",
-      	"isvtestuklegacy",
-      	"liftr",
-      	"liftrpantestplan",
-      	"msal",
+        "armid",
+        "cpus",
+        "eastus",
+        "cloudngfw",
+        "fqdnlists",
+        "isvtestuklegacy",
+        "liftr",
+        "liftrpantestplan",
+        "msal",
         "ngfw",
         "panrsid",
         "palo",
@@ -920,7 +939,7 @@
     {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
-      	"qumulo"
+        "qumulo"
       ]
     },
     {
@@ -1017,7 +1036,7 @@
       "filename": "**/sdk/securitycenter/**/*[.md,.txt,*.cs]",
       "words": [
         "Pricings",
-        "Cspm",
+        "Cspm"
       ]
     },
     {
@@ -1041,7 +1060,7 @@
         "Saas",
         "vmuuid",
         "vnets",
-        "Wdatp",
+        "Wdatp"
       ],
       "ignoreWords": [
         "AKIARPZCNODDNAEQFSOE",
@@ -1060,7 +1079,7 @@
         "matan",
         "matanvs",
         "OSDRIVE",
-        "WASECAGENTPROV",
+        "WASECAGENTPROV"
       ]
     },
     {
@@ -1137,7 +1156,8 @@
         "Soundex",
         "Sorani",
         "Unprocessable",
-        "Beider"
+        "Beider",
+        "Exfiltration"
       ]
     },
     {
@@ -1153,6 +1173,12 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb"
+      ]
+    },
+    {
+      "filename": "**/sdk/storageactions/**/*.cs",
+      "words": [
+        "undelete"
       ]
     },
     {
@@ -1320,7 +1346,7 @@
         "protobuf",
         "Ackable",
         "awps"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/openai/**/*.cs",

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingSubscriptionAliasData : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionAliasData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionAliasData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionAliasData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingSubscriptionAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
-                writer.WriteObjectValue<BillingAmount>(LastMonthCharges, options);
+                writer.WriteObjectValue(LastMonthCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
-                writer.WriteObjectValue<BillingAmount>(MonthToDateCharges, options);
+                writer.WriteObjectValue(MonthToDateCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
-                writer.WriteObjectValue<NextBillingCycleDetails>(NextBillingCycleDetails, options);
+                writer.WriteObjectValue(NextBillingCycleDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue<CreatedSubscriptionReseller>(Reseller, options);
+                writer.WriteObjectValue(Reseller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
-                writer.WriteObjectValue<SubscriptionRenewalTermDetails>(RenewalTermDetails, options);
+                writer.WriteObjectValue(RenewalTermDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing
 
         internal static BillingSubscriptionAliasData DeserializeBillingSubscriptionAliasData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Billing
             SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
             DateTimeOffset? enrollmentAccountStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -665,10 +665,10 @@ namespace Azure.ResourceManager.Billing
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BillingSubscriptionAliasData(
                 id,
                 name,

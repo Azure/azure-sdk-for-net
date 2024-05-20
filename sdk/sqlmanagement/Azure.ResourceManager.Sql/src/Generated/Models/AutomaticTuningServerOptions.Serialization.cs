@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class AutomaticTuningServerOptions : IUtf8JsonSerializable, IJsonModel<AutomaticTuningServerOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomaticTuningServerOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomaticTuningServerOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomaticTuningServerOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static AutomaticTuningServerOptions DeserializeAutomaticTuningServerOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? reasonCode = default;
             AutomaticTuningServerReason? reasonDesc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomaticTuningServerOptions(desiredState, actualState, reasonCode, reasonDesc, serializedAdditionalRawData);
         }
 
@@ -150,57 +150,61 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
-            if (Optional.IsDefined(DesiredState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  desiredState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DesiredState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  desiredState: ");
                     builder.AppendLine($"'{DesiredState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActualState), out propertyOverride);
-            if (Optional.IsDefined(ActualState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actualState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActualState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actualState: ");
                     builder.AppendLine($"'{ActualState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
-            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reasonCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reasonCode: ");
                     builder.AppendLine($"{ReasonCode.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonDesc), out propertyOverride);
-            if (Optional.IsDefined(ReasonDesc) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reasonDesc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonDesc))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reasonDesc: ");
                     builder.AppendLine($"'{ReasonDesc.Value.ToSerialString()}'");
                 }
             }

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
-require: https://github.com/Azure/azure-rest-api-specs/blob/4a361fccb94e82da94a239d3563f1e3e3b9d007d/specification/nginx/resource-manager/readme.md
-#tag: package-2023-04-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/nginx/resource-manager/readme.md
+tag: package-2024-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -27,10 +27,17 @@ rename-mapping:
   NginxNetworkInterfaceConfiguration.subnetId: -|arm-id
   NginxPrivateIPAddress.privateIPAddress: -|ip-address
   NginxPrivateIPAddress.subnetId: -|arm-id
+  AnalysisCreate : NginxAnalysisContent
+  AnalysisCreateConfig: NginxAnalysisConfig
+  NginxCertificateErrorResponseBody: NginxCertificateError
 
 prepend-rp-prefix:
   - ProvisioningState
   - ResourceSku
+  - AnalysisDiagnostic
+  - AnalysisResult
+  - ScaleProfile
+  - ScaleProfileCapacity
 
 format-by-name-rules:
   'tenantId': 'uuid'

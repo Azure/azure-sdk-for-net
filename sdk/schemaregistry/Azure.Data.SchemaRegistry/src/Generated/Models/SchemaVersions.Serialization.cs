@@ -44,5 +44,13 @@ namespace Azure.Data.SchemaRegistry.Models
             }
             return new SchemaVersions(schemaVersions ?? new ChangeTrackingList<int>(), nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SchemaVersions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSchemaVersions(document.RootElement);
+        }
     }
 }

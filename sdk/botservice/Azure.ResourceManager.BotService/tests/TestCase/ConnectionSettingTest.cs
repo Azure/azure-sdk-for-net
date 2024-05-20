@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Tests
     public class ConnectionSettingTest : BotServiceManagementTestBase
     {
         public ConnectionSettingTest(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 

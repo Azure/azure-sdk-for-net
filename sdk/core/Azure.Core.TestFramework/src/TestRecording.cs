@@ -49,7 +49,7 @@ namespace Azure.Core.TestFramework
                 case RecordedTestMode.Record:
                     var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile) { XRecordingAssetsFile = assetsJson });
                     RecordingId = recordResponse.Headers.XRecordingId;
-                    await AddProxySanitizersAsync();
+                    await ApplySanitizersAsync();
 
                     break;
                 case RecordedTestMode.Playback:
@@ -69,7 +69,7 @@ namespace Azure.Core.TestFramework
 
                     _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
                     RecordingId = playbackResponse.Headers.XRecordingId;
-                    await AddProxySanitizersAsync();
+                    await ApplySanitizersAsync();
 
                     // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
                     var excludedHeaders = new List<string>(_recordedTestBase.LegacyExcludedHeaders)
@@ -95,11 +95,11 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private async Task AddProxySanitizersAsync()
+        private async Task ApplySanitizersAsync()
         {
             foreach (string header in _recordedTestBase.SanitizedHeaders)
             {
-                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, Sanitized), RecordingId);
+                await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header), RecordingId);
             }
 
             foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
@@ -128,7 +128,7 @@ namespace Azure.Core.TestFramework
 
             foreach (string path in _recordedTestBase.JsonPathSanitizers)
             {
-                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
+                await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(path), RecordingId);
             }
 
             foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
@@ -139,6 +139,16 @@ namespace Azure.Core.TestFramework
             foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
             {
                 await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
+            }
+
+            if (_recordedTestBase.SanitizersToRemove.Count > 0)
+            {
+                var toRemove = new SanitizersToRemove();
+                foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
+                {
+                    toRemove.Sanitizers.Add(sanitizer);
+                }
+                await _proxy.Client.RemoveSanitizersAsync(toRemove, RecordingId);
             }
         }
 

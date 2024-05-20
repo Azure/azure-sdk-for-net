@@ -78,6 +78,7 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     try
     {
         $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Body $multipartContent -Headers $headers
+        Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -89,9 +90,13 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     return $StatusCode
 }
 
-function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $reviewFileName, $packageVersion)
+function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $reviewFileName, $packageVersion, $filePath)
 {
-    $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${packageName}&reviewFilePath=${reviewFileName}"    
+    Write-Host "Original File path: $filePath"
+    $fileName = Split-Path -Leaf $filePath
+    Write-Host "OriginalFile name: $fileName"
+
+    $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${fileName}&reviewFilePath=${reviewFileName}"    
     $params += "&label=${apiLabel}&repoName=${RepoName}&packageName=${packageName}&project=internal&packageVersion=${packageVersion}"
     if($MarkPackageAsShipped) {
         $params += "&setReleaseTag=true"
@@ -110,6 +115,7 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     try
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri -Headers $headers
+        Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -135,17 +141,17 @@ function Get-APITokenFileName($packageName)
     }
 }
 
-function Submit-APIReview($packageInfo, $packagePath)
+function Submit-APIReview($packageInfo, $packagePath, $packageArtifactName)
 {
     $packageName = $packageInfo.Name    
     $apiLabel = "Source Branch:${SourceBranch}"
 
     # Get generated review token file if present
     # APIView processes request using different API if token file is already generated
-    $reviewTokenFileName =  Get-APITokenFileName $packageName
+    $reviewTokenFileName =  Get-APITokenFileName $packageArtifactName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
-        return Upload-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version
+        return Upload-ReviewTokenFile $packageArtifactName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
     }
     else {
         Write-Host "Uploading $packagePath to APIView."
@@ -153,6 +159,18 @@ function Submit-APIReview($packageInfo, $packagePath)
     }
 }
 
+function IsApiviewStatusCheckRequired($packageInfo)
+{
+    if ($IsApiviewStatusCheckRequiredFn -and (Test-Path "Function:$IsApiviewStatusCheckRequiredFn"))
+    {
+        return &$IsApiviewStatusCheckRequiredFn $packageInfo
+    }
+
+    if ($packageInfo.SdkType -eq "client" -and $packageInfo.IsNewSdk) {
+        return $true
+    }
+    return $false
+}
 
 function ProcessPackage($packageName)
 {
@@ -198,7 +216,7 @@ function ProcessPackage($packageName)
             if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease) -or $MarkPackageAsShipped)
             {
                 Write-Host "Submitting API Review request for package $($pkg), File path: $($pkgPath)"
-                $respCode = Submit-APIReview $pkgInfo $pkgPath
+                $respCode = Submit-APIReview $pkgInfo $pkgPath $packageName
                 Write-Host "HTTP Response code: $($respCode)"
 
                 # no need to check API review status when marking a package as shipped
@@ -234,8 +252,14 @@ function ProcessPackage($packageName)
                     # Check if package name is approved. Preview version cannot be released without package name approval
                     if (!$pkgNameStatus.IsApproved) 
                     {
-                        Write-Error $($pkgNameStatus.Details)
-                        return 1
+                        if (IsApiviewStatusCheckRequired $pkgInfo)
+                        {
+                            Write-Error $($pkgNameStatus.Details)
+                            return 1
+                        }
+                        else{
+                            Write-Host "Package name is not approved for package $($packageName), however it is not required for this package type so it can still be released without API review approval."
+                        }                        
                     }
                     # Ignore API review status for prerelease version
                     Write-Host "Package version is not GA. Ignoring API view approval status"
@@ -245,7 +269,7 @@ function ProcessPackage($packageName)
                     # Return error code if status code is 201 for new data plane package
                     # Temporarily enable API review for spring SDK types. Ideally this should be done be using 'IsReviewRequired' method in language side
                     # to override default check of SDK type client
-                    if (($pkgInfo.SdkType -eq "client" -or $pkgInfo.SdkType -eq "spring") -and $pkgInfo.IsNewSdk)
+                    if (IsApiviewStatusCheckRequired $pkgInfo)
                     {
                         if (!$apiStatus.IsApproved)
                         {

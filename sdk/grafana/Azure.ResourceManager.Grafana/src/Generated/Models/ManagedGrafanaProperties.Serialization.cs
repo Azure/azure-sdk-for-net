@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Grafana.Models
 {
     public partial class ManagedGrafanaProperties : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedGrafanaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<GrafanaPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
-                writer.WriteObjectValue<GrafanaIntegrations>(GrafanaIntegrations, options);
+                writer.WriteObjectValue(GrafanaIntegrations, options);
             }
             if (Optional.IsDefined(EnterpriseConfigurations))
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
-                writer.WriteObjectValue<EnterpriseConfigurations>(EnterpriseConfigurations, options);
+                writer.WriteObjectValue(EnterpriseConfigurations, options);
             }
             if (Optional.IsDefined(GrafanaConfigurations))
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
-                writer.WriteObjectValue<GrafanaConfigurations>(GrafanaConfigurations, options);
+                writer.WriteObjectValue(GrafanaConfigurations, options);
             }
             if (Optional.IsCollectionDefined(GrafanaPlugins))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 foreach (var item in GrafanaPlugins)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<GrafanaPlugin>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static ManagedGrafanaProperties DeserializeManagedGrafanaProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Grafana.Models
             IDictionary<string, GrafanaPlugin> grafanaPlugins = default;
             string grafanaMajorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedGrafanaProperties(
                 provisioningState,
                 grafanaVersion,

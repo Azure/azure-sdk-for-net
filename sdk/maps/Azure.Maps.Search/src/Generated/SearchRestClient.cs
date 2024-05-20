@@ -2521,7 +2521,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchInsideGeometryRequest>(geometry);
+            content.JsonWriter.WriteObjectValue(geometry);
             request.Content = content;
             return message;
         }
@@ -2752,7 +2752,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchAlongRouteRequest>(route);
+            content.JsonWriter.WriteObjectValue(route);
             request.Content = content;
             return message;
         }
@@ -2949,7 +2949,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
         }
@@ -3326,7 +3326,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
         }
@@ -4062,7 +4062,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
         }
@@ -4423,7 +4423,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
         }
@@ -5127,7 +5127,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
         }
@@ -5492,7 +5492,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(batchRequest);
+            content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
         }

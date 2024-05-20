@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-11-16-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string reportName, string snapshotName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string reportName, string snapshotName)
@@ -113,6 +124,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
+        internal RequestUriBuilder CreateDownloadRequestUri(string reportName, string snapshotName, SnapshotDownloadContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(snapshotName, true);
+            uri.AppendPath("/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDownloadRequest(string reportName, string snapshotName, SnapshotDownloadContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -130,7 +154,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<SnapshotDownloadContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

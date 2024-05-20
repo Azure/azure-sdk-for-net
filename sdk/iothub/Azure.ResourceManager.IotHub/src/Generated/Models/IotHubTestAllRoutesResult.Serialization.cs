@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class IotHubTestAllRoutesResult : IUtf8JsonSerializable, IJsonModel<IotHubTestAllRoutesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubTestAllRoutesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubTestAllRoutesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotHubTestAllRoutesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue<IotHubMatchedRoute>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             IReadOnlyList<IotHubMatchedRoute> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IotHubTestAllRoutesResult(routes ?? new ChangeTrackingList<IotHubMatchedRoute>(), serializedAdditionalRawData);
         }
 

@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class Embeddings : IUtf8JsonSerializable, IJsonModel<Embeddings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Embeddings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Embeddings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Embeddings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,11 +30,11 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue<EmbeddingItem>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue<EmbeddingsUsage>(Usage, options);
+            writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,7 +67,7 @@ namespace Azure.AI.OpenAI
 
         internal static Embeddings DeserializeEmbeddings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI
             IReadOnlyList<EmbeddingItem> data = default;
             EmbeddingsUsage usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))
@@ -96,10 +96,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new Embeddings(data, usage, serializedAdditionalRawData);
         }
 
@@ -142,11 +142,11 @@ namespace Azure.AI.OpenAI
             return DeserializeEmbeddings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<Embeddings>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

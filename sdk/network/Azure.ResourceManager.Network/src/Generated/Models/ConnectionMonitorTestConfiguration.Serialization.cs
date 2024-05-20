@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ConnectionMonitorTestConfiguration : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorTestConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorTestConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorTestConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionMonitorTestConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
-                writer.WriteObjectValue<ConnectionMonitorHttpConfiguration>(HttpConfiguration, options);
+                writer.WriteObjectValue(HttpConfiguration, options);
             }
             if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
-                writer.WriteObjectValue<ConnectionMonitorTcpConfiguration>(TcpConfiguration, options);
+                writer.WriteObjectValue(TcpConfiguration, options);
             }
             if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
-                writer.WriteObjectValue<ConnectionMonitorIcmpConfiguration>(IcmpConfiguration, options);
+                writer.WriteObjectValue(IcmpConfiguration, options);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
-                writer.WriteObjectValue<ConnectionMonitorSuccessThreshold>(SuccessThreshold, options);
+                writer.WriteObjectValue(SuccessThreshold, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTestConfiguration DeserializeConnectionMonitorTestConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionMonitorIcmpConfiguration icmpConfiguration = default;
             ConnectionMonitorSuccessThreshold successThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectionMonitorTestConfiguration(
                 name,
                 testFrequencySec,

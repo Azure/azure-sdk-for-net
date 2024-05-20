@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class BuildDocumentClassifierContent : IUtf8JsonSerializable, IJsonModel<BuildDocumentClassifierContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentClassifierContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentClassifierContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BuildDocumentClassifierContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
             foreach (var item in DocTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ClassifierDocumentTypeDetails>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static BuildDocumentClassifierContent DeserializeBuildDocumentClassifierContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.AI.DocumentIntelligence
             string baseClassifierId = default;
             IDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classifierId"u8))
@@ -119,10 +119,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BuildDocumentClassifierContent(classifierId, description, baseClassifierId, docTypes, serializedAdditionalRawData);
         }
 
@@ -165,11 +165,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeBuildDocumentClassifierContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BuildDocumentClassifierContent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties);
+                writer.WriteObjectValue(CompressionProperties);
             }
             if (Optional.IsDefined(ValidationMode))
             {
@@ -133,12 +133,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 namespacePrefixes);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new XmlReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeXmlReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class XmlReadSettingsConverter : JsonConverter<XmlReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, XmlReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<XmlReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override XmlReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

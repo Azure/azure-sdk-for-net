@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class KubernetesFluxConfigurationPatch : IUtf8JsonSerializable, IJsonModel<KubernetesFluxConfigurationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesFluxConfigurationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesFluxConfigurationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesFluxConfigurationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue<KubernetesGitRepositoryUpdateContent>(GitRepository, options);
+                    writer.WriteObjectValue(GitRepository, options);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue<KubernetesBucketUpdateContent>(Bucket, options);
+                    writer.WriteObjectValue(Bucket, options);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue<KubernetesAzureBlobUpdateContent>(AzureBlob, options);
+                    writer.WriteObjectValue(AzureBlob, options);
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<KustomizationUpdateContent>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesFluxConfigurationPatch DeserializeKubernetesFluxConfigurationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             IDictionary<string, KustomizationUpdateContent> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesFluxConfigurationPatch(
                 sourceKind,
                 suspend,

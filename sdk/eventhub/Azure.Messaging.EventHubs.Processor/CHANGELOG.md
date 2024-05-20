@@ -10,6 +10,30 @@
 
 ### Other Changes
 
+## 5.11.3 (2024-05-15)
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Removed the restriction that endpoints used with the development emulator had to resolve to a `localhost` variant.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains several bug fixes, including for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+
+## 5.11.2 (2024-04-10)
+
+### Bugs Fixed
+
+- The `EventProcessorClient` will now create a unique span for each event emitted to the handler for processing.  Previously a single span was created for all events in a batch.  ([#31922](https://github.com/Azure/azure-sdk-for-net/issues/31922))
+
+- Fixed a parameter ordering error in ETW 22 (EventBatchProcessingError) that caused structured data arguments to be ordered differently than the associated replacement token in the log message. 
+
+### Other Changes
+
+- Added option `EnableCheckpointing` to allow automatic checkpointing to be disabled for applications that only wish to read current data rather than tracking the state of processing.
+
 ## 5.11.1 (2024-03-05)
 
 ### Other Changes

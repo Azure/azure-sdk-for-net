@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class FlinkProfile : IUtf8JsonSerializable, IJsonModel<FlinkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlinkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,25 +27,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
-            writer.WriteObjectValue<FlinkStorageProfile>(Storage, options);
+            writer.WriteObjectValue(Storage, options);
             if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
-            writer.WriteObjectValue<ComputeResourceRequirement>(JobManager, options);
+            writer.WriteObjectValue(JobManager, options);
             if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
-                writer.WriteObjectValue<ComputeResourceRequirement>(HistoryServer, options);
+                writer.WriteObjectValue(HistoryServer, options);
             }
             writer.WritePropertyName("taskManager"u8);
-            writer.WriteObjectValue<ComputeResourceRequirement>(TaskManager, options);
+            writer.WriteObjectValue(TaskManager, options);
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue<FlinkCatalogOptions>(CatalogOptions, options);
+                writer.WriteObjectValue(CatalogOptions, options);
             }
             if (Optional.IsDefined(DeploymentMode))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(JobSpec))
             {
                 writer.WritePropertyName("jobSpec"u8);
-                writer.WriteObjectValue<FlinkJobProfile>(JobSpec, options);
+                writer.WriteObjectValue(JobSpec, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static FlinkProfile DeserializeFlinkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             DeploymentMode? deploymentMode = default;
             FlinkJobProfile jobSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storage"u8))
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FlinkProfile(
                 storage,
                 numReplicas,

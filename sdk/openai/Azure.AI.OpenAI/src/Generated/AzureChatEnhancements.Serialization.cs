@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class AzureChatEnhancements : IUtf8JsonSerializable, IJsonModel<AzureChatEnhancements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureChatEnhancements>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureChatEnhancements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureChatEnhancements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
-                writer.WriteObjectValue<AzureGroundingEnhancement>(Grounding, options);
+                writer.WriteObjectValue(Grounding, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.AI.OpenAI
 
         internal static AzureChatEnhancements DeserializeAzureChatEnhancements(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI
             }
             AzureGroundingEnhancement grounding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grounding"u8))
@@ -85,10 +85,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureChatEnhancements(grounding, serializedAdditionalRawData);
         }
 
@@ -131,11 +131,11 @@ namespace Azure.AI.OpenAI
             return DeserializeAzureChatEnhancements(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureChatEnhancements>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
