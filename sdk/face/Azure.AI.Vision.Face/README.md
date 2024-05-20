@@ -8,7 +8,6 @@ Use the client library for to:
 - Liveness detection
 - Face recognition
   - Face verification ("one-to-one" matching)
-  - Face identification ("one-to-many" matching)
   - Find similar faces
   - Group faces
 
@@ -108,20 +107,9 @@ var client = new FaceClient(endpoint, credential);
 
 - Face detection and analysis: Detect human faces in an image and return the rectangle coordinates of their locations, and optionally with landmarks, and face-related attributes. This operation is required as a first step in all the other face recognition scenarios.
 - Face recognition: Confirm that a user is who they claim to be based on how closely their face data matches the target face.
-   It includes Face verification ("one-to-one" matching) and Face identification ("one-to-many" matching).
+   Support Face verification ("one-to-one" matching).
 - Finding similar faces from a smaller set of faces that look similar to the target face.
 - Grouping faces into several smaller groups based on similarity.
-
-### FaceAdministrationClient
-
-`FaceAdministrationClient` is provided to interact with the following data structures that hold data on faces and
-persons for Face recognition:
-
-- PersonDirectory
-- FaceList
-- LargeFaceList
-- PersonGroup
-- LargePersonGroup
 
 ### FaceSessionClient
 
