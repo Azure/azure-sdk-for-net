@@ -62,7 +62,7 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
-            CommunicationUserIdentifier answeredBy = default)
+            CommunicationIdentifier answeredBy = default)
         {
             return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, answeredBy);
         }

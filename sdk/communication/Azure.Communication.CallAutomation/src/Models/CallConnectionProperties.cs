@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
             IEnumerable<CommunicationIdentifier> targets,
             CallConnectionState callConnectionState,
             Uri callbackUri,
-            CommunicationIdentifier source,
+            CommunicationIdentifier sourceIdentity,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
             CommunicationIdentifier answeredBy
@@ -27,10 +27,10 @@ namespace Azure.Communication.CallAutomation
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
             CallConnectionState = callConnectionState == default ? CallConnectionState.Unknown : callConnectionState;
             CallbackUri = callbackUri;
-            Source = source;
+            Source = sourceIdentity;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            AnsweredBy = answeredBy;
+            AnsweredBy = new CommunicationUserIdentifier(answeredBy.RawId);
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
