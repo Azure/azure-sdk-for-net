@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -102,7 +103,7 @@ namespace Azure.Maps.Search.Tests
         public async Task GetReverseGeocodingTest()
         {
             var client = CreateClient();
-            IList<double> coordinates = new[] { -122.34255, 47.6 };
+            IList<double> coordinates = new[] { -122.34255, Math.Round(47.6, 1) };
             var response = await client.GetReverseGeocodingAsync(coordinates);
             Assert.AreEqual("Seattle", response.Value.Features[0].Properties.Address.Locality);
         }
@@ -147,11 +148,11 @@ namespace Azure.Maps.Search.Tests
                     {
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { -122.34255, 47.6 }
+                            Coordinates = new[] { -122.34255, Math.Round(47.6, 1) }
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
-                            Coordinates = new[] { -122.34255, 47.6 }
+                            Coordinates = new[] { -122.34255, Math.Round(47.6, 1) }
                         },
                         new ReverseGeocodingBatchRequestItem()
                         {
