@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2024-05-21)
 
 ### Features Added
 
@@ -17,10 +17,6 @@
 - Changed the name of `SentLen` property to `SentencesLengths` in `BreakSentenceItem`.
 - Changed type name from `SentenceLength` to `SentenceBoundaries`.
 - Changed the name of `Proj` property to `Projections` in `TranslatedTextAlignment` type.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2023-04-17)
 Initial version of Text Translation client library for .NET
