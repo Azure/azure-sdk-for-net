@@ -24,7 +24,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.GetJob("<name>", null);
+            Response response = client.GetJob("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -46,7 +46,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.GetJobAsync("<name>", null);
+            Response response = await client.GetJobAsync("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -68,7 +68,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = client.GetJob("<name>");
+            Response<DeidentifyJob> response = client.GetJob("<jobName>");
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = await client.GetJobAsync("<name>");
+            Response<DeidentifyJob> response = await client.GetJobAsync("<jobName>");
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.GetJob("<name>", null);
+            Response response = client.GetJob("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -124,7 +124,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.GetJobAsync("<name>", null);
+            Response response = await client.GetJobAsync("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -158,7 +158,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = client.GetJob("<name>");
+            Response<DeidentifyJob> response = client.GetJob("<jobName>");
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = await client.GetJobAsync("<name>");
+            Response<DeidentifyJob> response = await client.GetJobAsync("<jobName>");
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.CancelJob("<name>", null);
+            Response response = client.CancelJob("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -202,7 +202,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.CancelJobAsync("<name>", null);
+            Response response = await client.CancelJobAsync("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -224,7 +224,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = client.CancelJob("<name>");
+            Response<DeidentifyJob> response = client.CancelJob("<jobName>");
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = await client.CancelJobAsync("<name>");
+            Response<DeidentifyJob> response = await client.CancelJobAsync("<jobName>");
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.CancelJob("<name>", null);
+            Response response = client.CancelJob("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -280,7 +280,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.CancelJobAsync("<name>", null);
+            Response response = await client.CancelJobAsync("<jobName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
@@ -314,7 +314,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = client.CancelJob("<name>");
+            Response<DeidentifyJob> response = client.CancelJob("<jobName>");
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response<DeidentifyJob> response = await client.CancelJobAsync("<name>");
+            Response<DeidentifyJob> response = await client.CancelJobAsync("<jobName>");
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.DeleteJob("<name>");
+            Response response = client.DeleteJob("<jobName>");
 
             Console.WriteLine(response.Status);
         }
@@ -349,7 +349,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.DeleteJobAsync("<name>");
+            Response response = await client.DeleteJobAsync("<jobName>");
 
             Console.WriteLine(response.Status);
         }
@@ -362,7 +362,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = client.DeleteJob("<name>");
+            Response response = client.DeleteJob("<jobName>");
 
             Console.WriteLine(response.Status);
         }
@@ -375,7 +375,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            Response response = await client.DeleteJobAsync("<name>");
+            Response response = await client.DeleteJobAsync("<jobName>");
 
             Console.WriteLine(response.Status);
         }
@@ -712,7 +712,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobFiles("<name>", null, null, null))
+            foreach (BinaryData item in client.GetJobFiles("<jobName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -730,7 +730,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobFilesAsync("<name>", null, null, null))
+            await foreach (BinaryData item in client.GetJobFilesAsync("<jobName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -748,7 +748,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (HealthFileDetails item in client.GetJobFiles("<name>"))
+            foreach (HealthFileDetails item in client.GetJobFiles("<jobName>"))
             {
             }
         }
@@ -761,7 +761,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>"))
+            await foreach (HealthFileDetails item in client.GetJobFilesAsync("<jobName>"))
             {
             }
         }
@@ -774,7 +774,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobFiles("<name>", 1234, "<continuationToken>", null))
+            foreach (BinaryData item in client.GetJobFiles("<jobName>", 1234, "<continuationToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -798,7 +798,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobFilesAsync("<name>", 1234, "<continuationToken>", null))
+            await foreach (BinaryData item in client.GetJobFilesAsync("<jobName>", 1234, "<continuationToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -822,7 +822,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (HealthFileDetails item in client.GetJobFiles("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
+            foreach (HealthFileDetails item in client.GetJobFiles("<jobName>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
             {
             }
         }
@@ -835,7 +835,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
+            await foreach (HealthFileDetails item in client.GetJobFilesAsync("<jobName>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
             {
             }
         }
@@ -867,7 +867,7 @@ namespace Azure.Health.Deidentification.Samples
                 dataType = "PlainText",
                 operation = "Redact",
             });
-            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
+            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<jobName>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -909,7 +909,7 @@ namespace Azure.Health.Deidentification.Samples
                 dataType = "PlainText",
                 operation = "Redact",
             });
-            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
+            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobName>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -933,7 +933,7 @@ namespace Azure.Health.Deidentification.Samples
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact);
-            Operation<DeidentifyJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
+            Operation<DeidentifyJob> operation = client.CreateJob(WaitUntil.Completed, "<jobName>", resource);
             DeidentifyJob responseData = operation.Value;
         }
 
@@ -946,7 +946,7 @@ namespace Azure.Health.Deidentification.Samples
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact);
-            Operation<DeidentifyJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
+            Operation<DeidentifyJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobName>", resource);
             DeidentifyJob responseData = operation.Value;
         }
 
@@ -978,7 +978,7 @@ namespace Azure.Health.Deidentification.Samples
                 operation = "Redact",
                 redactionFormat = "<redactionFormat>",
             });
-            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<name>", content);
+            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<jobName>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1033,7 +1033,7 @@ namespace Azure.Health.Deidentification.Samples
                 operation = "Redact",
                 redactionFormat = "<redactionFormat>",
             });
-            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", content);
+            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobName>", content);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1072,7 +1072,7 @@ namespace Azure.Health.Deidentification.Samples
             {
                 RedactionFormat = "<redactionFormat>",
             };
-            Operation<DeidentifyJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
+            Operation<DeidentifyJob> operation = client.CreateJob(WaitUntil.Completed, "<jobName>", resource);
             DeidentifyJob responseData = operation.Value;
         }
 
@@ -1088,7 +1088,7 @@ namespace Azure.Health.Deidentification.Samples
             {
                 RedactionFormat = "<redactionFormat>",
             };
-            Operation<DeidentifyJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
+            Operation<DeidentifyJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobName>", resource);
             DeidentifyJob responseData = operation.Value;
         }
     }

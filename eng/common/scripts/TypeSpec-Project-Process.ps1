@@ -57,7 +57,7 @@ function CreateUpdate-TspLocation([System.Object]$tspConfig, [string]$TypeSpecPr
   Write-Host "updated tsp-location.yaml directory to $TypeSpecProjectDirectory"
   $tspLocationYaml["additionalDirectories"] = $additionalDirs
   Write-Host "updated tsp-location.yaml additionalDirectories to $additionalDirs"
-  $tspLocationYaml |ConvertTo-Yaml | Out-File $tspLocationYamlPath
+  $tspLocationYaml | ConvertTo-Yaml | Out-File $tspLocationYamlPath
   Write-Host "finished updating tsp-location.yaml in $packageDir"
   return $packageDir
 }
@@ -103,7 +103,7 @@ function Get-TspLocationFolder([System.Object]$tspConfig, [string]$repoRoot) {
   return $packageDir
 }
 
-$sdkRepoRootPath =  (Join-Path $PSScriptRoot .. .. ..)
+$sdkRepoRootPath = (Join-Path $PSScriptRoot .. .. ..)
 $sdkRepoRootPath = Resolve-Path $sdkRepoRootPath
 $sdkRepoRootPath = $sdkRepoRootPath -replace "\\", "/"
 $tspConfigPath = Join-Path $sdkRepoRootPath 'tspconfig.yaml'
@@ -128,7 +128,8 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-re
   $TypeSpecProjectDirectory = $Matches["path"]
   $CommitHash = $Matches["commit"]
   # TODO support the branch name in url then get the commithash from branch name
-} else {
+}
+else {
   # local path scenario
   $tspConfigPath = Join-Path $TypeSpecProjectDirectory "tspconfig.yaml"
   if (!(Test-Path $tspConfigPath)) {
@@ -139,7 +140,8 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-re
   if ($TypeSpecProjectDirectory -match "(?<repoRoot>^.*)/(?<path>specification/.*)$") {
     $TypeSpecProjectDirectory = $Matches["path"]
     $specRepoRoot = $Matches["repoRoot"]
-  } else {
+  }
+  else {
     Write-Error "$TypeSpecProjectDirectory doesn't have 'specification' in path."
     exit 1
   }
@@ -147,7 +149,7 @@ if ($TypeSpecProjectDirectory -match '^https://github.com/(?<repo>[^/]*/azure-re
     Write-Warning "Parameter of Commithash or RepoUrl are not provided along with the local path of tspconfig.yaml, trying to re-generate sdk code based on the local type specs."
     $generateFromLocalTypeSpec = $true
   }
-  
+
   if ($RepoUrl) {
     if ($RepoUrl -match "^(https://github.com/|git@github.com:)(?<repo>[^/]*/azure-rest-api-specs(-pr)?).*") {
       $repo = $Matches["repo"]
@@ -197,7 +199,8 @@ if ($generateFromLocalTypeSpec) {
     }
     $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath -isNewSdkProject ([ref]$isNewSdkProject)
   }
-} else {
+}
+else {
   # call CreateUpdate-TspLocation function
   $sdkProjectFolder = CreateUpdate-TspLocation $tspConfigYaml $TypeSpecProjectDirectory $CommitHash $repo $sdkRepoRootPath -isNewSdkProject ([ref]$isNewSdkProject)
 }
@@ -205,7 +208,8 @@ if ($generateFromLocalTypeSpec) {
 # checking skip switch, only skip when it's not a new sdk project as project scaffolding is supported by emitter
 if ($SkipSyncAndGenerate -and !$isNewSdkProject) {
   Write-Host "Skip calling TypeSpec-Project-Sync.ps1 and TypeSpec-Project-Generate.ps1."
-} else {
+}
+else {
   # call TypeSpec-Project-Sync.ps1
   $syncScript = Join-Path $PSScriptRoot TypeSpec-Project-Sync.ps1
   Write-Host "Calling TypeSpec-Project-Sync.ps1"

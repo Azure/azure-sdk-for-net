@@ -12,26 +12,118 @@ using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Tests
 {
+    [TestFixture]
     public class JobOperationsTest : DeidentificationTestBase
     {
+        private const string OUTPUT_FOLDER = "_output";
+
+        public JobOperationsTest() : base(true)
+        {
+        }
+
         public JobOperationsTest(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
-        public async Task JobE2E_ValidArguments_JobSuccessAndOutputsFiles()
+        public async Task CreateJobAsync_SucceedsWithExpectedFields()
         {
             DeidentificationClient client = GetDeidClient();
 
             string jobName = "net-sdk-job-" + Recording.GenerateId();
+            const string inputPrefix = "example_patient_1";
 
-            Console.WriteLine("TestEnvironment.StorageAccountSASUri: " + TestEnvironment.StorageAccountSASUri);
+            DeidentifyJob deidJobInput = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
+                // TODO: Change prefix to outputPrefix
+                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
+                // TODO: Default Arguments
+                DataType = DocumentDataType.PlainText,
+                Operation = OperationType.Surrogate
+            };
 
-            // TODO: Overload allowing creation of the full job? even though the rest API doesn't allow it?
-            DeidentifyJob jobToCreate = new DeidentifyJob();
+            DeidentifyJob job = (await client.CreateJobAsync(WaitUntil.Started, jobName, deidJobInput)).Value;
 
-            // TODO: name should be jobName
-            DeidentifyJob job = (await client.CreateJobAsync(WaitUntil.Completed, jobName, jobToCreate, CancellationToken.None)).Value;
+            Assert.IsNotNull(job);
+            Assert.IsNotNull(job.CreatedAt);
+            Assert.IsNotNull(job.LastUpdatedAt);
+            Assert.IsNull(job.StartedAt);
+            Assert.AreEqual(JobStatus.NotStarted, job.Status);
+            Assert.IsNull(job.Error);
+            Assert.IsNull(job.RedactionFormat);
+            Assert.IsNull(job.Summary);
+            Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
+            Assert.AreEqual(TestEnvironment.StorageAccountSASUri, job.SourceLocation.Location);
+            Assert.AreEqual(OUTPUT_FOLDER, job.TargetLocation.Prefix);
+            Assert.AreEqual(TestEnvironment.StorageAccountSASUri, job.TargetLocation.Location);
+        }
+
+        [Test]
+        public async Task JobE2E_WaitUntil_Success()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string jobName = "net-sdk-job-" + Recording.GenerateId();
+            const string inputPrefix = "example_patient_1";
+
+            DeidentifyJob deidJobInput = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
+                // TODO: Change prefix to outputPrefix
+                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
+                // TODO: Default Arguments
+                DataType = DocumentDataType.PlainText,
+                Operation = OperationType.Surrogate
+            };
+
+            DeidentifyJob job = (await client.CreateJobAsync(WaitUntil.Completed, jobName, deidJobInput)).Value;
+
+            Assert.AreEqual(JobStatus.Succeeded, job.Status);
+            Assert.IsNotNull(job.StartedAt);
+            Assert.IsNotNull(job.Summary);
+            Assert.AreEqual(2, job.Summary.Total);
+            Assert.AreEqual(2, job.Summary.Successful);
+        }
+
+        [Test]
+        public async Task JobE2E_CancelDeleteFlow_DeletesJob()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string jobName = "net-sdk-job-" + Recording.GenerateId();
+            const string inputPrefix = "example_patient_1";
+
+            // TODO: Potentially swap DeidentifyJob with DeidentificationJob. Only action is deidentify
+            DeidentifyJob job = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
+                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
+                // TODO: Default Arguments
+                DataType = DocumentDataType.PlainText,
+                // TODO: Potentially add DeidentificationOperationType
+                Operation = OperationType.Surrogate
+            };
+
+            // TODO: Bring up started langauge with SDK team
+            job = (await client.CreateJobAsync(WaitUntil.Started, jobName, deidJobInput)).Value;
+
+            do
+            {
+                job = await client.GetJobAsync(jobName);
+                await Task.Delay(2000);
+            }
+            while (job.Status == JobStatus.NotStarted);
+
+            string errorMessage = job.Error is not null ? job.Error.Message : "No Error Message Available.";
+            Assert.AreEqual(JobStatus.Running, job.Status, $"Job should be running. Error: {errorMessage}");
+
+            job = await client.CancelJobAsync(jobName);
+            Assert.AreEqual(JobStatus.Canceled, job.Status);
+
+            await client.DeleteJobAsync(jobName);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetJobAsync(jobName));
         }
     }
 }
