@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace Azure
     public class RequestFailedException : ClientResultException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
+
+        internal const string NoContentOnSuccessMessage = "Service request succeeded. Response content and headers are not included to avoid logging sensitive data.";
 
         /// <summary>
         /// Creates an instance of <see cref="RequestFailedException"/> in an
@@ -199,22 +202,49 @@ namespace Azure
             }
             StringBuilder messageBuilder = new();
 
-            messageBuilder
-                .AppendLine(error?.Message ?? DefaultMessage)
-                .Append("Status: ")
-                .Append(response.Status.ToString(CultureInfo.InvariantCulture));
+            AppendStatusAndReason(response, error, messageBuilder);
 
-            if (!string.IsNullOrEmpty(response.ReasonPhrase))
+            AppendErrorCodeAndAdditionalInfo(error, additionalInfo, messageBuilder);
+
+            if (response.IsError)
             {
-                messageBuilder.Append(" (")
-                    .Append(response.ReasonPhrase)
-                    .AppendLine(")");
+                AppendContentAndHeaders(response, messageBuilder);
             }
             else
             {
-                messageBuilder.AppendLine();
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine(NoContentOnSuccessMessage);
             }
 
+            var formatMessage = messageBuilder.ToString();
+            return new(formatMessage, error?.Code, additionalInfo);
+        }
+
+        private static void AppendContentAndHeaders(Response response, StringBuilder messageBuilder)
+        {
+            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:")
+                    .AppendLine(response.Content.ToString());
+            }
+
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Headers:");
+
+            foreach (HttpHeader responseHeader in response.Headers)
+            {
+                string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                string header = $"{responseHeader.Name}: {headerValue}";
+                messageBuilder.AppendLine(header);
+            }
+        }
+
+        private static void AppendErrorCodeAndAdditionalInfo(ResponseError? error, IDictionary<string, string>? additionalInfo, StringBuilder messageBuilder)
+        {
             if (!string.IsNullOrWhiteSpace(error?.Code))
             {
                 messageBuilder.Append("ErrorCode: ")
@@ -235,27 +265,25 @@ namespace Azure
                         .AppendLine(info.Value);
                 }
             }
+        }
 
-            if (ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
-            {
-                messageBuilder
-                    .AppendLine()
-                    .AppendLine("Content:")
-                    .AppendLine(response.Content.ToString());
-            }
-
+        private static void AppendStatusAndReason(Response response, ResponseError? error, StringBuilder messageBuilder)
+        {
             messageBuilder
-                .AppendLine()
-                .AppendLine("Headers:");
+                            .AppendLine(error?.Message ?? DefaultMessage)
+                            .Append("Status: ")
+                            .Append(response.Status.ToString(CultureInfo.InvariantCulture));
 
-            foreach (HttpHeader responseHeader in response.Headers)
+            if (!string.IsNullOrEmpty(response.ReasonPhrase))
             {
-                string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-                string header = $"{responseHeader.Name}: {headerValue}";
-                messageBuilder.AppendLine(header);
+                messageBuilder.Append(" (")
+                    .Append(response.ReasonPhrase)
+                    .AppendLine(")");
             }
-
-            return new ErrorDetails(messageBuilder.ToString(), error?.Code, additionalInfo);
+            else
+            {
+                messageBuilder.AppendLine();
+            }
         }
 
         // This class needs to be internal rather than private so that it can be used
